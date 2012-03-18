@@ -19,6 +19,8 @@
 
 //And finally, this takes the cake :D
 
+//And now I'm finally gonna call it. Git is going to remember my password and I will FINALLY sleep a happy man. for 8 hours. TROLLOLOL
+
 #import <UIKit/UIKit.h>
 
 @interface FirstViewController : UIViewController
