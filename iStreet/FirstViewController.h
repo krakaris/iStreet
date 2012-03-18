@@ -9,8 +9,16 @@
 
 //BAHAHAHAHAHAHA
 
+//WHAT AERIAJDCLKNSV:J ASDF:LKJASD:LAJSD:
+
+//ADLkjSD KJHAD LKJDHSLKAJHSDLKAJSDH  ASDJHLASDKJLSADKJ
+
+//Well this was just great
+
 #import <UIKit/UIKit.h>
 
 @interface FirstViewController : UIViewController
+
+@property (nonatomic, retain) NSString *watup;
 
 @end
