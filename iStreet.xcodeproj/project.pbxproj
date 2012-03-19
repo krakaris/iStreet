@@ -14,13 +14,16 @@
 		5BA1F61B15112DA7002CA7F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F61A15112DA7002CA7F3 /* main.m */; };
 		5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */; };
 		5BA1F62215112DA7002CA7F3 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F62015112DA7002CA7F3 /* MainStoryboard_iPhone.storyboard */; };
-		5BA1F62515112DA7002CA7F3 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F62315112DA7002CA7F3 /* MainStoryboard_iPad.storyboard */; };
-		5BA1F62815112DA7002CA7F3 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F62715112DA7002CA7F3 /* FirstViewController.m */; };
+		5BA1F62815112DA7002CA7F3 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F62715112DA7002CA7F3 /* HomeViewController.m */; };
 		5BA1F62A15112DA7002CA7F3 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F62915112DA7002CA7F3 /* first.png */; };
 		5BA1F62C15112DA7002CA7F3 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F62B15112DA7002CA7F3 /* first@2x.png */; };
-		5BA1F62F15112DA7002CA7F3 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F62E15112DA7002CA7F3 /* SecondViewController.m */; };
+		5BA1F62F15112DA7002CA7F3 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F62E15112DA7002CA7F3 /* ListViewController.m */; };
 		5BA1F63115112DA7002CA7F3 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F63015112DA7002CA7F3 /* second.png */; };
 		5BA1F63315112DA7002CA7F3 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F63215112DA7002CA7F3 /* second@2x.png */; };
+		5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AA15165A1F008E6C1F /* ChatViewController.m */; };
+		5BCE63AE15165D83008E6C1F /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AD15165D83008E6C1F /* MapViewController.m */; };
+		5BCE63B115165E5D008E6C1F /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63B015165E5D008E6C1F /* FriendsViewController.m */; };
+		5BCE63B41516610C008E6C1F /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63B31516610C008E6C1F /* TabBarController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,15 +38,22 @@
 		5BA1F61D15112DA7002CA7F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5BA1F62115112DA7002CA7F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		5BA1F62415112DA7002CA7F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		5BA1F62615112DA7002CA7F3 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		5BA1F62715112DA7002CA7F3 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		5BA1F62615112DA7002CA7F3 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		5BA1F62715112DA7002CA7F3 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		5BA1F62915112DA7002CA7F3 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
 		5BA1F62B15112DA7002CA7F3 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		5BA1F62D15112DA7002CA7F3 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		5BA1F62E15112DA7002CA7F3 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		5BA1F62D15112DA7002CA7F3 /* ListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
+		5BA1F62E15112DA7002CA7F3 /* ListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
 		5BA1F63015112DA7002CA7F3 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		5BA1F63215112DA7002CA7F3 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		5BCE63A915165A1F008E6C1F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		5BCE63AA15165A1F008E6C1F /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		5BCE63AC15165D83008E6C1F /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		5BCE63AD15165D83008E6C1F /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		5BCE63AF15165E5D008E6C1F /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
+		5BCE63B015165E5D008E6C1F /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
+		5BCE63B21516610C008E6C1F /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
+		5BCE63B31516610C008E6C1F /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,13 +103,20 @@
 				5BA1F61D15112DA7002CA7F3 /* AppDelegate.h */,
 				5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */,
 				5BA1F62015112DA7002CA7F3 /* MainStoryboard_iPhone.storyboard */,
-				5BA1F62315112DA7002CA7F3 /* MainStoryboard_iPad.storyboard */,
-				5BA1F62615112DA7002CA7F3 /* FirstViewController.h */,
-				5BA1F62715112DA7002CA7F3 /* FirstViewController.m */,
+				5BCE63B21516610C008E6C1F /* TabBarController.h */,
+				5BCE63B31516610C008E6C1F /* TabBarController.m */,
+				5BA1F62615112DA7002CA7F3 /* HomeViewController.h */,
+				5BA1F62715112DA7002CA7F3 /* HomeViewController.m */,
+				5BCE63AF15165E5D008E6C1F /* FriendsViewController.h */,
+				5BCE63B015165E5D008E6C1F /* FriendsViewController.m */,
+				5BCE63AC15165D83008E6C1F /* MapViewController.h */,
+				5BCE63AD15165D83008E6C1F /* MapViewController.m */,
+				5BCE63A915165A1F008E6C1F /* ChatViewController.h */,
+				5BCE63AA15165A1F008E6C1F /* ChatViewController.m */,
 				5BA1F62915112DA7002CA7F3 /* first.png */,
 				5BA1F62B15112DA7002CA7F3 /* first@2x.png */,
-				5BA1F62D15112DA7002CA7F3 /* SecondViewController.h */,
-				5BA1F62E15112DA7002CA7F3 /* SecondViewController.m */,
+				5BA1F62D15112DA7002CA7F3 /* ListViewController.h */,
+				5BA1F62E15112DA7002CA7F3 /* ListViewController.m */,
 				5BA1F63015112DA7002CA7F3 /* second.png */,
 				5BA1F63215112DA7002CA7F3 /* second@2x.png */,
 				5BA1F61515112DA7002CA7F3 /* Supporting Files */,
@@ -170,7 +187,6 @@
 			files = (
 				5BA1F61915112DA7002CA7F3 /* InfoPlist.strings in Resources */,
 				5BA1F62215112DA7002CA7F3 /* MainStoryboard_iPhone.storyboard in Resources */,
-				5BA1F62515112DA7002CA7F3 /* MainStoryboard_iPad.storyboard in Resources */,
 				5BA1F62A15112DA7002CA7F3 /* first.png in Resources */,
 				5BA1F62C15112DA7002CA7F3 /* first@2x.png in Resources */,
 				5BA1F63115112DA7002CA7F3 /* second.png in Resources */,
@@ -187,8 +203,12 @@
 			files = (
 				5BA1F61B15112DA7002CA7F3 /* main.m in Sources */,
 				5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */,
-				5BA1F62815112DA7002CA7F3 /* FirstViewController.m in Sources */,
-				5BA1F62F15112DA7002CA7F3 /* SecondViewController.m in Sources */,
+				5BA1F62815112DA7002CA7F3 /* HomeViewController.m in Sources */,
+				5BA1F62F15112DA7002CA7F3 /* ListViewController.m in Sources */,
+				5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */,
+				5BCE63AE15165D83008E6C1F /* MapViewController.m in Sources */,
+				5BCE63B115165E5D008E6C1F /* FriendsViewController.m in Sources */,
+				5BCE63B41516610C008E6C1F /* TabBarController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,14 +229,6 @@
 				5BA1F62115112DA7002CA7F3 /* en */,
 			);
 			name = MainStoryboard_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		5BA1F62315112DA7002CA7F3 /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5BA1F62415112DA7002CA7F3 /* en */,
-			);
-			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -275,7 +287,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iStreet/iStreet-Prefix.pch";
 				INFOPLIST_FILE = "iStreet/iStreet-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -286,7 +300,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iStreet/iStreet-Prefix.pch";
 				INFOPLIST_FILE = "iStreet/iStreet-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -310,6 +326,7 @@
 				5BA1F63815112DA7002CA7F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
