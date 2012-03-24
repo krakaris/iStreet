@@ -31,6 +31,7 @@
 
 - (void)viewDidUnload
 {
+    Campus = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -40,4 +41,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (IBAction)pushCampus:(id)sender {
+}
 @end

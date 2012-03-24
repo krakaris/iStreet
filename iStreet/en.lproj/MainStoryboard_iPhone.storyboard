@@ -141,16 +141,49 @@
                                     <navigationItem title="Events" id="u3D-kq-rrq"/>
                                 </items>
                             </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Roh-6i-HHy">
+                                <rect key="frame" x="130" y="64" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="Campus.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushCampus:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="Kax-ff-mpV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Er5-B0-UKh">
+                                <rect key="frame" x="191" y="100" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="Cannon.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Events" image="second" id="rEC-gh-Gpl"/>
+                    <connections>
+                        <outlet property="Campus" destination="Roh-6i-HHy" id="rup-D9-gTl"/>
+                        <outlet property="Cannon" destination="Er5-B0-UKh" id="DxI-EJ-AGP"/>
+                    </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="187" y="782"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Campus.png" width="95" height="115"/>
+        <image name="Cannon.png" width="92" height="98"/>
         <image name="first" width="16" height="16"/>
         <image name="second" width="16" height="16"/>
     </resources>
@@ -169,6 +202,14 @@
         </class>
         <class className="MapViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="pushCampus:"/>
+                <relationship kind="outlet" name="Campus" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Cannon" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Cap" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Charter" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Colonial" candidateClass="UIButton"/>
+            </relationships>
         </class>
         <class className="TabBarController" superclassName="UITabBarController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TabBarController.h"/>
