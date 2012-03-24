@@ -24,6 +24,17 @@
 		5BCE63AE15165D83008E6C1F /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AD15165D83008E6C1F /* MapViewController.m */; };
 		5BCE63B115165E5D008E6C1F /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63B015165E5D008E6C1F /* FriendsViewController.m */; };
 		5BCE63B41516610C008E6C1F /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63B31516610C008E6C1F /* TabBarController.m */; };
+		9DB903CA151BC6A900A13461 /* Campus.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903BF151BC6A900A13461 /* Campus.png */; };
+		9DB903CB151BC6A900A13461 /* Cannon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C0151BC6A900A13461 /* Cannon.png */; };
+		9DB903CC151BC6A900A13461 /* Cap&Gown.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C1151BC6A900A13461 /* Cap&Gown.png */; };
+		9DB903CD151BC6A900A13461 /* Charter.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C2151BC6A900A13461 /* Charter.png */; };
+		9DB903CE151BC6A900A13461 /* Colonial.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C3151BC6A900A13461 /* Colonial.png */; };
+		9DB903CF151BC6A900A13461 /* Cottage.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C4151BC6A900A13461 /* Cottage.png */; };
+		9DB903D0151BC6A900A13461 /* Ivy.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C5151BC6A900A13461 /* Ivy.png */; };
+		9DB903D1151BC6A900A13461 /* Quad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C6151BC6A900A13461 /* Quad.png */; };
+		9DB903D2151BC6A900A13461 /* T.I..png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C7151BC6A900A13461 /* T.I..png */; };
+		9DB903D3151BC6A900A13461 /* Terrace.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C8151BC6A900A13461 /* Terrace.png */; };
+		9DB903D4151BC6A900A13461 /* Tower.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C9151BC6A900A13461 /* Tower.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +65,21 @@
 		5BCE63B015165E5D008E6C1F /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		5BCE63B21516610C008E6C1F /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
 		5BCE63B31516610C008E6C1F /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
+		9DB903BF151BC6A900A13461 /* Campus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Campus.png; sourceTree = "<group>"; };
+		9DB903C0151BC6A900A13461 /* Cannon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cannon.png; sourceTree = "<group>"; };
+		9DB903C1151BC6A900A13461 /* Cap&Gown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cap&Gown.png"; sourceTree = "<group>"; };
+		9DB903C2151BC6A900A13461 /* Charter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Charter.png; sourceTree = "<group>"; };
+		9DB903C3151BC6A900A13461 /* Colonial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Colonial.png; sourceTree = "<group>"; };
+		9DB903C4151BC6A900A13461 /* Cottage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cottage.png; sourceTree = "<group>"; };
+		9DB903C5151BC6A900A13461 /* Ivy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ivy.png; sourceTree = "<group>"; };
+		9DB903C6151BC6A900A13461 /* Quad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quad.png; sourceTree = "<group>"; };
+		9DB903C7151BC6A900A13461 /* T.I..png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = T.I..png; sourceTree = "<group>"; };
+		9DB903C8151BC6A900A13461 /* Terrace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Terrace.png; sourceTree = "<group>"; };
+		9DB903C9151BC6A900A13461 /* Tower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tower.png; sourceTree = "<group>"; };
+		9DB903D7151BC92D00A13461 /* Chat icon.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chat icon.psd"; sourceTree = "<group>"; };
+		9DB903D8151BC92D00A13461 /* Friend icon.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Friend icon.psd"; sourceTree = "<group>"; };
+		9DB903D9151BC92D00A13461 /* List iconpsd.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "List iconpsd.psd"; sourceTree = "<group>"; };
+		9DB903DA151BC92D00A13461 /* Map icon.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Map icon.psd"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,12 +153,43 @@
 		5BA1F61515112DA7002CA7F3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9DB903D6151BC6F500A13461 /* Event Buttons */,
 				5BA1F61615112DA7002CA7F3 /* iStreet-Info.plist */,
+				9DB903DB151BC93700A13461 /* Icon Images */,
 				5BA1F61715112DA7002CA7F3 /* InfoPlist.strings */,
 				5BA1F61A15112DA7002CA7F3 /* main.m */,
 				5BA1F61C15112DA7002CA7F3 /* iStreet-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9DB903D6151BC6F500A13461 /* Event Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				9DB903C0151BC6A900A13461 /* Cannon.png */,
+				9DB903C1151BC6A900A13461 /* Cap&Gown.png */,
+				9DB903C2151BC6A900A13461 /* Charter.png */,
+				9DB903C3151BC6A900A13461 /* Colonial.png */,
+				9DB903C4151BC6A900A13461 /* Cottage.png */,
+				9DB903C5151BC6A900A13461 /* Ivy.png */,
+				9DB903C6151BC6A900A13461 /* Quad.png */,
+				9DB903C7151BC6A900A13461 /* T.I..png */,
+				9DB903C8151BC6A900A13461 /* Terrace.png */,
+				9DB903C9151BC6A900A13461 /* Tower.png */,
+				9DB903BF151BC6A900A13461 /* Campus.png */,
+			);
+			name = "Event Buttons";
+			sourceTree = "<group>";
+		};
+		9DB903DB151BC93700A13461 /* Icon Images */ = {
+			isa = PBXGroup;
+			children = (
+				9DB903D7151BC92D00A13461 /* Chat icon.psd */,
+				9DB903D8151BC92D00A13461 /* Friend icon.psd */,
+				9DB903D9151BC92D00A13461 /* List iconpsd.psd */,
+				9DB903DA151BC92D00A13461 /* Map icon.psd */,
+			);
+			name = "Icon Images";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +248,17 @@
 				5BA1F62C15112DA7002CA7F3 /* first@2x.png in Resources */,
 				5BA1F63115112DA7002CA7F3 /* second.png in Resources */,
 				5BA1F63315112DA7002CA7F3 /* second@2x.png in Resources */,
+				9DB903CA151BC6A900A13461 /* Campus.png in Resources */,
+				9DB903CB151BC6A900A13461 /* Cannon.png in Resources */,
+				9DB903CC151BC6A900A13461 /* Cap&Gown.png in Resources */,
+				9DB903CD151BC6A900A13461 /* Charter.png in Resources */,
+				9DB903CE151BC6A900A13461 /* Colonial.png in Resources */,
+				9DB903CF151BC6A900A13461 /* Cottage.png in Resources */,
+				9DB903D0151BC6A900A13461 /* Ivy.png in Resources */,
+				9DB903D1151BC6A900A13461 /* Quad.png in Resources */,
+				9DB903D2151BC6A900A13461 /* T.I..png in Resources */,
+				9DB903D3151BC6A900A13461 /* Terrace.png in Resources */,
+				9DB903D4151BC6A900A13461 /* Tower.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
