@@ -35,6 +35,14 @@
 		9DB903D2151BC6A900A13461 /* T.I..png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C7151BC6A900A13461 /* T.I..png */; };
 		9DB903D3151BC6A900A13461 /* Terrace.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C8151BC6A900A13461 /* Terrace.png */; };
 		9DB903D4151BC6A900A13461 /* Tower.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C9151BC6A900A13461 /* Tower.png */; };
+		9DC2F352151E3D9B0028F911 /* Princeton Crest 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */; };
+		9DC2F355151E3F3A0028F911 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F354151E3F3A0028F911 /* circle.png */; };
+		9DC2F35C151E52EB0028F911 /* Friend icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F359151E52EB0028F911 /* Friend icon.png */; };
+		9DC2F35D151E52EB0028F911 /* List icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F35A151E52EB0028F911 /* List icon.png */; };
+		9DC2F35F151E57CB0028F911 /* List icon 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F35E151E57CB0028F911 /* List icon 2.png */; };
+		9DC2F365151E5AC60028F911 /* Chat icon 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F364151E5AC60028F911 /* Chat icon 3.png */; };
+		9DC2F369151E5D130028F911 /* Events icon 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F368151E5D130028F911 /* Events icon 4.png */; };
+		9DC2F36B151E5D630028F911 /* Home icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F36A151E5D630028F911 /* Home icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,10 +84,14 @@
 		9DB903C7151BC6A900A13461 /* T.I..png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = T.I..png; sourceTree = "<group>"; };
 		9DB903C8151BC6A900A13461 /* Terrace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Terrace.png; sourceTree = "<group>"; };
 		9DB903C9151BC6A900A13461 /* Tower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tower.png; sourceTree = "<group>"; };
-		9DB903D7151BC92D00A13461 /* Chat icon.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chat icon.psd"; sourceTree = "<group>"; };
-		9DB903D8151BC92D00A13461 /* Friend icon.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Friend icon.psd"; sourceTree = "<group>"; };
-		9DB903D9151BC92D00A13461 /* List iconpsd.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "List iconpsd.psd"; sourceTree = "<group>"; };
-		9DB903DA151BC92D00A13461 /* Map icon.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Map icon.psd"; sourceTree = "<group>"; };
+		9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 2.png"; sourceTree = "<group>"; };
+		9DC2F354151E3F3A0028F911 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
+		9DC2F359151E52EB0028F911 /* Friend icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Friend icon.png"; sourceTree = "<group>"; };
+		9DC2F35A151E52EB0028F911 /* List icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "List icon.png"; sourceTree = "<group>"; };
+		9DC2F35E151E57CB0028F911 /* List icon 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "List icon 2.png"; sourceTree = "<group>"; };
+		9DC2F364151E5AC60028F911 /* Chat icon 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chat icon 3.png"; sourceTree = "<group>"; };
+		9DC2F368151E5D130028F911 /* Events icon 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Events icon 4.png"; sourceTree = "<group>"; };
+		9DC2F36A151E5D630028F911 /* Home icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Home icon.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +165,7 @@
 		5BA1F61515112DA7002CA7F3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */,
 				9DB903D6151BC6F500A13461 /* Event Buttons */,
 				5BA1F61615112DA7002CA7F3 /* iStreet-Info.plist */,
 				9DB903DB151BC93700A13461 /* Icon Images */,
@@ -166,6 +179,7 @@
 		9DB903D6151BC6F500A13461 /* Event Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				9DC2F354151E3F3A0028F911 /* circle.png */,
 				9DB903C0151BC6A900A13461 /* Cannon.png */,
 				9DB903C1151BC6A900A13461 /* Cap&Gown.png */,
 				9DB903C2151BC6A900A13461 /* Charter.png */,
@@ -184,10 +198,12 @@
 		9DB903DB151BC93700A13461 /* Icon Images */ = {
 			isa = PBXGroup;
 			children = (
-				9DB903D7151BC92D00A13461 /* Chat icon.psd */,
-				9DB903D8151BC92D00A13461 /* Friend icon.psd */,
-				9DB903D9151BC92D00A13461 /* List iconpsd.psd */,
-				9DB903DA151BC92D00A13461 /* Map icon.psd */,
+				9DC2F36A151E5D630028F911 /* Home icon.png */,
+				9DC2F368151E5D130028F911 /* Events icon 4.png */,
+				9DC2F364151E5AC60028F911 /* Chat icon 3.png */,
+				9DC2F35E151E57CB0028F911 /* List icon 2.png */,
+				9DC2F359151E52EB0028F911 /* Friend icon.png */,
+				9DC2F35A151E52EB0028F911 /* List icon.png */,
 			);
 			name = "Icon Images";
 			sourceTree = "<group>";
@@ -259,6 +275,14 @@
 				9DB903D2151BC6A900A13461 /* T.I..png in Resources */,
 				9DB903D3151BC6A900A13461 /* Terrace.png in Resources */,
 				9DB903D4151BC6A900A13461 /* Tower.png in Resources */,
+				9DC2F352151E3D9B0028F911 /* Princeton Crest 2.png in Resources */,
+				9DC2F355151E3F3A0028F911 /* circle.png in Resources */,
+				9DC2F35C151E52EB0028F911 /* Friend icon.png in Resources */,
+				9DC2F35D151E52EB0028F911 /* List icon.png in Resources */,
+				9DC2F35F151E57CB0028F911 /* List icon 2.png in Resources */,
+				9DC2F365151E5AC60028F911 /* Chat icon 3.png in Resources */,
+				9DC2F369151E5D130028F911 /* Events icon 4.png in Resources */,
+				9DC2F36B151E5D630028F911 /* Home icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

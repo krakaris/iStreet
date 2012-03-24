@@ -13,18 +13,28 @@
     IBOutlet UIButton *Cap;
     IBOutlet UIButton *Charter;
     IBOutlet UIButton *Colonial;
-    UIButton *Cottage;
-    UIButton *Ivy;
-    UIButton *Quad;
-    UIButton *TI;
-    UIButton *Terrace;
-    UIButton *Tower;
+    IBOutlet UIButton *Cottage;
+    IBOutlet UIButton *Ivy;
+    IBOutlet UIButton *Quad;
+    IBOutlet UIButton *TI;
+    IBOutlet UIButton *Terrace;
+    IBOutlet UIButton *Tower;
     //UIButton *Campus;
     IBOutlet UIButton *Campus;
     
 }
 
 - (IBAction)pushCampus:(id)sender;
+- (IBAction)pushCannon:(id)sender;
+- (IBAction)pushCap:(id)sender;
+- (IBAction)pushCharter:(id)sender;
+- (IBAction)pushColonial:(id)sender;
+- (IBAction)pushCottage:(id)sender;
+- (IBAction)pushIvy:(id)sender;
+- (IBAction)pushQuad:(id)sender;
+- (IBAction)pushTI:(id)sender;
+- (IBAction)pushTerrace:(id)sender;
+- (IBAction)pushTower:(id)sender;
 
 
 @end

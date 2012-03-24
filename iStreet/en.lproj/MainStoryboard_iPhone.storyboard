@@ -25,7 +25,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" id="Xey-9W-KHU"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="Home icon.png" id="Xey-9W-KHU">
+                        <inset key="imageInsets" minX="-11" minY="-6" maxX="-7" maxY="-11"/>
+                    </tabBarItem>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="-361" y="-422"/>
@@ -49,7 +51,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Clubs" image="second" id="6"/>
+                    <tabBarItem key="tabBarItem" title="Clubs" image="List icon.png" id="6">
+                        <inset key="imageInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                    </tabBarItem>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="187" y="-353"/>
@@ -96,7 +100,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Friends" image="first" id="jDn-u2-hgD"/>
+                    <tabBarItem key="tabBarItem" title="Friends" image="Friend icon.png" id="jDn-u2-hgD"/>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="-383" y="865"/>
@@ -120,7 +124,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Chat" image="first" id="ubp-a1-a7m"/>
+                    <tabBarItem key="tabBarItem" title="Chat" image="Chat icon 3.png" id="ubp-a1-a7m">
+                        <inset key="imageInsets" minX="-4" minY="-4" maxX="-4" maxY="-4"/>
+                    </tabBarItem>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="187" y="220"/>
@@ -134,6 +140,15 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="411"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" id="pA2-Yy-ENC">
+                                <rect key="frame" x="0.0" y="44" width="320" height="367"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="0.64000000000000001" colorSpace="calibratedRGB"/>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Princeton Crest 2.png" id="4ay-ZQ-iqj">
+                                <rect key="frame" x="79" y="141" width="159" height="151"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" barStyle="blackOpaque" id="wby-2U-ygh">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -142,7 +157,7 @@
                                 </items>
                             </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Roh-6i-HHy">
-                                <rect key="frame" x="130" y="64" width="60" height="60"/>
+                                <rect key="frame" x="156" y="57" width="60" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="Campus.png">
@@ -157,7 +172,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Er5-B0-UKh">
-                                <rect key="frame" x="191" y="100" width="60" height="60"/>
+                                <rect key="frame" x="210" y="92" width="60" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="Cannon.png">
@@ -167,14 +182,163 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="pushCannon:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="gMq-UI-Kje"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jCS-qh-bZb">
+                                <rect key="frame" x="245" y="157" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Cap" image="Cap&amp;Gown.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushCap:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="45f-Ej-d5x"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Dgw-9z-eKM">
+                                <rect key="frame" x="248" y="229" width="57" height="71"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Charter" image="Charter.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushCharter:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="NzQ-GT-SHz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9mh-UT-uCJ">
+                                <rect key="frame" x="204" y="299" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Colonial" image="Colonial.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushColonial:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="3jm-4B-GEG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kYl-2e-ajG">
+                                <rect key="frame" x="135" y="324" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Cottage" image="Cottage.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushCottage:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="8Fy-Nq-A8i"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yAN-yK-voU">
+                                <rect key="frame" x="61" y="306" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Ivy" image="Ivy.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushIvy:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="OBI-rW-rwd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="R48-p8-1x3">
+                                <rect key="frame" x="9" y="251" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Quad" image="Quad.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushQuad:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="EAS-8H-28M"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KdJ-01-cK6">
+                                <rect key="frame" x="7" y="175" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="TI" image="T.I..png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushTI:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="5S2-81-8La"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uqH-Ej-iUS">
+                                <rect key="frame" x="17" y="105" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Terrace" image="Terrace.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushTerrace:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="cBw-6Q-m6y"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oN7-Fd-I4V">
+                                <rect key="frame" x="83" y="65" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Tower" image="Tower.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushTower:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="jXx-E4-OME"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Events" image="second" id="rEC-gh-Gpl"/>
+                    <tabBarItem key="tabBarItem" title="Events" image="Events icon 4.png" id="rEC-gh-Gpl">
+                        <inset key="imageInsets" minX="-2" minY="-6" maxX="-2" maxY="3"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="Campus" destination="Roh-6i-HHy" id="rup-D9-gTl"/>
                         <outlet property="Cannon" destination="Er5-B0-UKh" id="DxI-EJ-AGP"/>
+                        <outlet property="Cap" destination="jCS-qh-bZb" id="TiK-u1-Vla"/>
+                        <outlet property="Charter" destination="Dgw-9z-eKM" id="gud-GC-BwP"/>
+                        <outlet property="Colonial" destination="9mh-UT-uCJ" id="eG2-e6-xaQ"/>
+                        <outlet property="Cottage" destination="kYl-2e-ajG" id="xot-BV-vom"/>
+                        <outlet property="Ivy" destination="yAN-yK-voU" id="Fwv-bc-y5E"/>
+                        <outlet property="Quad" destination="R48-p8-1x3" id="Gbk-y6-3ht"/>
+                        <outlet property="TI" destination="KdJ-01-cK6" id="9D1-xk-P93"/>
+                        <outlet property="Terrace" destination="uqH-Ej-iUS" id="jXI-Ca-h4E"/>
+                        <outlet property="Tower" destination="oN7-Fd-I4V" id="lOR-Un-fZR"/>
                     </connections>
                 </viewController>
             </objects>
@@ -184,8 +348,21 @@
     <resources>
         <image name="Campus.png" width="95" height="115"/>
         <image name="Cannon.png" width="92" height="98"/>
-        <image name="first" width="16" height="16"/>
-        <image name="second" width="16" height="16"/>
+        <image name="Cap&amp;Gown.png" width="86" height="100"/>
+        <image name="Charter.png" width="71" height="106"/>
+        <image name="Chat icon 3.png" width="30" height="27"/>
+        <image name="Colonial.png" width="98" height="91"/>
+        <image name="Cottage.png" width="96" height="106"/>
+        <image name="Events icon 4.png" width="40" height="37"/>
+        <image name="Friend icon.png" width="30" height="23"/>
+        <image name="Home icon.png" width="28" height="26"/>
+        <image name="Ivy.png" width="101" height="100"/>
+        <image name="List icon.png" width="30" height="29"/>
+        <image name="Princeton Crest 2.png" width="155" height="160"/>
+        <image name="Quad.png" width="95" height="85"/>
+        <image name="T.I..png" width="93" height="100"/>
+        <image name="Terrace.png" width="94" height="95"/>
+        <image name="Tower.png" width="78" height="101"/>
     </resources>
     <classes>
         <class className="ChatViewController" superclassName="UIViewController">
@@ -204,11 +381,27 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
             <relationships>
                 <relationship kind="action" name="pushCampus:"/>
+                <relationship kind="action" name="pushCannon:"/>
+                <relationship kind="action" name="pushCap:"/>
+                <relationship kind="action" name="pushCharter:"/>
+                <relationship kind="action" name="pushColonial:"/>
+                <relationship kind="action" name="pushCottage:"/>
+                <relationship kind="action" name="pushIvy:"/>
+                <relationship kind="action" name="pushQuad:"/>
+                <relationship kind="action" name="pushTI:"/>
+                <relationship kind="action" name="pushTerrace:"/>
+                <relationship kind="action" name="pushTower:"/>
                 <relationship kind="outlet" name="Campus" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="Cannon" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="Cap" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="Charter" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="Colonial" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Cottage" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Ivy" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Quad" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="TI" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Terrace" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Tower" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="TabBarController" superclassName="UITabBarController">
