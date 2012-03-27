@@ -22,7 +22,10 @@
     //UIButton *Campus;
     IBOutlet UIButton *Campus;
     
+    __weak IBOutlet UILabel *dateLabel;
+   // __weak IBOutlet UILabel *datelabel;
 }
+//@property (weak, nonatomic) IBOutlet UILabel *datelabel;
 
 - (IBAction)pushCampus:(id)sender;
 - (IBAction)pushCannon:(id)sender;

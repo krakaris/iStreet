@@ -13,6 +13,7 @@
 @end
 
 @implementation MapViewController
+//@synthesize datelabel = _datelabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,18 +28,30 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MMMM d"];
+    NSString *dateString = [dateFormat stringFromDate:date];
+    //self.datelabel.text = dateString;
+    dateLabel.text = dateString;
+    
 }
 
 - (void)viewDidUnload
 {
     Campus = nil;
+    //_datelabel = nil;
+    //[self setDatelabel:nil];
+    //dateLabel = nil;
+    dateLabel = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
+    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (IBAction)pushCampus:(id)sender {
@@ -73,4 +86,5 @@
 
 - (IBAction)pushTower:(id)sender {
 }
+
 @end
