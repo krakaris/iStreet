@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 // HELLO TEST COMMENT. FUCK YOU MERGE!
+// RAWR
 
 // conflict!
 
