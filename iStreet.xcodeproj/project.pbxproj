@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B892E87152157CC00E8701A /* TEST in Resources */ = {isa = PBXBuildFile; fileRef = 5B892E86152157CC00E8701A /* TEST */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
 		5BA1F61315112DA7002CA7F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */; };
@@ -46,6 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B892E86152157CC00E8701A /* TEST */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TEST; sourceTree = "<group>"; };
 		5BA1F60A15112DA7002CA7F3 /* iStreet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStreet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA1F60E15112DA7002CA7F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BA1F61015112DA7002CA7F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -150,6 +152,7 @@
 				5BCE63AC15165D83008E6C1F /* MapViewController.h */,
 				5BCE63AD15165D83008E6C1F /* MapViewController.m */,
 				5BCE63A915165A1F008E6C1F /* ChatViewController.h */,
+				5B892E86152157CC00E8701A /* TEST */,
 				5BCE63AA15165A1F008E6C1F /* ChatViewController.m */,
 				5BA1F62915112DA7002CA7F3 /* first.png */,
 				5BA1F62B15112DA7002CA7F3 /* first@2x.png */,
@@ -283,6 +286,7 @@
 				9DC2F365151E5AC60028F911 /* Chat icon 3.png in Resources */,
 				9DC2F369151E5D130028F911 /* Events icon 4.png in Resources */,
 				9DC2F36B151E5D630028F911 /* Home icon.png in Resources */,
+				5B892E87152157CC00E8701A /* TEST in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
