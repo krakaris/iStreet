@@ -9,6 +9,8 @@
 
 // conflict!
 
+// test 2
+
 #import <UIKit/UIKit.h>
 
 @interface ChatViewController : UIViewController
