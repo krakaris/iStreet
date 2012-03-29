@@ -15,6 +15,8 @@
 
 @end
 
+//WHATUP
+
 @implementation ChatViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
