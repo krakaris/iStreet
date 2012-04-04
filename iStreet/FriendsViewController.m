@@ -27,10 +27,18 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    //View picker
+    picker = [[AnimatedUIPickerView alloc] init];
+    picker.showsSelectionIndicator = YES;
+    picker.dataSource = self;
+    picker.delegate = self;
+    [picker addToView:self.view];
 }
 
 - (void)viewDidUnload
 {
+    Dates = nil;
+    plusLabel = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -40,4 +48,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (IBAction)expandDates:(id)sender {
+    plusLabel.text = @"x";
+}
 @end
