@@ -26,6 +26,9 @@
 		5BCE63AE15165D83008E6C1F /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AD15165D83008E6C1F /* MapViewController.m */; };
 		5BCE63B115165E5D008E6C1F /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63B015165E5D008E6C1F /* FriendsViewController.m */; };
 		5BCE63B41516610C008E6C1F /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63B31516610C008E6C1F /* TabBarController.m */; };
+		9D34B7711524D55600DB6C13 /* Settings icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D34B76F1524D55600DB6C13 /* Settings icon.png */; };
+		9D34B7741524D5D000DB6C13 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D34B7731524D5D000DB6C13 /* calendar.png */; };
+		9D34B7771524F0BD00DB6C13 /* AnimatedUIPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */; };
 		9DB903CA151BC6A900A13461 /* Campus.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903BF151BC6A900A13461 /* Campus.png */; };
 		9DB903CB151BC6A900A13461 /* Cannon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C0151BC6A900A13461 /* Cannon.png */; };
 		9DB903CC151BC6A900A13461 /* Cap&Gown.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C1151BC6A900A13461 /* Cap&Gown.png */; };
@@ -78,6 +81,10 @@
 		5BCE63B015165E5D008E6C1F /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		5BCE63B21516610C008E6C1F /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
 		5BCE63B31516610C008E6C1F /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
+		9D34B76F1524D55600DB6C13 /* Settings icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings icon.png"; sourceTree = "<group>"; };
+		9D34B7731524D5D000DB6C13 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
+		9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedUIPickerView.h; sourceTree = "<group>"; };
+		9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedUIPickerView.m; sourceTree = "<group>"; };
 		9DB903BF151BC6A900A13461 /* Campus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Campus.png; sourceTree = "<group>"; };
 		9DB903C0151BC6A900A13461 /* Cannon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cannon.png; sourceTree = "<group>"; };
 		9DB903C1151BC6A900A13461 /* Cap&Gown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cap&Gown.png"; sourceTree = "<group>"; };
@@ -147,6 +154,8 @@
 				5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */,
 				5BA1F62015112DA7002CA7F3 /* MainStoryboard_iPhone.storyboard */,
 				5BCE63B21516610C008E6C1F /* TabBarController.h */,
+				9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */,
+				9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */,
 				5BCE63B31516610C008E6C1F /* TabBarController.m */,
 				5BA1F62615112DA7002CA7F3 /* HomeViewController.h */,
 				5BA1F62715112DA7002CA7F3 /* HomeViewController.m */,
@@ -173,6 +182,8 @@
 		5BA1F61515112DA7002CA7F3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9D34B7731524D5D000DB6C13 /* calendar.png */,
+				9D34B76F1524D55600DB6C13 /* Settings icon.png */,
 				9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */,
 				9DB903D6151BC6F500A13461 /* Event Buttons */,
 				5BA1F61615112DA7002CA7F3 /* iStreet-Info.plist */,
