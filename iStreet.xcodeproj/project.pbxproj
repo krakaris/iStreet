@@ -7,17 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		41386586152D1502007A2327 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41386588152D1502007A2327 /* main.m */; };
+		41386589152D1508007A2327 /* ClubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4138658B152D1508007A2327 /* ClubsViewController.m */; };
+		41386594152D15EB007A2327 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41386592152D15EB007A2327 /* LoginViewController.m */; };
+		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
 		5BA1F61315112DA7002CA7F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */; };
 		5BA1F61915112DA7002CA7F3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F61715112DA7002CA7F3 /* InfoPlist.strings */; };
-		5BA1F61B15112DA7002CA7F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F61A15112DA7002CA7F3 /* main.m */; };
 		5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */; };
 		5BA1F62215112DA7002CA7F3 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F62015112DA7002CA7F3 /* MainStoryboard_iPhone.storyboard */; };
 		5BA1F62815112DA7002CA7F3 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F62715112DA7002CA7F3 /* HomeViewController.m */; };
 		5BA1F62A15112DA7002CA7F3 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F62915112DA7002CA7F3 /* first.png */; };
 		5BA1F62C15112DA7002CA7F3 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F62B15112DA7002CA7F3 /* first@2x.png */; };
-		5BA1F62F15112DA7002CA7F3 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F62E15112DA7002CA7F3 /* ListViewController.m */; };
 		5BA1F63115112DA7002CA7F3 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F63015112DA7002CA7F3 /* second.png */; };
 		5BA1F63315112DA7002CA7F3 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F63215112DA7002CA7F3 /* second@2x.png */; };
 		5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AA15165A1F008E6C1F /* ChatViewController.m */; };
@@ -46,13 +48,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		41386587152D1502007A2327 /* en */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = en; path = en.lproj/main.m; sourceTree = "<group>"; };
+		4138658A152D1508007A2327 /* en */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = en; path = en.lproj/ClubsViewController.m; sourceTree = "<group>"; };
+		41386591152D15EB007A2327 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		41386592152D15EB007A2327 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		41386593152D15EB007A2327 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		5BA1F60A15112DA7002CA7F3 /* iStreet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStreet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA1F60E15112DA7002CA7F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BA1F61015112DA7002CA7F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		5BA1F61615112DA7002CA7F3 /* iStreet-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iStreet-Info.plist"; sourceTree = "<group>"; };
 		5BA1F61815112DA7002CA7F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5BA1F61A15112DA7002CA7F3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5BA1F61C15112DA7002CA7F3 /* iStreet-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iStreet-Prefix.pch"; sourceTree = "<group>"; };
 		5BA1F61D15112DA7002CA7F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -61,8 +67,7 @@
 		5BA1F62715112DA7002CA7F3 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		5BA1F62915112DA7002CA7F3 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
 		5BA1F62B15112DA7002CA7F3 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		5BA1F62D15112DA7002CA7F3 /* ListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
-		5BA1F62E15112DA7002CA7F3 /* ListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
+		5BA1F62D15112DA7002CA7F3 /* ClubsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClubsViewController.h; sourceTree = "<group>"; };
 		5BA1F63015112DA7002CA7F3 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		5BA1F63215112DA7002CA7F3 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 		5BCE63A915165A1F008E6C1F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -153,8 +158,11 @@
 				5BCE63AA15165A1F008E6C1F /* ChatViewController.m */,
 				5BA1F62915112DA7002CA7F3 /* first.png */,
 				5BA1F62B15112DA7002CA7F3 /* first@2x.png */,
-				5BA1F62D15112DA7002CA7F3 /* ListViewController.h */,
-				5BA1F62E15112DA7002CA7F3 /* ListViewController.m */,
+				5BA1F62D15112DA7002CA7F3 /* ClubsViewController.h */,
+				4138658B152D1508007A2327 /* ClubsViewController.m */,
+				41386591152D15EB007A2327 /* LoginViewController.h */,
+				41386592152D15EB007A2327 /* LoginViewController.m */,
+				41386593152D15EB007A2327 /* LoginViewController.xib */,
 				5BA1F63015112DA7002CA7F3 /* second.png */,
 				5BA1F63215112DA7002CA7F3 /* second@2x.png */,
 				5BA1F61515112DA7002CA7F3 /* Supporting Files */,
@@ -170,7 +178,7 @@
 				5BA1F61615112DA7002CA7F3 /* iStreet-Info.plist */,
 				9DB903DB151BC93700A13461 /* Icon Images */,
 				5BA1F61715112DA7002CA7F3 /* InfoPlist.strings */,
-				5BA1F61A15112DA7002CA7F3 /* main.m */,
+				41386588152D1502007A2327 /* main.m */,
 				5BA1F61C15112DA7002CA7F3 /* iStreet-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -283,6 +291,7 @@
 				9DC2F365151E5AC60028F911 /* Chat icon 3.png in Resources */,
 				9DC2F369151E5D130028F911 /* Events icon 4.png in Resources */,
 				9DC2F36B151E5D630028F911 /* Home icon.png in Resources */,
+				41386595152D15EB007A2327 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,20 +302,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BA1F61B15112DA7002CA7F3 /* main.m in Sources */,
+				41386586152D1502007A2327 /* main.m in Sources */,
 				5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */,
 				5BA1F62815112DA7002CA7F3 /* HomeViewController.m in Sources */,
-				5BA1F62F15112DA7002CA7F3 /* ListViewController.m in Sources */,
+				41386589152D1508007A2327 /* ClubsViewController.m in Sources */,
 				5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */,
 				5BCE63AE15165D83008E6C1F /* MapViewController.m in Sources */,
 				5BCE63B115165E5D008E6C1F /* FriendsViewController.m in Sources */,
 				5BCE63B41516610C008E6C1F /* TabBarController.m in Sources */,
+				41386594152D15EB007A2327 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		41386588152D1502007A2327 /* main.m */ = {
+			isa = PBXVariantGroup;
+			children = (
+				41386587152D1502007A2327 /* en */,
+			);
+			name = main.m;
+			sourceTree = "<group>";
+		};
+		4138658B152D1508007A2327 /* ClubsViewController.m */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4138658A152D1508007A2327 /* en */,
+			);
+			name = ClubsViewController.m;
+			sourceTree = "<group>";
+		};
 		5BA1F61715112DA7002CA7F3 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
