@@ -13,7 +13,6 @@
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBUIWebView</string>
 			<string>IBUINavigationItem</string>
-			<string>IBUIBarButtonItem</string>
 			<string>IBUIView</string>
 			<string>IBUINavigationBar</string>
 			<string>IBProxyObject</string>
@@ -65,11 +64,6 @@
 							<object class="IBUINavigationItem" id="772187364">
 								<reference key="IBUINavigationBar" ref="20152559"/>
 								<string key="IBUITitle">Login</string>
-								<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="34788104">
-									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-									<reference key="IBUINavigationItem" ref="772187364"/>
-									<int key="IBUISystemItemIdentifier">1</int>
-								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
@@ -107,22 +101,6 @@
 						<reference key="destination" ref="55173277"/>
 					</object>
 					<int key="connectionID">5</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">cancelButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="34788104"/>
-					</object>
-					<int key="connectionID">9</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">cancelThisScreen:</string>
-						<reference key="source" ref="34788104"/>
-						<reference key="destination" ref="975951072"/>
-					</object>
-					<int key="connectionID">10</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -169,15 +147,8 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">7</int>
 						<reference key="object" ref="772187364"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="34788104"/>
-						</array>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="20152559"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">8</int>
-						<reference key="object" ref="34788104"/>
-						<reference key="parent" ref="772187364"/>
 					</object>
 				</array>
 			</object>
@@ -190,7 +161,6 @@
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
