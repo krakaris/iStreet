@@ -10,7 +10,9 @@
 #import "LoginViewController.h"
 
 @interface ClubsViewController : UIViewController <LoginViewControllerDelegate, UIWebViewDelegate>
+
 @property (assign) BOOL loggedIn;
+@property (nonatomic, retain) NSString *netid;
 
 - (void) screenGotCancelled:(id) sender;
 @end

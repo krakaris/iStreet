@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "ClubsViewController.h"
 
 @interface LoginViewController ()
 
@@ -38,10 +39,11 @@
 
 -(void) webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"Finished Loading!! ADFSLKIHASDLKJH");
+    NSLog(@"Finished Loading!!");
+   
     NSString *html = [webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"];
-    NSLog(html);
-    
+    //NSLog(html);
+        
     NSString *stringToMatch = @"successfully logged into";
     
     if ([html rangeOfString:stringToMatch].location == NSNotFound)
@@ -54,6 +56,27 @@
     }
     
     NSLog(webView.request.URL.absoluteString);
+    
+}
+
+- (void) webViewDidStartLoad:(UIWebView *)webView
+{
+    NSString *netid;
+    
+    if ([(ClubsViewController *)self.delegate loggedIn] == NO)
+    {
+        netid = [webView stringByEvaluatingJavaScriptFromString:@"document.getElementById('username').value;"];
+
+        ClubsViewController *cvc = (ClubsViewController *) self.delegate;
+        cvc.netid = netid;
+
+        NSLog(@"Net id is this -- %@", netid);
+     
+        NSLog(@"Bazinga!");
+    }
+    else {
+        NSLog(@"YAMAHA!");
+    }
     
 }
 

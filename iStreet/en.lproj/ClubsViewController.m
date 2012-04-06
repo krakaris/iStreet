@@ -16,6 +16,7 @@
 @implementation ClubsViewController
 
 @synthesize loggedIn;
+@synthesize netid;
 
 - (void)viewDidLoad
 {
@@ -48,8 +49,14 @@
 {
     NSLog(@"WHAZOO!");
     loggedIn = YES;
+    
+   // NSString *netid;
+   // netid = self.loginView.
+    
     [self dismissModalViewControllerAnimated:YES];
-
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logged In!" message:[NSString stringWithFormat:@"Welcome to iStreet, %@!", self.netid] delegate:self cancelButtonTitle:@"Start!" otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)viewDidUnload
