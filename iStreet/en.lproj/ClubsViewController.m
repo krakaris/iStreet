@@ -15,17 +15,22 @@
 
 @implementation ClubsViewController
 
+@synthesize loggedIn;
+
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
+    loggedIn = NO;
 }
 
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
     
+    if (loggedIn != YES)
+    {
     NSString *casURL = @"https://fed.princeton.edu/cas/login";
     
     LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NSURL URLWithString:casURL]];
@@ -35,13 +40,16 @@
     loginView.delegate = self;
 
     [self presentModalViewController:loginView animated:YES];
-
+    }
 }
+
 
 - (void) screenGotCancelled:(id) sender
 {
     NSLog(@"WHAZOO!");
+    loggedIn = YES;
     [self dismissModalViewControllerAnimated:YES];
+
 }
 
 - (void)viewDidUnload

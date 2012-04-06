@@ -7,15 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AnimatedUIPickerView.h"
 
-@interface FriendsViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource> {
-    IBOutlet UIButton *Dates;
-    
-    __weak IBOutlet UILabel *plusLabel;
-    AnimatedUIPickerView *picker;
-}
-- (IBAction)expandDates:(id)sender;
-
+@interface FriendsViewController : UIViewController
 
 @end

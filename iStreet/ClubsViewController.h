@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "LoginViewController.h"
 
-@interface ClubsViewController : UIViewController <LoginViewControllerDelegate>
+@interface ClubsViewController : UIViewController <LoginViewControllerDelegate, UIWebViewDelegate>
+@property (assign) BOOL loggedIn;
+
 - (void) screenGotCancelled:(id) sender;
 @end

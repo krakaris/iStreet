@@ -38,7 +38,21 @@
 
 -(void) webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"Finished Loading!!");
+    NSLog(@"Finished Loading!! ADFSLKIHASDLKJH");
+    NSString *html = [webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"];
+    NSLog(html);
+    
+    NSString *stringToMatch = @"successfully logged into";
+    
+    if ([html rangeOfString:stringToMatch].location == NSNotFound)
+    {
+        NSLog(@"Not found");
+    }
+    else {
+        NSLog(@"Found it!");
+        [self.delegate screenGotCancelled:self];
+    }
+    
     NSLog(webView.request.URL.absoluteString);
     
 }
