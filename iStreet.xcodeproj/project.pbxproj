@@ -7,28 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		41386586152D1502007A2327 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41386588152D1502007A2327 /* main.m */; };
-		41386589152D1508007A2327 /* ClubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4138658B152D1508007A2327 /* ClubsViewController.m */; };
 		41386594152D15EB007A2327 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41386592152D15EB007A2327 /* LoginViewController.m */; };
 		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
+		5B4E089B15337E0B007B0221 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4E089A15337E0B007B0221 /* FriendsViewController.m */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
 		5BA1F61315112DA7002CA7F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */; };
-		5BA1F61915112DA7002CA7F3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F61715112DA7002CA7F3 /* InfoPlist.strings */; };
 		5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */; };
-		5BA1F62215112DA7002CA7F3 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F62015112DA7002CA7F3 /* MainStoryboard_iPhone.storyboard */; };
-		5BA1F62815112DA7002CA7F3 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F62715112DA7002CA7F3 /* HomeViewController.m */; };
-		5BA1F62A15112DA7002CA7F3 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F62915112DA7002CA7F3 /* first.png */; };
-		5BA1F62C15112DA7002CA7F3 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F62B15112DA7002CA7F3 /* first@2x.png */; };
-		5BA1F63115112DA7002CA7F3 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F63015112DA7002CA7F3 /* second.png */; };
-		5BA1F63315112DA7002CA7F3 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA1F63215112DA7002CA7F3 /* second@2x.png */; };
 		5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AA15165A1F008E6C1F /* ChatViewController.m */; };
-		5BCE63AE15165D83008E6C1F /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AD15165D83008E6C1F /* MapViewController.m */; };
-		5BCE63B115165E5D008E6C1F /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63B015165E5D008E6C1F /* FriendsViewController.m */; };
-		5BCE63B41516610C008E6C1F /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63B31516610C008E6C1F /* TabBarController.m */; };
-		9D34B7711524D55600DB6C13 /* Settings icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D34B76F1524D55600DB6C13 /* Settings icon.png */; };
-		9D34B7741524D5D000DB6C13 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D34B7731524D5D000DB6C13 /* calendar.png */; };
-		9D34B7771524F0BD00DB6C13 /* AnimatedUIPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */; };
+		5BCE63AE15165D83008E6C1F /* ClubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AD15165D83008E6C1F /* ClubsViewController.m */; };
+		5BFB44FA153382E800960C81 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F6153382E800960C81 /* EventsViewController.m */; };
+		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
+		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
+		5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */; };
 		9DB903CA151BC6A900A13461 /* Campus.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903BF151BC6A900A13461 /* Campus.png */; };
 		9DB903CB151BC6A900A13461 /* Cannon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C0151BC6A900A13461 /* Cannon.png */; };
 		9DB903CC151BC6A900A13461 /* Cap&Gown.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C1151BC6A900A13461 /* Cap&Gown.png */; };
@@ -41,7 +32,6 @@
 		9DB903D3151BC6A900A13461 /* Terrace.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C8151BC6A900A13461 /* Terrace.png */; };
 		9DB903D4151BC6A900A13461 /* Tower.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C9151BC6A900A13461 /* Tower.png */; };
 		9DC2F352151E3D9B0028F911 /* Princeton Crest 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */; };
-		9DC2F355151E3F3A0028F911 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F354151E3F3A0028F911 /* circle.png */; };
 		9DC2F35C151E52EB0028F911 /* Friend icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F359151E52EB0028F911 /* Friend icon.png */; };
 		9DC2F35D151E52EB0028F911 /* List icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F35A151E52EB0028F911 /* List icon.png */; };
 		9DC2F35F151E57CB0028F911 /* List icon 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F35E151E57CB0028F911 /* List icon 2.png */; };
@@ -51,36 +41,28 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		41386587152D1502007A2327 /* en */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = en; path = en.lproj/main.m; sourceTree = "<group>"; };
-		4138658A152D1508007A2327 /* en */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = en; path = en.lproj/ClubsViewController.m; sourceTree = "<group>"; };
 		41386591152D15EB007A2327 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		41386592152D15EB007A2327 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		41386593152D15EB007A2327 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		5B4E089915337E0B007B0221 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
+		5B4E089A15337E0B007B0221 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		5BA1F60A15112DA7002CA7F3 /* iStreet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStreet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA1F60E15112DA7002CA7F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BA1F61015112DA7002CA7F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		5BA1F61615112DA7002CA7F3 /* iStreet-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iStreet-Info.plist"; sourceTree = "<group>"; };
-		5BA1F61815112DA7002CA7F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5BA1F61C15112DA7002CA7F3 /* iStreet-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iStreet-Prefix.pch"; sourceTree = "<group>"; };
 		5BA1F61D15112DA7002CA7F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5BA1F62115112DA7002CA7F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		5BA1F62615112DA7002CA7F3 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		5BA1F62715112DA7002CA7F3 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		5BA1F62915112DA7002CA7F3 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
-		5BA1F62B15112DA7002CA7F3 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		5BA1F62D15112DA7002CA7F3 /* ClubsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClubsViewController.h; sourceTree = "<group>"; };
-		5BA1F63015112DA7002CA7F3 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
-		5BA1F63215112DA7002CA7F3 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		5BA1F62D15112DA7002CA7F3 /* EventsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
 		5BCE63A915165A1F008E6C1F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		5BCE63AA15165A1F008E6C1F /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
-		5BCE63AC15165D83008E6C1F /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
-		5BCE63AD15165D83008E6C1F /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
-		5BCE63AF15165E5D008E6C1F /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
-		5BCE63B015165E5D008E6C1F /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
-		5BCE63B21516610C008E6C1F /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
-		5BCE63B31516610C008E6C1F /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
+		5BCE63AC15165D83008E6C1F /* ClubsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubsViewController.h; sourceTree = "<group>"; };
+		5BCE63AD15165D83008E6C1F /* ClubsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClubsViewController.m; sourceTree = "<group>"; };
+		5BFB44F6153382E800960C81 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
+		5BFB44F8153382E800960C81 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5BFB450D153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5BFB450F153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		9D34B76F1524D55600DB6C13 /* Settings icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings icon.png"; sourceTree = "<group>"; };
 		9D34B7731524D5D000DB6C13 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
 		9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedUIPickerView.h; sourceTree = "<group>"; };
@@ -97,7 +79,6 @@
 		9DB903C8151BC6A900A13461 /* Terrace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Terrace.png; sourceTree = "<group>"; };
 		9DB903C9151BC6A900A13461 /* Tower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tower.png; sourceTree = "<group>"; };
 		9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 2.png"; sourceTree = "<group>"; };
-		9DC2F354151E3F3A0028F911 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		9DC2F359151E52EB0028F911 /* Friend icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Friend icon.png"; sourceTree = "<group>"; };
 		9DC2F35A151E52EB0028F911 /* List icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "List icon.png"; sourceTree = "<group>"; };
 		9DC2F35E151E57CB0028F911 /* List icon 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "List icon 2.png"; sourceTree = "<group>"; };
@@ -152,28 +133,13 @@
 			children = (
 				5BA1F61D15112DA7002CA7F3 /* AppDelegate.h */,
 				5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */,
-				5BA1F62015112DA7002CA7F3 /* MainStoryboard_iPhone.storyboard */,
-				5BCE63B21516610C008E6C1F /* TabBarController.h */,
+				5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */,
 				9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */,
 				9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */,
-				5BCE63B31516610C008E6C1F /* TabBarController.m */,
-				5BA1F62615112DA7002CA7F3 /* HomeViewController.h */,
-				5BA1F62715112DA7002CA7F3 /* HomeViewController.m */,
-				5BCE63AF15165E5D008E6C1F /* FriendsViewController.h */,
-				5BCE63B015165E5D008E6C1F /* FriendsViewController.m */,
-				5BCE63AC15165D83008E6C1F /* MapViewController.h */,
-				5BCE63AD15165D83008E6C1F /* MapViewController.m */,
-				5BCE63A915165A1F008E6C1F /* ChatViewController.h */,
-				5BCE63AA15165A1F008E6C1F /* ChatViewController.m */,
-				5BA1F62915112DA7002CA7F3 /* first.png */,
-				5BA1F62B15112DA7002CA7F3 /* first@2x.png */,
-				5BA1F62D15112DA7002CA7F3 /* ClubsViewController.h */,
-				4138658B152D1508007A2327 /* ClubsViewController.m */,
-				41386591152D15EB007A2327 /* LoginViewController.h */,
-				41386592152D15EB007A2327 /* LoginViewController.m */,
-				41386593152D15EB007A2327 /* LoginViewController.xib */,
-				5BA1F63015112DA7002CA7F3 /* second.png */,
-				5BA1F63215112DA7002CA7F3 /* second@2x.png */,
+				5BFB44FF1533842D00960C81 /* Friends */,
+				5BFB45001533843300960C81 /* Clubs */,
+				5BFB45011533843900960C81 /* Chat */,
+				5BFB45021533845000960C81 /* Events */,
 				5BA1F61515112DA7002CA7F3 /* Supporting Files */,
 			);
 			path = iStreet;
@@ -184,21 +150,67 @@
 			children = (
 				9D34B7731524D5D000DB6C13 /* calendar.png */,
 				9D34B76F1524D55600DB6C13 /* Settings icon.png */,
-				9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */,
-				9DB903D6151BC6F500A13461 /* Event Buttons */,
 				5BA1F61615112DA7002CA7F3 /* iStreet-Info.plist */,
 				9DB903DB151BC93700A13461 /* Icon Images */,
-				5BA1F61715112DA7002CA7F3 /* InfoPlist.strings */,
-				41386588152D1502007A2327 /* main.m */,
+				5BFB44F8153382E800960C81 /* main.m */,
+				5BFB450C153386F500960C81 /* InfoPlist.strings */,
 				5BA1F61C15112DA7002CA7F3 /* iStreet-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9DB903D6151BC6F500A13461 /* Event Buttons */ = {
+		5BFB44FF1533842D00960C81 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
-				9DC2F354151E3F3A0028F911 /* circle.png */,
+				5B4E089915337E0B007B0221 /* FriendsViewController.h */,
+				5B4E089A15337E0B007B0221 /* FriendsViewController.m */,
+			);
+			name = Friends;
+			sourceTree = "<group>";
+		};
+		5BFB45001533843300960C81 /* Clubs */ = {
+			isa = PBXGroup;
+			children = (
+				9DB903D6151BC6F500A13461 /* Club Images */,
+				5BCE63AC15165D83008E6C1F /* ClubsViewController.h */,
+				5BCE63AD15165D83008E6C1F /* ClubsViewController.m */,
+				5BFB45031533846600960C81 /* CAS Login */,
+			);
+			name = Clubs;
+			sourceTree = "<group>";
+		};
+		5BFB45011533843900960C81 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				5BCE63A915165A1F008E6C1F /* ChatViewController.h */,
+				5BCE63AA15165A1F008E6C1F /* ChatViewController.m */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
+		5BFB45021533845000960C81 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				5BA1F62D15112DA7002CA7F3 /* EventsViewController.h */,
+				5BFB44F6153382E800960C81 /* EventsViewController.m */,
+			);
+			name = Events;
+			sourceTree = "<group>";
+		};
+		5BFB45031533846600960C81 /* CAS Login */ = {
+			isa = PBXGroup;
+			children = (
+				41386591152D15EB007A2327 /* LoginViewController.h */,
+				41386592152D15EB007A2327 /* LoginViewController.m */,
+				41386593152D15EB007A2327 /* LoginViewController.xib */,
+			);
+			name = "CAS Login";
+			sourceTree = "<group>";
+		};
+		9DB903D6151BC6F500A13461 /* Club Images */ = {
+			isa = PBXGroup;
+			children = (
+				9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */,
 				9DB903C0151BC6A900A13461 /* Cannon.png */,
 				9DB903C1151BC6A900A13461 /* Cap&Gown.png */,
 				9DB903C2151BC6A900A13461 /* Charter.png */,
@@ -211,7 +223,7 @@
 				9DB903C9151BC6A900A13461 /* Tower.png */,
 				9DB903BF151BC6A900A13461 /* Campus.png */,
 			);
-			name = "Event Buttons";
+			name = "Club Images";
 			sourceTree = "<group>";
 		};
 		9DB903DB151BC93700A13461 /* Icon Images */ = {
@@ -277,12 +289,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BA1F61915112DA7002CA7F3 /* InfoPlist.strings in Resources */,
-				5BA1F62215112DA7002CA7F3 /* MainStoryboard_iPhone.storyboard in Resources */,
-				5BA1F62A15112DA7002CA7F3 /* first.png in Resources */,
-				5BA1F62C15112DA7002CA7F3 /* first@2x.png in Resources */,
-				5BA1F63115112DA7002CA7F3 /* second.png in Resources */,
-				5BA1F63315112DA7002CA7F3 /* second@2x.png in Resources */,
 				9DB903CA151BC6A900A13461 /* Campus.png in Resources */,
 				9DB903CB151BC6A900A13461 /* Cannon.png in Resources */,
 				9DB903CC151BC6A900A13461 /* Cap&Gown.png in Resources */,
@@ -295,7 +301,6 @@
 				9DB903D3151BC6A900A13461 /* Terrace.png in Resources */,
 				9DB903D4151BC6A900A13461 /* Tower.png in Resources */,
 				9DC2F352151E3D9B0028F911 /* Princeton Crest 2.png in Resources */,
-				9DC2F355151E3F3A0028F911 /* circle.png in Resources */,
 				9DC2F35C151E52EB0028F911 /* Friend icon.png in Resources */,
 				9DC2F35D151E52EB0028F911 /* List icon.png in Resources */,
 				9DC2F35F151E57CB0028F911 /* List icon 2.png in Resources */,
@@ -303,6 +308,8 @@
 				9DC2F369151E5D130028F911 /* Events icon 4.png in Resources */,
 				9DC2F36B151E5D630028F911 /* Home icon.png in Resources */,
 				41386595152D15EB007A2327 /* LoginViewController.xib in Resources */,
+				5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */,
+				5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,49 +320,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41386586152D1502007A2327 /* main.m in Sources */,
 				5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */,
-				5BA1F62815112DA7002CA7F3 /* HomeViewController.m in Sources */,
-				41386589152D1508007A2327 /* ClubsViewController.m in Sources */,
 				5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */,
-				5BCE63AE15165D83008E6C1F /* MapViewController.m in Sources */,
-				5BCE63B115165E5D008E6C1F /* FriendsViewController.m in Sources */,
-				5BCE63B41516610C008E6C1F /* TabBarController.m in Sources */,
+				5BCE63AE15165D83008E6C1F /* ClubsViewController.m in Sources */,
 				41386594152D15EB007A2327 /* LoginViewController.m in Sources */,
+				5B4E089B15337E0B007B0221 /* FriendsViewController.m in Sources */,
+				5BFB44FA153382E800960C81 /* EventsViewController.m in Sources */,
+				5BFB44FC153382E800960C81 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		41386588152D1502007A2327 /* main.m */ = {
+		5BFB450C153386F500960C81 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				41386587152D1502007A2327 /* en */,
-			);
-			name = main.m;
-			sourceTree = "<group>";
-		};
-		4138658B152D1508007A2327 /* ClubsViewController.m */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4138658A152D1508007A2327 /* en */,
-			);
-			name = ClubsViewController.m;
-			sourceTree = "<group>";
-		};
-		5BA1F61715112DA7002CA7F3 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5BA1F61815112DA7002CA7F3 /* en */,
+				5BFB450D153386F500960C81 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		5BA1F62015112DA7002CA7F3 /* MainStoryboard_iPhone.storyboard */ = {
+		5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5BA1F62115112DA7002CA7F3 /* en */,
+				5BFB450F153386F500960C81 /* en */,
 			);
 			name = MainStoryboard_iPhone.storyboard;
 			sourceTree = "<group>";

@@ -7,7 +7,7 @@
 //
 
 #import "LoginViewController.h"
-#import "ClubsViewController.h"
+#import "EventsViewController.h"
 
 @interface LoginViewController ()
 
@@ -55,7 +55,7 @@
         [self.delegate screenGotCancelled:self];
     }
     
-    NSLog(webView.request.URL.absoluteString);
+    NSLog(@"%@", webView.request.URL.absoluteString);
     
 }
 
@@ -63,11 +63,11 @@
 {
     NSString *netid;
     
-    if ([(ClubsViewController *)self.delegate loggedIn] == NO)
+    if ([(EventsViewController *)self.delegate loggedIn] == NO)
     {
         netid = [webView stringByEvaluatingJavaScriptFromString:@"document.getElementById('username').value;"];
 
-        ClubsViewController *cvc = (ClubsViewController *) self.delegate;
+        EventsViewController *cvc = (EventsViewController *) self.delegate;
         cvc.netid = netid;
 
         NSLog(@"Net id is this -- %@", netid);
