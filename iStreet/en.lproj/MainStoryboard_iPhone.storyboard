@@ -57,7 +57,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="jGS-xY-v8H">
                                 <rect key="frame" x="0.0" y="76" width="320" height="335"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </tableView>
                             <navigationBar contentMode="scaleToFill" barStyle="blackOpaque" id="gnq-bx-GQh">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -69,9 +69,14 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="phQ-or-8vM">
                                 <rect key="frame" x="2" y="44" width="240" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="gray" id="c3H-Wf-kH1">
+                                <rect key="frame" x="122" y="49" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5A6-GT-74G">
                                 <rect key="frame" x="245" y="44" width="72" height="31.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -83,6 +88,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="sendClicked:" destination="vtS-QH-gNE" eventType="touchUpInside" id="Ll9-N2-O7B"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -90,6 +98,7 @@
                     <tabBarItem key="tabBarItem" title="Chat" image="Chat icon 3.png" id="whZ-0b-bqg"/>
                     <navigationItem key="navigationItem" id="Kvf-tQ-sef"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="c3H-Wf-kH1" id="SQk-No-KMa"/>
                         <outlet property="messageText" destination="phQ-or-8vM" id="zKp-DA-BRk"/>
                         <outlet property="messagesList" destination="jGS-xY-v8H" id="d8q-ra-qlw"/>
                         <outlet property="sendButton" destination="5A6-GT-74G" id="EFg-8n-M4A"/>
@@ -360,6 +369,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
             <relationships>
                 <relationship kind="action" name="sendClicked:"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="messageText" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="messagesList" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>

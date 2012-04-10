@@ -10,8 +10,11 @@
 
 @interface Message : NSObject
 
+@property(nonatomic, assign) int ID;
 @property(nonatomic, retain) NSString *user;
 @property(nonatomic, retain) NSString *message;
 @property(nonatomic, retain) NSString *timestamp;
+
+- (id)initWithDictionary:(NSDictionary *)dict;
 
 @end
