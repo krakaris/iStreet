@@ -134,7 +134,9 @@
     //IS it UTF8 or LATIN-1 encoding???
     NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     // Create a dictionary from the JSON string
-    NSDictionary *results = [jsonString JSONValue];
+    
+    //NSDictionary *results = [jsonString JSONValue];
+    NSDictionary *results;
     
     // Build an array of events from the dictionary for easy access to each entry
     //NSArray *events = [[results objectForKey:@""];
@@ -150,7 +152,7 @@
         [NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", picture];
         } else {
             //Use default crest if no image provided
-            NSString *imageURLString = [@"http://pam.tigerapps.org/media/%@", clubName];
+            NSString *imageURLString = [NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", clubName];
         }
          
         [eventDates addObject:[results objectForKey:@"DATE(time_start)"]];
