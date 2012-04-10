@@ -1,0 +1,10 @@
+What everyone is working on:
+
+Rishi - chat
+Alexa - clubs
+Aki - CAS / FB / friends - PLEASE MAKE NETID A GLOBAL VARIABLE IN THE APPDELEGATE
+
+Conventions (uniformity!)
+next line curly braces
+Use /* ... */ for comments
+Use #pragma mark <section_title> to organize related methods

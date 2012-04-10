@@ -8,29 +8,28 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChatViewController : UITableViewController <UITableViewDataSource,UITableViewDelegate>
+@interface ChatViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 {
-    IBOutlet UITextField *messageText;
-    IBOutlet UIButton *sendButton;
-    IBOutlet UITableView *messageList;
+    UITextField *messageText;
+    UIButton *sendButton;
+    UITableView *messagesList;
     
     NSMutableData *receivedData;
     NSMutableArray *messages;
-    int lastId;
-    //hi
+    int lastMessageID;
     NSTimer *timer;
     
     NSString *msgAdded;
     NSMutableString *msgUser;
     NSMutableString *msgText;
     int msgId;
-    Boolean inText;
-    Boolean inUser;
+    bool inText;
+    bool inUser;
 }
 
-@property (nonatomic,retain) UITextField *messageText;
-@property (nonatomic,retain) UIButton *sendButton;
-@property (nonatomic,retain) UITableView *messageList;
+@property (nonatomic,retain) IBOutlet UITextField *messageText;
+@property (nonatomic,retain) IBOutlet UIButton *sendButton;
+@property (nonatomic,retain) IBOutlet UITableView *messagesList;
 
 - (IBAction)sendClicked:(id)sender;
 
