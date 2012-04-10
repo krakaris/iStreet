@@ -30,17 +30,18 @@
 {
     [super viewDidAppear:YES];
     
+    //loggedIn = YES;
     if (loggedIn != YES)
     {
-    NSString *casURL = @"https://fed.princeton.edu/cas/login";
-    
-    LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NSURL URLWithString:casURL]];
-    
-    //LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NS
-    loginView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;   
-    loginView.delegate = self;
-
-    [self presentModalViewController:loginView animated:YES];
+        NSString *casURL = @"https://fed.princeton.edu/cas/login";
+        
+        LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NSURL URLWithString:casURL]];
+        
+        //LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NS
+        loginView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;   
+        loginView.delegate = self;
+        
+        [self presentModalViewController:loginView animated:YES];
     }
 }
 
