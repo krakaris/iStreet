@@ -21,6 +21,7 @@
     if (self) {
         // Custom initialization
     }
+       
     return self;
 }
 
@@ -61,6 +62,7 @@
 }
 
 - (IBAction)pushCap:(id)sender {
+    
 }
 
 - (IBAction)pushCharter:(id)sender {
