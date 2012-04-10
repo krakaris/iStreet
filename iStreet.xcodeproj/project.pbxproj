@@ -23,13 +23,13 @@
 		9D4ED4A315338DA700680D1D /* ClubEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */; };
 		9DB903CA151BC6A900A13461 /* Campus.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903BF151BC6A900A13461 /* Campus.png */; };
 		9DB903CB151BC6A900A13461 /* Cannon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C0151BC6A900A13461 /* Cannon.png */; };
-		9DB903CC151BC6A900A13461 /* Cap&Gown.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C1151BC6A900A13461 /* Cap&Gown.png */; };
+		9DB903CC151BC6A900A13461 /* Cap and Gown.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C1151BC6A900A13461 /* Cap and Gown.png */; };
 		9DB903CD151BC6A900A13461 /* Charter.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C2151BC6A900A13461 /* Charter.png */; };
 		9DB903CE151BC6A900A13461 /* Colonial.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C3151BC6A900A13461 /* Colonial.png */; };
 		9DB903CF151BC6A900A13461 /* Cottage.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C4151BC6A900A13461 /* Cottage.png */; };
 		9DB903D0151BC6A900A13461 /* Ivy.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C5151BC6A900A13461 /* Ivy.png */; };
-		9DB903D1151BC6A900A13461 /* Quad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C6151BC6A900A13461 /* Quad.png */; };
-		9DB903D2151BC6A900A13461 /* T.I..png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C7151BC6A900A13461 /* T.I..png */; };
+		9DB903D1151BC6A900A13461 /* Quadrangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C6151BC6A900A13461 /* Quadrangle.png */; };
+		9DB903D2151BC6A900A13461 /* Tiger Inn.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C7151BC6A900A13461 /* Tiger Inn.png */; };
 		9DB903D3151BC6A900A13461 /* Terrace.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C8151BC6A900A13461 /* Terrace.png */; };
 		9DB903D4151BC6A900A13461 /* Tower.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C9151BC6A900A13461 /* Tower.png */; };
 		9DC2F352151E3D9B0028F911 /* Princeton Crest 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */; };
@@ -72,13 +72,13 @@
 		9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClubEventsViewController.m; sourceTree = "<group>"; };
 		9DB903BF151BC6A900A13461 /* Campus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Campus.png; sourceTree = "<group>"; };
 		9DB903C0151BC6A900A13461 /* Cannon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cannon.png; sourceTree = "<group>"; };
-		9DB903C1151BC6A900A13461 /* Cap&Gown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cap&Gown.png"; sourceTree = "<group>"; };
+		9DB903C1151BC6A900A13461 /* Cap and Gown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cap and Gown.png"; sourceTree = "<group>"; };
 		9DB903C2151BC6A900A13461 /* Charter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Charter.png; sourceTree = "<group>"; };
 		9DB903C3151BC6A900A13461 /* Colonial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Colonial.png; sourceTree = "<group>"; };
 		9DB903C4151BC6A900A13461 /* Cottage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cottage.png; sourceTree = "<group>"; };
 		9DB903C5151BC6A900A13461 /* Ivy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ivy.png; sourceTree = "<group>"; };
-		9DB903C6151BC6A900A13461 /* Quad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quad.png; sourceTree = "<group>"; };
-		9DB903C7151BC6A900A13461 /* T.I..png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = T.I..png; sourceTree = "<group>"; };
+		9DB903C6151BC6A900A13461 /* Quadrangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quadrangle.png; sourceTree = "<group>"; };
+		9DB903C7151BC6A900A13461 /* Tiger Inn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tiger Inn.png"; sourceTree = "<group>"; };
 		9DB903C8151BC6A900A13461 /* Terrace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Terrace.png; sourceTree = "<group>"; };
 		9DB903C9151BC6A900A13461 /* Tower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tower.png; sourceTree = "<group>"; };
 		9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 2.png"; sourceTree = "<group>"; };
@@ -217,13 +217,13 @@
 			children = (
 				9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */,
 				9DB903C0151BC6A900A13461 /* Cannon.png */,
-				9DB903C1151BC6A900A13461 /* Cap&Gown.png */,
+				9DB903C1151BC6A900A13461 /* Cap and Gown.png */,
 				9DB903C2151BC6A900A13461 /* Charter.png */,
 				9DB903C3151BC6A900A13461 /* Colonial.png */,
 				9DB903C4151BC6A900A13461 /* Cottage.png */,
 				9DB903C5151BC6A900A13461 /* Ivy.png */,
-				9DB903C6151BC6A900A13461 /* Quad.png */,
-				9DB903C7151BC6A900A13461 /* T.I..png */,
+				9DB903C6151BC6A900A13461 /* Quadrangle.png */,
+				9DB903C7151BC6A900A13461 /* Tiger Inn.png */,
 				9DB903C8151BC6A900A13461 /* Terrace.png */,
 				9DB903C9151BC6A900A13461 /* Tower.png */,
 				9DB903BF151BC6A900A13461 /* Campus.png */,
@@ -296,13 +296,13 @@
 			files = (
 				9DB903CA151BC6A900A13461 /* Campus.png in Resources */,
 				9DB903CB151BC6A900A13461 /* Cannon.png in Resources */,
-				9DB903CC151BC6A900A13461 /* Cap&Gown.png in Resources */,
+				9DB903CC151BC6A900A13461 /* Cap and Gown.png in Resources */,
 				9DB903CD151BC6A900A13461 /* Charter.png in Resources */,
 				9DB903CE151BC6A900A13461 /* Colonial.png in Resources */,
 				9DB903CF151BC6A900A13461 /* Cottage.png in Resources */,
 				9DB903D0151BC6A900A13461 /* Ivy.png in Resources */,
-				9DB903D1151BC6A900A13461 /* Quad.png in Resources */,
-				9DB903D2151BC6A900A13461 /* T.I..png in Resources */,
+				9DB903D1151BC6A900A13461 /* Quadrangle.png in Resources */,
+				9DB903D2151BC6A900A13461 /* Tiger Inn.png in Resources */,
 				9DB903D3151BC6A900A13461 /* Terrace.png in Resources */,
 				9DB903D4151BC6A900A13461 /* Tower.png in Resources */,
 				9DC2F352151E3D9B0028F911 /* Princeton Crest 2.png in Resources */,

@@ -27,7 +27,14 @@
 
     //Get event data from server
     //Hardcoded for Cap no - fix later!!!
-    [self getListOfEvents: @"Cap and Gown"]
+    clubName = @"Tower";
+    [self getListOfEvents: clubName];
+    
+    //Make sure names are consistent!
+    NSString* imagePath = [[NSBundle mainBundle] pathForResource:clubName ofType:@"png"];
+    
+    clubCrest = [[UIImage alloc] initWithContentsOfFile:imagePath];
+    
     return self;
 }
 
@@ -130,17 +137,22 @@
     NSDictionary *results = [jsonString JSONValue];
     
     // Build an array of events from the dictionary for easy access to each entry
-    //NSArray *events = [[results objectForKey:@"photos"] objectForKey:@"photo"];
+    //NSArray *events = [[results objectForKey:@""];
     for (NSString *key in results) {
         [eventTitles addObject:[results objectForKey:@"title"]];
         NSString *picture = [results objectForKey:@"poster"];
         // If there is a field for "poster", use it
-        if (picture.length > 0) {
-            [eventImages addObject:picture];
+        [eventImages addObject:(picture.length > 0 ? picture : @"")];
+        
+        //Create url for event images:
+        if (![picture isEqualToString:@""]) {
+            NSString *imageURLString = 
+        [NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", picture];
         } else {
-            //FIx this!!!
-            //[eventImages addObject:Cap&Gown.png];
+            //Use default crest if no image provided
+            NSString *imageURLString = [@"http://pam.tigerapps.org/media/%@", clubName];
         }
+         
         [eventDates addObject:[results objectForKey:@"DATE(time_start)"]];
     }
 }

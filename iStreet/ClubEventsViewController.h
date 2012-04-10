@@ -14,6 +14,9 @@
     NSMutableArray *eventTitles;
     NSMutableArray *eventImages;
     NSMutableArray *eventDates;
+    
+    NSString *clubName;
+    UIImage *clubCrest;
 
 }
 
