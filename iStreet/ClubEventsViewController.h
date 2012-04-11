@@ -7,17 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Club.h"
 
 @interface ClubEventsViewController : UITableViewController
 {
     //Information we want to get from server
-    NSMutableArray *eventTitles;
+    NSMutableArray *events;
     NSMutableArray *eventImages;
+    
+    //Not sure if I need these two...
+    NSMutableArray *eventTitles;
     NSMutableArray *eventDates;
     
-    NSString *clubName;
-    UIImage *clubCrest;
+    NSMutableData *receivedData;
+    
+//    NSString *clubName;
+//    UIImage *clubCrest;
 
 }
+
+@property(nonatomic) Club *club;
 
 @end

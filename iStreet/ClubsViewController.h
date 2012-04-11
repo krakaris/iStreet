@@ -26,7 +26,7 @@
     
 }
 //@property (weak, nonatomic) IBOutlet UILabel *datelabel;
-
+/*
 - (IBAction)pushCampus:(id)sender;
 - (IBAction)pushCannon:(id)sender;
 - (IBAction)pushCap:(id)sender;
@@ -39,5 +39,5 @@
 - (IBAction)pushTerrace:(id)sender;
 - (IBAction)pushTower:(id)sender;
 
-
+*/
 @end

@@ -11,7 +11,6 @@
 		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
 		5B4E089B15337E0B007B0221 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4E089A15337E0B007B0221 /* FriendsViewController.m */; };
 		5B63654615338AB700845082 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 5B63654515338AB700845082 /* README */; };
-		5B63654A1533AC6100845082 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6365491533AC6100845082 /* Message.m */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
 		5BA1F61315112DA7002CA7F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */; };
@@ -22,7 +21,9 @@
 		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
 		5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */; };
+		9D43D8431535DADB000B4CFB /* Club.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D43D8421535DADB000B4CFB /* Club.m */; };
 		9D4ED4A315338DA700680D1D /* ClubEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */; };
+		9D8C8D331534FF99001549B1 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D8C8D321534FF99001549B1 /* Event.m */; };
 		9DB903CA151BC6A900A13461 /* Campus.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903BF151BC6A900A13461 /* Campus.png */; };
 		9DB903CB151BC6A900A13461 /* Cannon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C0151BC6A900A13461 /* Cannon.png */; };
 		9DB903CC151BC6A900A13461 /* Cap and Gown.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C1151BC6A900A13461 /* Cap and Gown.png */; };
@@ -73,8 +74,12 @@
 		9D34B7731524D5D000DB6C13 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
 		9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedUIPickerView.h; sourceTree = "<group>"; };
 		9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedUIPickerView.m; sourceTree = "<group>"; };
+		9D43D8411535DADB000B4CFB /* Club.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Club.h; sourceTree = "<group>"; };
+		9D43D8421535DADB000B4CFB /* Club.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Club.m; sourceTree = "<group>"; };
 		9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubEventsViewController.h; sourceTree = "<group>"; };
 		9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClubEventsViewController.m; sourceTree = "<group>"; };
+		9D8C8D311534FF99001549B1 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		9D8C8D321534FF99001549B1 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		9DB903BF151BC6A900A13461 /* Campus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Campus.png; sourceTree = "<group>"; };
 		9DB903C0151BC6A900A13461 /* Cannon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cannon.png; sourceTree = "<group>"; };
 		9DB903C1151BC6A900A13461 /* Cap and Gown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cap and Gown.png"; sourceTree = "<group>"; };
@@ -183,6 +188,10 @@
 				9DB903D6151BC6F500A13461 /* Club Images */,
 				5BCE63AC15165D83008E6C1F /* ClubsViewController.h */,
 				5BCE63AD15165D83008E6C1F /* ClubsViewController.m */,
+				9D8C8D311534FF99001549B1 /* Event.h */,
+				9D8C8D321534FF99001549B1 /* Event.m */,
+				9D43D8411535DADB000B4CFB /* Club.h */,
+				9D43D8421535DADB000B4CFB /* Club.m */,
 				9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */,
 				9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */,
 				5BFB45031533846600960C81 /* CAS Login */,
@@ -342,6 +351,8 @@
 				5BFB44FA153382E800960C81 /* EventsViewController.m in Sources */,
 				5BFB44FC153382E800960C81 /* main.m in Sources */,
 				9D4ED4A315338DA700680D1D /* ClubEventsViewController.m in Sources */,
+				9D8C8D331534FF99001549B1 /* Event.m in Sources */,
+				9D43D8431535DADB000B4CFB /* Club.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

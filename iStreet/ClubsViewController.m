@@ -7,6 +7,7 @@
 //
 
 #import "ClubsViewController.h"
+#import "Club.h"
 
 @interface ClubsViewController ()
 
@@ -55,6 +56,34 @@
     //return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    Club *club = [Club alloc];
+    //segue.identifier;
+    
+        NSLog(@"\n\n%@\n\n", segue.identifier);
+    
+    if(club)
+    {
+        [segue.destinationViewController setClubName:[club clubName]];
+    }
+    
+}
+/*
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ 
+ Servery *servery = [ServeryCache.instance.serveries objectForKey:segue.identifier];
+ 
+ if(servery)
+ {
+ [segue.destinationViewController setServery:(servery)];
+ }
+ 
+ }
+*/
+
+/*
 - (IBAction)pushCampus:(id)sender {
 }
 
@@ -88,5 +117,6 @@
 
 - (IBAction)pushTower:(id)sender {
 }
+ */
 
 @end

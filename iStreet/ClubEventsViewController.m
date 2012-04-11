@@ -7,12 +7,14 @@
 //
 
 #import "ClubEventsViewController.h"
+#import "Event.h"
 
 @interface ClubEventsViewController ()
 
 @end
 
 @implementation ClubEventsViewController
+@synthesize club;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -22,18 +24,20 @@
     }
     
     // Initialize our arrays
+    events = [[NSMutableArray alloc] init];
     eventTitles = [[NSMutableArray alloc] init];
     eventImages = [[NSMutableArray alloc] init];
+    eventDates  = [[NSMutableArray alloc] init];
 
     //Get event data from server
     //Hardcoded for Cap no - fix later!!!
-    clubName = @"Tower";
-    [self getListOfEvents: clubName];
+    //clubName = @"Tower";
+    [self getListOfEvents: club.clubName];
     
     //Make sure names are consistent!
-    NSString* imagePath = [[NSBundle mainBundle] pathForResource:clubName ofType:@"png"];
+    NSString* imagePath = [[NSBundle mainBundle] pathForResource:club.clubName ofType:@"png"];
     
-    clubCrest = [[UIImage alloc] initWithContentsOfFile:imagePath];
+    club.clubCrest = [[UIImage alloc] initWithContentsOfFile:imagePath];
     
     return self;
 }
@@ -41,6 +45,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.title = self.club.clubName;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -128,7 +133,8 @@
 */
 
 #pragma mark - Table view delegate
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data 
+// Online Flickr Tutorial - not sure if correct?
+/*- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data 
 {
     // Store incoming data into a string
     //IS it UTF8 or LATIN-1 encoding???
@@ -158,18 +164,85 @@
         [eventDates addObject:[results objectForKey:@"DATE(time_start)"]];
     }
 }
+*/ 
+ - (void) getListOfEvents: (NSString *) clubName
+ {
+ //Build url for server
+ NSString *urlString = 
+ [NSString stringWithFormat:
+ @"http://istreetsvr.herokuapp.com/clubevents?name=%@", clubName];
+ NSURL *url = [NSURL URLWithString:urlString];
+ NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
+ NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+ if (connection)
+ receivedData = [NSMutableData data];
+ //else do nothing
 
-- (void) getListOfEvents: (NSString *) clubName
-{
-    //Build url for server
-    NSString *urlString = 
-    [NSString stringWithFormat:
-     @"http://istreetsvr.herokuapp.com/eventslist"];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+ }
+
+ 
+//Rishi Chat code:
+/*
+ Runs when the sufficient server response data has been received.
+ */
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{  
+    [receivedData setLength:0];
+}  
+
+/*
+ Runs as the connection loads data from the server.
+ */
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data  
+{  
+    [receivedData appendData:data];
+} 
+
+/*
+ Runs when the connection has successfully finished loading all data
+ */
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{      
+    NSError *error;
+    NSArray *eventsArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
+    if(!eventsArray)
+    {
+        NSLog(@"%@", [error localizedDescription]);
+        return; // do nothing if can't recieve messages
+    }
+    
+    for(NSDictionary *dict in eventsArray)
+    {
+         Event *e = [[Event alloc] initWithDictionary:dict];
+        [events addObject:e];
+    }
+    //Add images to Array: "eventImages"
+    for (Event *event in events)
+    {
+        
+        // If there is a field for "poster", use it
+        //[eventImages addObject:(event.poster.length > 0 ? event.poster : @"")];
+        
+        //Create url for event images:
+        if (![event.poster isEqualToString:@""]) {
+            NSString *imageURLString = 
+            [NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", event.poster];
+            //UIImage *eventImage = get Image!
+            UIImage *eventImage = nil;
+            
+            [eventImages addObject:eventImage];
+        } else {
+            NSString *name = [NSString stringWithFormat:@"%@", club.clubName];
+            //Use default crest if no image provided
+            UIImage *eventImage = [UIImage imageNamed: name]; 
+            [eventImages addObject:eventImage];
+            
+        }
+    }
     
 }
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
