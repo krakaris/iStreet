@@ -36,5 +36,6 @@
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 - (IBAction)sendClicked:(id)sender;
+- (void)getNewMessages;
 
 @end

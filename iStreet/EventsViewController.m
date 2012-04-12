@@ -30,7 +30,7 @@
 {
     [super viewDidAppear:YES];
     
-    //loggedIn = YES;
+    loggedIn = YES;
     if (loggedIn != YES)
     {
         NSString *casURL = @"https://fed.princeton.edu/cas/login";

@@ -2,8 +2,14 @@
 //  ChatViewControllerViewController.m
 //  iStreet
 //
-//  Much of the client-server interaction code is by Jack D Herrington, Senior Software Engineer, Fortify Software, Inc.
+//  A little bit of the client-server interaction code is borrowed from Jack D Herrington, Senior Software Engineer, Fortify Software, Inc.
 //  http://www.ibm.com/developerworks/library/x-ioschat/index.html
+//
+// A little bit of the interface code is borrowed from here:
+// http://mobile.tutsplus.com/tutorials/iphone/building-a-jabber-client-for-ios-custom-chat-view-and-emoticons/
+//
+// To be clear, most of the code was written by ourselves.
+
 
 #import "ChatViewController.h"
 #import "Message.h"
@@ -13,6 +19,8 @@
 @end
 
 @implementation ChatViewController
+
+#pragma mark Synthesizing Properties
 @synthesize messageText, messagesList, sendButton, activityIndicator;
 
 #pragma mark Setting up the View
@@ -23,6 +31,7 @@
     
     [activityIndicator startAnimating];
     activityIndicator.hidesWhenStopped = YES;
+    
     lastMessageID = 0;
     messages = [[NSMutableArray alloc] init];
     
@@ -30,7 +39,7 @@
     messagesList.delegate = self;
     
     
-    timer = [NSTimer timerWithTimeInterval:5.0 target:self selector:@selector(getNewMessages) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(getNewMessages) userInfo:nil repeats:YES];
     [self getNewMessages];
 }
 
@@ -41,7 +50,7 @@
 
 #pragma mark Receiving Messages
 
-- (void)getNewMessages 
+- (void)getNewMessages
 {
     NSString *url = [NSString stringWithFormat:@"http://istreetsvr.herokuapp.com/get?past=%d", lastMessageID];
     
@@ -54,12 +63,6 @@
         receivedData = [NSMutableData data];
     // else do nothing
 }
-
-- (void)timerCallback 
-{
-    [self getNewMessages];
-}
-
 
 /*
  Runs when the sufficient server response data has been received.
@@ -82,7 +85,6 @@
  */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {      
-    //parser = [[SBJsonParser alloc] init];
     NSError *error;
     NSArray *messagesArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
     if(!messagesArray)
@@ -91,7 +93,6 @@
         return; // do nothing if can't recieve messages
     }
     
-    //NSDictionary *dict = [parser objectWithData:receivedData];
     for(NSDictionary *dict in messagesArray)
     {
         Message *m = [[Message alloc] initWithDictionary:dict];
@@ -102,6 +103,7 @@
         lastMessageID = ((Message *)[messages objectAtIndex:([messages count]-1)]).ID;
     
     [messagesList reloadData];
+    [messagesList scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([messages count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     [activityIndicator stopAnimating];
 }
 
@@ -168,10 +170,10 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
-    Message *m = [messages objectAtIndex:([messages count] - indexPath.row - 1)];
-    
+    //reversed order: Message *m = [messages objectAtIndex:([messages count] - indexPath.row - 1)];
+    Message *m = [messages objectAtIndex:indexPath.row];
     [cell.textLabel setText:m.message];
-    [cell.detailTextLabel setText:@"User ID will be here"];    
+    [cell.detailTextLabel setText:@"User ID will be here"];
     
     return cell;
 }
@@ -189,6 +191,9 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+    [timer invalidate];
 }
+
+
 
 @end
