@@ -60,7 +60,7 @@
     if ([m.user isEqualToString:myNetID]) 
     { 
         // sent messages
-        bgImage = [[UIImage imageNamed:@"aqua.png"] stretchableImageWithLeftCapWidth:24  topCapHeight:15];
+        bgImage = [[UIImage imageNamed:@"grey.png"] stretchableImageWithLeftCapWidth:24  topCapHeight:15];
         
         [self.messageView setFrame:CGRectMake(320 - fittedSize.width - PADDING,
                                                      PADDING*2,
@@ -74,7 +74,7 @@
     } 
     else 
     {
-        bgImage = [[UIImage imageNamed:@"orange.png"] stretchableImageWithLeftCapWidth:24  topCapHeight:15];
+        bgImage = [[UIImage imageNamed:@"light_orange.png"] stretchableImageWithLeftCapWidth:24  topCapHeight:15];
         
         [self.messageView setFrame:CGRectMake(PADDING, PADDING*2, fittedSize.width, fittedSize.height)];
         

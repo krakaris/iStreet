@@ -161,8 +161,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="pushCampus:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="Kax-ff-mpV"/>
-                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Campus" id="AqI-b2-QL5"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Charter" id="AqI-b2-QL5"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Er5-B0-UKh">
@@ -209,7 +208,7 @@
                                         </state>
                                         <connections>
                                             <action selector="pushCharter:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="NzQ-GT-SHz"/>
-                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Charter" id="wJC-67-ChH"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Cloister" id="wJC-67-ChH"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9mh-UT-uCJ">
@@ -348,10 +347,9 @@
                         <inset key="imageInsets" minX="-2" minY="-6" maxX="-2" maxY="3"/>
                     </tabBarItem>
                     <connections>
-                        <outlet property="Campus" destination="Roh-6i-HHy" id="rup-D9-gTl"/>
                         <outlet property="Cannon" destination="Er5-B0-UKh" id="DxI-EJ-AGP"/>
                         <outlet property="Cap" destination="jCS-qh-bZb" id="TiK-u1-Vla"/>
-                        <outlet property="Charter" destination="Dgw-9z-eKM" id="gud-GC-BwP"/>
+                        <outlet property="Charter" destination="Roh-6i-HHy" id="ekE-sf-f7W"/>
                         <outlet property="Colonial" destination="9mh-UT-uCJ" id="eG2-e6-xaQ"/>
                         <outlet property="Cottage" destination="kYl-2e-ajG" id="xot-BV-vom"/>
                         <outlet property="Ivy" destination="yAN-yK-voU" id="Fwv-bc-y5E"/>
@@ -448,10 +446,10 @@
         <class className="ClubsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubsViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="Campus" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="Cannon" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="Cap" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="Charter" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Cloister" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="Colonial" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="Cottage" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="Ivy" candidateClass="UIButton"/>
@@ -475,6 +473,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="wJC-67-ChH"/>
+        <segue reference="AqI-b2-QL5"/>
     </inferredMetricsTieBreakers>
 </document>

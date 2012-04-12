@@ -42,7 +42,7 @@
 
 - (void)viewDidUnload
 {
-    Campus = nil;
+    Cloister = nil;
     //_datelabel = nil;
     //[self setDatelabel:nil];
     //dateLabel = nil;

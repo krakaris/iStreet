@@ -11,7 +11,7 @@
 @interface ClubsViewController : UIViewController {
     IBOutlet UIButton *Cannon;
     IBOutlet UIButton *Cap;
-    IBOutlet UIButton *Charter;
+    IBOutlet UIButton *Cloister;
     IBOutlet UIButton *Colonial;
     IBOutlet UIButton *Cottage;
     IBOutlet UIButton *Ivy;
@@ -20,7 +20,7 @@
     IBOutlet UIButton *Terrace;
     IBOutlet UIButton *Tower;
     //UIButton *Campus;
-    IBOutlet UIButton *Campus;
+    IBOutlet UIButton *Charter;
     
     __weak IBOutlet UILabel *dateLabel;
     
