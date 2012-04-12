@@ -18,7 +18,9 @@
     
     //Not sure if I need these two...
     NSMutableArray *eventTitles;
-    NSMutableArray *eventDates;
+    NSMutableArray *eventStartDates;
+    NSMutableArray *eventStartTimes;
+    NSMutableArray *eventEndTimes;
     
     NSMutableData *receivedData;
     

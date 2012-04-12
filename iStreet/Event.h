@@ -13,7 +13,9 @@
 @property(nonatomic, assign) int ID;
 @property(nonatomic, retain) NSString *title;
 @property(nonatomic, retain) NSString *poster;
-@property(nonatomic, retain) NSDate *startDate;
+@property(nonatomic, retain) NSString *startDate;
+@property(nonatomic, retain) NSString *startTime;
+@property(nonatomic, retain) NSString *endTime;
 //@property(nonatomic) NSTimeInterval *duration;
 
 //club name

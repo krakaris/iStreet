@@ -33,7 +33,9 @@
     events = [[NSMutableArray alloc] init];
     eventTitles = [[NSMutableArray alloc] init];
     eventImages = [[NSMutableArray alloc] init];
-    eventDates  = [[NSMutableArray alloc] init];
+    eventStartDates  = [[NSMutableArray alloc] init];
+    eventStartTimes = [[NSMutableArray alloc] init];
+    eventEndTimes = [[NSMutableArray alloc] init];
     
     eventsList.dataSource = self;
     eventsList.delegate = self;
@@ -74,16 +76,12 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 #warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    //return 0;
     return [events count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    //return 0;
     return [events count];
 }
 
@@ -92,10 +90,18 @@
     static NSString *CellIdentifier = @"Club Event";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
+    if (cell == nil) 
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    }
+    
     // Configure the cell...
-    Event *event = [events objectAtIndex: indexPath.row];
-    cell.detailTextLabel.text = club.clubName;
-    cell.textLabel.text = event.title;
+    //Event *event = [events objectAtIndex: indexPath.row];
+    NSString *title = [eventTitles objectAtIndex: indexPath.row];
+    
+    //cell.detailTextLabel.text = club.clubName;
+    cell.textLabel.text = title;
     
     return cell;
 }
@@ -224,18 +230,28 @@
         NSLog(@"%@", [error localizedDescription]);
         return; // do nothing if can't recieve messages
     }
-   // NSLog(@"EventsArray: %@\n", eventsArray);
-    NSLog(@"Got Events array \n");
+    
     for(NSDictionary *dict in eventsArray)
     {
+        NSLog(@"Event Dictionary: %@\n", dict);
          Event *e = [[Event alloc] initWithDictionary:dict];
+        NSLog(@"Event created: %@\n", e);
         [events addObject:e];
-        [eventTitles addObject:e.title];
-        [eventDates addObject:e.startDate];
+        if (e.title != nil) {
+            [eventTitles addObject:e.title];
+        } else {
+            [e setTitle:@"On Tap"];
+            [eventTitles addObject:e.title];
+        }
+        [eventStartDates addObject:e.startDate];
+        [eventStartTimes addObject:e.startTime];
+        [eventEndTimes addObject:e.endTime];
     }
     //Add images to Array: "eventImages"
-    for (Event *event in events)
+    /*for (Event *event in events)
     {
+        
+        
         
         // If there is a field for "poster", use it
         //[eventImages addObject:(event.poster.length > 0 ? event.poster : @"")];
@@ -255,7 +271,7 @@
             [eventImages addObject:eventImage];
             
         }
-    }
+    }*/
     
 }
 
