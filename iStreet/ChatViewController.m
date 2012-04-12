@@ -5,14 +5,16 @@
 //  A little bit of the client-server interaction code is borrowed from Jack D Herrington, Senior Software Engineer, Fortify Software, Inc.
 //  http://www.ibm.com/developerworks/library/x-ioschat/index.html
 //
-// A little bit of the interface code is borrowed from here:
+// A good deal of the interface code is borrowed from here:
 // http://mobile.tutsplus.com/tutorials/iphone/building-a-jabber-client-for-ios-custom-chat-view-and-emoticons/
 //
-// To be clear, most of the code was written by ourselves.
+// To be clear, because code was borrowed but customized a good deal, most of the code was written by us. In a sense, the above links were excellent guides in producing this code.
 
 
 #import "ChatViewController.h"
+#import "MessageTableViewCell.h"
 #import "Message.h"
+#import "AppDelegate.h"
 
 @interface ChatViewController ()
 
@@ -21,7 +23,7 @@
 @implementation ChatViewController
 
 #pragma mark Synthesizing Properties
-@synthesize messageText, messagesList, sendButton, activityIndicator;
+@synthesize messageField, messagesTable, sendButton, activityIndicator, scrollView;
 
 #pragma mark Setting up the View
 
@@ -29,17 +31,19 @@
 {
     [super viewDidLoad];
     
+    messageSending = NO;
+    receivedNewMessages = NO;
+    
     [activityIndicator startAnimating];
     activityIndicator.hidesWhenStopped = YES;
     
     lastMessageID = 0;
     messages = [[NSMutableArray alloc] init];
     
-    messagesList.dataSource = self;
-    messagesList.delegate = self;
+    messagesTable.dataSource = self;
+    messagesTable.delegate = self;
     
-    
-    timer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(getNewMessages) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(getNewMessages) userInfo:nil repeats:YES];
     [self getNewMessages];
 }
 
@@ -93,6 +97,13 @@
         return; // do nothing if can't recieve messages
     }
     
+    receivedNewMessages = YES;
+    int oldLastID = 0;
+    if([messages count] > 0)
+    {
+        oldLastID = ((Message *)[messages objectAtIndex:([messages count]-1)]).ID;
+    }
+        
     for(NSDictionary *dict in messagesArray)
     {
         Message *m = [[Message alloc] initWithDictionary:dict];
@@ -100,44 +111,45 @@
     }
     
     if([messages count] > 0)
-        lastMessageID = ((Message *)[messages objectAtIndex:([messages count]-1)]).ID;
+        lastMessageID = ((Message *)[messages objectAtIndex:([messages count]-1)]).ID;            
     
-    [messagesList reloadData];
-    [messagesList scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([messages count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [messagesTable reloadData];
+    if(lastMessageID > oldLastID) // if new messages were received, scroll to the new message(s)
+        [messagesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([messages count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     [activityIndicator stopAnimating];
 }
 
 #pragma mark Sending Messages
 
 - (IBAction)sendClicked:(id)sender 
-{
-    [messageText resignFirstResponder];
-    
-    if ([messageText.text length] == 0)
+{   
+    // if there is no text, or the message is still sending (i.e. the user double-clicked), don't do anything.
+    if ([messageField.text length] == 0 || messageSending)
         return;
     
-    [messageText setTextColor:[UIColor grayColor]];
+    messageSending = YES;
+    [messageField setTextColor:[UIColor grayColor]];
     [activityIndicator startAnimating];
     
-    NSString *url = [NSString stringWithFormat:
-                     @"http://istreetsvr.herokuapp.com/add"];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] 
-                                    init];
+    NSString *url = [NSString stringWithFormat:@"http://istreetsvr.herokuapp.com/add"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:@"POST"];
+    
+    NSString *myNetID = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
+    
     NSMutableData *body = [NSMutableData data];
-    [body appendData:[[NSString stringWithFormat:@"user_id=%@&message=%@", 
-                       @"Rishi Narang", 
-                       messageText.text] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"user_id=%@&message=%@", myNetID, messageField.text] dataUsingEncoding:NSUTF8StringEncoding]];
     [request setHTTPBody:body];
+    
     NSHTTPURLResponse *response = nil;
     NSError *error = [[NSError alloc] init];
-    [NSURLConnection sendSynchronousRequest:request 
-                          returningResponse:&response error:&error];
+    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
-    messageText.text = @"";
-    [messageText setTextColor:[UIColor blackColor]];
+    messageField.text = @"";
+    [messageField setTextColor:[UIColor blackColor]];
     
+    messageSending = NO;
     [self getNewMessages];
 }
 
@@ -148,41 +160,82 @@
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)myTableView numberOfRowsInSection:(NSInteger)section 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
     return [messages count];
 }
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:
-(NSIndexPath *)indexPath 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)myTableView 
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath 
-{
-    UITableViewCell *cell = (UITableViewCell *)[myTableView dequeueReusableCellWithIdentifier:@"cell"];
+    static NSString *CELL_IDENTIFIER = @"message cell";
+    MessageTableViewCell *cell = (MessageTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER];
     
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    if (cell == nil) 
+    {
+        cell = [[MessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELL_IDENTIFIER];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
+    
     //reversed order: Message *m = [messages objectAtIndex:([messages count] - indexPath.row - 1)];
     Message *m = [messages objectAtIndex:indexPath.row];
-    [cell.textLabel setText:m.message];
-    [cell.detailTextLabel setText:@"User ID will be here"];
+    
+    [cell packCellWithMessage:m];
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 
+{
+    
+    Message *m = [messages objectAtIndex:indexPath.row];
+    NSString *msg = m.message;
+    
+    CGSize maxSize = CGSizeMake(MAX_WIDTH, MAX_HEIGHT);
+    CGSize fittedSize = [msg sizeWithFont:[UIFont boldSystemFontOfSize:13]
+                  constrainedToSize:maxSize
+                      lineBreakMode:UILineBreakModeWordWrap];
+    
+    fittedSize.height += PADDING * 2 + 10;
+    
+    CGFloat height = fittedSize.height;
+    return height;
+    
 }
 
 #pragma mark UITableViewController Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [messageText resignFirstResponder];
+    [messageField resignFirstResponder];
+}
+
+#pragma mark UITextField Delegate
+
+/**
+ TO DO: FIX SCROLLING SO THAT THE TABLE VIEW DOESN'T GO OFF THE TOP OF THE SCREEN. THIS IMPORTANT FOR WHEN THERE
+ IS ONLY 1 OR 2 MESSAGES.
+        FIX RANDOM DUPLICATES BUG.
+ 
+ */
+
+/*
+ Shift the tableview, textfield, etc. up to make space for the keyboard.
+ */
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    static int TAB_BAR_HEIGHT = 49;
+    static int KEYBOARD_HEIGHT = 216;
+    CGPoint scrollPoint = CGPointMake(0.0, messageField.frame.origin.y - KEYBOARD_HEIGHT + TAB_BAR_HEIGHT);
+    [scrollView setContentOffset:scrollPoint animated:YES];
+}
+
+/*
+ Shift the tableview, textfield, etc. back down to hide the keyboard.
+ */
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [scrollView setContentOffset:CGPointZero animated:YES];   
 }
 
 #pragma mark Memory Management

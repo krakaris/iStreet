@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		41386594152D15EB007A2327 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41386592152D15EB007A2327 /* LoginViewController.m */; };
 		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
+		5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */; };
+		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
+		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
 		5B4E089B15337E0B007B0221 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4E089A15337E0B007B0221 /* FriendsViewController.m */; };
 		5B63654615338AB700845082 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 5B63654515338AB700845082 /* README */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
@@ -49,6 +52,10 @@
 		41386591152D15EB007A2327 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		41386592152D15EB007A2327 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		41386593152D15EB007A2327 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		5B227E49153673F200B5DD52 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
+		5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
+		5B227E4D15367D5200B5DD52 /* aqua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aqua.png; sourceTree = "<group>"; };
+		5B227E4E15367D5200B5DD52 /* orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange.png; sourceTree = "<group>"; };
 		5B4E089915337E0B007B0221 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		5B4E089A15337E0B007B0221 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		5B63654515338AB700845082 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
@@ -115,6 +122,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B227E5115367D5900B5DD52 /* Message Images */ = {
+			isa = PBXGroup;
+			children = (
+				5B227E4D15367D5200B5DD52 /* aqua.png */,
+				5B227E4E15367D5200B5DD52 /* orange.png */,
+			);
+			name = "Message Images";
+			sourceTree = "<group>";
+		};
 		5BA1F5FF15112DA7002CA7F3 = {
 			isa = PBXGroup;
 			children = (
@@ -195,7 +211,6 @@
 				9D43D8421535DADB000B4CFB /* Club.m */,
 				9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */,
 				9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */,
-				5BFB45031533846600960C81 /* CAS Login */,
 			);
 			name = Clubs;
 			sourceTree = "<group>";
@@ -205,8 +220,11 @@
 			children = (
 				5BCE63A915165A1F008E6C1F /* ChatViewController.h */,
 				5BCE63AA15165A1F008E6C1F /* ChatViewController.m */,
+				5B227E49153673F200B5DD52 /* MessageTableViewCell.h */,
+				5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */,
 				9DA5B1FA15362AFC00F2FC68 /* Message.h */,
 				9DA5B1FB15362AFC00F2FC68 /* Message.m */,
+				5B227E5115367D5900B5DD52 /* Message Images */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -214,6 +232,7 @@
 		5BFB45021533845000960C81 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				5BFB45031533846600960C81 /* CAS Login */,
 				5BA1F62D15112DA7002CA7F3 /* EventsViewController.h */,
 				5BFB44F6153382E800960C81 /* EventsViewController.m */,
 			);
@@ -334,6 +353,8 @@
 				5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */,
 				5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */,
 				5B63654615338AB700845082 /* README in Resources */,
+				5B227E4F15367D5200B5DD52 /* aqua.png in Resources */,
+				5B227E5015367D5200B5DD52 /* orange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +376,7 @@
 				9D8C8D331534FF99001549B1 /* Event.m in Sources */,
 				9D43D8431535DADB000B4CFB /* Club.m in Sources */,
 				9DA5B1FC15362AFC00F2FC68 /* Message.m in Sources */,
+				5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

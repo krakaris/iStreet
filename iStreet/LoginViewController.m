@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "EventsViewController.h"
+#import "AppDelegate.h"
 
 @interface LoginViewController ()
 
@@ -71,7 +72,7 @@
         cvc.netid = netid;
 
         NSLog(@"Net id is this -- %@", netid);
-     
+        [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:netid];
         NSLog(@"Bazinga!");
     }
     else {

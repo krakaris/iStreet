@@ -9,31 +9,28 @@
 #import <UIKit/UIKit.h>
 //#import "SBJsonParser.h"
 
-@interface ChatViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
+@interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 {
-    UITextField *messageText;
+    UITextField *messageField;
     UIButton *sendButton;
-    UITableView *messagesList;
+    UITableView *messagesTable;
     UIActivityIndicatorView *activityIndicator;
+    UIScrollView *scrollView;
     
     NSMutableData *receivedData;
     NSMutableArray *messages;
-    int lastMessageID;
     NSTimer *timer;
+    int lastMessageID;
+    BOOL messageSending; // the button has been pressed, but the message hasn't yet sent
+    BOOL receivedNewMessages; // new messages were received at the last update
     //SBJsonParser *parser;
-    
-    NSString *msgAdded;
-    NSMutableString *msgUser;
-    NSMutableString *msgText;
-    int msgId;
-    bool inText;
-    bool inUser;
 }
 
-@property (nonatomic,retain) IBOutlet UITextField *messageText;
-@property (nonatomic,retain) IBOutlet UIButton *sendButton;
-@property (nonatomic,retain) IBOutlet UITableView *messagesList;
-@property (nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, retain) IBOutlet UITextField *messageField;
+@property (nonatomic, retain) IBOutlet UIButton *sendButton;
+@property (nonatomic, retain) IBOutlet UITableView *messagesTable;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 
 - (IBAction)sendClicked:(id)sender;
 - (void)getNewMessages;
