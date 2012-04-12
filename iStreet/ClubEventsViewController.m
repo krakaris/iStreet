@@ -21,30 +21,33 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-    }
-    
-    // Initialize our arrays
-    events = [[NSMutableArray alloc] init];
-    eventTitles = [[NSMutableArray alloc] init];
-    eventImages = [[NSMutableArray alloc] init];
-    eventDates  = [[NSMutableArray alloc] init];
-
-    //Get event data from server
-    //Hardcoded for Cap no - fix later!!!
-    //clubName = @"Tower";
-    [self getListOfEvents: club.clubName];
-    
-    //Make sure names are consistent!
-    NSString* imagePath = [[NSBundle mainBundle] pathForResource:club.clubName ofType:@"png"];
-    
-    club.clubCrest = [[UIImage alloc] initWithContentsOfFile:imagePath];
-    
+    }    
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Initialize our arrays
+    events = [[NSMutableArray alloc] init];
+    eventTitles = [[NSMutableArray alloc] init];
+    eventImages = [[NSMutableArray alloc] init];
+    eventDates  = [[NSMutableArray alloc] init];
+    
+    eventsList.dataSource = self;
+    eventsList.delegate = self;
+    
+    //Get event data from server
+    [self getListOfEvents: club.clubName];
+    
+    //Make sure names are consistent!
+    /*
+     NSString* imagePath = [[NSBundle mainBundle] pathForResource:club.clubName ofType:@"png"];
+     
+     club.clubCrest = [[UIImage alloc] initWithContentsOfFile:imagePath];
+     */
+
     self.navigationItem.title = self.club.clubName;
 
     // Uncomment the following line to preserve selection between presentations.
@@ -72,14 +75,16 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    //return 0;
+    return [events count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    //return 0;
+    return [events count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -88,7 +93,9 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
-    
+    Event *event = [events objectAtIndex: indexPath.row];
+    cell.detailTextLabel.text = club.clubName;
+    cell.textLabel.text = event.title;
     
     return cell;
 }
@@ -165,18 +172,22 @@
     }
 }
 */ 
- - (void) getListOfEvents: (NSString *) clubName
- {
- //Build url for server
- NSString *urlString = 
- [NSString stringWithFormat:
- @"http://istreetsvr.herokuapp.com/clubevents?name=%@", clubName];
- NSURL *url = [NSURL URLWithString:urlString];
- NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
- NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
- if (connection)
- receivedData = [NSMutableData data];
+- (void) getListOfEvents: (NSString *) clubName
+{
+    //Build url for server
+    NSString *urlString = 
+    [NSString stringWithFormat:
+     @"http://istreetsvr.herokuapp.com/clubevents?name=%@", clubName];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    if (connection) {
+        receivedData = [NSMutableData data];
+        NSLog(@"RECEIVED DATA\n");
+    }
+    
  //else do nothing
+    NSLog(@"\n DATA: %@\n", receivedData);
 
  }
 
@@ -187,6 +198,7 @@
  */
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {  
+    NSLog(@"Did receive response\n");
     [receivedData setLength:0];
 }  
 
@@ -195,6 +207,7 @@
  */
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data  
 {  
+    NSLog(@"Did receive data\n");
     [receivedData appendData:data];
 } 
 
@@ -211,11 +224,14 @@
         NSLog(@"%@", [error localizedDescription]);
         return; // do nothing if can't recieve messages
     }
-    
+   // NSLog(@"EventsArray: %@\n", eventsArray);
+    NSLog(@"Got Events array \n");
     for(NSDictionary *dict in eventsArray)
     {
          Event *e = [[Event alloc] initWithDictionary:dict];
         [events addObject:e];
+        [eventTitles addObject:e.title];
+        [eventDates addObject:e.startDate];
     }
     //Add images to Array: "eventImages"
     for (Event *event in events)
@@ -255,16 +271,5 @@
      */
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    NSString *cap = @"Cap";
-    UIButton *club = (UIButton *)sender;
-    NSString *clubname = (NSString *)club.titleLabel;
-    if ([clubname isEqualToString:cap])
-    {
-        
-    }
-    
-}
 
 @end

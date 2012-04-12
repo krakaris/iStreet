@@ -14,6 +14,7 @@
     //Information we want to get from server
     NSMutableArray *events;
     NSMutableArray *eventImages;
+    UITableView *eventsList;
     
     //Not sure if I need these two...
     NSMutableArray *eventTitles;
@@ -26,6 +27,6 @@
 
 }
 
-@property(nonatomic) Club *club;
+@property(nonatomic, retain) Club *club;
 
 @end

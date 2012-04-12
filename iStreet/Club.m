@@ -21,11 +21,6 @@
     return self;
 }
 
--(void)setClubName:(NSString *)clubName
-{
-    self.clubName = clubName;
-}
-
 - (id)init
 {
     self = [super init];

@@ -17,7 +17,6 @@
 
 
 - (id)initWithDictionary:(NSDictionary *)dict;
--(void)setClubName:(NSString *)clubName;
 -(id)init;
 
 @end
