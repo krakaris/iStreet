@@ -143,7 +143,7 @@
                                         <rect key="frame" x="160" y="-5" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="Campus.png">
+                                        <state key="normal" title="Campus" image="Campus.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -152,13 +152,14 @@
                                         </state>
                                         <connections>
                                             <action selector="pushCampus:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="Kax-ff-mpV"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Campus" id="AqI-b2-QL5"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Er5-B0-UKh">
                                         <rect key="frame" x="214" y="30" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="Cannon.png">
+                                        <state key="normal" title="Cannon" image="Cannon.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -167,13 +168,14 @@
                                         </state>
                                         <connections>
                                             <action selector="pushCannon:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="gMq-UI-Kje"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Cannon" id="vbH-sP-fie"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jCS-qh-bZb">
                                         <rect key="frame" x="249" y="95" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Cap" image="Cap&amp;Gown.png">
+                                        <state key="normal" title="Cap and Gown" image="Cap&amp;Gown.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -181,7 +183,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="pushCap:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="45f-Ej-d5x"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Cap and Gown" id="2op-RL-HQb"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Dgw-9z-eKM">
@@ -197,6 +199,7 @@
                                         </state>
                                         <connections>
                                             <action selector="pushCharter:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="NzQ-GT-SHz"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Charter" id="wJC-67-ChH"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9mh-UT-uCJ">
@@ -212,6 +215,7 @@
                                         </state>
                                         <connections>
                                             <action selector="pushColonial:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="3jm-4B-GEG"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Colonial" id="xTr-XZ-lrn"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kYl-2e-ajG">
@@ -227,6 +231,7 @@
                                         </state>
                                         <connections>
                                             <action selector="pushCottage:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="8Fy-Nq-A8i"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Cottage" id="1j5-I8-HT3"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yAN-yK-voU">
@@ -242,13 +247,14 @@
                                         </state>
                                         <connections>
                                             <action selector="pushIvy:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="OBI-rW-rwd"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Ivy" id="xLj-Ej-rmZ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="R48-p8-1x3">
                                         <rect key="frame" x="13" y="189" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Quad" image="Quad.png">
+                                        <state key="normal" title="Quadrangle" image="Quad.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -257,13 +263,14 @@
                                         </state>
                                         <connections>
                                             <action selector="pushQuad:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="EAS-8H-28M"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Cloister" id="qHy-N6-Mf9"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KdJ-01-cK6">
                                         <rect key="frame" x="11" y="113" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="TI" image="T.I..png">
+                                        <state key="normal" title="Tiger Inn" image="T.I..png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -272,6 +279,7 @@
                                         </state>
                                         <connections>
                                             <action selector="pushTI:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="5S2-81-8La"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Tiger Inn" id="TAM-vJ-t2v"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uqH-Ej-iUS">
@@ -287,6 +295,7 @@
                                         </state>
                                         <connections>
                                             <action selector="pushTerrace:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="cBw-6Q-m6y"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Terrace" id="A36-YY-7Gq"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oN7-Fd-I4V">
@@ -302,6 +311,7 @@
                                         </state>
                                         <connections>
                                             <action selector="pushTower:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="jXx-E4-OME"/>
+                                            <segue destination="DWK-0W-THd" kind="modal" identifier="Tower" id="LJx-HG-xg2"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="5I3-Lj-qG6">
@@ -345,6 +355,52 @@
             </objects>
             <point key="canvasLocation" x="187" y="782"/>
         </scene>
+        <!--Club Events View Controller-->
+        <scene sceneID="A6X-jM-ROa">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iq2-HS-eIH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="DWK-0W-THd" customClass="ClubEventsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="xoj-t7-ooj">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Club Event" textLabel="jtB-D9-58i" detailTextLabel="wUD-7O-qoe" style="IBUITableViewCellStyleSubtitle" id="IDJ-vU-4Wh">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jtB-D9-58i">
+                                            <rect key="frame" x="10" y="2" width="38" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wUD-7O-qoe">
+                                            <rect key="frame" x="10" y="24" width="47" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="DWK-0W-THd" id="wej-I7-1vU"/>
+                            <outlet property="delegate" destination="DWK-0W-THd" id="Xai-Nr-SYs"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="604" y="791"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Campus.png" width="95" height="115"/>
@@ -375,20 +431,12 @@
                 <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
             </relationships>
         </class>
+        <class className="ClubEventsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubEventsViewController.h"/>
+        </class>
         <class className="ClubsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubsViewController.h"/>
             <relationships>
-                <relationship kind="action" name="pushCampus:"/>
-                <relationship kind="action" name="pushCannon:"/>
-                <relationship kind="action" name="pushCap:"/>
-                <relationship kind="action" name="pushCharter:"/>
-                <relationship kind="action" name="pushColonial:"/>
-                <relationship kind="action" name="pushCottage:"/>
-                <relationship kind="action" name="pushIvy:"/>
-                <relationship kind="action" name="pushQuad:"/>
-                <relationship kind="action" name="pushTI:"/>
-                <relationship kind="action" name="pushTerrace:"/>
-                <relationship kind="action" name="pushTower:"/>
                 <relationship kind="outlet" name="Campus" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="Cannon" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="Cap" candidateClass="UIButton"/>
@@ -415,4 +463,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="1j5-I8-HT3"/>
+    </inferredMetricsTieBreakers>
 </document>

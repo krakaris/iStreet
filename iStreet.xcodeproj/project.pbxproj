@@ -11,7 +11,6 @@
 		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
 		5B4E089B15337E0B007B0221 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4E089A15337E0B007B0221 /* FriendsViewController.m */; };
 		5B63654615338AB700845082 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 5B63654515338AB700845082 /* README */; };
-		5B63654A1533AC6100845082 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6365491533AC6100845082 /* Message.m */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
 		5BA1F61315112DA7002CA7F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */; };
@@ -22,15 +21,19 @@
 		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
 		5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */; };
+		9D43D8431535DADB000B4CFB /* Club.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D43D8421535DADB000B4CFB /* Club.m */; };
+		9D4ED4A315338DA700680D1D /* ClubEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */; };
+		9D8C8D331534FF99001549B1 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D8C8D321534FF99001549B1 /* Event.m */; };
+		9DA5B1FC15362AFC00F2FC68 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5B1FB15362AFC00F2FC68 /* Message.m */; };
 		9DB903CA151BC6A900A13461 /* Campus.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903BF151BC6A900A13461 /* Campus.png */; };
 		9DB903CB151BC6A900A13461 /* Cannon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C0151BC6A900A13461 /* Cannon.png */; };
-		9DB903CC151BC6A900A13461 /* Cap&Gown.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C1151BC6A900A13461 /* Cap&Gown.png */; };
+		9DB903CC151BC6A900A13461 /* Cap and Gown.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C1151BC6A900A13461 /* Cap and Gown.png */; };
 		9DB903CD151BC6A900A13461 /* Charter.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C2151BC6A900A13461 /* Charter.png */; };
 		9DB903CE151BC6A900A13461 /* Colonial.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C3151BC6A900A13461 /* Colonial.png */; };
 		9DB903CF151BC6A900A13461 /* Cottage.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C4151BC6A900A13461 /* Cottage.png */; };
 		9DB903D0151BC6A900A13461 /* Ivy.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C5151BC6A900A13461 /* Ivy.png */; };
-		9DB903D1151BC6A900A13461 /* Quad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C6151BC6A900A13461 /* Quad.png */; };
-		9DB903D2151BC6A900A13461 /* T.I..png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C7151BC6A900A13461 /* T.I..png */; };
+		9DB903D1151BC6A900A13461 /* Quadrangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C6151BC6A900A13461 /* Quadrangle.png */; };
+		9DB903D2151BC6A900A13461 /* Tiger Inn.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C7151BC6A900A13461 /* Tiger Inn.png */; };
 		9DB903D3151BC6A900A13461 /* Terrace.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C8151BC6A900A13461 /* Terrace.png */; };
 		9DB903D4151BC6A900A13461 /* Tower.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C9151BC6A900A13461 /* Tower.png */; };
 		9DC2F352151E3D9B0028F911 /* Princeton Crest 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */; };
@@ -49,8 +52,6 @@
 		5B4E089915337E0B007B0221 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		5B4E089A15337E0B007B0221 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		5B63654515338AB700845082 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		5B6365481533AC6100845082 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
-		5B6365491533AC6100845082 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		5BA1F60A15112DA7002CA7F3 /* iStreet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStreet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA1F60E15112DA7002CA7F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BA1F61015112DA7002CA7F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -72,15 +73,23 @@
 		9D34B7731524D5D000DB6C13 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
 		9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedUIPickerView.h; sourceTree = "<group>"; };
 		9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedUIPickerView.m; sourceTree = "<group>"; };
+		9D43D8411535DADB000B4CFB /* Club.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Club.h; sourceTree = "<group>"; };
+		9D43D8421535DADB000B4CFB /* Club.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Club.m; sourceTree = "<group>"; };
+		9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubEventsViewController.h; sourceTree = "<group>"; };
+		9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClubEventsViewController.m; sourceTree = "<group>"; };
+		9D8C8D311534FF99001549B1 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		9D8C8D321534FF99001549B1 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		9DA5B1FA15362AFC00F2FC68 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		9DA5B1FB15362AFC00F2FC68 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		9DB903BF151BC6A900A13461 /* Campus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Campus.png; sourceTree = "<group>"; };
 		9DB903C0151BC6A900A13461 /* Cannon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cannon.png; sourceTree = "<group>"; };
-		9DB903C1151BC6A900A13461 /* Cap&Gown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cap&Gown.png"; sourceTree = "<group>"; };
+		9DB903C1151BC6A900A13461 /* Cap and Gown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cap and Gown.png"; sourceTree = "<group>"; };
 		9DB903C2151BC6A900A13461 /* Charter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Charter.png; sourceTree = "<group>"; };
 		9DB903C3151BC6A900A13461 /* Colonial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Colonial.png; sourceTree = "<group>"; };
 		9DB903C4151BC6A900A13461 /* Cottage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cottage.png; sourceTree = "<group>"; };
 		9DB903C5151BC6A900A13461 /* Ivy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ivy.png; sourceTree = "<group>"; };
-		9DB903C6151BC6A900A13461 /* Quad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quad.png; sourceTree = "<group>"; };
-		9DB903C7151BC6A900A13461 /* T.I..png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = T.I..png; sourceTree = "<group>"; };
+		9DB903C6151BC6A900A13461 /* Quadrangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quadrangle.png; sourceTree = "<group>"; };
+		9DB903C7151BC6A900A13461 /* Tiger Inn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tiger Inn.png"; sourceTree = "<group>"; };
 		9DB903C8151BC6A900A13461 /* Terrace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Terrace.png; sourceTree = "<group>"; };
 		9DB903C9151BC6A900A13461 /* Tower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tower.png; sourceTree = "<group>"; };
 		9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 2.png"; sourceTree = "<group>"; };
@@ -180,6 +189,12 @@
 				9DB903D6151BC6F500A13461 /* Club Images */,
 				5BCE63AC15165D83008E6C1F /* ClubsViewController.h */,
 				5BCE63AD15165D83008E6C1F /* ClubsViewController.m */,
+				9D8C8D311534FF99001549B1 /* Event.h */,
+				9D8C8D321534FF99001549B1 /* Event.m */,
+				9D43D8411535DADB000B4CFB /* Club.h */,
+				9D43D8421535DADB000B4CFB /* Club.m */,
+				9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */,
+				9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */,
 				5BFB45031533846600960C81 /* CAS Login */,
 			);
 			name = Clubs;
@@ -190,8 +205,8 @@
 			children = (
 				5BCE63A915165A1F008E6C1F /* ChatViewController.h */,
 				5BCE63AA15165A1F008E6C1F /* ChatViewController.m */,
-				5B6365481533AC6100845082 /* Message.h */,
-				5B6365491533AC6100845082 /* Message.m */,
+				9DA5B1FA15362AFC00F2FC68 /* Message.h */,
+				9DA5B1FB15362AFC00F2FC68 /* Message.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -220,13 +235,13 @@
 			children = (
 				9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */,
 				9DB903C0151BC6A900A13461 /* Cannon.png */,
-				9DB903C1151BC6A900A13461 /* Cap&Gown.png */,
+				9DB903C1151BC6A900A13461 /* Cap and Gown.png */,
 				9DB903C2151BC6A900A13461 /* Charter.png */,
 				9DB903C3151BC6A900A13461 /* Colonial.png */,
 				9DB903C4151BC6A900A13461 /* Cottage.png */,
 				9DB903C5151BC6A900A13461 /* Ivy.png */,
-				9DB903C6151BC6A900A13461 /* Quad.png */,
-				9DB903C7151BC6A900A13461 /* T.I..png */,
+				9DB903C6151BC6A900A13461 /* Quadrangle.png */,
+				9DB903C7151BC6A900A13461 /* Tiger Inn.png */,
 				9DB903C8151BC6A900A13461 /* Terrace.png */,
 				9DB903C9151BC6A900A13461 /* Tower.png */,
 				9DB903BF151BC6A900A13461 /* Campus.png */,
@@ -299,13 +314,13 @@
 			files = (
 				9DB903CA151BC6A900A13461 /* Campus.png in Resources */,
 				9DB903CB151BC6A900A13461 /* Cannon.png in Resources */,
-				9DB903CC151BC6A900A13461 /* Cap&Gown.png in Resources */,
+				9DB903CC151BC6A900A13461 /* Cap and Gown.png in Resources */,
 				9DB903CD151BC6A900A13461 /* Charter.png in Resources */,
 				9DB903CE151BC6A900A13461 /* Colonial.png in Resources */,
 				9DB903CF151BC6A900A13461 /* Cottage.png in Resources */,
 				9DB903D0151BC6A900A13461 /* Ivy.png in Resources */,
-				9DB903D1151BC6A900A13461 /* Quad.png in Resources */,
-				9DB903D2151BC6A900A13461 /* T.I..png in Resources */,
+				9DB903D1151BC6A900A13461 /* Quadrangle.png in Resources */,
+				9DB903D2151BC6A900A13461 /* Tiger Inn.png in Resources */,
 				9DB903D3151BC6A900A13461 /* Terrace.png in Resources */,
 				9DB903D4151BC6A900A13461 /* Tower.png in Resources */,
 				9DC2F352151E3D9B0028F911 /* Princeton Crest 2.png in Resources */,
@@ -336,7 +351,10 @@
 				5B4E089B15337E0B007B0221 /* FriendsViewController.m in Sources */,
 				5BFB44FA153382E800960C81 /* EventsViewController.m in Sources */,
 				5BFB44FC153382E800960C81 /* main.m in Sources */,
-				5B63654A1533AC6100845082 /* Message.m in Sources */,
+				9D4ED4A315338DA700680D1D /* ClubEventsViewController.m in Sources */,
+				9D8C8D331534FF99001549B1 /* Event.m in Sources */,
+				9D43D8431535DADB000B4CFB /* Club.m in Sources */,
+				9DA5B1FC15362AFC00F2FC68 /* Message.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
