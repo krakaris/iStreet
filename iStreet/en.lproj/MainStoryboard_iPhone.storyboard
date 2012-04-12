@@ -176,7 +176,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="pushCannon:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="gMq-UI-Kje"/>
                                             <segue destination="DWK-0W-THd" kind="modal" identifier="Cannon" id="vbH-sP-fie"/>
                                         </connections>
                                     </button>
@@ -207,7 +206,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="pushCharter:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="NzQ-GT-SHz"/>
                                             <segue destination="DWK-0W-THd" kind="modal" identifier="Cloister" id="wJC-67-ChH"/>
                                         </connections>
                                     </button>
@@ -223,7 +221,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="pushColonial:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="3jm-4B-GEG"/>
                                             <segue destination="DWK-0W-THd" kind="modal" identifier="Colonial" id="xTr-XZ-lrn"/>
                                         </connections>
                                     </button>
@@ -239,7 +236,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="pushCottage:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="8Fy-Nq-A8i"/>
                                             <segue destination="DWK-0W-THd" kind="modal" identifier="Cottage" id="1j5-I8-HT3"/>
                                         </connections>
                                     </button>
@@ -255,7 +251,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="pushIvy:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="OBI-rW-rwd"/>
                                             <segue destination="DWK-0W-THd" kind="modal" identifier="Ivy" id="xLj-Ej-rmZ"/>
                                         </connections>
                                     </button>
@@ -271,7 +266,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="pushQuad:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="EAS-8H-28M"/>
                                             <segue destination="DWK-0W-THd" kind="modal" identifier="Cloister" id="qHy-N6-Mf9"/>
                                         </connections>
                                     </button>
@@ -287,7 +281,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="pushTI:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="5S2-81-8La"/>
                                             <segue destination="DWK-0W-THd" kind="modal" identifier="Tiger Inn" id="TAM-vJ-t2v"/>
                                         </connections>
                                     </button>
@@ -303,7 +296,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="pushTerrace:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="cBw-6Q-m6y"/>
                                             <segue destination="DWK-0W-THd" kind="modal" identifier="Terrace" id="A36-YY-7Gq"/>
                                         </connections>
                                     </button>
@@ -319,7 +311,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="pushTower:" destination="Q3F-0C-Gk0" eventType="touchUpInside" id="jXx-E4-OME"/>
                                             <segue destination="DWK-0W-THd" kind="modal" identifier="Tower" id="LJx-HG-xg2"/>
                                         </connections>
                                     </button>
@@ -347,16 +338,6 @@
                         <inset key="imageInsets" minX="-2" minY="-6" maxX="-2" maxY="3"/>
                     </tabBarItem>
                     <connections>
-                        <outlet property="Cannon" destination="Er5-B0-UKh" id="DxI-EJ-AGP"/>
-                        <outlet property="Cap" destination="jCS-qh-bZb" id="TiK-u1-Vla"/>
-                        <outlet property="Charter" destination="Roh-6i-HHy" id="ekE-sf-f7W"/>
-                        <outlet property="Colonial" destination="9mh-UT-uCJ" id="eG2-e6-xaQ"/>
-                        <outlet property="Cottage" destination="kYl-2e-ajG" id="xot-BV-vom"/>
-                        <outlet property="Ivy" destination="yAN-yK-voU" id="Fwv-bc-y5E"/>
-                        <outlet property="Quad" destination="R48-p8-1x3" id="Gbk-y6-3ht"/>
-                        <outlet property="TI" destination="KdJ-01-cK6" id="9D1-xk-P93"/>
-                        <outlet property="Terrace" destination="uqH-Ej-iUS" id="jXI-Ca-h4E"/>
-                        <outlet property="Tower" destination="oN7-Fd-I4V" id="lOR-Un-fZR"/>
                         <outlet property="dateLabel" destination="5I3-Lj-qG6" id="87p-U8-qNq"/>
                     </connections>
                 </viewController>

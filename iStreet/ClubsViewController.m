@@ -42,11 +42,12 @@
 
 - (void)viewDidUnload
 {
-    Cloister = nil;
+    /*Cloister = nil;
     //_datelabel = nil;
     //[self setDatelabel:nil];
     //dateLabel = nil;
     dateLabel = nil;
+     */
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -84,41 +85,5 @@
  
  }
 */
-
-/*
-- (IBAction)pushCampus:(id)sender {
-}
-
-- (IBAction)pushCannon:(id)sender {
-}
-
-- (IBAction)pushCap:(id)sender {
-    
-}
-
-- (IBAction)pushCharter:(id)sender {
-}
-
-- (IBAction)pushColonial:(id)sender {
-}
-
-- (IBAction)pushCottage:(id)sender {
-}
-
-- (IBAction)pushIvy:(id)sender {
-}
-
-- (IBAction)pushQuad:(id)sender {
-}
-
-- (IBAction)pushTI:(id)sender {
-}
-
-- (IBAction)pushTerrace:(id)sender {
-}
-
-- (IBAction)pushTower:(id)sender {
-}
- */
 
 @end

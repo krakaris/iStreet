@@ -21,23 +21,11 @@
     IBOutlet UIButton *Tower;
     //UIButton *Campus;
     IBOutlet UIButton *Charter;
+     
     
     __weak IBOutlet UILabel *dateLabel;
     
 }
 //@property (weak, nonatomic) IBOutlet UILabel *datelabel;
-/*
-- (IBAction)pushCampus:(id)sender;
-- (IBAction)pushCannon:(id)sender;
-- (IBAction)pushCap:(id)sender;
-- (IBAction)pushCharter:(id)sender;
-- (IBAction)pushColonial:(id)sender;
-- (IBAction)pushCottage:(id)sender;
-- (IBAction)pushIvy:(id)sender;
-- (IBAction)pushQuad:(id)sender;
-- (IBAction)pushTI:(id)sender;
-- (IBAction)pushTerrace:(id)sender;
-- (IBAction)pushTower:(id)sender;
 
-*/
 @end
