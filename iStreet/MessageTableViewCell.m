@@ -45,7 +45,6 @@
 
 - (void)packCellWithMessage:(Message *)m
 {
-    NSLog(@"packing...");
     CGSize maxTextSize = CGSizeMake(MAX_WIDTH, MAX_HEIGHT);
     NSString *messageText = [NSString stringWithFormat:@"%@: %@", m.user, m.message];
     CGSize fittedSize = [messageText sizeWithFont:[UIFont boldSystemFontOfSize:13]
@@ -97,9 +96,6 @@
     NSString *timestamp = [formatter stringFromDate:date];
     
     [self.infoLabel setText:[NSString stringWithFormat:timestamp]];
-    
-    NSLog(@"done packing...");
-
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

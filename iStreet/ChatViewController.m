@@ -31,6 +31,7 @@
 {
     [super viewDidLoad];
     
+    gettingNewMessages = NO;
     receivedNewMessages = NO;
     
     [activityIndicator startAnimating];
@@ -55,6 +56,9 @@
 
 - (void)getNewMessages
 {
+    if(gettingNewMessages)
+        return;
+    gettingNewMessages = YES;
     NSString *url = [NSString stringWithFormat:@"http://istreetsvr.herokuapp.com/get?past=%d", lastMessageID];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -64,7 +68,8 @@
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     if (conn)
         receivedData = [NSMutableData data];
-    // else do nothing
+    else
+        gettingNewMessages = NO;
 }
 
 /*
@@ -93,6 +98,7 @@
     if(!messagesArray)
     {
         NSLog(@"%@", [error localizedDescription]);
+        gettingNewMessages = NO;
         return; // do nothing if can't recieve messages
     }
     
@@ -118,6 +124,7 @@
     if(lastMessageID > oldLastID) // if new messages were received, scroll to the new message(s)
         [messagesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([messages count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     [activityIndicator stopAnimating];
+    gettingNewMessages = NO;
 }
 
 #pragma mark Sending Messages
