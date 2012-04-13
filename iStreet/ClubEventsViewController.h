@@ -30,5 +30,9 @@
 }
 
 @property(nonatomic, retain) Club *club;
+@property (nonatomic, retain) IBOutlet UITableView *eventsList;
+@property (nonatomic, retain) NSMutableDictionary *sections;
+
+- (void) getListOfEvents: (NSString *) clubName;
 
 @end

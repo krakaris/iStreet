@@ -14,7 +14,7 @@
 @end
 
 @implementation ClubEventsViewController
-@synthesize club;
+@synthesize club, eventsList, sections;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -75,14 +75,55 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+//#warning Potentially incomplete method implementation.
     return [events count];
+    //return 1;
+    /*BOOL found;
+    
+    for (Event *e in events)
+    {
+        NSString *sDate = e.startDate;
+        
+        found = NO;
+        
+        for (NSString *str in [self.sections allKeys])
+        {
+            if ([str isEqualToString:sDate])
+            {
+                found = YES;
+            }
+        }
+        if (!found)
+        {
+            //[self.sections setValue:[[NSMutableArray alloc] init] forKey:sDate];
+            [self.sections setValue:e forKey:sDate];
+        }
+    }
+    for (Event *e in events)
+    {
+        [[self.sections objectForKey:e.startDate] addObject:e];
+    }
+     */
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    return [events count];
+//#warning Incomplete method implementation.
+    //return [events count];
+    return 1;
+}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    Event *e = [events objectAtIndex:section];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"YYYY-MM-dd"];
+    NSDate *sDate = [dateFormat dateFromString:e.startDate];
+    
+    NSDateFormatter *newFormat = [[NSDateFormatter alloc] init];
+    [newFormat setDateFormat:@"EEEE, MMMM d"];
+    NSString *sTimeString = [newFormat stringFromDate:sDate];
+
+    return sTimeString;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -97,11 +138,33 @@
     }
     
     // Configure the cell...
-    //Event *event = [events objectAtIndex: indexPath.row];
-    NSString *title = [eventTitles objectAtIndex: indexPath.row];
+    Event *event = [events objectAtIndex: indexPath.section];
+    //NSString *title = [eventTitles objectAtIndex: indexPath.section];
+    NSString *title = event.title;
     
-    //cell.detailTextLabel.text = club.clubName;
-    cell.textLabel.text = title;
+    if ([title isEqualToString:@""] || [title isEqualToString:club.clubName]) {
+        title = @"On Tap";
+    }
+    
+    // Format Times appropriately for Subtitle
+    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+    [inputFormatter setDateFormat:@"HH:mm:ss"];
+    NSDate *sTime = [inputFormatter dateFromString:event.startTime];
+    
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"h:mm"];
+    NSString *sTimeString = [outputFormatter stringFromDate:sTime];
+    
+    NSDate *eTime = [inputFormatter dateFromString:event.endTime];
+    NSString *eTimeString = [outputFormatter stringFromDate:eTime];
+    
+    //Hardcoded AM and PM --> FIX!!!
+    NSString *timeString = [sTimeString stringByAppendingString:@"pm - "];
+    timeString = [timeString stringByAppendingString:eTimeString];
+    timeString = [timeString stringByAppendingString:@"am"];
+        
+    [cell.textLabel setText:title];
+    [cell.detailTextLabel setText:timeString];
     
     return cell;
 }
@@ -145,7 +208,6 @@
 }
 */
 
-#pragma mark - Table view delegate
 // Online Flickr Tutorial - not sure if correct?
 /*- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data 
 {
@@ -189,11 +251,9 @@
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     if (connection) {
         receivedData = [NSMutableData data];
-        NSLog(@"RECEIVED DATA\n");
     }
     
  //else do nothing
-    NSLog(@"\n DATA: %@\n", receivedData);
 
  }
 
@@ -204,7 +264,6 @@
  */
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {  
-    NSLog(@"Did receive response\n");
     [receivedData setLength:0];
 }  
 
@@ -213,7 +272,6 @@
  */
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data  
 {  
-    NSLog(@"Did receive data\n");
     [receivedData appendData:data];
 } 
 
@@ -233,9 +291,7 @@
     
     for(NSDictionary *dict in eventsArray)
     {
-        NSLog(@"Event Dictionary: %@\n", dict);
          Event *e = [[Event alloc] initWithDictionary:dict];
-        NSLog(@"Event created: %@\n", e);
         [events addObject:e];
         if (e.title != nil) {
             [eventTitles addObject:e.title];
@@ -247,6 +303,9 @@
         [eventStartTimes addObject:e.startTime];
         [eventEndTimes addObject:e.endTime];
     }
+    NSLog(@"Number of Events: %d\n", [events count]);
+    [eventsList reloadData];
+    
     //Add images to Array: "eventImages"
     /*for (Event *event in events)
     {
@@ -275,6 +334,7 @@
     
 }
 
+#pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
