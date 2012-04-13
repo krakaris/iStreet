@@ -21,7 +21,7 @@
         infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 20)];
         infoLabel.textAlignment = UITextAlignmentCenter;
         infoLabel.font = [UIFont systemFontOfSize:11.0];
-        infoLabel.textColor = [UIColor darkGrayColor];
+        infoLabel.textColor = [UIColor lightGrayColor];
         infoLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:infoLabel];
         
@@ -45,14 +45,16 @@
 
 - (void)packCellWithMessage:(Message *)m
 {
+    NSLog(@"packing...");
     CGSize maxTextSize = CGSizeMake(MAX_WIDTH, MAX_HEIGHT);
-    CGSize fittedSize = [m.message sizeWithFont:[UIFont boldSystemFontOfSize:13]
+    NSString *messageText = [NSString stringWithFormat:@"%@: %@", m.user, m.message];
+    CGSize fittedSize = [messageText sizeWithFont:[UIFont boldSystemFontOfSize:13]
                               constrainedToSize:maxTextSize
                                   lineBreakMode:UILineBreakModeCharacterWrap];
     
     fittedSize.width += PADDING;
     
-    [self.messageView setText:m.message];
+    [self.messageView setText:messageText];
     
     UIImage *bgImage = nil;
     NSString *myNetID = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
@@ -84,9 +86,20 @@
                                                   fittedSize.height + PADDING)];
     }
     [self.backgroundImage setImage:bgImage];
-    [self.infoLabel setText:[NSString stringWithFormat:@"%@: %@", m.user, m.timestamp]];
     
     
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+    NSDate *date = [formatter dateFromString:m.timestamp];
+    [formatter setTimeZone:[NSTimeZone localTimeZone]];
+    [formatter setDateFormat:@"MMMM d, yyyy h:mm a"];
+    NSString *timestamp = [formatter stringFromDate:date];
+    
+    [self.infoLabel setText:[NSString stringWithFormat:timestamp]];
+    
+    NSLog(@"done packing...");
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

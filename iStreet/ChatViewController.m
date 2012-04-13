@@ -188,7 +188,7 @@
 {
     
     Message *m = [messages objectAtIndex:indexPath.row];
-    NSString *msg = m.message;
+    NSString *msg = [NSString stringWithFormat:@"%@: %@", m.user, m.message];
     
     CGSize maxSize = CGSizeMake(MAX_WIDTH, MAX_HEIGHT);
     CGSize fittedSize = [msg sizeWithFont:[UIFont boldSystemFontOfSize:13]
