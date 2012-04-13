@@ -31,7 +31,6 @@
 {
     [super viewDidLoad];
     
-    messageSending = NO;
     receivedNewMessages = NO;
     
     [activityIndicator startAnimating];
@@ -103,8 +102,10 @@
     {
         oldLastID = ((Message *)[messages objectAtIndex:([messages count]-1)]).ID;
     }
-        
-    for(NSDictionary *dict in messagesArray)
+    
+    NSEnumerator *realMessageOrder = [messagesArray reverseObjectEnumerator];
+    NSDictionary *dict;
+    while (dict = [realMessageOrder nextObject])
     {
         Message *m = [[Message alloc] initWithDictionary:dict];
         [messages addObject:m];
@@ -124,10 +125,9 @@
 - (IBAction)sendClicked:(id)sender 
 {   
     // if there is no text, or the message is still sending (i.e. the user double-clicked), don't do anything.
-    if ([messageField.text length] == 0 || messageSending)
+    if ([messageField.text length] == 0 || [activityIndicator isAnimating])
         return;
     
-    messageSending = YES;
     [messageField setTextColor:[UIColor grayColor]];
     [activityIndicator startAnimating];
     
@@ -149,7 +149,6 @@
     messageField.text = @"";
     [messageField setTextColor:[UIColor blackColor]];
     
-    messageSending = NO;
     [self getNewMessages];
 }
 
@@ -228,6 +227,7 @@
     static int KEYBOARD_HEIGHT = 216;
     CGPoint scrollPoint = CGPointMake(0.0, messageField.frame.origin.y - KEYBOARD_HEIGHT + TAB_BAR_HEIGHT);
     [scrollView setContentOffset:scrollPoint animated:YES];
+    CGRect oldTableFrame = self.messagesTable.frame;
 }
 
 /*
