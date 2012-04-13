@@ -227,7 +227,15 @@
     static int KEYBOARD_HEIGHT = 216;
     CGPoint scrollPoint = CGPointMake(0.0, messageField.frame.origin.y - KEYBOARD_HEIGHT + TAB_BAR_HEIGHT);
     [scrollView setContentOffset:scrollPoint animated:YES];
-    CGRect oldTableFrame = self.messagesTable.frame;
+}
+
+/* 
+ If the user hits "Send", send the message
+*/
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self sendClicked:nil];
+    return YES;
 }
 
 /*
