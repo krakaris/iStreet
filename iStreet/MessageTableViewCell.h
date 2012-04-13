@@ -12,8 +12,8 @@
 enum messageBubbleValues 
 {
     PADDING = 15,
-    MAX_WIDTH = 220,
-    MAX_HEIGHT = 400
+    MAX_WIDTH = 200,
+    MAX_HEIGHT = 500
 };
 
 @interface MessageTableViewCell : UITableViewCell 

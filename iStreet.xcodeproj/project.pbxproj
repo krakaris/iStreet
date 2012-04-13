@@ -464,6 +464,7 @@
 		5BA1F63715112DA7002CA7F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iStreet/iStreet-Prefix.pch";
 				INFOPLIST_FILE = "iStreet/iStreet-Info.plist";

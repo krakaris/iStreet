@@ -31,7 +31,7 @@
 {
     [super viewDidLoad];
     
-    messageSending = NO;
+    gettingNewMessages = NO;
     receivedNewMessages = NO;
     
     [activityIndicator startAnimating];
@@ -56,6 +56,9 @@
 
 - (void)getNewMessages
 {
+    if(gettingNewMessages)
+        return;
+    gettingNewMessages = YES;
     NSString *url = [NSString stringWithFormat:@"http://istreetsvr.herokuapp.com/get?past=%d", lastMessageID];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -65,7 +68,8 @@
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     if (conn)
         receivedData = [NSMutableData data];
-    // else do nothing
+    else
+        gettingNewMessages = NO;
 }
 
 /*
@@ -94,6 +98,7 @@
     if(!messagesArray)
     {
         NSLog(@"%@", [error localizedDescription]);
+        gettingNewMessages = NO;
         return; // do nothing if can't recieve messages
     }
     
@@ -103,8 +108,10 @@
     {
         oldLastID = ((Message *)[messages objectAtIndex:([messages count]-1)]).ID;
     }
-        
-    for(NSDictionary *dict in messagesArray)
+    
+    NSEnumerator *realMessageOrder = [messagesArray reverseObjectEnumerator];
+    NSDictionary *dict;
+    while (dict = [realMessageOrder nextObject])
     {
         Message *m = [[Message alloc] initWithDictionary:dict];
         [messages addObject:m];
@@ -117,6 +124,7 @@
     if(lastMessageID > oldLastID) // if new messages were received, scroll to the new message(s)
         [messagesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([messages count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     [activityIndicator stopAnimating];
+    gettingNewMessages = NO;
 }
 
 #pragma mark Sending Messages
@@ -124,10 +132,9 @@
 - (IBAction)sendClicked:(id)sender 
 {   
     // if there is no text, or the message is still sending (i.e. the user double-clicked), don't do anything.
-    if ([messageField.text length] == 0 || messageSending)
+    if ([messageField.text length] == 0 || [activityIndicator isAnimating])
         return;
     
-    messageSending = YES;
     [messageField setTextColor:[UIColor grayColor]];
     [activityIndicator startAnimating];
     
@@ -149,7 +156,6 @@
     messageField.text = @"";
     [messageField setTextColor:[UIColor blackColor]];
     
-    messageSending = NO;
     [self getNewMessages];
 }
 
@@ -189,7 +195,7 @@
 {
     
     Message *m = [messages objectAtIndex:indexPath.row];
-    NSString *msg = m.message;
+    NSString *msg = [NSString stringWithFormat:@"%@: %@", m.user, m.message];
     
     CGSize maxSize = CGSizeMake(MAX_WIDTH, MAX_HEIGHT);
     CGSize fittedSize = [msg sizeWithFont:[UIFont boldSystemFontOfSize:13]
@@ -228,6 +234,15 @@
     static int KEYBOARD_HEIGHT = 216;
     CGPoint scrollPoint = CGPointMake(0.0, messageField.frame.origin.y - KEYBOARD_HEIGHT + TAB_BAR_HEIGHT);
     [scrollView setContentOffset:scrollPoint animated:YES];
+}
+
+/* 
+ If the user hits "Send", send the message
+*/
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self sendClicked:nil];
+    return YES;
 }
 
 /*
