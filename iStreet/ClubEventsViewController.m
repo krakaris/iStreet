@@ -24,10 +24,19 @@
     }    
     return self;
 }
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+    
+	[self.navigationController setNavigationBarHidden:NO animated:YES];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                   style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backButton;
     
     // Initialize our arrays
     events = [[NSMutableArray alloc] init];
@@ -345,6 +354,16 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    
+    /* set event based on row selected
+     Event *event;
+     [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
+    
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc]
+                                                    initWithNibName:@"DetailsViewController" bundle:nil];
+     detailsViewController.navigationItem.title = event.title;
+    [self.navigationController pushViewController:detailsViewController];
+    */
 }
 
 
