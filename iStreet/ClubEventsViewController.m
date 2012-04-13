@@ -14,6 +14,7 @@
 @end
 
 @implementation ClubEventsViewController
+@synthesize navigationBarItem;
 @synthesize club, eventsList, sections;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -30,13 +31,23 @@
 	[self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
+-(void)backAction:(id)arg {
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
-                                                                   style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backButton;
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Clubs"
+        style:UIBarButtonItemStyleBordered 
+        target:self action:@selector(backAction:)];
+    
+    //self.navigationBarItem.backBarButtonItem = backButton;
+    self.navigationBarItem.leftBarButtonItem = backButton;
+     
+    self.navigationBarItem.title = self.club.clubName;
+
     
     // Initialize our arrays
     events = [[NSMutableArray alloc] init];
@@ -59,8 +70,6 @@
      club.clubCrest = [[UIImage alloc] initWithContentsOfFile:imagePath];
      */
 
-    self.navigationItem.title = self.club.clubName;
-
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -70,6 +79,7 @@
 
 - (void)viewDidUnload
 {
+    [self setNavigationBarItem:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
