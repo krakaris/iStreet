@@ -21,7 +21,6 @@
     NSMutableArray *messages;
     NSTimer *timer;
     int lastMessageID;
-    BOOL messageSending; // the button has been pressed, but the message hasn't yet sent
     BOOL receivedNewMessages; // new messages were received at the last update
     //SBJsonParser *parser;
 }
