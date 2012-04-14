@@ -8,6 +8,7 @@
 
 #import "ClubEventsViewController.h"
 #import "Event.h"
+#import "EventDetailsViewController.h"
 
 @interface ClubEventsViewController ()
 
@@ -39,7 +40,7 @@
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Clubs"
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Clubs"]
         style:UIBarButtonItemStyleBordered 
         target:self action:@selector(backAction:)];
     
@@ -365,15 +366,16 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
     
-    /* set event based on row selected
-     Event *event;
+    // set event based on row selected
+     Event *event = [events objectAtIndex: indexPath.section];
      [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
     
-    DetailsViewController *detailsViewController = [[DetailsViewController alloc]
-                                                    initWithNibName:@"DetailsViewController" bundle:nil];
+    EventDetailsViewController *detailsViewController = [[EventDetailsViewController alloc]
+                                                    initWithNibName:@"EventDetailsViewController" bundle:nil];
+    
      detailsViewController.navigationItem.title = event.title;
-    [self.navigationController pushViewController:detailsViewController];
-    */
+    //[self.eventsList pushViewController:detailsViewController];
+    
 }
 
 

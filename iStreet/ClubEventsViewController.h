@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Club.h"
+#import "EventDetailsViewController.h"
 
 @interface ClubEventsViewController : UITableViewController
 {
@@ -23,6 +24,8 @@
     NSMutableArray *eventEndTimes;
     
     NSMutableData *receivedData;
+    
+    IBOutlet EventDetailsViewController *edvController;
     
 //    NSString *clubName;
 //    UIImage *clubCrest;
