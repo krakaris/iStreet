@@ -5,12 +5,19 @@
 //  Created by Rishi on 3/14/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
+//  Some of the code for synchronously loading event icons in the table cells (and all of the logic) is from Apple's LazyTable sample project
 
 #import "EventsViewController.h"
-#import "LoginViewController.h"
+#import "TempEvent.h"
+#import "EventsArray.h"
+#import "EventsViewCell.h"
+
+enum constants {
+    kLoadingIndicatorTag = 1,
+};
 
 @interface EventsViewController ()
-
+- (void)getEventsData;
 @end
 
 @implementation EventsViewController
@@ -18,12 +25,18 @@
 @synthesize loggedIn;
 @synthesize netid;
 
+@synthesize activityIndicator, eventsTable;
+
 - (void)viewDidLoad
 {
-    
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     loggedIn = NO;
+    
+    eventsByDate = [NSMutableArray array];
+    iconsBeingDownloaded = [NSMutableDictionary dictionary];
+    
+    [self getEventsData];
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -51,8 +64,8 @@
     NSLog(@"WHAZOO!");
     loggedIn = YES;
     
-   // NSString *netid;
-   // netid = self.loginView.
+    // NSString *netid;
+    // netid = self.loginView.
     
     [self dismissModalViewControllerAnimated:YES];
     
@@ -68,89 +81,239 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-    } else {
-        return YES;
-    }
+    return interfaceOrientation == UIInterfaceOrientationPortrait;
 }
+
+#pragma mark Receiving Events Data
+
+- (void)getEventsData
+{
+    [activityIndicator startAnimating];
+    NSString *url = @"http://istreetsvr.herokuapp.com/eventslist";
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:url]];
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    if (conn)
+        receivedData = [NSMutableData data];
+}
+
+/*
+ Runs when the sufficient server response data has been received.
+ */
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{  
+    [receivedData setLength:0];
+}  
+
+/*
+ Runs as the connection loads data from the server.
+ */
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data  
+{  
+    [receivedData appendData:data];
+} 
+
+/*
+ Runs when the connection has successfully finished loading all data
+ */
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSError *error;
+    NSArray *eventsArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
+    if(!eventsArray)
+    {
+        NSLog(@"%@", [error localizedDescription]);
+        return;
+    }
+    
+    for(NSDictionary *dict in eventsArray)
+    {
+        
+        TempEvent *e = [[TempEvent alloc] initWithDictionary:dict];
+        NSString *dateOfEvent = [e.timeStart substringToIndex:[e.timeStart rangeOfString:@" "].location];
+        
+        //Find the array in eventsByDate that has events on the same date as e
+        EventsArray *eventsSameDate = nil;
+        for(EventsArray *events in eventsByDate)
+            if([[events date] isEqualToString:dateOfEvent])
+                eventsSameDate = events;
+        
+        //If the array wasn't found, create a new array of events for that night.
+        if(eventsSameDate == nil)
+        {
+            eventsSameDate = [[EventsArray alloc] initWithDate:dateOfEvent];
+            [eventsByDate addObject:eventsSameDate];
+        }
+        
+        [eventsSameDate addEvent:e];
+    }
+    
+    [eventsByDate sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        EventsArray *ea1 = (EventsArray *)obj1;
+        EventsArray *ea2 = (EventsArray *)obj2;
+        
+        return [ea1.date compare:ea2.date];
+    }];
+    
+    [eventsTable reloadData];
+    [activityIndicator stopAnimating];
+}
+
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+{    
+    return [eventsByDate count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    EventsArray *ea = [eventsByDate objectAtIndex:section];
+    return [ea.array count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CELL_IDENTIFIER = @"event cell";
+    EventsViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER];
+    if(cell == nil)
+        cell = [[EventsViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CELL_IDENTIFIER];
     
     // Configure the cell...
+    
+    //If there is an activity indicator, remove it.
+    [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kLoadingIndicatorTag] removeFromSuperview];
+    
+    EventsArray *ea = [eventsByDate objectAtIndex:indexPath.section];
+    TempEvent *event = [ea.array objectAtIndex:indexPath.row];
+    
+    // If there is no event title, make the title "On tap"
+    [cell.textLabel setText:([event.title isEqualToString:@""] ? @"On Tap" : event.title)];
+    [cell.detailTextLabel setText:event.name];
+    
+    if([event.poster isEqualToString:@""])
+    {
+        NSString *imageName = [NSString stringWithFormat:@"%@.png", event.name];
+        [cell setImage:[UIImage imageNamed:imageName]];
+        return cell;
+    }
+    
+    // Use the icon if it's already available
+    if (event.icon)
+    {
+        [cell setImage:event.icon];
+        return cell;
+    }
+        
+    // Otherwise, start downloading the icon (unless the table is scrolling)
+    
+    if (self.eventsTable.dragging == NO && self.eventsTable.decelerating == NO)
+    {
+        [self startIconDownload:event forIndexPath:indexPath];
+    }
+    
+    // If a download is deferred or in progress, return a placeholder image
+    [cell setImage:[UIImage imageNamed:@"Placeholder.png"]];     
+    UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    CGSize imageViewSize = cell.imageView.image.size;
+    NSLog(@"%f, %f", imageViewSize.width, imageViewSize.height);
+    [loadingIndicator setCenter:CGPointMake(imageViewSize.width/2, imageViewSize.height/2)];
+    [loadingIndicator setTag:kLoadingIndicatorTag];
+    [cell.imageView addSubview:loadingIndicator];
+    [loadingIndicator startAnimating];
+    NSLog(@"%f %f %f %f", loadingIndicator.frame.origin.x, loadingIndicator.frame.origin.y, loadingIndicator.frame.size.width, loadingIndicator.frame.size.height);
     
     return cell;
 }
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
 
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }   
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }   
- }
- */
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 45;
+}
 
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    EventsArray *ea = [eventsByDate objectAtIndex:section];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [formatter dateFromString:ea.date];
+    [formatter setDateFormat:@"MMMM d, yyyy"];
+    NSString *dateString = [formatter stringFromDate:date];
+    
+    return dateString;
+}
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+}
+
+#pragma mark -
+#pragma mark Table cell image support
+
+- (void)startIconDownload:(TempEvent *)event forIndexPath:(NSIndexPath *)indexPath
+{
+    IconDownloader *iconDownloader = [iconsBeingDownloaded objectForKey:indexPath];
+    if (iconDownloader == nil) 
+    {
+        iconDownloader = [[IconDownloader alloc] init];
+        iconDownloader.event = event;
+        iconDownloader.indexPathInTableView = indexPath;
+        iconDownloader.delegate = self;
+        [iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
+        [iconDownloader startDownload];
+    }
+}
+
+// this method is used when the user scrolls into a set of cells that don't have their app icons yet
+- (void)loadImagesForOnscreenRows
+{
+    NSArray *visiblePaths = [self.eventsTable indexPathsForVisibleRows];
+    for (NSIndexPath *indexPath in visiblePaths)
+    {
+        TempEvent *event = [((EventsArray *)[eventsByDate objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row]; // the event for the cell at that index path
+        
+        // start downloading the icon if the event doesn't have an icon but has a link to one
+        if (!event.icon && ![event.poster isEqualToString:@""])
+            [self startIconDownload:event forIndexPath:indexPath];
+    }
+}
+
+// called by our ImageDownloader when an icon is ready to be displayed
+- (void)appImageDidLoad:(NSIndexPath *)indexPath
+{
+    NSLog(@"image loaded!");
+    UITableViewCell *cell = [self.eventsTable cellForRowAtIndexPath:indexPath];
+    [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kLoadingIndicatorTag] stopAnimating];
+    [eventsTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [iconsBeingDownloaded removeObjectForKey:indexPath];
+}
+
+
+#pragma mark -
+#pragma mark Deferred image loading (UIScrollViewDelegate)
+
+// Load images for all onscreen rows when scrolling is finished
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate)
+	{
+        [self loadImagesForOnscreenRows];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadImagesForOnscreenRows];
 }
 
 @end

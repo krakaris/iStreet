@@ -6,22 +6,61 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller - Events-->
+        <scene sceneID="BG4-na-7Sk">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dBr-qy-Zbo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController definesPresentationContext="YES" id="WCo-Zm-bLh" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Events" image="List icon.png" id="f3j-wF-Wxg"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" barStyle="blackOpaque" id="aR8-iF-RcN">
+                        <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="3" kind="relationship" relationship="rootViewController" id="XQX-gW-4PQ"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="-373" y="-393"/>
+        </scene>
         <!--Events View Controller - Events-->
         <scene sceneID="13">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="12" sceneMemberID="firstResponder"/>
-                <viewController id="3" customClass="EventsViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8bg-7h-FJe">
-                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </tableView>
+                <viewController title="Events" id="3" customClass="EventsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Utm-iJ-Ph6">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Pym-Su-YSk">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="3" id="WfK-Ha-skl"/>
+                                    <outlet property="delegate" destination="3" id="yOI-PI-cnM"/>
+                                </connections>
+                            </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" id="2Lq-WE-aZm">
+                                <rect key="frame" x="142" y="165" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" cocoaTouchSystemColor="darkTextColor"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
                     <tabBarItem key="tabBarItem" title="Events" image="List icon.png" id="6">
                         <inset key="imageInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                     </tabBarItem>
+                    <navigationItem key="navigationItem" title="Events" id="7bB-ck-wWb"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="2Lq-WE-aZm" id="hgc-V4-jYA"/>
+                        <outlet property="eventsTable" destination="Pym-Su-YSk" id="ttc-Xb-Eaf"/>
+                    </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-343" y="-425"/>
+            <point key="canvasLocation" x="107" y="-393"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="15">
@@ -36,10 +75,10 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="3" kind="relationship" relationship="viewControllers" id="27"/>
+                        <segue destination="WCo-Zm-bLh" kind="relationship" relationship="viewControllers" id="s6N-Ut-cba"/>
+                        <segue destination="wyn-DU-M0b" kind="relationship" relationship="viewControllers" id="Z8g-GV-BEt"/>
                         <segue destination="rXC-yw-ECj" kind="relationship" relationship="viewControllers" id="ocL-bF-wSQ"/>
                         <segue destination="vtS-QH-gNE" kind="relationship" relationship="viewControllers" id="otY-OD-E85"/>
-                        <segue destination="wyn-DU-M0b" kind="relationship" relationship="viewControllers" id="Z8g-GV-BEt"/>
                     </connections>
                 </tabBarController>
             </objects>
@@ -115,7 +154,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="129" y="-425"/>
+            <point key="canvasLocation" x="107" y="237"/>
         </scene>
         <!--Friends View Controller - Friends-->
         <scene sceneID="CfW-4D-yDY">
@@ -153,7 +192,7 @@
                                         <rect key="frame" x="160" y="-5" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Campus" image="Campus.png">
+                                        <state key="normal" title="Charter" image="Charter.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -183,7 +222,7 @@
                                         <rect key="frame" x="249" y="95" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Cap and Gown" image="Cap&amp;Gown.png">
+                                        <state key="normal" title="Cap and Gown" image="Cap and Gown.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -258,7 +297,7 @@
                                         <rect key="frame" x="13" y="189" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Quadrangle" image="Quad.png">
+                                        <state key="normal" title="Quadrangle" image="Quadrangle.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -273,7 +312,7 @@
                                         <rect key="frame" x="11" y="113" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Tiger Inn" image="T.I..png">
+                                        <state key="normal" title="Tiger Inn" image="Tiger Inn.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -336,7 +375,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="525" y="205"/>
+            <point key="canvasLocation" x="537" y="857"/>
         </scene>
         <!--Navigation Controller - Clubs-->
         <scene sceneID="5DI-Nv-rtZ">
@@ -355,7 +394,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="121" y="198"/>
+            <point key="canvasLocation" x="65" y="848"/>
         </scene>
         <!--Club Events View Controller-->
         <scene sceneID="A6X-jM-ROa">
@@ -399,13 +438,14 @@
                             <outlet property="delegate" destination="DWK-0W-THd" id="Xai-Nr-SYs"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="m1f-WA-aAf"/>
                     <connections>
                         <outlet property="eventsList" destination="xoj-t7-ooj" id="63s-aI-Oxv"/>
                         <segue destination="xZq-Pq-Unb" kind="push" identifier="ShowEventDetails" id="gZz-0c-lrR"/>
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="952" y="205"/>
+            <point key="canvasLocation" x="978" y="848"/>
         </scene>
         <!--Event Details View Controller-->
         <scene sceneID="Hog-8J-hRa">
@@ -433,10 +473,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Campus.png" width="95" height="115"/>
         <image name="Cannon.png" width="92" height="98"/>
-        <image name="Cap&amp;Gown.png" width="86" height="100"/>
-        <image name="Charter.png" width="71" height="106"/>
+        <image name="Cap and Gown.png" width="86" height="100"/>
+        <image name="Charter.png" width="95" height="115"/>
         <image name="Chat icon 3.png" width="30" height="27"/>
         <image name="Colonial.png" width="98" height="91"/>
         <image name="Cottage.png" width="96" height="106"/>
@@ -445,9 +484,9 @@
         <image name="Ivy.png" width="101" height="100"/>
         <image name="List icon.png" width="30" height="29"/>
         <image name="Princeton Crest 3.png" width="155" height="160"/>
-        <image name="Quad.png" width="95" height="85"/>
-        <image name="T.I..png" width="93" height="100"/>
+        <image name="Quadrangle.png" width="95" height="85"/>
         <image name="Terrace.png" width="94" height="95"/>
+        <image name="Tiger Inn.png" width="93" height="100"/>
         <image name="Tower.png" width="78" height="101"/>
     </resources>
     <classes>
@@ -490,8 +529,12 @@
         <class className="EventDetailsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EventDetailsViewController.h"/>
         </class>
-        <class className="EventsViewController" superclassName="UITableViewController">
+        <class className="EventsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="eventsTable" candidateClass="UITableView"/>
+            </relationships>
         </class>
         <class className="FriendsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
@@ -503,6 +546,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="wJC-67-ChH"/>
+        <segue reference="1j5-I8-HT3"/>
     </inferredMetricsTieBreakers>
 </document>
