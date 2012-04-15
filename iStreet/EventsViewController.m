@@ -5,10 +5,9 @@
 //  Created by Rishi on 3/14/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
-//  Help for downloading icons asynchronously was received from Apple's LazyTable sample project
+//  Some of the code for synchronously loading event icons in the table cells (and all of the logic) is from Apple's LazyTable sample project
 
 #import "EventsViewController.h"
-#import "LoginViewController.h"
 #import "TempEvent.h"
 #import "EventsArray.h"
 
@@ -29,7 +28,8 @@
 	// Do any additional setup after loading the view, typically from a nib.
     loggedIn = NO;
     
-    eventsByDate = [NSMutableDictionary dictionary];
+    eventsByDate = [NSMutableArray array];
+    iconsBeingDownloaded = [NSMutableDictionary dictionary];
     
     [self getEventsData];
 }
@@ -182,24 +182,31 @@
     
     // Configure the cell...
     EventsArray *ea = [eventsByDate objectAtIndex:indexPath.section];
-    TempEvent *e = [ea.array objectAtIndex:indexPath.row];
+    TempEvent *event = [ea.array objectAtIndex:indexPath.row];
+    
+    [cell.textLabel setText:([event.title isEqualToString:@""] ? @"On Tap" : event.title)];
+    [cell.detailTextLabel setText:event.name];
+    
+    if([event.poster isEqualToString:@""])
+    {
+        NSString *imageName = [NSString stringWithFormat:@"%@.png", event.name];
+        cell.imageView.image = [UIImage imageNamed:imageName];                
+        return cell;
+    }
     
     // Start downloading the icon (unless the table is scrolling), or use it if it's already available
-    if (!e.icon)
+    if (!event.icon)
     {
         if (self.eventsTable.dragging == NO && self.eventsTable.decelerating == NO)
-            [self startIconDownload:appRecord forIndexPath:indexPath];
-
+        {
+            [self startIconDownload:event forIndexPath:indexPath];
+        }
+        
         // if a download is deferred or in progress, return a placeholder image
         cell.imageView.image = [UIImage imageNamed:@"Placeholder.png"];                
     }
     else
-        cell.imageView.image = e.icon;
-
-    
-    [cell.imageView setImage:[UIImage imageNamed:@"Placeholder.png"]];
-    [cell.textLabel setText:([e.title isEqualToString:@""] ? @"On Tap" : e.title)];
-    [cell.detailTextLabel setText:e.name];
+        cell.imageView.image = event.icon;
     
     return cell;
 }
@@ -212,7 +219,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     EventsArray *ea = [eventsByDate objectAtIndex:section];
-
+    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *date = [formatter dateFromString:ea.date];
@@ -222,105 +229,48 @@
     return dateString;
 }
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }   
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }   
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
 }
 
 #pragma mark -
 #pragma mark Table cell image support
 
-- (void)startIconDownload:(AppRecord *)appRecord forIndexPath:(NSIndexPath *)indexPath
+- (void)startIconDownload:(TempEvent *)event forIndexPath:(NSIndexPath *)indexPath
 {
-    IconDownloader *iconDownloader = [imageDownloadsInProgress objectForKey:indexPath];
+    IconDownloader *iconDownloader = [iconsBeingDownloaded objectForKey:indexPath];
     if (iconDownloader == nil) 
     {
         iconDownloader = [[IconDownloader alloc] init];
-        iconDownloader.appRecord = appRecord;
+        iconDownloader.event = event;
         iconDownloader.indexPathInTableView = indexPath;
         iconDownloader.delegate = self;
-        [imageDownloadsInProgress setObject:iconDownloader forKey:indexPath];
+        [iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
         [iconDownloader startDownload];
-        [iconDownloader release];   
     }
 }
 
-// this method is used in case the user scrolled into a set of cells that don't have their app icons yet
+// this method is used when the user scrolls into a set of cells that don't have their app icons yet
 - (void)loadImagesForOnscreenRows
 {
-    if ([self.entries count] > 0)
+    NSArray *visiblePaths = [self.eventsTable indexPathsForVisibleRows];
+    for (NSIndexPath *indexPath in visiblePaths)
     {
-        NSArray *visiblePaths = [self.tableView indexPathsForVisibleRows];
-        for (NSIndexPath *indexPath in visiblePaths)
-        {
-            AppRecord *appRecord = [self.entries objectAtIndex:indexPath.row];
-            
-            if (!appRecord.appIcon) // avoid the app icon download if the app already has an icon
-            {
-                [self startIconDownload:appRecord forIndexPath:indexPath];
-            }
-        }
+        TempEvent *event = [((EventsArray *)[eventsByDate objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row]; // the event for the cell at that index path
+        
+        // start downloading the icon if the event doesn't have an icon but has a link to one
+        if (!event.icon && ![event.poster isEqualToString:@""])
+            [self startIconDownload:event forIndexPath:indexPath];
     }
 }
 
 // called by our ImageDownloader when an icon is ready to be displayed
 - (void)appImageDidLoad:(NSIndexPath *)indexPath
 {
-    IconDownloader *iconDownloader = [imageDownloadsInProgress objectForKey:indexPath];
-    if (iconDownloader != nil)
-    {
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:iconDownloader.indexPathInTableView];
-        
-        // Display the newly loaded image
-        cell.imageView.image = iconDownloader.appRecord.appIcon;
-    }
+    [eventsTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 

@@ -8,14 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "LoginViewController.h"
+#import "IconDownloader.h"
 
-@interface EventsViewController : UIViewController <LoginViewControllerDelegate, UIWebViewDelegate>
+@interface EventsViewController : UIViewController <LoginViewControllerDelegate, UIWebViewDelegate, IconDownloaderDelegate>
 {
     UITableView *eventsTable;
     UIActivityIndicatorView *activityIndicator;
     
     NSMutableData *receivedData;
-    NSMutableArray *eventsByDate; //an array of arrays of events of a given date
+    NSMutableArray *eventsByDate; //an array of arrays of events of a given date (considered making this a dictionary (date : events array), but the events must be ordered, which a dictionary is not.
+    NSMutableDictionary *iconsBeingDownloaded;
 }
 
 // will be moved...

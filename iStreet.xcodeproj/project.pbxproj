@@ -23,6 +23,7 @@
 		5BCE63AE15165D83008E6C1F /* ClubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AD15165D83008E6C1F /* ClubsViewController.m */; };
 		5BE7E2A6153A2E76008EFCA0 /* EventsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7E2A5153A2E76008EFCA0 /* EventsArray.m */; };
 		5BE7E2B1153A5E54008EFCA0 /* Placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BE7E2B0153A5E54008EFCA0 /* Placeholder.png */; };
+		5BE7E2B4153A649D008EFCA0 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7E2B3153A649D008EFCA0 /* IconDownloader.m */; };
 		5BFB44FA153382E800960C81 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F6153382E800960C81 /* EventsViewController.m */; };
 		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
@@ -35,10 +36,10 @@
 		9D6005DF1538D0A60088ABA7 /* EventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D6005DE1538D0A60088ABA7 /* EventDetailsViewController.m */; };
 		9D8C8D331534FF99001549B1 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D8C8D321534FF99001549B1 /* Event.m */; };
 		9DA5B1FC15362AFC00F2FC68 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5B1FB15362AFC00F2FC68 /* Message.m */; };
-		9DB903CA151BC6A900A13461 /* Campus.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903BF151BC6A900A13461 /* Campus.png */; };
+		9DB903CA151BC6A900A13461 /* Charter.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903BF151BC6A900A13461 /* Charter.png */; };
 		9DB903CB151BC6A900A13461 /* Cannon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C0151BC6A900A13461 /* Cannon.png */; };
 		9DB903CC151BC6A900A13461 /* Cap and Gown.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C1151BC6A900A13461 /* Cap and Gown.png */; };
-		9DB903CD151BC6A900A13461 /* Charter.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C2151BC6A900A13461 /* Charter.png */; };
+		9DB903CD151BC6A900A13461 /* Cloister.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C2151BC6A900A13461 /* Cloister.png */; };
 		9DB903CE151BC6A900A13461 /* Colonial.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C3151BC6A900A13461 /* Colonial.png */; };
 		9DB903CF151BC6A900A13461 /* Cottage.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C4151BC6A900A13461 /* Cottage.png */; };
 		9DB903D0151BC6A900A13461 /* Ivy.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C5151BC6A900A13461 /* Ivy.png */; };
@@ -84,6 +85,8 @@
 		5BE7E2A4153A2E76008EFCA0 /* EventsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsArray.h; sourceTree = "<group>"; };
 		5BE7E2A5153A2E76008EFCA0 /* EventsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsArray.m; sourceTree = "<group>"; };
 		5BE7E2B0153A5E54008EFCA0 /* Placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Placeholder.png; sourceTree = "<group>"; };
+		5BE7E2B2153A649D008EFCA0 /* IconDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconDownloader.h; sourceTree = "<group>"; };
+		5BE7E2B3153A649D008EFCA0 /* IconDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconDownloader.m; sourceTree = "<group>"; };
 		5BFB44F6153382E800960C81 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		5BFB44F8153382E800960C81 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5BFB450D153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -105,10 +108,10 @@
 		9D8C8D321534FF99001549B1 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		9DA5B1FA15362AFC00F2FC68 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		9DA5B1FB15362AFC00F2FC68 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
-		9DB903BF151BC6A900A13461 /* Campus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Campus.png; sourceTree = "<group>"; };
+		9DB903BF151BC6A900A13461 /* Charter.png */ = {isa = PBXFileReference; path = Charter.png; sourceTree = "<group>"; };
 		9DB903C0151BC6A900A13461 /* Cannon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cannon.png; sourceTree = "<group>"; };
 		9DB903C1151BC6A900A13461 /* Cap and Gown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cap and Gown.png"; sourceTree = "<group>"; };
-		9DB903C2151BC6A900A13461 /* Charter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Charter.png; sourceTree = "<group>"; };
+		9DB903C2151BC6A900A13461 /* Cloister.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cloister.png; sourceTree = "<group>"; };
 		9DB903C3151BC6A900A13461 /* Colonial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Colonial.png; sourceTree = "<group>"; };
 		9DB903C4151BC6A900A13461 /* Cottage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cottage.png; sourceTree = "<group>"; };
 		9DB903C5151BC6A900A13461 /* Ivy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ivy.png; sourceTree = "<group>"; };
@@ -256,6 +259,8 @@
 				5BFB45031533846600960C81 /* CAS Login */,
 				5BA1F62D15112DA7002CA7F3 /* EventsViewController.h */,
 				5BFB44F6153382E800960C81 /* EventsViewController.m */,
+				5BE7E2B2153A649D008EFCA0 /* IconDownloader.h */,
+				5BE7E2B3153A649D008EFCA0 /* IconDownloader.m */,
 				5BE7E2B0153A5E54008EFCA0 /* Placeholder.png */,
 				5BE7E2A4153A2E76008EFCA0 /* EventsArray.h */,
 				5BE7E2A5153A2E76008EFCA0 /* EventsArray.m */,
@@ -282,7 +287,7 @@
 				9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */,
 				9DB903C0151BC6A900A13461 /* Cannon.png */,
 				9DB903C1151BC6A900A13461 /* Cap and Gown.png */,
-				9DB903C2151BC6A900A13461 /* Charter.png */,
+				9DB903C2151BC6A900A13461 /* Cloister.png */,
 				9DB903C3151BC6A900A13461 /* Colonial.png */,
 				9DB903C4151BC6A900A13461 /* Cottage.png */,
 				9DB903C5151BC6A900A13461 /* Ivy.png */,
@@ -290,7 +295,7 @@
 				9DB903C7151BC6A900A13461 /* Tiger Inn.png */,
 				9DB903C8151BC6A900A13461 /* Terrace.png */,
 				9DB903C9151BC6A900A13461 /* Tower.png */,
-				9DB903BF151BC6A900A13461 /* Campus.png */,
+				9DB903BF151BC6A900A13461 /* Charter.png */,
 			);
 			name = "Club Images";
 			sourceTree = "<group>";
@@ -358,10 +363,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DB903CA151BC6A900A13461 /* Campus.png in Resources */,
+				9DB903CA151BC6A900A13461 /* Charter.png in Resources */,
 				9DB903CB151BC6A900A13461 /* Cannon.png in Resources */,
 				9DB903CC151BC6A900A13461 /* Cap and Gown.png in Resources */,
-				9DB903CD151BC6A900A13461 /* Charter.png in Resources */,
+				9DB903CD151BC6A900A13461 /* Cloister.png in Resources */,
 				9DB903CE151BC6A900A13461 /* Colonial.png in Resources */,
 				9DB903CF151BC6A900A13461 /* Cottage.png in Resources */,
 				9DB903D0151BC6A900A13461 /* Ivy.png in Resources */,
@@ -411,6 +416,7 @@
 				9D6005DF1538D0A60088ABA7 /* EventDetailsViewController.m in Sources */,
 				5B1603E515392E1600A1101A /* TempEvent.m in Sources */,
 				5BE7E2A6153A2E76008EFCA0 /* EventsArray.m in Sources */,
+				5BE7E2B4153A649D008EFCA0 /* IconDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@
 
 @implementation TempEvent
 
-@synthesize eventId, name, title, timeStart, poster;
+@synthesize eventId, name, title, timeStart, poster, icon;
 
 - (id)initWithDictionary:(NSDictionary *)dict
 {

@@ -192,7 +192,7 @@
                                         <rect key="frame" x="160" y="-5" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Campus" image="Campus.png">
+                                        <state key="normal" title="Charter" image="Charter.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -222,7 +222,7 @@
                                         <rect key="frame" x="249" y="95" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Cap and Gown" image="Cap&amp;Gown.png">
+                                        <state key="normal" title="Cap and Gown" image="Cap and Gown.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -297,7 +297,7 @@
                                         <rect key="frame" x="13" y="189" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Quadrangle" image="Quad.png">
+                                        <state key="normal" title="Quadrangle" image="Quadrangle.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -312,7 +312,7 @@
                                         <rect key="frame" x="11" y="113" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Tiger Inn" image="T.I..png">
+                                        <state key="normal" title="Tiger Inn" image="Tiger Inn.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -476,10 +476,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Campus.png" width="95" height="115"/>
         <image name="Cannon.png" width="92" height="98"/>
-        <image name="Cap&amp;Gown.png" width="86" height="100"/>
-        <image name="Charter.png" width="71" height="106"/>
+        <image name="Cap and Gown.png" width="86" height="100"/>
+        <image name="Charter.png" width="95" height="115"/>
         <image name="Chat icon 3.png" width="30" height="27"/>
         <image name="Colonial.png" width="98" height="91"/>
         <image name="Cottage.png" width="96" height="106"/>
@@ -488,9 +487,9 @@
         <image name="Ivy.png" width="101" height="100"/>
         <image name="List icon.png" width="30" height="29"/>
         <image name="Princeton Crest 3.png" width="155" height="160"/>
-        <image name="Quad.png" width="95" height="85"/>
-        <image name="T.I..png" width="93" height="100"/>
+        <image name="Quadrangle.png" width="95" height="85"/>
         <image name="Terrace.png" width="94" height="95"/>
+        <image name="Tiger Inn.png" width="93" height="100"/>
         <image name="Tower.png" width="78" height="101"/>
     </resources>
     <classes>
@@ -535,7 +534,7 @@
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
             </relationships>
         </class>
-        <class className="EventsViewController" superclassName="UITableViewController">
+        <class className="EventsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
@@ -552,6 +551,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="wJC-67-ChH"/>
+        <segue reference="1j5-I8-HT3"/>
     </inferredMetricsTieBreakers>
 </document>
