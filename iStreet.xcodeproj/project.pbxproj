@@ -13,6 +13,7 @@
 		5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */; };
 		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
 		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
+		5B2F5626153A861300380CB0 /* EventsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F5625153A861300380CB0 /* EventsViewCell.m */; };
 		5B4E089B15337E0B007B0221 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4E089A15337E0B007B0221 /* FriendsViewController.m */; };
 		5B63654615338AB700845082 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 5B63654515338AB700845082 /* README */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
@@ -66,6 +67,8 @@
 		5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		5B227E4D15367D5200B5DD52 /* aqua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aqua.png; sourceTree = "<group>"; };
 		5B227E4E15367D5200B5DD52 /* orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange.png; sourceTree = "<group>"; };
+		5B2F5624153A861300380CB0 /* EventsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewCell.h; sourceTree = "<group>"; };
+		5B2F5625153A861300380CB0 /* EventsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewCell.m; sourceTree = "<group>"; };
 		5B4E089915337E0B007B0221 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		5B4E089A15337E0B007B0221 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		5B63654515338AB700845082 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
@@ -108,7 +111,7 @@
 		9D8C8D321534FF99001549B1 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		9DA5B1FA15362AFC00F2FC68 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		9DA5B1FB15362AFC00F2FC68 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
-		9DB903BF151BC6A900A13461 /* Charter.png */ = {isa = PBXFileReference; path = Charter.png; sourceTree = "<group>"; };
+		9DB903BF151BC6A900A13461 /* Charter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Charter.png; sourceTree = "<group>"; };
 		9DB903C0151BC6A900A13461 /* Cannon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cannon.png; sourceTree = "<group>"; };
 		9DB903C1151BC6A900A13461 /* Cap and Gown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cap and Gown.png"; sourceTree = "<group>"; };
 		9DB903C2151BC6A900A13461 /* Cloister.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cloister.png; sourceTree = "<group>"; };
@@ -259,6 +262,8 @@
 				5BFB45031533846600960C81 /* CAS Login */,
 				5BA1F62D15112DA7002CA7F3 /* EventsViewController.h */,
 				5BFB44F6153382E800960C81 /* EventsViewController.m */,
+				5B2F5624153A861300380CB0 /* EventsViewCell.h */,
+				5B2F5625153A861300380CB0 /* EventsViewCell.m */,
 				5BE7E2B2153A649D008EFCA0 /* IconDownloader.h */,
 				5BE7E2B3153A649D008EFCA0 /* IconDownloader.m */,
 				5BE7E2B0153A5E54008EFCA0 /* Placeholder.png */,
@@ -417,6 +422,7 @@
 				5B1603E515392E1600A1101A /* TempEvent.m in Sources */,
 				5BE7E2A6153A2E76008EFCA0 /* EventsArray.m in Sources */,
 				5BE7E2B4153A649D008EFCA0 /* IconDownloader.m in Sources */,
+				5B2F5626153A861300380CB0 /* EventsViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -99,19 +99,18 @@
     // Set appIcon and clear temporary data/image
     UIImage *image = [[UIImage alloc] initWithData:self.receivedData];
     
-    if (image.size.width != kEventIconHeight && image.size.height != kEventIconHeight)
-	{
-        CGSize itemSize = CGSizeMake(kEventIconHeight, kEventIconHeight);
-		UIGraphicsBeginImageContext(itemSize);
-		CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
-		[image drawInRect:imageRect];
-		self.event.icon = UIGraphicsGetImageFromCurrentImageContext();
-		UIGraphicsEndImageContext();
-    }
-    else
-    {
-        self.event.icon = image;
-    }
+    
+    
+    
+    // Fit the image
+   /* CGSize itemSize = CGSizeMake(kEventIconHeight, kEventIconHeight);
+    UIGraphicsBeginImageContext(itemSize);
+    CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
+    [image drawInRect:imageRect];
+    self.event.icon = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();*/
+    
+    self.event.icon = image;
     
     self.receivedData = nil;
     

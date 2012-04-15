@@ -10,6 +10,11 @@
 #import "EventsViewController.h"
 #import "TempEvent.h"
 #import "EventsArray.h"
+#import "EventsViewCell.h"
+
+enum constants {
+    kLoadingIndicatorTag = 1,
+};
 
 @interface EventsViewController ()
 - (void)getEventsData;
@@ -175,41 +180,57 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CELL_IDENTIFIER = @"event cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER];
-    if(cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CELL_IDENTIFIER];
-    }
+    EventsViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER];
+    if(cell == nil)
+        cell = [[EventsViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CELL_IDENTIFIER];
     
     // Configure the cell...
+    
+    //If there is an activity indicator, remove it.
+    [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kLoadingIndicatorTag] removeFromSuperview];
+    
     EventsArray *ea = [eventsByDate objectAtIndex:indexPath.section];
     TempEvent *event = [ea.array objectAtIndex:indexPath.row];
     
+    // If there is no event title, make the title "On tap"
     [cell.textLabel setText:([event.title isEqualToString:@""] ? @"On Tap" : event.title)];
     [cell.detailTextLabel setText:event.name];
     
     if([event.poster isEqualToString:@""])
     {
         NSString *imageName = [NSString stringWithFormat:@"%@.png", event.name];
-        cell.imageView.image = [UIImage imageNamed:imageName];                
+        [cell setImage:[UIImage imageNamed:imageName]];
         return cell;
     }
     
-    // Start downloading the icon (unless the table is scrolling), or use it if it's already available
-    if (!event.icon)
+    // Use the icon if it's already available
+    if (event.icon)
     {
-        if (self.eventsTable.dragging == NO && self.eventsTable.decelerating == NO)
-        {
-            [self startIconDownload:event forIndexPath:indexPath];
-        }
-        
-        // if a download is deferred or in progress, return a placeholder image
-        cell.imageView.image = [UIImage imageNamed:@"Placeholder.png"];                
+        [cell setImage:event.icon];
+        return cell;
     }
-    else
-        cell.imageView.image = event.icon;
+        
+    // Otherwise, start downloading the icon (unless the table is scrolling)
+    
+    if (self.eventsTable.dragging == NO && self.eventsTable.decelerating == NO)
+    {
+        [self startIconDownload:event forIndexPath:indexPath];
+    }
+    
+    // If a download is deferred or in progress, return a placeholder image
+    [cell setImage:[UIImage imageNamed:@"Placeholder.png"]];     
+    UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    CGSize imageViewSize = cell.imageView.image.size;
+    NSLog(@"%f, %f", imageViewSize.width, imageViewSize.height);
+    [loadingIndicator setCenter:CGPointMake(imageViewSize.width/2, imageViewSize.height/2)];
+    [loadingIndicator setTag:kLoadingIndicatorTag];
+    [cell.imageView addSubview:loadingIndicator];
+    [loadingIndicator startAnimating];
+    NSLog(@"%f %f %f %f", loadingIndicator.frame.origin.x, loadingIndicator.frame.origin.y, loadingIndicator.frame.size.width, loadingIndicator.frame.size.height);
     
     return cell;
 }
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -270,7 +291,11 @@
 // called by our ImageDownloader when an icon is ready to be displayed
 - (void)appImageDidLoad:(NSIndexPath *)indexPath
 {
+    NSLog(@"image loaded!");
+    UITableViewCell *cell = [self.eventsTable cellForRowAtIndexPath:indexPath];
+    [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kLoadingIndicatorTag] stopAnimating];
     [eventsTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [iconsBeingDownloaded removeObjectForKey:indexPath];
 }
 
 
