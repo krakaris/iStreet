@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		41386594152D15EB007A2327 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41386592152D15EB007A2327 /* LoginViewController.m */; };
 		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
+		5B1603E515392E1600A1101A /* TempEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1603E415392E1600A1101A /* TempEvent.m */; };
 		5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */; };
 		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
 		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
@@ -20,6 +21,8 @@
 		5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */; };
 		5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AA15165A1F008E6C1F /* ChatViewController.m */; };
 		5BCE63AE15165D83008E6C1F /* ClubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AD15165D83008E6C1F /* ClubsViewController.m */; };
+		5BE7E2A6153A2E76008EFCA0 /* EventsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7E2A5153A2E76008EFCA0 /* EventsArray.m */; };
+		5BE7E2B1153A5E54008EFCA0 /* Placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BE7E2B0153A5E54008EFCA0 /* Placeholder.png */; };
 		5BFB44FA153382E800960C81 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F6153382E800960C81 /* EventsViewController.m */; };
 		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
@@ -56,6 +59,8 @@
 		41386591152D15EB007A2327 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		41386592152D15EB007A2327 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		41386593152D15EB007A2327 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		5B1603E315392E1600A1101A /* TempEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TempEvent.h; sourceTree = "<group>"; };
+		5B1603E415392E1600A1101A /* TempEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TempEvent.m; sourceTree = "<group>"; };
 		5B227E49153673F200B5DD52 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
 		5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		5B227E4D15367D5200B5DD52 /* aqua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aqua.png; sourceTree = "<group>"; };
@@ -76,6 +81,9 @@
 		5BCE63AA15165A1F008E6C1F /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		5BCE63AC15165D83008E6C1F /* ClubsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubsViewController.h; sourceTree = "<group>"; };
 		5BCE63AD15165D83008E6C1F /* ClubsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClubsViewController.m; sourceTree = "<group>"; };
+		5BE7E2A4153A2E76008EFCA0 /* EventsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsArray.h; sourceTree = "<group>"; };
+		5BE7E2A5153A2E76008EFCA0 /* EventsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsArray.m; sourceTree = "<group>"; };
+		5BE7E2B0153A5E54008EFCA0 /* Placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Placeholder.png; sourceTree = "<group>"; };
 		5BFB44F6153382E800960C81 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		5BFB44F8153382E800960C81 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5BFB450D153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -91,7 +99,7 @@
 		9D464B201537631C00468729 /* Princeton Crest 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 3.png"; sourceTree = "<group>"; };
 		9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubEventsViewController.h; sourceTree = "<group>"; };
 		9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClubEventsViewController.m; sourceTree = "<group>"; };
-		9D6005DD1538D0A60088ABA7 /* EventDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = EventDetailsViewController.h; sourceTree = "<group>"; };
+		9D6005DD1538D0A60088ABA7 /* EventDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailsViewController.h; sourceTree = "<group>"; };
 		9D6005DE1538D0A60088ABA7 /* EventDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailsViewController.m; sourceTree = "<group>"; };
 		9D8C8D311534FF99001549B1 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		9D8C8D321534FF99001549B1 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
@@ -248,6 +256,11 @@
 				5BFB45031533846600960C81 /* CAS Login */,
 				5BA1F62D15112DA7002CA7F3 /* EventsViewController.h */,
 				5BFB44F6153382E800960C81 /* EventsViewController.m */,
+				5BE7E2B0153A5E54008EFCA0 /* Placeholder.png */,
+				5BE7E2A4153A2E76008EFCA0 /* EventsArray.h */,
+				5BE7E2A5153A2E76008EFCA0 /* EventsArray.m */,
+				5B1603E315392E1600A1101A /* TempEvent.h */,
+				5B1603E415392E1600A1101A /* TempEvent.m */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -372,6 +385,7 @@
 				9D464B191537482600468729 /* grey.png in Resources */,
 				9D464B1A1537482600468729 /* light_orange.png in Resources */,
 				9D464B211537631C00468729 /* Princeton Crest 3.png in Resources */,
+				5BE7E2B1153A5E54008EFCA0 /* Placeholder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +409,8 @@
 				9DA5B1FC15362AFC00F2FC68 /* Message.m in Sources */,
 				5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */,
 				9D6005DF1538D0A60088ABA7 /* EventDetailsViewController.m in Sources */,
+				5B1603E515392E1600A1101A /* TempEvent.m in Sources */,
+				5BE7E2A6153A2E76008EFCA0 /* EventsArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
