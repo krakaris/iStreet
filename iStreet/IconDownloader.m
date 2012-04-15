@@ -53,8 +53,6 @@
 #import "IconDownloader.h"
 #import "TempEvent.h"
 
-#define kEventIconHeight 43
-
 @implementation IconDownloader
 
 @synthesize event;
@@ -64,11 +62,11 @@
 @synthesize imageConnection;
 
 #pragma mark
+#pragma mark Public methods
 
 - (void)startDownload
 {
     self.receivedData = [NSMutableData data];
-    // alloc+init and start an NSURLConnection; release on completion/failure
     NSString *url = [NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", event.poster];
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:
                              [NSURLRequest requestWithURL:
@@ -87,34 +85,18 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-	// Clear the activeDownload property to allow later attempts
+	// Clear the received data to allow later attempts
     self.receivedData = nil;
-    
-    // Release the connection now that it's finished
     self.imageConnection = nil;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    // Set appIcon and clear temporary data/image
+    // Set the event icon and clear temporary data/image
     UIImage *image = [[UIImage alloc] initWithData:self.receivedData];
-    
-    
-    
-    
-    // Fit the image
-   /* CGSize itemSize = CGSizeMake(kEventIconHeight, kEventIconHeight);
-    UIGraphicsBeginImageContext(itemSize);
-    CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
-    [image drawInRect:imageRect];
-    self.event.icon = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();*/
-    
     self.event.icon = image;
     
     self.receivedData = nil;
-    
-    // Release the connection now that it's finished
     self.imageConnection = nil;
         
     // call our delegate and tell it that our icon is ready for display
