@@ -12,5 +12,10 @@
 @interface EventDetailsViewController : UIViewController
 
 @property (nonatomic, retain) Event *myEvent;
+@property (weak, nonatomic) IBOutlet UILabel *eventTitle;
+@property (weak, nonatomic) IBOutlet UILabel *eventDate;
+@property (weak, nonatomic) IBOutlet UILabel *eventTime;
+@property (weak, nonatomic) IBOutlet UILabel *eventDescription;
+@property (weak, nonatomic) IBOutlet UIImageView *eventImage;
 
 @end

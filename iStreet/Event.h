@@ -16,6 +16,7 @@
 @property(nonatomic, retain) NSString *startDate;
 @property(nonatomic, retain) NSString *startTime;
 @property(nonatomic, retain) NSString *endTime;
+@property(nonatomic, retain) NSString *description;
 //@property(nonatomic) NSTimeInterval *duration;
 
 //club name

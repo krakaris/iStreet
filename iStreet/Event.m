@@ -10,7 +10,7 @@
 
 @implementation Event
 
-@synthesize ID, title, poster, startDate, startTime, endTime, name;
+@synthesize ID, title, poster, startDate, startTime, endTime, name, description;
 
 - (id)initWithDictionary:(NSDictionary *)dict
 {
@@ -24,6 +24,11 @@
     } else {
         [self setPoster:[dict objectForKey:@"poster"]];
     }
+    if ([dict objectForKey:@"description"] == nil) {
+        [self setDescription:@"On Tap"];
+    } else {
+        [self setDescription:[dict objectForKey:@"description"]];
+    }
     //Initialize startDate and startTime and endTime
     NSString *startTimeString = [dict objectForKey:@"time_start"];
     NSString *endTimeString = [dict objectForKey:@"time_end"];
@@ -36,6 +41,7 @@
     NSString *sTimeString = [startDateComps objectAtIndex:1];
     NSString *eTimeString = [endDateComps objectAtIndex:1];
     
+    [self setName:[dict objectForKey:@"name"]];
     [self setStartDate:dateString];
     [self setStartTime:sTimeString];
     [self setEndTime:eTimeString];
