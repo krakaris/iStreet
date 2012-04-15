@@ -1,8 +1,8 @@
 //
-//  EventViewController.m
+//  EventDetailsViewController.m
 //  iStreet
 //
-//  Created by Alexa Krakaris on 4/13/12.
+//  Created by Alexa Krakaris on 4/14/12.
 //  Copyright (c) 2012 Princeton University. All rights reserved.
 //
 
@@ -13,7 +13,7 @@
 @end
 
 @implementation EventDetailsViewController
-@synthesize navigationBar;
+@synthesize myEvent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,11 +28,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.navigationItem.title = myEvent.title;
+
 }
 
 - (void)viewDidUnload
 {
-    [self setNavigationBar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

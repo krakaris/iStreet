@@ -16,6 +16,7 @@
     NSMutableArray *events;
     NSMutableArray *eventImages;
     UITableView *eventsList;
+    Event *selectedEvent;
     
     //Not sure if I need these two...
     NSMutableArray *eventTitles;

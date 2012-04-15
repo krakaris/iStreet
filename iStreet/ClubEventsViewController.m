@@ -97,33 +97,6 @@
 {
 //#warning Potentially incomplete method implementation.
     return [events count];
-    //return 1;
-    /*BOOL found;
-    
-    for (Event *e in events)
-    {
-        NSString *sDate = e.startDate;
-        
-        found = NO;
-        
-        for (NSString *str in [self.sections allKeys])
-        {
-            if ([str isEqualToString:sDate])
-            {
-                found = YES;
-            }
-        }
-        if (!found)
-        {
-            //[self.sections setValue:[[NSMutableArray alloc] init] forKey:sDate];
-            [self.sections setValue:e forKey:sDate];
-        }
-    }
-    for (Event *e in events)
-    {
-        [[self.sections objectForKey:e.startDate] addObject:e];
-    }
-     */
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -163,6 +136,7 @@
     NSString *title = event.title;
     
     if ([title isEqualToString:@""] || [title isEqualToString:club.clubName]) {
+        event.title = @"On Tap";
         title = @"On Tap";
     }
     
@@ -367,15 +341,22 @@
      */
     
     // set event based on row selected
-     Event *event = [events objectAtIndex: indexPath.section];
+     selectedEvent = [events objectAtIndex: indexPath.section];
      [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
     
-    EventDetailsViewController *detailsViewController = [[EventDetailsViewController alloc]
-                                                    initWithNibName:@"EventDetailsViewController" bundle:nil];
+    EventDetailsViewController *detailsViewController = [[EventDetailsViewController alloc] initWithNibName:@"EventDetailsViewController" bundle:nil];
     
-     detailsViewController.navigationItem.title = event.title;
-    //[self.eventsList pushViewController:detailsViewController];
+    detailsViewController.navigationItem.title = selectedEvent.title;
+    detailsViewController.myEvent = selectedEvent;
+    [self performSegueWithIdentifier:@"ShowEventDetails" sender:self];
     
+}
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ShowEventDetails"])
+    {
+        [segue.destinationViewController setMyEvent:selectedEvent];
+    }
 }
 
 
