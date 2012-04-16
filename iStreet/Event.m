@@ -7,6 +7,7 @@
 //
 
 #import "Event.h"
+#import "Club.h"
 #import "User.h"
 
 
@@ -25,5 +26,6 @@
 @dynamic posterImageData;
 @dynamic rank;
 @dynamic usersAttending;
+@dynamic whichClub;
 
 @end

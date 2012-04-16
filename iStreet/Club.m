@@ -7,6 +7,7 @@
 //
 
 #import "Club.h"
+#import "Event.h"
 
 
 @implementation Club
@@ -15,5 +16,6 @@
 @dynamic id;
 @dynamic imageData;
 @dynamic imageURL;
+@dynamic whichEvents;
 
 @end

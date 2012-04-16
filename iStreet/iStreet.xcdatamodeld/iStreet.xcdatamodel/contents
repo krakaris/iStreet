@@ -5,6 +5,7 @@
         <attribute name="imageData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="whichEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="whichClub" inverseEntity="Event" syncable="YES"/>
     </entity>
     <entity name="Event" representedClassName="Event" syncable="YES">
         <attribute name="club_name" optional="YES" attributeType="String" syncable="YES"/>
@@ -20,6 +21,7 @@
         <attribute name="startTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="usersAttending" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="attendingTheseEvents" inverseEntity="User" syncable="YES"/>
+        <relationship name="whichClub" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Club" inverseName="whichEvents" inverseEntity="Club" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="fb_friends" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,7 +31,7 @@
     </entity>
     <elements>
         <element name="User" positionX="-9" positionY="147" width="128" height="105"/>
-        <element name="Event" positionX="313" positionY="126" width="128" height="240"/>
-        <element name="Club" positionX="504" positionY="261" width="128" height="105"/>
+        <element name="Event" positionX="313" positionY="126" width="128" height="255"/>
+        <element name="Club" positionX="736" positionY="261" width="128" height="120"/>
     </elements>
 </model>

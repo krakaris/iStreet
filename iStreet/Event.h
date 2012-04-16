@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class User;
+@class Club, User;
 
 @interface Event : NSManagedObject
 
@@ -26,6 +26,7 @@
 @property (nonatomic, retain) NSData * posterImageData;
 @property (nonatomic, retain) NSString * rank;
 @property (nonatomic, retain) NSSet *usersAttending;
+@property (nonatomic, retain) Club *whichClub;
 @end
 
 @interface Event (CoreDataGeneratedAccessors)

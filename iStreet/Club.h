@@ -9,11 +9,22 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Event;
+
 @interface Club : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * id;
 @property (nonatomic, retain) NSData * imageData;
 @property (nonatomic, retain) NSString * imageURL;
+@property (nonatomic, retain) NSSet *whichEvents;
+@end
+
+@interface Club (CoreDataGeneratedAccessors)
+
+- (void)addWhichEventsObject:(Event *)value;
+- (void)removeWhichEventsObject:(Event *)value;
+- (void)addWhichEvents:(NSSet *)values;
+- (void)removeWhichEvents:(NSSet *)values;
 
 @end
