@@ -78,4 +78,8 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (IBAction)attend:(UIButton *)sender {
+    sender.hidden = YES;
+    [sender setBackgroundColor:(UIColor *)greenColor];
+}
 @end

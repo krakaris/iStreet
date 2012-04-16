@@ -17,5 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventTime;
 @property (weak, nonatomic) IBOutlet UILabel *eventDescription;
 @property (weak, nonatomic) IBOutlet UIImageView *eventImage;
+- (IBAction)attend:(UIButton *)sender;
 
 @end
