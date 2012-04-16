@@ -2,21 +2,19 @@
 //  Club.h
 //  iStreet
 //
-//  Created by Alexa Krakaris on 4/11/12.
-//  Copyright (c) 2012 Princeton University. All rights reserved.
+//  Created by Akarshan Kumar on 4/16/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-
-@interface Club : NSObject
-
-@property(nonatomic, assign) int ID;
-@property(nonatomic, retain) NSString *clubName;
-@property(nonatomic, retain) UIImage *clubCrest;
-//@property(nonatomic, retain) NSMutableArray *events;
+#import <CoreData/CoreData.h>
 
 
-- (id)initWithDictionary:(NSDictionary *)dict;
--(id)init;
+@interface Club : NSManagedObject
+
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * id;
+@property (nonatomic, retain) NSData * imageData;
+@property (nonatomic, retain) NSString * imageURL;
 
 @end

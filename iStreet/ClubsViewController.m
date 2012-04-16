@@ -7,7 +7,7 @@
 //
 
 #import "ClubsViewController.h"
-#import "Club.h"
+#import "Clubold.h"
 #import "ClubEventsViewController.h"
 
 @interface ClubsViewController ()

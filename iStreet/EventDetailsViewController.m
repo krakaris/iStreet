@@ -54,10 +54,12 @@
     newFrame.size.height = expectedLabelSize.height;
     self.eventDescription.frame = newFrame;
     
+        /* commented by Aki
     NSString *imageName = [NSString stringWithFormat:@"%@.png", myEvent.name];
     NSLog(@"Event club: %@\n", myEvent.name);
     NSLog(@"Image: %@\n", imageName);
     self.eventImage.image = [UIImage imageNamed:imageName];
+         */
                        
 }
 

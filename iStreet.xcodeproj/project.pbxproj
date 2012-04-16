@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		41386594152D15EB007A2327 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41386592152D15EB007A2327 /* LoginViewController.m */; };
 		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
+		4163B68E153BCC0A00D7B2DC /* iStreet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4163B68C153BCC0A00D7B2DC /* iStreet.xcdatamodeld */; };
+		4163B69C153BD0FC00D7B2DC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B69B153BD0FC00D7B2DC /* User.m */; };
+		4163B69F153BD0FC00D7B2DC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B69E153BD0FC00D7B2DC /* Event.m */; };
+		4163B6A2153BD0FC00D7B2DC /* Club.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6A1153BD0FC00D7B2DC /* Club.m */; };
 		5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */; };
 		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
 		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
@@ -29,12 +33,12 @@
 		9D197B6A153B51B800604080 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B63153B51B800604080 /* EventsViewController.m */; };
 		9D197B6B153B51B800604080 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B65153B51B800604080 /* IconDownloader.m */; };
 		9D197B6C153B51B800604080 /* TempEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B67153B51B800604080 /* TempEvent.m */; };
-		9D43D8431535DADB000B4CFB /* Club.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D43D8421535DADB000B4CFB /* Club.m */; };
+		9D43D8431535DADB000B4CFB /* Clubold.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D43D8421535DADB000B4CFB /* Clubold.m */; };
 		9D464B191537482600468729 /* grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B171537482600468729 /* grey.png */; };
 		9D464B1A1537482600468729 /* light_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B181537482600468729 /* light_orange.png */; };
 		9D464B211537631C00468729 /* Princeton Crest 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B201537631C00468729 /* Princeton Crest 3.png */; };
 		9D4ED4A315338DA700680D1D /* ClubEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */; };
-		9D8C8D331534FF99001549B1 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D8C8D321534FF99001549B1 /* Event.m */; };
+		9D8C8D331534FF99001549B1 /* Eventold.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D8C8D321534FF99001549B1 /* Eventold.m */; };
 		9DA1BF0B153A08DE005CCC13 /* EventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA1BF0A153A08DE005CCC13 /* EventDetailsViewController.m */; };
 		9DA5B1FC15362AFC00F2FC68 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5B1FB15362AFC00F2FC68 /* Message.m */; };
 		9DB903CA151BC6A900A13461 /* Charter.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903BF151BC6A900A13461 /* Charter.png */; };
@@ -61,6 +65,13 @@
 		41386591152D15EB007A2327 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		41386592152D15EB007A2327 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		41386593152D15EB007A2327 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		4163B68D153BCC0A00D7B2DC /* iStreet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iStreet.xcdatamodel; sourceTree = "<group>"; };
+		4163B69A153BD0FC00D7B2DC /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		4163B69B153BD0FC00D7B2DC /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		4163B69D153BD0FC00D7B2DC /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		4163B69E153BD0FC00D7B2DC /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		4163B6A0153BD0FC00D7B2DC /* Club.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Club.h; sourceTree = "<group>"; };
+		4163B6A1153BD0FC00D7B2DC /* Club.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Club.m; sourceTree = "<group>"; };
 		5B227E49153673F200B5DD52 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
 		5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		5B227E4D15367D5200B5DD52 /* aqua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aqua.png; sourceTree = "<group>"; };
@@ -98,15 +109,15 @@
 		9D34B7731524D5D000DB6C13 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
 		9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedUIPickerView.h; sourceTree = "<group>"; };
 		9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedUIPickerView.m; sourceTree = "<group>"; };
-		9D43D8411535DADB000B4CFB /* Club.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Club.h; sourceTree = "<group>"; };
-		9D43D8421535DADB000B4CFB /* Club.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Club.m; sourceTree = "<group>"; };
+		9D43D8411535DADB000B4CFB /* Clubold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clubold.h; sourceTree = "<group>"; };
+		9D43D8421535DADB000B4CFB /* Clubold.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Clubold.m; sourceTree = "<group>"; };
 		9D464B171537482600468729 /* grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey.png; sourceTree = "<group>"; };
 		9D464B181537482600468729 /* light_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light_orange.png; sourceTree = "<group>"; };
 		9D464B201537631C00468729 /* Princeton Crest 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 3.png"; sourceTree = "<group>"; };
 		9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubEventsViewController.h; sourceTree = "<group>"; };
 		9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClubEventsViewController.m; sourceTree = "<group>"; };
-		9D8C8D311534FF99001549B1 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
-		9D8C8D321534FF99001549B1 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		9D8C8D311534FF99001549B1 /* Eventold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Eventold.h; sourceTree = "<group>"; };
+		9D8C8D321534FF99001549B1 /* Eventold.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Eventold.m; sourceTree = "<group>"; };
 		9DA1BF09153A08DE005CCC13 /* EventDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailsViewController.h; sourceTree = "<group>"; };
 		9DA1BF0A153A08DE005CCC13 /* EventDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailsViewController.m; sourceTree = "<group>"; };
 		9DA5B1FA15362AFC00F2FC68 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -145,6 +156,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4163B690153BD08D00D7B2DC /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				4163B69A153BD0FC00D7B2DC /* User.h */,
+				4163B69B153BD0FC00D7B2DC /* User.m */,
+				4163B69D153BD0FC00D7B2DC /* Event.h */,
+				4163B69E153BD0FC00D7B2DC /* Event.m */,
+				4163B6A0153BD0FC00D7B2DC /* Club.h */,
+				4163B6A1153BD0FC00D7B2DC /* Club.m */,
+			);
+			name = "Data Model";
+			sourceTree = "<group>";
+		};
 		5B227E5115367D5900B5DD52 /* Message Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +217,7 @@
 				9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */,
 				5BFB44FF1533842D00960C81 /* Friends */,
 				5BFB45001533843300960C81 /* Clubs */,
+				4163B690153BD08D00D7B2DC /* Data Model */,
 				5BFB45011533843900960C81 /* Chat */,
 				5BFB45021533845000960C81 /* Events */,
 				5BA1F61515112DA7002CA7F3 /* Supporting Files */,
@@ -203,6 +228,7 @@
 		5BA1F61515112DA7002CA7F3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4163B68C153BCC0A00D7B2DC /* iStreet.xcdatamodeld */,
 				5B63654515338AB700845082 /* README */,
 				9D34B7731524D5D000DB6C13 /* calendar.png */,
 				9D34B76F1524D55600DB6C13 /* Settings icon.png */,
@@ -234,10 +260,10 @@
 				9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */,
 				5BCE63AC15165D83008E6C1F /* ClubsViewController.h */,
 				5BCE63AD15165D83008E6C1F /* ClubsViewController.m */,
-				9D8C8D311534FF99001549B1 /* Event.h */,
-				9D8C8D321534FF99001549B1 /* Event.m */,
-				9D43D8411535DADB000B4CFB /* Club.h */,
-				9D43D8421535DADB000B4CFB /* Club.m */,
+				9D8C8D311534FF99001549B1 /* Eventold.h */,
+				9D8C8D321534FF99001549B1 /* Eventold.m */,
+				9D43D8411535DADB000B4CFB /* Clubold.h */,
+				9D43D8421535DADB000B4CFB /* Clubold.m */,
 			);
 			name = Clubs;
 			sourceTree = "<group>";
@@ -413,8 +439,8 @@
 				5B4E089B15337E0B007B0221 /* FriendsViewController.m in Sources */,
 				5BFB44FC153382E800960C81 /* main.m in Sources */,
 				9D4ED4A315338DA700680D1D /* ClubEventsViewController.m in Sources */,
-				9D8C8D331534FF99001549B1 /* Event.m in Sources */,
-				9D43D8431535DADB000B4CFB /* Club.m in Sources */,
+				9D8C8D331534FF99001549B1 /* Eventold.m in Sources */,
+				9D43D8431535DADB000B4CFB /* Clubold.m in Sources */,
 				9DA5B1FC15362AFC00F2FC68 /* Message.m in Sources */,
 				5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */,
 				9DA1BF0B153A08DE005CCC13 /* EventDetailsViewController.m in Sources */,
@@ -423,6 +449,10 @@
 				9D197B6A153B51B800604080 /* EventsViewController.m in Sources */,
 				9D197B6B153B51B800604080 /* IconDownloader.m in Sources */,
 				9D197B6C153B51B800604080 /* TempEvent.m in Sources */,
+				4163B68E153BCC0A00D7B2DC /* iStreet.xcdatamodeld in Sources */,
+				4163B69C153BD0FC00D7B2DC /* User.m in Sources */,
+				4163B69F153BD0FC00D7B2DC /* Event.m in Sources */,
+				4163B6A2153BD0FC00D7B2DC /* Club.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +574,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4163B68C153BCC0A00D7B2DC /* iStreet.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4163B68D153BCC0A00D7B2DC /* iStreet.xcdatamodel */,
+			);
+			currentVersion = 4163B68D153BCC0A00D7B2DC /* iStreet.xcdatamodel */;
+			path = iStreet.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5BA1F60115112DA7002CA7F3 /* Project object */;
 }
