@@ -17,7 +17,6 @@
         <attribute name="posterImageData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="posterURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rank" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="usersAttending" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="attendingTheseEvents" inverseEntity="User" syncable="YES"/>
@@ -31,7 +30,7 @@
     </entity>
     <elements>
         <element name="User" positionX="-9" positionY="147" width="128" height="105"/>
-        <element name="Event" positionX="313" positionY="126" width="128" height="255"/>
+        <element name="Event" positionX="313" positionY="126" width="128" height="240"/>
         <element name="Club" positionX="736" positionY="261" width="128" height="120"/>
     </elements>
 </model>

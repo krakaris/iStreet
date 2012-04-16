@@ -19,7 +19,6 @@
 @property (nonatomic, retain) NSString * entry_type;
 @property (nonatomic, retain) NSString * entry_descrip;
 @property (nonatomic, retain) NSString * event_descrip;
-@property (nonatomic, retain) NSString * startDate;
 @property (nonatomic, retain) NSString * startTime;
 @property (nonatomic, retain) NSString * endTime;
 @property (nonatomic, retain) NSString * posterURL;

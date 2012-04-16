@@ -19,7 +19,6 @@
 @dynamic entry_type;
 @dynamic entry_descrip;
 @dynamic event_descrip;
-@dynamic startDate;
 @dynamic startTime;
 @dynamic endTime;
 @dynamic posterURL;
