@@ -7,7 +7,7 @@
 //
 
 #import "ClubEventsViewController.h"
-#import "Event.h"
+#import "OldEvent.h"
 #import "EventDetailsViewController.h"
 
 @interface ClubEventsViewController ()
@@ -93,7 +93,7 @@
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    Event *e = [events objectAtIndex:section];
+    OldEvent *e = [events objectAtIndex:section];
     return e.startDate;
 }
 
@@ -109,7 +109,7 @@
     }
     
     // Configure the cell...
-    Event *event = [events objectAtIndex: indexPath.section];
+    OldEvent *event = [events objectAtIndex: indexPath.section];
     //NSString *title = [eventTitles objectAtIndex: indexPath.section];
     NSString *title = event.title;
     
@@ -231,7 +231,7 @@
 
  }
 
-- (void) getImageForEvent: (Event *) event
+- (void) getImageForEvent: (OldEvent *) event
 {
     //Build url for server
     NSString *urlString = 
@@ -278,7 +278,7 @@
     
     for(NSDictionary *dict in eventsArray)
     {
-         Event *e = [[Event alloc] initWithDictionary:dict];
+         OldEvent *e = [[OldEvent alloc] initWithDictionary:dict];
         [events addObject:e];
         if (e.title != nil) {
             [eventTitles addObject:e.title];

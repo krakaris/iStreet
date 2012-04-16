@@ -7,7 +7,7 @@
 //
 
 #import "ClubsViewController.h"
-#import "Club.h"
+#import "OldClub.h"
 #import "ClubEventsViewController.h"
 
 @interface ClubsViewController ()
@@ -61,7 +61,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    Club *club = [Club alloc];
+    OldClub *club = [OldClub alloc];
     [club setClubName:segue.identifier];
     NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
     

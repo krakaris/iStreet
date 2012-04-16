@@ -5,7 +5,7 @@
 //  Created by Rishi on 3/14/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
-//  Some of the code for synchronously loading event icons in the table cells (and all of the logic) is from Apple's LazyTable sample project
+//  A good deal of the code for synchronously loading event icons in the table cells (and all of the logic) is from Apple's LazyTable sample project. The IconDownloader.h/.m code is almost completely Apple's. A good deal of code was eliminated and several customizations were made.
 
 #import "EventsViewController.h"
 #import "TempEvent.h"
@@ -18,6 +18,7 @@ enum constants {
 
 @interface EventsViewController ()
 - (void)getEventsData;
+- (void)loadImagesForOnscreenRows;
 @end
 
 @implementation EventsViewController
@@ -71,12 +72,6 @@ enum constants {
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logged In!" message:[NSString stringWithFormat:@"Welcome to iStreet, %@!", self.netid] delegate:self cancelButtonTitle:@"Start!" otherButtonTitles:nil];
     [alert show];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -221,12 +216,10 @@ enum constants {
     [cell setImage:[UIImage imageNamed:@"Placeholder.png"]];     
     UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     CGSize imageViewSize = cell.imageView.image.size;
-    NSLog(@"%f, %f", imageViewSize.width, imageViewSize.height);
     [loadingIndicator setCenter:CGPointMake(imageViewSize.width/2, imageViewSize.height/2)];
     [loadingIndicator setTag:kLoadingIndicatorTag];
     [cell.imageView addSubview:loadingIndicator];
     [loadingIndicator startAnimating];
-    NSLog(@"%f %f %f %f", loadingIndicator.frame.origin.x, loadingIndicator.frame.origin.y, loadingIndicator.frame.size.width, loadingIndicator.frame.size.height);
     
     return cell;
 }
@@ -234,7 +227,7 @@ enum constants {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45;
+    return kCellHeight;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -263,7 +256,7 @@ enum constants {
 - (void)startIconDownload:(TempEvent *)event forIndexPath:(NSIndexPath *)indexPath
 {
     IconDownloader *iconDownloader = [iconsBeingDownloaded objectForKey:indexPath];
-    if (iconDownloader == nil) 
+    if (iconDownloader == nil) //if there isn't already a download in progress for that event
     {
         iconDownloader = [[IconDownloader alloc] init];
         iconDownloader.event = event;
@@ -274,24 +267,9 @@ enum constants {
     }
 }
 
-// this method is used when the user scrolls into a set of cells that don't have their app icons yet
-- (void)loadImagesForOnscreenRows
-{
-    NSArray *visiblePaths = [self.eventsTable indexPathsForVisibleRows];
-    for (NSIndexPath *indexPath in visiblePaths)
-    {
-        TempEvent *event = [((EventsArray *)[eventsByDate objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row]; // the event for the cell at that index path
-        
-        // start downloading the icon if the event doesn't have an icon but has a link to one
-        if (!event.icon && ![event.poster isEqualToString:@""])
-            [self startIconDownload:event forIndexPath:indexPath];
-    }
-}
-
 // called by our ImageDownloader when an icon is ready to be displayed
 - (void)appImageDidLoad:(NSIndexPath *)indexPath
 {
-    NSLog(@"image loaded!");
     UITableViewCell *cell = [self.eventsTable cellForRowAtIndexPath:indexPath];
     [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kLoadingIndicatorTag] stopAnimating];
     [eventsTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -314,6 +292,20 @@ enum constants {
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self loadImagesForOnscreenRows];
+}
+
+// this method is used when the user scrolls into a set of cells that don't have their app icons yet
+- (void)loadImagesForOnscreenRows
+{
+    NSArray *visiblePaths = [self.eventsTable indexPathsForVisibleRows];
+    for (NSIndexPath *indexPath in visiblePaths)
+    {
+        TempEvent *event = [((EventsArray *)[eventsByDate objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row]; // the event for the cell at that index path
+        
+        // start downloading the icon if the event doesn't have an icon but has a link to one
+        if (!event.icon && ![event.poster isEqualToString:@""])
+            [self startIconDownload:event forIndexPath:indexPath];
+    }
 }
 
 @end

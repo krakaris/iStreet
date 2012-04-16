@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Club.h"
+#import "OldClub.h"
 #import "EventDetailsViewController.h"
 
 @interface ClubEventsViewController : UITableViewController
@@ -16,7 +16,7 @@
     NSMutableArray *events;
     NSMutableArray *eventImages;
     UITableView *eventsList;
-    Event *selectedEvent;
+    OldEvent *selectedEvent;
     
     //Not sure if I need these two...
     NSMutableArray *eventTitles;
@@ -33,11 +33,11 @@
 
 }
 
-@property(nonatomic, retain) Club *club;
+@property(nonatomic, retain) OldClub *club;
 @property (nonatomic, retain) IBOutlet UITableView *eventsList;
 @property (nonatomic, retain) NSMutableDictionary *sections;
 
 - (void) getListOfEvents: (NSString *) clubName;
-- (void) getImageForEvent: (Event *) event;
+- (void) getImageForEvent: (OldEvent *) event;
 
 @end

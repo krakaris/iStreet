@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define kCellHeight 45
+
 @interface EventsViewCell : UITableViewCell
 
 - (void)setImage:(UIImage *)image;
