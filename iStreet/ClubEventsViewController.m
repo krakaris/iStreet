@@ -8,13 +8,13 @@
 
 #import "ClubEventsViewController.h"
 #import "Event.h"
+#import "EventDetailsViewController.h"
 
 @interface ClubEventsViewController ()
 
 @end
 
 @implementation ClubEventsViewController
-@synthesize navigationBarItem;
 @synthesize club, eventsList, sections;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -31,23 +31,11 @@
 	[self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
--(void)backAction:(id)arg {
-    [self dismissModalViewControllerAnimated:YES];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Clubs"
-        style:UIBarButtonItemStyleBordered 
-        target:self action:@selector(backAction:)];
-    
-    //self.navigationBarItem.backBarButtonItem = backButton;
-    self.navigationBarItem.leftBarButtonItem = backButton;
-     
-    self.navigationBarItem.title = self.club.clubName;
-
+    self.navigationItem.title = self.club.clubName;
     
     // Initialize our arrays
     events = [[NSMutableArray alloc] init];
@@ -79,7 +67,6 @@
 
 - (void)viewDidUnload
 {
-    [self setNavigationBarItem:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -96,33 +83,6 @@
 {
 //#warning Potentially incomplete method implementation.
     return [events count];
-    //return 1;
-    /*BOOL found;
-    
-    for (Event *e in events)
-    {
-        NSString *sDate = e.startDate;
-        
-        found = NO;
-        
-        for (NSString *str in [self.sections allKeys])
-        {
-            if ([str isEqualToString:sDate])
-            {
-                found = YES;
-            }
-        }
-        if (!found)
-        {
-            //[self.sections setValue:[[NSMutableArray alloc] init] forKey:sDate];
-            [self.sections setValue:e forKey:sDate];
-        }
-    }
-    for (Event *e in events)
-    {
-        [[self.sections objectForKey:e.startDate] addObject:e];
-    }
-     */
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -134,15 +94,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     Event *e = [events objectAtIndex:section];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"YYYY-MM-dd"];
-    NSDate *sDate = [dateFormat dateFromString:e.startDate];
-    
-    NSDateFormatter *newFormat = [[NSDateFormatter alloc] init];
-    [newFormat setDateFormat:@"EEEE, MMMM d"];
-    NSString *sTimeString = [newFormat stringFromDate:sDate];
-
-    return sTimeString;
+    return e.startDate;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -162,6 +114,7 @@
     NSString *title = event.title;
     
     if ([title isEqualToString:@""] || [title isEqualToString:club.clubName]) {
+        event.title = @"On Tap";
         title = @"On Tap";
     }
     
@@ -173,9 +126,11 @@
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setDateFormat:@"h:mm"];
     NSString *sTimeString = [outputFormatter stringFromDate:sTime];
+    event.startTime = sTimeString;
     
     NSDate *eTime = [inputFormatter dateFromString:event.endTime];
     NSString *eTimeString = [outputFormatter stringFromDate:eTime];
+    event.endTime = eTimeString;
     
     //Hardcoded AM and PM --> FIX!!!
     NSString *timeString = [sTimeString stringByAppendingString:@"pm - "];
@@ -276,7 +231,20 @@
 
  }
 
- 
+- (void) getImageForEvent: (Event *) event
+{
+    //Build url for server
+    NSString *urlString = 
+    [NSString stringWithFormat:
+     @"http://pam.tigerapps.org/media/%@", event.poster];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    if (connection) {
+        receivedData = [NSMutableData data];
+    }
+}
+
 //Rishi Chat code:
 /*
  Runs when the sufficient server response data has been received.
@@ -318,11 +286,26 @@
             [e setTitle:@"On Tap"];
             [eventTitles addObject:e.title];
         }
+        if ([e.description isEqualToString:@""]) {
+            e.description = @"On Tap";
+        }
+        e.description = [e.description stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+       
+        // Fix start date string
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"YYYY-MM-dd"];
+        NSDate *sDate = [dateFormat dateFromString:e.startDate];
+        
+        NSDateFormatter *newFormat = [[NSDateFormatter alloc] init];
+        [newFormat setDateFormat:@"EEEE, MMMM d"];
+        NSString *sTimeString = [newFormat stringFromDate:sDate];
+        e.startDate = sTimeString;
+        
         [eventStartDates addObject:e.startDate];
         [eventStartTimes addObject:e.startTime];
         [eventEndTimes addObject:e.endTime];
     }
-    NSLog(@"Number of Events: %d\n", [events count]);
+    
     [eventsList reloadData];
     
     //Add images to Array: "eventImages"
@@ -365,15 +348,23 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
     
-    /* set event based on row selected
-     Event *event;
+    // set event based on row selected
+     selectedEvent = [events objectAtIndex: indexPath.section];
      [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
     
-    DetailsViewController *detailsViewController = [[DetailsViewController alloc]
-                                                    initWithNibName:@"DetailsViewController" bundle:nil];
-     detailsViewController.navigationItem.title = event.title;
-    [self.navigationController pushViewController:detailsViewController];
-    */
+    EventDetailsViewController *detailsViewController = [[EventDetailsViewController alloc] initWithNibName:@"EventDetailsViewController" bundle:nil];
+    
+    detailsViewController.navigationItem.title = selectedEvent.title;
+    detailsViewController.myEvent = selectedEvent;
+    [self performSegueWithIdentifier:@"ShowEventDetails" sender:self];
+    
+}
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ShowEventDetails"])
+    {
+        [segue.destinationViewController setMyEvent:selectedEvent];
+    }
 }
 
 

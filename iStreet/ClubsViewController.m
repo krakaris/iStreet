@@ -7,7 +7,7 @@
 //
 
 #import "ClubsViewController.h"
-#import "Club.h"
+#import "Clubold.h"
 #import "ClubEventsViewController.h"
 
 @interface ClubsViewController ()
@@ -63,14 +63,9 @@
 {
     Club *club = [Club alloc];
     [club setClubName:segue.identifier];
-    //segue.identifier;
+    NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
     
-        NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
-    
-    if(club)
-    {
-        [(ClubEventsViewController *)segue.destinationViewController setClub:(club)];
-    }
+    [segue.destinationViewController setClub:(club)];
     
 }
 /*
