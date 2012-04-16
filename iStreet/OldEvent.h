@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Event : NSObject
+@interface OldEvent : NSObject
 
 @property(nonatomic, assign) int ID;
 @property(nonatomic, retain) NSString *title;

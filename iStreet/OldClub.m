@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Princeton University. All rights reserved.
 //
 
-#import "Clubold.h"
+#import "OldClub.h"
 
-@implementation Club
+@implementation OldClub
 
 @synthesize ID, clubName, clubCrest;
 

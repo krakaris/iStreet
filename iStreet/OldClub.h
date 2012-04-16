@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Club : NSObject
+@interface OldClub : NSObject
 
 @property(nonatomic, assign) int ID;
 @property(nonatomic, retain) NSString *clubName;

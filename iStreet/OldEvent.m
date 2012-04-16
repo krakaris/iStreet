@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Princeton University. All rights reserved.
 //
 
-#import "Eventold.h"
+#import "OldEvent.h"
 
-@implementation Event
+@implementation OldEvent
 
 @synthesize ID, title, poster, startDate, startTime, endTime, name, description;
 
