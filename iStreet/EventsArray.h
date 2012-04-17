@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TempEvent.h"
+#import "Event.h"
 
 /*
  An EventsArray is an array of events for a given night. It's only additional property is the date.
@@ -18,6 +18,6 @@
 @property(nonatomic, retain) NSString *date;
 
 - (id)initWithDate:(NSString *)date;
-- (void)addEvent:(TempEvent *)e;
+- (void)addEvent:(Event *)e;
 
 @end

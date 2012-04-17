@@ -16,7 +16,7 @@
 @dynamic entry;
 @dynamic entry_description;
 @dynamic event_description;
-@dynamic id;
+@dynamic event_id;
 @dynamic name;
 @dynamic poster;
 @dynamic posterImageData;

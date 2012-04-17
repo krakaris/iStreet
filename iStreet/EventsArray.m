@@ -20,9 +20,9 @@
     return self;
 }
 
-- (void)addEvent:(TempEvent *)e
+- (void)addEvent:(Event *)e
 {
-    NSString *eventDate = [e.timeStart substringToIndex:[e.timeStart rangeOfString:@" "].location];
+    NSString *eventDate = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
     if ([eventDate isEqualToString:[self date]])
         [self.array addObject:e];
     else

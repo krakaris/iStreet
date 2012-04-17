@@ -16,7 +16,7 @@
 @property (nonatomic, retain) NSString * entry;
 @property (nonatomic, retain) NSString * entry_description;
 @property (nonatomic, retain) NSString * event_description;
-@property (nonatomic, retain) NSString * id;
+@property (nonatomic, retain) NSString * event_id;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * poster;
 @property (nonatomic, retain) NSData * posterImageData;

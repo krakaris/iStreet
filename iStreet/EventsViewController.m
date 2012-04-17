@@ -5,16 +5,13 @@
 //  Created by Rishi on 3/14/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
-//  A good deal of the code for synchronously loading event icons in the table cells (and all of the logic) is from Apple's LazyTable sample project. The IconDownloader.h/.m code is almost completely Apple's. A good deal of code was eliminated and several customizations were made.
+//  A good deal of the code for synchronously loading event icons in the table cells (and all of the logic) is from Apple's LazyTable sample project. The IconDownloader.h/.m code is almost completely Apple's. A lot of code was eliminated, however, and several customizations were made.
 
 #import "EventsViewController.h"
-#import "TempEvent.h"
 #import "EventsArray.h"
-#import "EventsViewCell.h"
-
-enum constants {
-    kLoadingIndicatorTag = 1,
-};
+#import "EventCell.h"
+#import "Event.h"
+#import "Event+Create.h"
 
 @interface EventsViewController ()
 - (void)getEventsData;
@@ -126,9 +123,8 @@ enum constants {
     
     for(NSDictionary *dict in eventsArray)
     {
-        
-        TempEvent *e = [[TempEvent alloc] initWithDictionary:dict];
-        NSString *dateOfEvent = [e.timeStart substringToIndex:[e.timeStart rangeOfString:@" "].location];
+        Event *e = [Event eventWithData:dict];
+        NSString *dateOfEvent = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
         
         //Find the array in eventsByDate that has events on the same date as e
         EventsArray *eventsSameDate = nil;
@@ -175,51 +171,19 @@ enum constants {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CELL_IDENTIFIER = @"event cell";
-    EventsViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER];
+    EventCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER];
     if(cell == nil)
-        cell = [[EventsViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CELL_IDENTIFIER];
+        cell = [[EventCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CELL_IDENTIFIER];
     
     // Configure the cell...
-    
-    //If there is an activity indicator, remove it.
-    [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kLoadingIndicatorTag] removeFromSuperview];
-    
-    EventsArray *ea = [eventsByDate objectAtIndex:indexPath.section];
-    TempEvent *event = [ea.array objectAtIndex:indexPath.row];
-    
-    // If there is no event title, make the title "On tap"
-    [cell.textLabel setText:([event.title isEqualToString:@""] ? @"On Tap" : event.title)];
-    [cell.detailTextLabel setText:event.name];
-    
-    if([event.poster isEqualToString:@""])
-    {
-        NSString *imageName = [NSString stringWithFormat:@"%@.png", event.name];
-        [cell setImage:[UIImage imageNamed:imageName]];
-        return cell;
-    }
-    
-    // Use the icon if it's already available
-    if (event.icon)
-    {
-        [cell setImage:event.icon];
-        return cell;
-    }
         
-    // Otherwise, start downloading the icon (unless the table is scrolling)
+    EventsArray *ea = [eventsByDate objectAtIndex:indexPath.section];
+    Event *event = [ea.array objectAtIndex:indexPath.row];
     
-    if (self.eventsTable.dragging == NO && self.eventsTable.decelerating == NO)
-    {
+    if([cell packCellWithEventInformation:event 
+                           atIndexPath:indexPath 
+                        whileScrolling:(self.eventsTable.dragging == YES || self.eventsTable.decelerating == YES)])
         [self startIconDownload:event forIndexPath:indexPath];
-    }
-    
-    // If a download is deferred or in progress, return a placeholder image
-    [cell setImage:[UIImage imageNamed:@"Placeholder.png"]];     
-    UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    CGSize imageViewSize = cell.imageView.image.size;
-    [loadingIndicator setCenter:CGPointMake(imageViewSize.width/2, imageViewSize.height/2)];
-    [loadingIndicator setTag:kLoadingIndicatorTag];
-    [cell.imageView addSubview:loadingIndicator];
-    [loadingIndicator startAnimating];
     
     return cell;
 }
@@ -253,7 +217,7 @@ enum constants {
 #pragma mark -
 #pragma mark Table cell image support
 
-- (void)startIconDownload:(TempEvent *)event forIndexPath:(NSIndexPath *)indexPath
+- (void)startIconDownload:(Event *)event forIndexPath:(NSIndexPath *)indexPath
 {
     IconDownloader *iconDownloader = [iconsBeingDownloaded objectForKey:indexPath];
     if (iconDownloader == nil) //if there isn't already a download in progress for that event
@@ -300,10 +264,10 @@ enum constants {
     NSArray *visiblePaths = [self.eventsTable indexPathsForVisibleRows];
     for (NSIndexPath *indexPath in visiblePaths)
     {
-        TempEvent *event = [((EventsArray *)[eventsByDate objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row]; // the event for the cell at that index path
+        Event *event = [((EventsArray *)[eventsByDate objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row]; // the event for the cell at that index path
         
         // start downloading the icon if the event doesn't have an icon but has a link to one
-        if (!event.icon && ![event.poster isEqualToString:@""])
+        if (!event.posterImageData && ![event.poster isEqualToString:@""])
             [self startIconDownload:event forIndexPath:indexPath];
     }
 }

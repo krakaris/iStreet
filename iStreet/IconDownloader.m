@@ -51,7 +51,6 @@
  */
 
 #import "IconDownloader.h"
-#import "TempEvent.h"
 
 @implementation IconDownloader
 
@@ -93,8 +92,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     // Set the event icon and clear temporary data/image
-    UIImage *image = [[UIImage alloc] initWithData:self.receivedData];
-    self.event.icon = image;
+    self.event.posterImageData = self.receivedData;
     
     self.receivedData = nil;
     self.imageConnection = nil;

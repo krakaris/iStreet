@@ -10,6 +10,9 @@
 #import "Club+Create.h"
 #import "User.h"
 
+//temp
+#import "Event.h"  
+
 @interface AppDelegate ()
 - (void)setupCoreData;
 @end
@@ -27,8 +30,10 @@
     //[self.view presentModalViewController:loginWebView animated:YES completion:^{}];
     //[self.window.subviews.lastObject presentModalViewController:loginWebView animated:YES];
     
-    
-    
+    NSLog(@"going to sleep!");
+   // [NSThread sleepForTimeInterval:5];
+    NSLog(@"wakie wakie eggs and bakie");
+
     
     /* THIS CODE SHOULD BE CALLED ONLY AFTER A SUCCESSFUL CAS LOGIN */ 
     NSLog(@"begin!");
@@ -63,6 +68,16 @@
                     NSLog(@"%@", club.name);
                 }
                  */
+
+                NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
+                NSError *error;
+                NSLog(@"listing events in data...");
+                NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
+                for(int i = 0; i < [events count]; i++)
+                {
+                    Event *event = [events objectAtIndex:i];
+                    NSLog(@"%@", event.title);
+                }
 
                 
             }

@@ -9,7 +9,7 @@
         <attribute name="entry" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="entry_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="event_description" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="event_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="poster" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="posterImageData" optional="YES" attributeType="Binary" syncable="YES"/>
