@@ -2,28 +2,29 @@
 //  Event.m
 //  iStreet
 //
-//  Created by Akarshan Kumar on 4/16/12.
+//  Created by Rishi on 4/17/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "Event.h"
+#import "Club.h"
 #import "User.h"
 
 
 @implementation Event
 
-@dynamic title;
-@dynamic id;
-@dynamic club_name;
-@dynamic entry_type;
-@dynamic entry_descrip;
-@dynamic event_descrip;
-@dynamic startDate;
-@dynamic startTime;
-@dynamic endTime;
-@dynamic posterURL;
+@dynamic entry;
+@dynamic entry_description;
+@dynamic event_description;
+@dynamic event_id;
+@dynamic name;
+@dynamic poster;
 @dynamic posterImageData;
 @dynamic rank;
+@dynamic time_end;
+@dynamic time_start;
+@dynamic title;
+@dynamic whichClub;
 @dynamic usersAttending;
 
 @end

@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Club" representedClassName="Club" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imageData" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="club_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="whichEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="whichClub" inverseEntity="Event" syncable="YES"/>
     </entity>
     <entity name="Event" representedClassName="Event" syncable="YES">
-        <attribute name="club_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="endTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="entry_descrip" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="entry_type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="event_descrip" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="entry" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="entry_description" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="event_description" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="event_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="poster" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="posterImageData" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="posterURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rank" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time_end" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time_start" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="usersAttending" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="attendingTheseEvents" inverseEntity="User" syncable="YES"/>
+        <relationship name="usersAttending" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="attendingTheseEvents" inverseEntity="User" syncable="YES"/>
+        <relationship name="whichClub" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Club" inverseName="whichEvents" inverseEntity="Club" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="fb_friends" optional="YES" attributeType="String" syncable="YES"/>
@@ -28,8 +27,8 @@
         <relationship name="attendingTheseEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="usersAttending" inverseEntity="Event" syncable="YES"/>
     </entity>
     <elements>
-        <element name="User" positionX="-9" positionY="147" width="128" height="105"/>
+        <element name="Club" positionX="736" positionY="261" width="128" height="120"/>
         <element name="Event" positionX="313" positionY="126" width="128" height="240"/>
-        <element name="Club" positionX="504" positionY="261" width="128" height="105"/>
+        <element name="User" positionX="-9" positionY="147" width="128" height="105"/>
     </elements>
 </model>

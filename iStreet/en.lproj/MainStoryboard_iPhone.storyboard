@@ -305,7 +305,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DWK-0W-THd" kind="push" identifier="Cloister" id="qHy-N6-Mf9"/>
+                                            <segue destination="DWK-0W-THd" kind="push" identifier="Quadrangle" id="qHy-N6-Mf9"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KdJ-01-cK6">
