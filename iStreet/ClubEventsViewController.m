@@ -7,7 +7,7 @@
 //
 
 #import "ClubEventsViewController.h"
-#import "OldEvent.h"
+#import "Event.h"
 #import "EventDetailsViewController.h"
 
 @interface ClubEventsViewController ()
@@ -35,21 +35,17 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.title = self.club.clubName;
+    self.navigationItem.title = self.club.name;
     
     // Initialize our arrays
     events = [[NSMutableArray alloc] init];
-    eventTitles = [[NSMutableArray alloc] init];
     eventImages = [[NSMutableArray alloc] init];
-    eventStartDates  = [[NSMutableArray alloc] init];
-    eventStartTimes = [[NSMutableArray alloc] init];
-    eventEndTimes = [[NSMutableArray alloc] init];
     
     eventsList.dataSource = self;
     eventsList.delegate = self;
     
     //Get event data from server
-    [self getListOfEvents: club.clubName];
+    [self getListOfEvents: club.name];
     
     //Make sure names are consistent!
     /*
@@ -93,7 +89,7 @@
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    OldEvent *e = [events objectAtIndex:section];
+    Event *e = [events objectAtIndex:section];
     return e.startDate;
 }
 
@@ -109,11 +105,11 @@
     }
     
     // Configure the cell...
-    OldEvent *event = [events objectAtIndex: indexPath.section];
+    Event *event = [events objectAtIndex: indexPath.section];
     //NSString *title = [eventTitles objectAtIndex: indexPath.section];
     NSString *title = event.title;
     
-    if ([title isEqualToString:@""] || [title isEqualToString:club.clubName]) {
+    if ([title isEqualToString:@""] || [title isEqualToString:club.name]) {
         event.title = @"On Tap";
         title = @"On Tap";
     }
@@ -231,12 +227,12 @@
 
  }
 
-- (void) getImageForEvent: (OldEvent *) event
+- (void) getImageForEvent: (Event *) event
 {
     //Build url for server
     NSString *urlString = 
     [NSString stringWithFormat:
-     @"http://pam.tigerapps.org/media/%@", event.poster];
+     @"http://pam.tigerapps.org/media/%@", event.posterURL];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
@@ -278,18 +274,16 @@
     
     for(NSDictionary *dict in eventsArray)
     {
-         OldEvent *e = [[OldEvent alloc] initWithDictionary:dict];
+         //Event *e = [[Event alloc] initWithDictionary:dict];
+        Event *e = [[Event alloc] init];
         [events addObject:e];
-        if (e.title != nil) {
-            [eventTitles addObject:e.title];
-        } else {
+        if (e.title == nil) {
             [e setTitle:@"On Tap"];
-            [eventTitles addObject:e.title];
         }
-        if ([e.description isEqualToString:@""]) {
-            e.description = @"On Tap";
+        if ([e.event_descrip isEqualToString:@""]) {
+            e.event_descrip = @"On Tap";
         }
-        e.description = [e.description stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+        e.event_descrip = [e.event_descrip stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
        
         // Fix start date string
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -301,9 +295,6 @@
         NSString *sTimeString = [newFormat stringFromDate:sDate];
         e.startDate = sTimeString;
         
-        [eventStartDates addObject:e.startDate];
-        [eventStartTimes addObject:e.startTime];
-        [eventEndTimes addObject:e.endTime];
     }
     
     [eventsList reloadData];

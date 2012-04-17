@@ -19,6 +19,7 @@
 @synthesize eventTime;
 @synthesize eventDescription;
 @synthesize eventImage;
+@synthesize attending;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -71,6 +72,7 @@
     [self setEventTime:nil];
     [self setEventDescription:nil];
     [self setEventImage:nil];
+    [self setAttending:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -82,6 +84,7 @@
 
 - (IBAction)attend:(UIButton *)sender {
     sender.hidden = YES;
-    [sender setBackgroundColor:(UIColor *)greenColor];
+    self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
+    //[sender setBackgroundColor:(UIColor *)greenColor];
 }
 @end

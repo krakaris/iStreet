@@ -7,16 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OldEvent.h"
+#import "Event.h"
 
 @interface EventDetailsViewController : UIViewController
 
-@property (nonatomic, retain) OldEvent *myEvent;
+@property (nonatomic, retain) Event *myEvent;
 @property (weak, nonatomic) IBOutlet UILabel *eventTitle;
 @property (weak, nonatomic) IBOutlet UILabel *eventDate;
 @property (weak, nonatomic) IBOutlet UILabel *eventTime;
 @property (weak, nonatomic) IBOutlet UILabel *eventDescription;
 @property (weak, nonatomic) IBOutlet UIImageView *eventImage;
+@property (weak, nonatomic) IBOutlet UILabel *attending;
 - (IBAction)attend:(UIButton *)sender;
 
 @end

@@ -495,7 +495,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="MsM-9b-zol">
                                         <rect key="frame" x="20" y="310" width="280" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="17"/>
                                         <state key="normal" title="I plan to attend this event!">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -506,6 +506,13 @@
                                             <action selector="attend:" destination="xZq-Pq-Unb" eventType="touchUpInside" id="J1L-LE-3yF"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" id="dCS-sl-Q6w">
+                                        <rect key="frame" x="20" y="318" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.50022758140000001" blue="0.1220668298" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
@@ -514,6 +521,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="FVB-zF-wHJ"/>
                     <connections>
+                        <outlet property="attending" destination="dCS-sl-Q6w" id="Hpk-oj-c1P"/>
                         <outlet property="eventDate" destination="mcr-LK-g6w" id="h3A-ta-Wb0"/>
                         <outlet property="eventDescription" destination="aQK-xL-t2d" id="yWk-T8-FxV"/>
                         <outlet property="eventImage" destination="rHP-V8-lBI" id="oLh-Kx-B60"/>
@@ -543,64 +551,6 @@
         <image name="Tiger Inn.png" width="93" height="100"/>
         <image name="Tower.png" width="78" height="101"/>
     </resources>
-    <classes>
-        <class className="ChatViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sendClicked:"/>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="messageField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="ClubEventsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubEventsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="edvController" candidateClass="EventDetailsViewController"/>
-                <relationship kind="outlet" name="eventsList" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="ClubsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="Cannon" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Cap" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Charter" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Cloister" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Colonial" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Cottage" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Ivy" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Quad" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="TI" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Terrace" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Tower" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EventDetailsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="attend:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="eventDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventDescription" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="eventTime" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventTitle" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EventsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="eventsTable" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="FriendsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
