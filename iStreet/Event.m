@@ -2,7 +2,7 @@
 //  Event.m
 //  iStreet
 //
-//  Created by Akarshan Kumar on 4/16/12.
+//  Created by Rishi on 4/17/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -13,18 +13,18 @@
 
 @implementation Event
 
-@dynamic title;
+@dynamic entry;
+@dynamic entry_description;
+@dynamic event_description;
 @dynamic id;
-@dynamic club_name;
-@dynamic entry_type;
-@dynamic entry_descrip;
-@dynamic event_descrip;
-@dynamic startTime;
-@dynamic endTime;
-@dynamic posterURL;
+@dynamic name;
+@dynamic poster;
 @dynamic posterImageData;
 @dynamic rank;
-@dynamic usersAttending;
+@dynamic time_end;
+@dynamic time_start;
+@dynamic title;
 @dynamic whichClub;
+@dynamic usersAttending;
 
 @end

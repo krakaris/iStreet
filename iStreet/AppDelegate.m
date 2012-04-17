@@ -7,21 +7,114 @@
 // 
 
 #import "AppDelegate.h"
+#import "Club+Create.h"
+#import "User.h"
+
+@interface AppDelegate ()
+- (void)setupCoreData;
+@end
 
 @implementation AppDelegate
 
-@synthesize window = _window, netID;
+@synthesize window = _window, netID, document;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    netID = @"<skipped login>";
+
     // Override point for customization after application launch.
     //UIView *loginWebView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     //[self.view presentModalViewController:loginWebView animated:YES completion:^{}];
     //[self.window.subviews.lastObject presentModalViewController:loginWebView animated:YES];
     
-    netID = @"<skipped login>";
     
+    
+    
+    /* THIS CODE SHOULD BE CALLED ONLY AFTER A SUCCESSFUL CAS LOGIN */ 
+    NSLog(@"begin!");
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSURL *dataURL = [[fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    dataURL = [dataURL URLByAppendingPathComponent:@"database"];
+    self.document = [[UIManagedDocument alloc] initWithFileURL:dataURL];
+
+    if ([fm fileExistsAtPath:[dataURL path]]) 
+    {
+        [self.document openWithCompletionHandler:^(BOOL success) {
+            if (success) 
+            {
+                NSLog(@"successfully opened database!");
+                /* A test to make sure that [Club clubWithData] behaves correctly when an entity already exists. 
+                 
+                NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];                
+                NSError *error;
+                NSLog(@"listing clubs in data...");
+                NSArray *clubs = [document.managedObjectContext executeFetchRequest:request error:&error];
+                for(int i = 0; i < [clubs count]; i++)
+                {
+                    Club *club = [clubs objectAtIndex:i];
+                    NSLog(@"%@", club.name);
+                    Club *sameClub = [Club clubWithData:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%@", club.club_id] forKey:@"club_id"]];
+                }
+                NSLog(@"testing again!");
+                clubs = [document.managedObjectContext executeFetchRequest:request error:&error];
+                for(int i = 0; i < [clubs count]; i++)
+                {
+                    Club *club = [clubs objectAtIndex:i];
+                    NSLog(@"%@", club.name);
+                }
+                 */
+
+                
+            }
+            if (!success) NSLog(@"couldn’t open document at %@", [dataURL path]);
+        }]; 
+    } 
+    else 
+    {
+        [self.document saveToURL:dataURL forSaveOperation:UIDocumentSaveForCreating
+          completionHandler:^(BOOL success) {
+              if (success) 
+              {
+                  [self setupCoreData];
+                  NSLog(@"successfully created database!");   
+              }
+              if (!success) NSLog(@"couldn’t create document at %@", [dataURL path]);
+          }];
+    }    
+
     return YES;
+}
+
+/*
+ Is called the first time that the application runs in order to create the database.
+ */
+- (void)setupCoreData
+{
+    NSLog(@"setting up core data...");
+    int CONNECTION_TIMEOUT = 8;
+    NSURL *clubsURL = [NSURL URLWithString:@"http://istreetsvr.heroku.com/clubslist"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:clubsURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:CONNECTION_TIMEOUT];
+    NSURLResponse *response;
+    NSLog(@"sending request...");
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:NULL];
+    NSLog(@"data recieved!");
+    if(!data)
+    {
+        //APPROPRIATELY HANDLE WEB FAILURE!
+        NSLog(@"clubs list connection failed");
+        return;
+    }
+    
+    NSArray *clubs = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+    for (NSDictionary *clubInformation in clubs)
+    {
+        NSLog(@"%@", [clubInformation objectForKey:@"name"]);
+        [Club clubWithData:clubInformation];
+    }
+    
+    User *thisUser = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:document.managedObjectContext];
+    [thisUser setNetid:netID];
+    
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

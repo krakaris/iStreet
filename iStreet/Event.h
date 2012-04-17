@@ -2,7 +2,7 @@
 //  Event.h
 //  iStreet
 //
-//  Created by Akarshan Kumar on 4/16/12.
+//  Created by Rishi on 4/17/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -13,26 +13,18 @@
 
 @interface Event : NSManagedObject
 
-@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * entry;
+@property (nonatomic, retain) NSString * entry_description;
+@property (nonatomic, retain) NSString * event_description;
 @property (nonatomic, retain) NSString * id;
-@property (nonatomic, retain) NSString * club_name;
-@property (nonatomic, retain) NSString * entry_type;
-@property (nonatomic, retain) NSString * entry_descrip;
-@property (nonatomic, retain) NSString * event_descrip;
-@property (nonatomic, retain) NSString * startTime;
-@property (nonatomic, retain) NSString * endTime;
-@property (nonatomic, retain) NSString * posterURL;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * poster;
 @property (nonatomic, retain) NSData * posterImageData;
 @property (nonatomic, retain) NSString * rank;
-@property (nonatomic, retain) NSSet *usersAttending;
+@property (nonatomic, retain) NSString * time_end;
+@property (nonatomic, retain) NSString * time_start;
+@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) Club *whichClub;
-@end
-
-@interface Event (CoreDataGeneratedAccessors)
-
-- (void)addUsersAttendingObject:(User *)value;
-- (void)removeUsersAttendingObject:(User *)value;
-- (void)addUsersAttending:(NSSet *)values;
-- (void)removeUsersAttending:(NSSet *)values;
+@property (nonatomic, retain) User *usersAttending;
 
 @end
