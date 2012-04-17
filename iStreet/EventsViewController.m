@@ -12,6 +12,7 @@
 #import "EventCell.h"
 #import "Event.h"
 #import "Event+Create.h"
+#import "AppDelegate.h"
 
 @interface EventsViewController ()
 - (void)getEventsData;
@@ -34,6 +35,19 @@
     eventsByDate = [NSMutableArray array];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
     
+    NSLog(@"Beginning loading core data.");
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
+    NSError *error;
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
+    
+    [self setPropertiesWithNewEventData:events];
+    
+    [eventsTable reloadData];
+    [activityIndicator stopAnimating];
+    NSLog(@"Finished loading core data.");
+    NSLog(@"Beginning loading web data.");
     [self getEventsData];
 }
 
@@ -80,7 +94,8 @@
 
 - (void)getEventsData
 {
-    [activityIndicator startAnimating];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
     NSString *url = @"http://istreetsvr.herokuapp.com/eventslist";
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -90,6 +105,8 @@
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     if (conn)
         receivedData = [NSMutableData data];
+     
+   
 }
 
 /*
@@ -114,16 +131,33 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     NSError *error;
-    NSArray *eventsArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
-    if(!eventsArray)
+    NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
+    if(!eventsDictionaryArray)
     {
         NSLog(@"%@", [error localizedDescription]);
         return;
     }
+    NSMutableArray *eventsArray = [NSMutableArray arrayWithCapacity:[eventsDictionaryArray count]];
     
-    for(NSDictionary *dict in eventsArray)
+    for(NSDictionary *dict in eventsDictionaryArray)
+        [eventsArray addObject:[Event eventWithData:dict]];
+    
+    [self setPropertiesWithNewEventData:eventsArray];
+    
+    NSLog(@"Finished loading web data, going to sleep.");
+    //[NSThread sleepForTimeInterval:5];
+    NSLog(@"waking up!");
+    [eventsTable reloadData];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+}
+
+- (void)setPropertiesWithNewEventData:(NSArray *)eventData;
+{
+    eventsByDate = [NSMutableArray array];
+    for(int i = [eventData count] - 1; i >= 0; i--)
     {
-        Event *e = [Event eventWithData:dict];
+        Event *e = (Event *)[eventData objectAtIndex:i];
+        NSLog(@"%@", e.title);
         NSString *dateOfEvent = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
         
         //Find the array in eventsByDate that has events on the same date as e
@@ -148,11 +182,8 @@
         
         return [ea1.date compare:ea2.date];
     }];
-    
-    [eventsTable reloadData];
-    [activityIndicator stopAnimating];
-}
 
+}
 
 #pragma mark - Table view data source
 

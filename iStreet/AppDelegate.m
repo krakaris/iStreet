@@ -69,6 +69,8 @@
                 }
                  */
 
+                /*
+                //List all events in data
                 NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
                 NSError *error;
                 NSLog(@"listing events in data...");
@@ -77,7 +79,7 @@
                 {
                     Event *event = [events objectAtIndex:i];
                     NSLog(@"%@", event.title);
-                }
+                }*/
 
                 
             }
