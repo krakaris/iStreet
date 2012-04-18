@@ -2,7 +2,7 @@
 //  User.m
 //  iStreet
 //
-//  Created by Akarshan Kumar on 4/16/12.
+//  Created by Rishi on 4/17/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -12,9 +12,9 @@
 
 @implementation User
 
-@dynamic netid;
-@dynamic fb_id;
 @dynamic fb_friends;
+@dynamic fb_id;
+@dynamic netid;
 @dynamic attendingTheseEvents;
 
 @end

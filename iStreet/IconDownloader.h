@@ -50,20 +50,20 @@
   
  */
 
-#import "TempEvent.h"
+#import "Event.h"
 
 @protocol IconDownloaderDelegate;
 
 @interface IconDownloader : NSObject
 {
-    TempEvent  *event;
+    Event  *event;
     NSIndexPath *indexPathInTableView;
     
     NSMutableData *receivedData;
     NSURLConnection *imageConnection;
 }
 
-@property (nonatomic, retain) TempEvent *event;
+@property (nonatomic, retain) Event *event;
 @property (nonatomic, retain) NSIndexPath *indexPathInTableView;
 @property __weak id <IconDownloaderDelegate> delegate;
 
