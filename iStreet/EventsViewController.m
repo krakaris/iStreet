@@ -14,6 +14,8 @@
 #import "Event+Create.h"
 #import "AppDelegate.h"
 
+#import "Club.h"
+
 @interface EventsViewController ()
 - (void)getEventsData;
 - (void)loadImagesForOnscreenRows;
@@ -34,21 +36,25 @@
     
     eventsByDate = [NSMutableArray array];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
-    
+        
     NSLog(@"Beginning loading core data.");
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
     NSError *error;
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    //while(document.documentState != UIDocumentStateNormal);
+    
     NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
+
     
     [self setPropertiesWithNewEventData:events];
     
     [eventsTable reloadData];
     [activityIndicator stopAnimating];
     NSLog(@"Finished loading core data.");
+    
     NSLog(@"Beginning loading web data.");
-    [self getEventsData];
+    //[self getEventsData];
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -99,14 +105,15 @@
     NSString *url = @"http://istreetsvr.herokuapp.com/eventslist";
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setTimeoutInterval:8];
     [request setURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:@"GET"];
     
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     if (conn)
         receivedData = [NSMutableData data];
-     
-   
+    else
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 /*
@@ -124,6 +131,11 @@
 {  
     [receivedData appendData:data];
 } 
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+}
 
 /*
  Runs when the connection has successfully finished loading all data
@@ -157,7 +169,7 @@
     for(int i = [eventData count] - 1; i >= 0; i--)
     {
         Event *e = (Event *)[eventData objectAtIndex:i];
-        NSLog(@"%@", e.title);
+        //NSLog(@"%@", e.title);
         NSString *dateOfEvent = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
         
         //Find the array in eventsByDate that has events on the same date as e
