@@ -31,7 +31,7 @@
     //[self.window.subviews.lastObject presentModalViewController:loginWebView animated:YES];
     
     NSLog(@"going to sleep!");
-   // [NSThread sleepForTimeInterval:5];
+    [NSThread sleepForTimeInterval:3];
     NSLog(@"wakie wakie eggs and bakie");
 
     
@@ -48,6 +48,13 @@
             if (success) 
             {
                 NSLog(@"successfully opened database!");
+                
+                if(document.documentState == UIDocumentStateNormal)
+                    NSLog(@"normal!");
+                else
+                    NSLog(@"abnormal!");
+                
+                
                 /* A test to make sure that [Club clubWithData] behaves correctly when an entity already exists. 
                  
                 NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];                
@@ -107,6 +114,11 @@
  */
 - (void)setupCoreData
 {
+    if(document.documentState == UIDocumentStateNormal)
+        NSLog(@"normal!");
+    else
+        NSLog(@"abnormal!");
+    
     NSLog(@"setting up core data...");
     int CONNECTION_TIMEOUT = 8;
     NSURL *clubsURL = [NSURL URLWithString:@"http://istreetsvr.heroku.com/clubslist"];
@@ -131,6 +143,8 @@
     
     User *thisUser = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:document.managedObjectContext];
     [thisUser setNetid:netID];
+    
+ //   [document saveToURL:<#(NSURL *)#> forSaveOperation:<#(UIDocumentSaveOperation)#> comp
     
 }
 							
