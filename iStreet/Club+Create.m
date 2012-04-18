@@ -9,6 +9,8 @@
 #import "Club+Create.h"
 #import "AppDelegate.h"
 
+#import "Event.h"
+
 @implementation Club (Create)
 
 + (Club *)clubWithData:(NSDictionary *)clubData
