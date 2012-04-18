@@ -8,14 +8,17 @@
 
 #import "ClubEventsViewController.h"
 #import "Event.h"
+#import "Event+Create.h"
+#import "EventCell.h"
 #import "EventDetailsViewController.h"
+#import "AppDelegate.h"
 
 @interface ClubEventsViewController ()
 
 @end
 
 @implementation ClubEventsViewController
-@synthesize club, eventsList, sections;
+@synthesize club, eventsList, activityIndicator;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -39,10 +42,29 @@
     
     // Initialize our arrays
     events = [[NSMutableArray alloc] init];
-    eventImages = [[NSMutableArray alloc] init];
+    iconsBeingDownloaded = [NSMutableDictionary dictionary];
+       
+    //eventsList.dataSource = self;
+    //eventsList.delegate = self;
     
-    eventsList.dataSource = self;
-    eventsList.delegate = self;
+    NSLog(@"Beginning loading core data.");
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];   
+    // Class code
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"time_start" ascending:YES];
+    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    request.predicate = [NSPredicate predicateWithFormat:@"whichClub.name = %@", club.name];
+    NSError *error;
+    //Not sure we want class code - no way to customize view or sections..
+    
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    NSArray *eventsArray = [document.managedObjectContext executeFetchRequest:request error:&error];
+    
+    
+    [eventsList reloadData];
+    [activityIndicator stopAnimating];
+    NSLog(@"Finished loading core data.");
+    NSLog(@"Beginning loading web data.");
     
     //Get event data from server
     [self getListOfEvents: club.name];
@@ -90,31 +112,52 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     Event *e = [events objectAtIndex:section];
-    return e.startDate;
+    
+    // Fix start date string
+    NSString *eventDate = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"YYYY-MM-dd"];
+    NSDate *sDate = [dateFormat dateFromString:eventDate];
+    
+    NSDateFormatter *newFormat = [[NSDateFormatter alloc] init];
+    [newFormat setDateFormat:@"EEEE, MMMM d"];
+    NSString *sTimeString = [newFormat stringFromDate:sDate];
+
+    return sTimeString;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Club Event";
+    static NSString *CellIdentifier = @"event cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) 
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[EventCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
     // Configure the cell...
-    Event *event = [events objectAtIndex: indexPath.section];
-    //NSString *title = [eventTitles objectAtIndex: indexPath.section];
-    NSString *title = event.title;
     
-    if ([title isEqualToString:@""] || [title isEqualToString:club.name]) {
-        event.title = @"On Tap";
-        title = @"On Tap";
-    }
+    Event *event = [events objectAtIndex: indexPath.section];
+    
+    /*if([cell packCellWithEventInformation:event 
+                              atIndexPath:indexPath 
+                           whileScrolling:(self.eventsList.dragging == YES || self.eventsList.decelerating == YES)])
+        [self startIconDownload:event forIndexPath:indexPath];
+    */
+    return cell;
+
+    
+    
     
     // Format Times appropriately for Subtitle
+    /*
+     if ([title isEqualToString:@""] || [title isEqualToString:club.name]) {
+     event.title = @"On Tap";
+     title = @"On Tap";
+     }
+     
     NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
     [inputFormatter setDateFormat:@"HH:mm:ss"];
     NSDate *sTime = [inputFormatter dateFromString:event.startTime];
@@ -135,111 +178,93 @@
         
     [cell.textLabel setText:title];
     [cell.detailTextLabel setText:timeString];
-    
     return cell;
+    */
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+#pragma mark -
+#pragma mark Table cell image support
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)startIconDownload:(Event *)event forIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-// Online Flickr Tutorial - not sure if correct?
-/*- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data 
-{
-    // Store incoming data into a string
-    //IS it UTF8 or LATIN-1 encoding???
-    NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    // Create a dictionary from the JSON string
-    
-    //NSDictionary *results = [jsonString JSONValue];
-    NSDictionary *results;
-    
-    // Build an array of events from the dictionary for easy access to each entry
-    //NSArray *events = [[results objectForKey:@""];
-    for (NSString *key in results) {
-        [eventTitles addObject:[results objectForKey:@"title"]];
-        NSString *picture = [results objectForKey:@"poster"];
-        // If there is a field for "poster", use it
-        [eventImages addObject:(picture.length > 0 ? picture : @"")];
-        
-        //Create url for event images:
-        if (![picture isEqualToString:@""]) {
-            NSString *imageURLString = 
-        [NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", picture];
-        } else {
-            //Use default crest if no image provided
-            NSString *imageURLString = [NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", clubName];
-        }
-         
-        [eventDates addObject:[results objectForKey:@"DATE(time_start)"]];
+    IconDownloader *iconDownloader = [iconsBeingDownloaded objectForKey:indexPath];
+    if (iconDownloader == nil) //if there isn't already a download in progress for that event
+    {
+        iconDownloader = [[IconDownloader alloc] init];
+        iconDownloader.event = event;
+        iconDownloader.indexPathInTableView = indexPath;
+        iconDownloader.delegate = self;
+        [iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
+        [iconDownloader startDownload];
     }
 }
-*/ 
+
+// called by our ImageDownloader when an icon is ready to be displayed
+- (void)appImageDidLoad:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [self.eventsList cellForRowAtIndexPath:indexPath];
+    [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kLoadingIndicatorTag] stopAnimating];
+    [eventsList reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [iconsBeingDownloaded removeObjectForKey:indexPath];
+}
+
+
+#pragma mark -
+#pragma mark Deferred image loading (UIScrollViewDelegate)
+
+// Load images for all onscreen rows when scrolling is finished
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate)
+	{
+        [self loadImagesForOnscreenRows];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadImagesForOnscreenRows];
+}
+
+// this method is used when the user scrolls into a set of cells that don't have their app icons yet
+- (void)loadImagesForOnscreenRows
+{
+    NSArray *visiblePaths = [self.eventsList indexPathsForVisibleRows];
+    for (NSIndexPath *indexPath in visiblePaths)
+    {
+        Event *event = [events objectAtIndex:indexPath.row]; // the event for the cell at that index path
+        
+        // start downloading the icon if the event doesn't have an icon but has a link to one
+        if (!event.posterImageData && ![event.poster isEqualToString:@""])
+            [self startIconDownload:event forIndexPath:indexPath];
+    }
+}
+
+
 - (void) getListOfEvents: (NSString *) clubName
 {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
     //Build url for server
     NSString *urlString = 
     [NSString stringWithFormat:
      @"http://istreetsvr.herokuapp.com/clubevents?name=%@", clubName];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    if (connection) {
+    //NSURL *url = [NSURL URLWithString:urlString];
+    //NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString: urlString]];
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    
+    //NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    if (conn) {
         receivedData = [NSMutableData data];
     }
     
  //else do nothing
 
  }
-
-- (void) getImageForEvent: (Event *) event
-{
-    //Build url for server
-    NSString *urlString = 
-    [NSString stringWithFormat:
-     @"http://pam.tigerapps.org/media/%@", event.posterURL];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    if (connection) {
-        receivedData = [NSMutableData data];
-    }
-}
 
 //Rishi Chat code:
 /*
@@ -265,18 +290,21 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {      
     NSError *error;
-    NSArray *eventsArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
-    if(!eventsArray)
+    NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
+    if(!eventsDictionaryArray)
     {
         NSLog(@"%@", [error localizedDescription]);
         return; // do nothing if can't recieve messages
     }
     
-    for(NSDictionary *dict in eventsArray)
+    for(NSDictionary *dict in eventsDictionaryArray)
     {
-         //Event *e = [[Event alloc] initWithDictionary:dict];
-        Event *e = [[Event alloc] init];
+        Event *e = [Event eventWithData:dict];
         [events addObject:e];
+    }
+    
+    [eventsList reloadData];
+    /*
         if (e.title == nil) {
             [e setTitle:@"On Tap"];
         }
@@ -294,38 +322,12 @@
         [newFormat setDateFormat:@"EEEE, MMMM d"];
         NSString *sTimeString = [newFormat stringFromDate:sDate];
         e.startDate = sTimeString;
+     */
         
-    }
-    
-    [eventsList reloadData];
-    
-    //Add images to Array: "eventImages"
-    /*for (Event *event in events)
-    {
-        
-        
-        
-        // If there is a field for "poster", use it
-        //[eventImages addObject:(event.poster.length > 0 ? event.poster : @"")];
-        
-        //Create url for event images:
-        if (![event.poster isEqualToString:@""]) {
-            NSString *imageURLString = 
-            [NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", event.poster];
-            //UIImage *eventImage = get Image!
-            UIImage *eventImage = nil;
-            
-            [eventImages addObject:eventImage];
-        } else {
-            NSString *name = [NSString stringWithFormat:@"%@", club.clubName];
-            //Use default crest if no image provided
-            UIImage *eventImage = [UIImage imageNamed: name]; 
-            [eventImages addObject:eventImage];
-            
-        }
-    }*/
-    
 }
+    
+    
+
 
 #pragma mark - Table view delegate
 

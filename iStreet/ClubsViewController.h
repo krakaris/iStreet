@@ -22,10 +22,12 @@
     //UIButton *Campus;
     IBOutlet UIButton *Charter;
      
+    NSArray *clubs;
     
     __weak IBOutlet UILabel *dateLabel;
     
 }
 //@property (weak, nonatomic) IBOutlet UILabel *datelabel;
+
 
 @end

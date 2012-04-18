@@ -23,8 +23,6 @@
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
 		5BA1F61315112DA7002CA7F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */; };
 		5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */; };
-		5BC0D9E7153BF30E004D560A /* OldClub.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0D9E4153BF30E004D560A /* OldClub.m */; };
-		5BC0D9E8153BF30E004D560A /* OldEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0D9E6153BF30E004D560A /* OldEvent.m */; };
 		5BC0D9F3153BF379004D560A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC0D9F2153BF379004D560A /* CoreData.framework */; };
 		5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AA15165A1F008E6C1F /* ChatViewController.m */; };
 		5BCE63AE15165D83008E6C1F /* ClubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AD15165D83008E6C1F /* ClubsViewController.m */; };
@@ -91,10 +89,6 @@
 		5BA1F61C15112DA7002CA7F3 /* iStreet-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iStreet-Prefix.pch"; sourceTree = "<group>"; };
 		5BA1F61D15112DA7002CA7F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5BC0D9E3153BF305004D560A /* OldClub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldClub.h; sourceTree = "<group>"; };
-		5BC0D9E4153BF30E004D560A /* OldClub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldClub.m; sourceTree = "<group>"; };
-		5BC0D9E5153BF30E004D560A /* OldEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldEvent.h; sourceTree = "<group>"; };
-		5BC0D9E6153BF30E004D560A /* OldEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldEvent.m; sourceTree = "<group>"; };
 		5BC0D9F2153BF379004D560A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5BCE63A915165A1F008E6C1F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		5BCE63AA15165A1F008E6C1F /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
@@ -108,7 +102,7 @@
 		5BFB450F153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		9D197B5E153B51B800604080 /* EventsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsArray.h; sourceTree = "<group>"; };
 		9D197B5F153B51B800604080 /* EventsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsArray.m; sourceTree = "<group>"; };
-		9D197B60153B51B800604080 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; path = EventCell.h; sourceTree = "<group>"; };
+		9D197B60153B51B800604080 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		9D197B61153B51B800604080 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		9D197B62153B51B800604080 /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
 		9D197B63153B51B800604080 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
@@ -271,10 +265,6 @@
 				9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */,
 				5BCE63AC15165D83008E6C1F /* ClubsViewController.h */,
 				5BCE63AD15165D83008E6C1F /* ClubsViewController.m */,
-				5BC0D9E3153BF305004D560A /* OldClub.h */,
-				5BC0D9E4153BF30E004D560A /* OldClub.m */,
-				5BC0D9E5153BF30E004D560A /* OldEvent.h */,
-				5BC0D9E6153BF30E004D560A /* OldEvent.m */,
 			);
 			name = Clubs;
 			sourceTree = "<group>";
@@ -456,8 +446,6 @@
 				9D197B6A153B51B800604080 /* EventsViewController.m in Sources */,
 				9D197B6B153B51B800604080 /* IconDownloader.m in Sources */,
 				4163B68E153BCC0A00D7B2DC /* iStreet.xcdatamodeld in Sources */,
-				5BC0D9E7153BF30E004D560A /* OldClub.m in Sources */,
-				5BC0D9E8153BF30E004D560A /* OldEvent.m in Sources */,
 				5BF9EE42153CBA3F00E53F6E /* Event+Create.m in Sources */,
 				5B3C20C4153D119200B3B1B9 /* Club+Create.m in Sources */,
 				5B3C20E1153D275D00B3B1B9 /* Club.m in Sources */,

@@ -36,10 +36,35 @@
 	// Do any additional setup after loading the view.
     self.navigationItem.title = myEvent.title;
     self.eventTitle.text = myEvent.title;
-    self.eventDate.text = myEvent.startDate;
-    NSString *sTimeString = myEvent.startTime;
+    
+    // Fix start date string
+    NSString *eventDay = [myEvent.time_start substringToIndex:[myEvent.time_start rangeOfString:@" "].location];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"YYYY-MM-dd"];
+    NSDate *sDate = [dateFormat dateFromString:eventDay];
+    
+    NSDateFormatter *newFormat = [[NSDateFormatter alloc] init];
+    [newFormat setDateFormat:@"EEEE, MMMM d"];
+    NSString *sDayString = [newFormat stringFromDate:sDate];
+    
+    self.eventDate.text = sDayString;
+    
+    NSString *fullStartTimeString = myEvent.time_start;
+    NSString *fullEndTimeString = myEvent.time_end;
+    NSDateFormatter *longFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    NSDate *fullStartDate = [dateFormat dateFromString:fullStartTimeString];
+    NSDate *fullEndDate = [dateFormat dateFromString:fullEndTimeString];
+
+    
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"h:mm"];
+    NSString *sTimeString = [outputFormatter stringFromDate:fullStartDate];
+     NSString *eTimeString = [outputFormatter stringFromDate:fullEndDate];
+
+    //Hardcoded AM and PM --> FIX!!!
     NSString *timeString = [sTimeString stringByAppendingString:@"pm - "];
-    timeString = [timeString stringByAppendingString:myEvent.endTime];
+    timeString = [timeString stringByAppendingString:eTimeString];
     timeString = [timeString stringByAppendingString:@"am"];
     
     self.eventTime.text = timeString;

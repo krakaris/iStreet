@@ -9,6 +9,7 @@
 #import "ClubsViewController.h"
 #import "Club.h"
 #import "ClubEventsViewController.h"
+#import "AppDelegate.h"
 
 @interface ClubsViewController ()
 
@@ -39,6 +40,13 @@
     //self.datelabel.text = dateString;
     dateLabel.text = dateString;
     
+    //Get all clubs from Core Data
+    clubs = [NSArray array];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];                
+    NSError *error;
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    clubs = [document.managedObjectContext executeFetchRequest:request error:&error];
 }
 
 - (void)viewDidUnload
@@ -61,25 +69,21 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    Club *club = [Club alloc];
-    [club setName:segue.identifier];
+    /*Club *club = [Club alloc];
+    //[club setName:segue.identifier];
+    club.name = segue.identifier;
+     */
     NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
+    NSString *clubName = segue.identifier;
+    for (Club *club in clubs){
+        if ([club.name isEqualToString:clubName]){
+            [segue.destinationViewController setClub:(club)];
+            NSLog(@"Destination club: %@\n", club.name);
+        }
+    }
     
-    [segue.destinationViewController setClub:(club)];
+    //[segue.destinationViewController setClub:(club)];
     
 }
-/*
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- 
- Servery *servery = [ServeryCache.instance.serveries objectForKey:segue.identifier];
- 
- if(servery)
- {
- [segue.destinationViewController setServery:(servery)];
- }
- 
- }
-*/
 
 @end

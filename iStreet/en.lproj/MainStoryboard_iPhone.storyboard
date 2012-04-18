@@ -405,6 +405,10 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" style="gray" id="XV1-LZ-0VO">
+                            <rect key="frame" x="0.0" y="66" width="320" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Club Event" textLabel="jtB-D9-58i" detailTextLabel="wUD-7O-qoe" style="IBUITableViewCellStyleSubtitle" id="IDJ-vU-4Wh">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
@@ -440,6 +444,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="m1f-WA-aAf"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="XV1-LZ-0VO" id="yWP-cT-4Ou"/>
                         <outlet property="eventsList" destination="xoj-t7-ooj" id="63s-aI-Oxv"/>
                         <segue destination="xZq-Pq-Unb" kind="push" identifier="ShowEventDetails" id="gZz-0c-lrR"/>
                     </connections>
@@ -551,6 +556,66 @@
         <image name="Tiger Inn.png" width="93" height="100"/>
         <image name="Tower.png" width="78" height="101"/>
     </resources>
+    <classes>
+        <class className="ChatViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendClicked:"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="messageField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ClubEventsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubEventsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="edvController" candidateClass="EventDetailsViewController"/>
+                <relationship kind="outlet" name="eventsList" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="ClubsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="Cannon" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Cap" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Charter" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Cloister" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Colonial" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Cottage" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Ivy" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Quad" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="TI" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Terrace" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Tower" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="EventDetailsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventDetailsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="attend:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="attending" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventDescription" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="eventTime" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventTitle" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="EventsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="eventsTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="FriendsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
