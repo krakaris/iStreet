@@ -19,19 +19,19 @@
 
 @implementation AppDelegate
 
-@synthesize window = _window, netID, document;
+@synthesize window = _window, netID, document, appDataLoaded;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     netID = @"<skipped login>";
-    
+    appDataLoaded = NO;
     // Override point for customization after application launch.
     //UIView *loginWebView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     //[self.view presentModalViewController:loginWebView animated:YES completion:^{}];
     //[self.window.subviews.lastObject presentModalViewController:loginWebView animated:YES];
     
     NSLog(@"going to sleep for NSFileManager startup (only for simulator)...");
-    [NSThread sleepForTimeInterval:5];
+    //[NSThread sleepForTimeInterval:5];
     NSLog(@"wakie wakie eggs and bakie");
     
     
@@ -47,30 +47,30 @@
             if (success) 
             {
                 NSLog(@"successfully opened database!");
-                
-                    /*
-                NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];                
-                NSError *error;
-                NSLog(@"listing clubs in data...");
-                NSArray *clubs = [document.managedObjectContext executeFetchRequest:request error:&error];
-                for(int i = 0; i < [clubs count]; i++)
-                {
-                    Club *club = [clubs objectAtIndex:i];
-                    //NSLog(@"%@", club.name);
-                    Club *sameClub = [Club clubWithData:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%@", club.club_id] forKey:@"club_id"]];
-                }
-                NSLog(@"testing again!");
-                clubs = [document.managedObjectContext executeFetchRequest:request error:&error];
-                for(int i = 0; i < [clubs count]; i++)
-                {
-                    Club *club = [clubs objectAtIndex:i];
-                    NSString *events = @"";
-                    for(Event *event in club.whichEvents)
-                        events = [events stringByAppendingFormat:@"%@, ", event.title];
-                    NSLog(@"%@: %@", club.name, events);
-                }
-                */
-                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"App Data Loaded" object:self];
+                appDataLoaded = YES;
+                /*
+                 NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];                
+                 NSError *error;
+                 NSLog(@"listing clubs in data...");
+                 NSArray *clubs = [document.managedObjectContext executeFetchRequest:request error:&error];
+                 for(int i = 0; i < [clubs count]; i++)
+                 {
+                 Club *club = [clubs objectAtIndex:i];
+                 //NSLog(@"%@", club.name);
+                 Club *sameClub = [Club clubWithData:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%@", club.club_id] forKey:@"club_id"]];
+                 }
+                 NSLog(@"testing again!");
+                 clubs = [document.managedObjectContext executeFetchRequest:request error:&error];
+                 for(int i = 0; i < [clubs count]; i++)
+                 {
+                 Club *club = [clubs objectAtIndex:i];
+                 NSString *events = @"";
+                 for(Event *event in club.whichEvents)
+                 events = [events stringByAppendingFormat:@"%@, ", event.title];
+                 NSLog(@"%@: %@", club.name, events);
+                 }
+                 */
                 /*
                  //List all events in data
                  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
@@ -82,8 +82,6 @@
                  Event *event = [events objectAtIndex:i];
                  NSLog(@"%@", event.title);
                  }*/
-                
-                
             }
             if (!success) NSLog(@"couldn’t open document at %@", [dataURL path]);
         }]; 
@@ -96,6 +94,8 @@
                    {
                        [self setupCoreData];
                        NSLog(@"successfully created database!");   
+                       [[NSNotificationCenter defaultCenter] postNotificationName:@"App Data Loaded" object:self];
+                       appDataLoaded = YES;
                    }
                    if (!success) NSLog(@"couldn’t create document at %@", [dataURL path]);
                    

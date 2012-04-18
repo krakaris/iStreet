@@ -19,6 +19,7 @@
 @interface EventsViewController ()
 - (void)getEventsData;
 - (void)loadImagesForOnscreenRows;
+/* Probably incomplete */
 @end
 
 @implementation EventsViewController
@@ -37,24 +38,48 @@
     eventsByDate = [NSMutableArray array];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
         
+    [activityIndicator startAnimating];
+    
+    BOOL dataDidLoad = [(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded];
+    
+    if(!dataDidLoad)
+    {
+        NSLog(@"Setting up notifications.");
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData:) name:@"App Data Loaded" object:nil];
+    }
+    else
+    {
+        NSLog(@"No need for notification, data already loade.");
+        [self loadData:nil];
+    }
+}
+
+- (void)loadData:(NSNotification *)notification
+{
+    NSLog(@"Notification received!");
+    
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+
+    if(notification)
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     NSLog(@"Beginning loading core data.");
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
     NSError *error;
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-    //while(document.documentState != UIDocumentStateNormal);
     
     NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
-
     
     [self setPropertiesWithNewEventData:events];
     
     [eventsTable reloadData];
     [activityIndicator stopAnimating];
+    
     NSLog(@"Finished loading core data.");
     
-    NSLog(@"Beginning loading web data.");
-    //[self getEventsData];
+    NSLog(@"Beginning loading web data (maybe).");
+    [self getEventsData];
+
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -152,13 +177,12 @@
     NSMutableArray *eventsArray = [NSMutableArray arrayWithCapacity:[eventsDictionaryArray count]];
     
     for(NSDictionary *dict in eventsDictionaryArray)
-        [eventsArray addObject:[Event eventWithData:dict]];
+    {
+        Event *event = [Event eventWithData:dict];
+        [eventsArray addObject:event];
+    }
     
     [self setPropertiesWithNewEventData:eventsArray];
-    
-    NSLog(@"Finished loading web data, going to sleep.");
-    //[NSThread sleepForTimeInterval:5];
-    NSLog(@"waking up!");
     [eventsTable reloadData];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
@@ -169,7 +193,6 @@
     for(int i = [eventData count] - 1; i >= 0; i--)
     {
         Event *e = (Event *)[eventData objectAtIndex:i];
-        //NSLog(@"%@", e.title);
         NSString *dateOfEvent = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
         
         //Find the array in eventsByDate that has events on the same date as e
