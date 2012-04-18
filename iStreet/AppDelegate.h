@@ -9,6 +9,7 @@
 //new comment
 
 #import <UIKit/UIKit.h>
+#import "FBConnect.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
