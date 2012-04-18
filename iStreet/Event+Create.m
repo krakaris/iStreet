@@ -7,13 +7,19 @@
 //
 
 #import "Event+Create.h"
+#import "Club.h"
 #import "AppDelegate.h"
 
 @implementation Event (Create)
 
 + (Event *)eventWithData:(NSDictionary *)eventData
 {
-    int eventID = [(NSString *)[eventData objectForKey:@"event_id"] intValue];
+    NSString *eventIDString = [eventData objectForKey:@"event_id"];
+    
+    if(eventIDString == nil)
+        [NSException raise:@"No event_id key in eventData dictionary as argument to [Event -eventWithData]" format:nil];
+    
+    int eventID = [eventIDString intValue];
 
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
@@ -41,6 +47,16 @@
             [event setValue:[eventData objectForKey:key] forKey:key];
         else
             [event setValue:[eventData objectForKey:key] forKey:@"event_description"];
+    }
+    
+    NSString *clubName = [event name];
+    if(clubName)
+    {
+        request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];
+        request.predicate = [NSPredicate predicateWithFormat:@"name = %@", clubName];
+        Club *club = [[document.managedObjectContext executeFetchRequest:request error:&error] lastObject];
+        [event setWhichClub:club];
+        [club addWhichEventsObject:event];
     }
     
     return event;
