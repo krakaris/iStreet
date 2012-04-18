@@ -56,7 +56,8 @@
         request.predicate = [NSPredicate predicateWithFormat:@"name = %@", clubName];
         Club *club = [[document.managedObjectContext executeFetchRequest:request error:&error] lastObject];
         [event setWhichClub:club];
-        [club addWhichEventsObject:event];
+        // The Core Data framework automatically keeps relationships consistent, so the following line is unnecessary (but valid)
+        //[club addWhichEventsObject:event];
     }
     
     return event;

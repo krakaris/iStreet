@@ -29,9 +29,7 @@
     
     Club *club;
     if ([clubs count] == 0) 
-    {
         club = [NSEntityDescription insertNewObjectForEntityForName:@"Club" inManagedObjectContext:document.managedObjectContext];
-    }
     else 
         club = [clubs objectAtIndex:0];
     
