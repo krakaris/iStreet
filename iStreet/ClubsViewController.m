@@ -79,7 +79,6 @@
             [clubsList addObject:c];
         }
     }
-    NSLog(@"List of clubs: %@\n", clubsList);
 }
 - (void)viewDidUnload
 {

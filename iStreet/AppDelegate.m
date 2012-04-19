@@ -49,6 +49,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
             {
                 NSLog(@"successfully opened database!");
                 
+                /*
                 NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];
                 request.predicate = [NSPredicate predicateWithFormat:@"event_id = %d", 100];
                 
@@ -60,7 +61,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
                     NSLog(@"%@: %@", e.event_id, e.title);
                 }
                 
-                
+                */
                 appDataLoaded = YES;
                 [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
                 /*
@@ -87,7 +88,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
                  */
                 
                  //List all events in data
-                 NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
+                 /*NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
                  NSError *error;
                  NSLog(@"listing events in data...");
                  NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
@@ -96,7 +97,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
                  Event *event = [events objectAtIndex:i];
                  NSLog(@"%@", event.title);
                  }
-                NSLog(@"done loading events in data");
+                NSLog(@"done loading events in data");*/
             }
             if (!success) NSLog(@"couldn’t open document at %@", [dataURL path]);
         }]; 
