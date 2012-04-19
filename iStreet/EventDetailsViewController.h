@@ -21,11 +21,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventTitle;
 @property (weak, nonatomic) IBOutlet UILabel *eventDate;
 @property (weak, nonatomic) IBOutlet UILabel *eventTime;
-@property (weak, nonatomic) IBOutlet UILabel *eventDescription;
 @property (weak, nonatomic) IBOutlet UIImageView *eventImage;
 @property (weak, nonatomic) IBOutlet UILabel *attending;
 @property (weak, nonatomic) IBOutlet UIButton *attendButton;
-
+@property (weak, nonatomic) IBOutlet UITextView *descriptionText;
 @property (weak, nonatomic) IBOutlet UIButton *seeAllFriendsAttending;
 
 - (IBAction)attend:(UIButton *)sender;
