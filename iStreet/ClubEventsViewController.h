@@ -33,6 +33,5 @@
 //@property (nonatomic, retain) NSMutableDictionary *sections;
 
 - (void) getListOfEvents: (NSString *) clubName;
-- (void) getImageForEvent: (Event *) event;
 
 @end
