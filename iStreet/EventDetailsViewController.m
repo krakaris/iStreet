@@ -7,6 +7,8 @@
 //
 
 #import "EventDetailsViewController.h"
+#import "AppDelegate.h"
+#import "FriendsAttendingEventViewController.m"
 
 @interface EventDetailsViewController ()
 
@@ -20,6 +22,8 @@
 @synthesize eventDescription;
 @synthesize eventImage;
 @synthesize attending;
+@synthesize attendButton;
+@synthesize seeAllFriendsAttending;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,8 +40,53 @@
 	// Do any additional setup after loading the view.
     self.navigationItem.title = myEvent.title;
     self.eventTitle.text = myEvent.title;
+    [self setUserWithNetid];
+    friendsList = [user.fb_friends componentsSeparatedByString:@","];
+    if ([user.attendingTheseEvents containsObject:myEvent]) {
+        userIsAttending = YES;
+        //hide the button
+        attendButton.enabled = NO;
+        attendButton.hidden = YES;
+        self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
+    } else {
+        userIsAttending = NO;
+        attendButton.enabled = YES;
+        attendButton.hidden = NO;
+        [attendButton setBackgroundColor:[UIColor greenColor]];
+    }
     
-    // Fix start date string
+    // Fix date and time strings
+    [self formatDates];
+       
+    self.eventDescription.text = myEvent.description;
+        CGSize maximumLabelSize = CGSizeMake(280,200);
+    
+    CGSize expectedLabelSize = [self.eventDescription.text sizeWithFont:self.eventDescription.font 
+        constrainedToSize:maximumLabelSize 
+        lineBreakMode:UILineBreakModeWordWrap]; 
+    
+    //adjust the label the the new height.
+    CGRect newFrame = self.eventDescription.frame;
+    newFrame.size.height = expectedLabelSize.height;
+    self.eventDescription.frame = newFrame;
+    
+    //Set image
+    if (myEvent.posterImageData)
+    {
+        [eventImage setImage:[UIImage imageWithData:myEvent.posterImageData]];
+    } else {
+        NSString *imageName = [NSString stringWithFormat:@"%@.png", myEvent.name];
+        eventImage.image = [UIImage imageNamed:imageName]; 
+    }
+        /* commented by Aki
+    NSString *imageName = [NSString stringWithFormat:@"%@.png", myEvent.name];
+    NSLog(@"Event club: %@\n", myEvent.name);
+    NSLog(@"Image: %@\n", imageName);
+    self.eventImage.image = [UIImage imageNamed:imageName];
+         */
+                       
+}
+- (void)formatDates {
     NSString *eventDay = [myEvent.time_start substringToIndex:[myEvent.time_start rangeOfString:@" "].location];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"YYYY-MM-dd"];
@@ -52,41 +101,44 @@
     NSString *fullStartTimeString = myEvent.time_start;
     NSString *fullEndTimeString = myEvent.time_end;
     NSDateFormatter *longFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-    NSDate *fullStartDate = [dateFormat dateFromString:fullStartTimeString];
-    NSDate *fullEndDate = [dateFormat dateFromString:fullEndTimeString];
-
+    [longFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    NSDate *fullStartDate = [longFormat dateFromString:fullStartTimeString];
+    NSDate *fullEndDate = [longFormat dateFromString:fullEndTimeString];
+    
     
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setDateFormat:@"h:mm"];
     NSString *sTimeString = [outputFormatter stringFromDate:fullStartDate];
-     NSString *eTimeString = [outputFormatter stringFromDate:fullEndDate];
-
+    NSString *eTimeString = [outputFormatter stringFromDate:fullEndDate];
+    
     //Hardcoded AM and PM --> FIX!!!
     NSString *timeString = [sTimeString stringByAppendingString:@"pm - "];
     timeString = [timeString stringByAppendingString:eTimeString];
     timeString = [timeString stringByAppendingString:@"am"];
     
     self.eventTime.text = timeString;
-    self.eventDescription.text = myEvent.description;
-        CGSize maximumLabelSize = CGSizeMake(280,130);
     
-    CGSize expectedLabelSize = [self.eventDescription.text sizeWithFont:self.eventDescription.font 
-        constrainedToSize:maximumLabelSize 
-        lineBreakMode:UILineBreakModeWordWrap]; 
+}
+- (void)setUserWithNetid {
+    //How to access netid from AppDelegate??
+    NSString *id = @"netid";
     
-    //adjust the label the the new height.
-    CGRect newFrame = self.eventDescription.frame;
-    newFrame.size.height = expectedLabelSize.height;
-    self.eventDescription.frame = newFrame;
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
-        /* commented by Aki
-    NSString *imageName = [NSString stringWithFormat:@"%@.png", myEvent.name];
-    NSLog(@"Event club: %@\n", myEvent.name);
-    NSLog(@"Image: %@\n", imageName);
-    self.eventImage.image = [UIImage imageNamed:imageName];
-         */
-                       
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    request.predicate = [NSPredicate predicateWithFormat:@"netid = %@", id];
+    
+    NSError *error;
+    NSArray *users = [document.managedObjectContext executeFetchRequest:request error:&error];
+    if([users count] > 1)
+        [NSException raise:@"More than one user in core data with a given netid" format:nil];
+    if([users count] == 0)
+        [NSException raise:@"User does not exist!" format:nil];
+    
+    for (User *u in users) {
+        user = u;
+        NSLog(@"Number of matching users: %d\n", [users count]);
+    }
 }
 
 - (void)viewDidUnload
@@ -98,6 +150,8 @@
     [self setEventDescription:nil];
     [self setEventImage:nil];
     [self setAttending:nil];
+    [self setAttendButton:nil];
+    [self setSeeAllFriendsAttending:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -108,8 +162,22 @@
 }
 
 - (IBAction)attend:(UIButton *)sender {
+    [user addAttendingTheseEventsObject:myEvent];
+    userIsAttending = YES;
     sender.hidden = YES;
+    sender.enabled = NO;
     self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
-    //[sender setBackgroundColor:(UIColor *)greenColor];
+
 }
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
+    if([segue.identifier isEqualToString:@"See Friends Attending Event"]) {
+        [segue.destinationViewController setFriendsList:(friendsList)];
+        [segue.destinationViewController setUser:user];
+        [segue.destinationViewController setEvent:myEvent];
+    }
+}
+
+
 @end

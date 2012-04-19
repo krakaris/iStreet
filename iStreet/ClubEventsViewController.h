@@ -17,7 +17,7 @@
     UITableView *eventsList;
     UIActivityIndicatorView *activityIndicator;
     
-    NSMutableArray *events;
+    NSMutableArray *eventsArray;
     Event *selectedEvent;
     
     NSMutableData *receivedData;

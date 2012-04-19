@@ -21,8 +21,8 @@
     IBOutlet UIButton *Tower;
     //UIButton *Campus;
     IBOutlet UIButton *Charter;
-     
-    NSArray *clubs;
+    NSMutableData *receivedData; 
+    NSMutableArray *clubsList;
     
     __weak IBOutlet UILabel *dateLabel;
     

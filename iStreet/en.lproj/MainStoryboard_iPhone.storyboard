@@ -518,6 +518,21 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bJD-ba-HzR">
+                                        <rect key="frame" x="20" y="265" width="280" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="See all Friends attending this Event">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="Bv7-0j-XFh" kind="push" identifier="See Friends Attending Event" id="B5b-bU-7Ei"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.50022758140000001" blue="0.1220668298" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
@@ -526,17 +541,61 @@
                     </view>
                     <navigationItem key="navigationItem" id="FVB-zF-wHJ"/>
                     <connections>
+                        <outlet property="attendButton" destination="MsM-9b-zol" id="GzM-yY-YWF"/>
                         <outlet property="attending" destination="dCS-sl-Q6w" id="Hpk-oj-c1P"/>
                         <outlet property="eventDate" destination="mcr-LK-g6w" id="h3A-ta-Wb0"/>
                         <outlet property="eventDescription" destination="aQK-xL-t2d" id="yWk-T8-FxV"/>
                         <outlet property="eventImage" destination="rHP-V8-lBI" id="oLh-Kx-B60"/>
                         <outlet property="eventTime" destination="1I9-zV-etb" id="QVv-H4-kGo"/>
                         <outlet property="eventTitle" destination="1RG-s2-R8n" id="qTx-t3-wrn"/>
+                        <outlet property="seeAllFriendsAttending" destination="bJD-ba-HzR" id="q1N-BH-Qne"/>
                         <outlet property="view" destination="l57-XW-jk1" id="0Tw-X6-fkG"/>
                     </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="1338" y="209"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="1Bs-mT-vqk">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="khA-eK-j9I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="Bv7-0j-XFh" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Xq0-HF-eol">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Friend Cell" textLabel="gcK-1q-J3f" style="IBUITableViewCellStyleDefault" id="RNV-qf-aai">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gcK-1q-J3f">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Bv7-0j-XFh" id="6PT-Yt-a8a"/>
+                            <outlet property="delegate" destination="Bv7-0j-XFh" id="P6o-v2-iBR"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="DT2-KX-CTD"/>
+                    <connections>
+                        <outlet property="view" destination="Xq0-HF-eol" id="xjd-Sq-GFr"/>
+                    </connections>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="1755" y="215"/>
         </scene>
     </scenes>
     <resources>
@@ -556,72 +615,12 @@
         <image name="Tiger Inn.png" width="93" height="100"/>
         <image name="Tower.png" width="78" height="101"/>
     </resources>
-    <classes>
-        <class className="ChatViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sendClicked:"/>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="messageField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="ClubEventsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubEventsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="edvController" candidateClass="EventDetailsViewController"/>
-                <relationship kind="outlet" name="eventsList" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="ClubsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="Cannon" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Cap" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Charter" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Cloister" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Colonial" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Cottage" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Ivy" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Quad" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="TI" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Terrace" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Tower" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EventDetailsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="attend:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="attending" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventDescription" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="eventTime" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventTitle" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EventsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="eventsTable" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="FriendsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="1j5-I8-HT3"/>
+        <segue reference="2op-RL-HQb"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -41,7 +41,7 @@
     self.navigationItem.title = self.club.name;
     
     // Initialize our arrays
-    events = [[NSMutableArray alloc] init];
+    eventsArray = [[NSMutableArray alloc] init];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
        
     //eventsList.dataSource = self;
@@ -49,25 +49,14 @@
     
     NSLog(@"Beginning loading core data.");
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];   
-    // Class code
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"time_start" ascending:YES];
-    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    request.predicate = [NSPredicate predicateWithFormat:@"whichClub.name = %@", club.name];
-    NSError *error;
-    //Not sure we want class code - no way to customize view or sections..
-    
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-    NSArray *eventsArray = [document.managedObjectContext executeFetchRequest:request error:&error];
-    
-    
     [eventsList reloadData];
-    [activityIndicator stopAnimating];
+
     NSLog(@"Finished loading core data.");
     NSLog(@"Beginning loading web data.");
     
     //Get event data from server
     [self getListOfEvents: club.name];
+    //[activityIndicator stopAnimating];
     
     //Make sure names are consistent!
     /*
@@ -100,7 +89,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 //#warning Potentially incomplete method implementation.
-    return [events count];
+    return [eventsArray count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -111,7 +100,7 @@
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    Event *e = [events objectAtIndex:section];
+    Event *e = [eventsArray objectAtIndex:section];
     
     // Fix start date string
     NSString *eventDate = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
@@ -129,7 +118,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"event cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    EventCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) 
     {
@@ -139,13 +128,15 @@
     
     // Configure the cell...
     
-    Event *event = [events objectAtIndex: indexPath.section];
+    Event *event = [eventsArray objectAtIndex: indexPath.section];
     
-    /*if([cell packCellWithEventInformation:event 
-                              atIndexPath:indexPath 
-                           whileScrolling:(self.eventsList.dragging == YES || self.eventsList.decelerating == YES)])
+    if ([cell packCellWithEventInformation:event
+                               atIndexPath:indexPath
+                            whileScrolling:(self.eventsList.dragging == YES 
+                                            || self.eventsList.decelerating == YES)]) {
         [self startIconDownload:event forIndexPath:indexPath];
-    */
+    }
+     
     return cell;
 
     
@@ -232,7 +223,7 @@
     NSArray *visiblePaths = [self.eventsList indexPathsForVisibleRows];
     for (NSIndexPath *indexPath in visiblePaths)
     {
-        Event *event = [events objectAtIndex:indexPath.row]; // the event for the cell at that index path
+        Event *event = [eventsArray objectAtIndex:indexPath.row]; // the event for the cell at that index path
         
         // start downloading the icon if the event doesn't have an icon but has a link to one
         if (!event.posterImageData && ![event.poster isEqualToString:@""])
@@ -289,6 +280,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {      
+    NSLog(@"Connection finished loading\n");
     NSError *error;
     NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
     if(!eventsDictionaryArray)
@@ -300,7 +292,7 @@
     for(NSDictionary *dict in eventsDictionaryArray)
     {
         Event *e = [Event eventWithData:dict];
-        [events addObject:e];
+        [eventsArray addObject:e];
     }
     
     [eventsList reloadData];
@@ -323,6 +315,7 @@
         NSString *sTimeString = [newFormat stringFromDate:sDate];
         e.startDate = sTimeString;
      */
+    NSLog(@"Events: %@\n", eventsArray);
         
 }
     
@@ -342,7 +335,7 @@
      */
     
     // set event based on row selected
-     selectedEvent = [events objectAtIndex: indexPath.section];
+     selectedEvent = [eventsArray objectAtIndex: indexPath.section];
      [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
     
     EventDetailsViewController *detailsViewController = [[EventDetailsViewController alloc] initWithNibName:@"EventDetailsViewController" bundle:nil];
