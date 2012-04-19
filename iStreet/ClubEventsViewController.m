@@ -24,9 +24,6 @@
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }    
     return self;
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -46,9 +43,6 @@
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
     
     [activityIndicator startAnimating];
-       
-    //eventsList.dataSource = self;
-    //eventsList.delegate = self;
     
     NSLog(@"Beginning loading core data.");
     
@@ -71,6 +65,93 @@
     [self getListOfEvents: club.name];
     //[activityIndicator stopAnimating];
     
+}
+
+- (void) getListOfEvents: (NSString *) clubName
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    //Build url for server
+    NSString *urlString = 
+    [NSString stringWithFormat:
+     @"http://istreetsvr.herokuapp.com/clubevents?name=%@", clubName];
+    NSString *url = [urlString stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setTimeoutInterval:8];
+    [request setURL:[NSURL URLWithString: url]];
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    
+    //NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    if (conn) {
+        receivedData = [NSMutableData data];
+    } else {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }
+    
+}
+
+/*
+ Runs when the sufficient server response data has been received.
+ */
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{  
+    [receivedData setLength:0];
+}  
+
+/*
+ Runs as the connection loads data from the server.
+ */
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data  
+{  
+    [receivedData appendData:data];
+} 
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+}
+
+/*
+ Runs when the connection has successfully finished loading all data
+ */
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{      
+    NSLog(@"Connection finished loading\n");
+    NSError *error;
+    NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
+    if(!eventsDictionaryArray)
+    {
+        NSLog(@"%@", [error localizedDescription]);
+        return; // do nothing if can't recieve messages
+    }
+    
+    NSMutableArray *eventsTempArray = [NSMutableArray arrayWithCapacity:[eventsDictionaryArray count]];
+    
+    for(NSDictionary *dict in eventsDictionaryArray)
+    {
+        Event *e = [Event eventWithData:dict];
+        [eventsTempArray addObject:e];
+    }
+    [self setPropertiesWithNewEventData:eventsTempArray];
+    [eventsList reloadData];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    
+}
+
+- (void)setPropertiesWithNewEventData:(NSArray *)eventData;
+{
+    eventsArray = [NSMutableArray array];    
+    for (int i = 0; i < [eventData count]; i++) {
+        Event *e = (Event *)[eventData objectAtIndex:i];
+        
+        //Determine if eventsArray already contains the event. Else add it
+        if (![eventsArray containsObject:e]){
+            [eventsArray addObject:e];
+        }
+    }
 }
 
 - (void)viewDidUnload
@@ -139,39 +220,6 @@
     }
      
     return cell;
-
-    
-    
-    
-    // Format Times appropriately for Subtitle
-    /*
-     if ([title isEqualToString:@""] || [title isEqualToString:club.name]) {
-     event.title = @"On Tap";
-     title = @"On Tap";
-     }
-     
-    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-    [inputFormatter setDateFormat:@"HH:mm:ss"];
-    NSDate *sTime = [inputFormatter dateFromString:event.startTime];
-    
-    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"h:mm"];
-    NSString *sTimeString = [outputFormatter stringFromDate:sTime];
-    event.startTime = sTimeString;
-    
-    NSDate *eTime = [inputFormatter dateFromString:event.endTime];
-    NSString *eTimeString = [outputFormatter stringFromDate:eTime];
-    event.endTime = eTimeString;
-    
-    //Hardcoded AM and PM --> FIX!!!
-    NSString *timeString = [sTimeString stringByAppendingString:@"pm - "];
-    timeString = [timeString stringByAppendingString:eTimeString];
-    timeString = [timeString stringByAppendingString:@"am"];
-        
-    [cell.textLabel setText:title];
-    [cell.detailTextLabel setText:timeString];
-    return cell;
-    */
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -236,93 +284,6 @@
     }
 }
 
-
-- (void) getListOfEvents: (NSString *) clubName
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    //Build url for server
-    NSString *urlString = 
-    [NSString stringWithFormat:
-     @"http://istreetsvr.herokuapp.com/clubevents?name=%@", clubName];
-    //NSURL *url = [NSURL URLWithString:urlString];
-    //NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setTimeoutInterval:8];
-    [request setURL:[NSURL URLWithString: urlString]];
-    [request setHTTPMethod:@"GET"];
-    
-    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    
-    //NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    if (conn) {
-        receivedData = [NSMutableData data];
-    } else {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    }
-
- }
-
-/*
- Runs when the sufficient server response data has been received.
- */
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{  
-    [receivedData setLength:0];
-}  
-
-/*
- Runs as the connection loads data from the server.
- */
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data  
-{  
-    [receivedData appendData:data];
-} 
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-}
-
-/*
- Runs when the connection has successfully finished loading all data
- */
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{      
-    NSLog(@"Connection finished loading\n");
-    NSError *error;
-    NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
-    if(!eventsDictionaryArray)
-    {
-        NSLog(@"%@", [error localizedDescription]);
-        return; // do nothing if can't recieve messages
-    }
-    
-    NSMutableArray *eventsTempArray = [NSMutableArray arrayWithCapacity:[eventsDictionaryArray count]];
-    
-    for(NSDictionary *dict in eventsDictionaryArray)
-    {
-        Event *e = [Event eventWithData:dict];
-        [eventsTempArray addObject:e];
-    }
-    [self setPropertiesWithNewEventData:eventsTempArray];
-    [eventsList reloadData];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        
-}
-- (void)setPropertiesWithNewEventData:(NSArray *)eventData;
-{
-    eventsArray = [NSMutableArray array];    
-    for (int i = 0; i < [eventData count]; i++) {
-        Event *e = (Event *)[eventData objectAtIndex:i];
-        
-        //Determine if eventsArray already contains the event. Else add it
-        if (![eventsArray containsObject:e]){
-            [eventsArray addObject:e];
-        }
-    }
-}
 
 
 #pragma mark - Table view delegate

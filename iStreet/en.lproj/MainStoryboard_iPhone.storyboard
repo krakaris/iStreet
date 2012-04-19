@@ -258,7 +258,7 @@
                                         <rect key="frame" x="252" y="167" width="57" height="71"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Charter" image="Charter.png">
+                                        <state key="normal" title="Cloister" image="Cloister.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -382,7 +382,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="0.64000000000000001" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.70081103406294321" blue="0.29710604117308581" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -512,18 +512,11 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="14" id="aQK-xL-t2d">
-                                        <rect key="frame" x="20" y="128" width="280" height="130"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="14"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="MsM-9b-zol">
-                                        <rect key="frame" x="20" y="310" width="280" height="37"/>
+                                        <rect key="frame" x="20" y="322" width="128" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="17"/>
-                                        <state key="normal" title="I plan to attend this event!">
+                                        <state key="normal" title="Attend!">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="highlighted">
@@ -533,18 +526,18 @@
                                             <action selector="attend:" destination="xZq-Pq-Unb" eventType="touchUpInside" id="J1L-LE-3yF"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" id="dCS-sl-Q6w">
-                                        <rect key="frame" x="20" y="318" width="280" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" id="dCS-sl-Q6w">
+                                        <rect key="frame" x="20" y="316" width="144" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bJD-ba-HzR">
-                                        <rect key="frame" x="20" y="265" width="280" height="37"/>
+                                        <rect key="frame" x="172" y="322" width="128" height="27.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="See all Friends attending this Event">
+                                        <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="15"/>
+                                        <state key="normal" title="See Friends">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -555,8 +548,15 @@
                                             <segue destination="Bv7-0j-XFh" kind="push" identifier="See Friends Attending Event" id="B5b-bU-7Ei"/>
                                         </connections>
                                     </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" text="On Tap" id="71B-y4-eAU">
+                                        <rect key="frame" x="20" y="140" width="280" height="168"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.50022758140000001" blue="0.1220668298" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.70081103410000001" blue="0.2971060412" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -565,8 +565,8 @@
                     <connections>
                         <outlet property="attendButton" destination="MsM-9b-zol" id="GzM-yY-YWF"/>
                         <outlet property="attending" destination="dCS-sl-Q6w" id="Hpk-oj-c1P"/>
+                        <outlet property="descriptionText" destination="71B-y4-eAU" id="zPW-sd-gzE"/>
                         <outlet property="eventDate" destination="mcr-LK-g6w" id="h3A-ta-Wb0"/>
-                        <outlet property="eventDescription" destination="aQK-xL-t2d" id="yWk-T8-FxV"/>
                         <outlet property="eventImage" destination="rHP-V8-lBI" id="oLh-Kx-B60"/>
                         <outlet property="eventTime" destination="1I9-zV-etb" id="QVv-H4-kGo"/>
                         <outlet property="eventTitle" destination="1RG-s2-R8n" id="qTx-t3-wrn"/>
@@ -625,6 +625,7 @@
         <image name="Cap and Gown.png" width="86" height="100"/>
         <image name="Charter.png" width="95" height="115"/>
         <image name="Chat icon 3.png" width="30" height="27"/>
+        <image name="Cloister.png" width="71" height="106"/>
         <image name="Colonial.png" width="98" height="91"/>
         <image name="Cottage.png" width="96" height="106"/>
         <image name="Events icon 4.png" width="40" height="37"/>
@@ -654,7 +655,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubEventsViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="edvController" candidateClass="EventDetailsViewController"/>
                 <relationship kind="outlet" name="eventsList" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -670,8 +670,8 @@
                 <relationship kind="action" name="attend:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="attendButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="attending" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionText" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="eventDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventDescription" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="eventImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="eventTime" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="eventTitle" candidateClass="UILabel"/>
@@ -699,7 +699,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="2op-RL-HQb"/>
         <segue reference="Hyg-kK-m3l"/>
+        <segue reference="wJC-67-ChH"/>
     </inferredMetricsTieBreakers>
 </document>

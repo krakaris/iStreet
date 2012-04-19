@@ -18,18 +18,15 @@
 @synthesize eventTitle;
 @synthesize eventDate;
 @synthesize eventTime;
-@synthesize eventDescription;
 @synthesize eventImage;
 @synthesize attending;
 @synthesize attendButton;
+@synthesize descriptionText;
 @synthesize seeAllFriendsAttending;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 
@@ -37,8 +34,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
     self.navigationItem.title = myEvent.title;
-    self.eventTitle.text = myEvent.title;
+    if (myEvent.title != nil) {
+        self.eventTitle.text = myEvent.title;
+    } else {
+        self.eventTitle.text = @"On Tap";
+    }
     [self setUserWithNetid];
     friendsList = [user.fb_friends componentsSeparatedByString:@","];
     if ([user.attendingEvents containsObject:myEvent]) {
@@ -46,6 +48,10 @@
         //hide the button
         attendButton.enabled = NO;
         attendButton.hidden = YES;
+        //FIX this
+        [self.attending.text sizeWithFont:self.attending.font 
+                        constrainedToSize:self.attending.frame.size
+                            lineBreakMode:UILineBreakModeWordWrap]; 
         self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
     } else {
         userIsAttending = NO;
@@ -67,6 +73,8 @@
     CGRect newFrame = self.eventDescription.frame;
     newFrame.size.height = expectedLabelSize.height;
     self.eventDescription.frame = newFrame;
+    */
+    self.descriptionText.text = myEvent.event_description;
     
     //Set image
     if (myEvent.posterImageData)
@@ -139,11 +147,11 @@
     [self setEventTitle:nil];
     [self setEventDate:nil];
     [self setEventTime:nil];
-    [self setEventDescription:nil];
     [self setEventImage:nil];
     [self setAttending:nil];
     [self setAttendButton:nil];
     [self setSeeAllFriendsAttending:nil];
+    [self setDescriptionText:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
