@@ -35,19 +35,27 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    [self setUserWithNetid];
+    friendsList = [user.fb_friends componentsSeparatedByString:@","];
+    
+    //Set main Titles and Labels
     self.navigationItem.title = myEvent.title;
     if (myEvent.title != nil) {
         self.eventTitle.text = myEvent.title;
     } else {
         self.eventTitle.text = @"On Tap";
     }
-    [self setUserWithNetid];
-    friendsList = [user.fb_friends componentsSeparatedByString:@","];
+    self.descriptionText.text = myEvent.event_description;
+    // Fix date and time strings
+    [self formatDates];
+    
+    //Set "Attending" Button/Label
     if ([user.attendingEvents containsObject:myEvent]) {
         userIsAttending = YES;
         //hide the button
         attendButton.enabled = NO;
         attendButton.hidden = YES;
+        
         //FIX this
         [self.attending.text sizeWithFont:self.attending.font 
                         constrainedToSize:self.attending.frame.size
@@ -57,22 +65,7 @@
         userIsAttending = NO;
         attendButton.enabled = YES;
         attendButton.hidden = NO;
-}
-    
-    // Fix date and time strings
-    [self formatDates];
-       
-    /*self.eventDescription.text = myEvent.event_description;
-    CGSize maximumLabelSize = CGSizeMake(280,180);
-    
-    CGSize expectedLabelSize = 
-    
-    //adjust the label the the new height.
-    CGRect newFrame = self.eventDescription.frame;
-    newFrame.size.height = expectedLabelSize.height;
-    self.eventDescription.frame = newFrame;
-    */
-    self.descriptionText.text = myEvent.event_description;
+    }
     
     //Set image
     if (myEvent.posterImageData)
@@ -85,37 +78,38 @@
     
 }
 - (void)formatDates {
-    NSString *eventDay = [myEvent.time_start substringToIndex:[myEvent.time_start rangeOfString:@" "].location];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"YYYY-MM-dd"];
-    NSDate *sDate = [dateFormat dateFromString:eventDay];
-    
-    NSDateFormatter *newFormat = [[NSDateFormatter alloc] init];
-    [newFormat setDateFormat:@"EEEE, MMMM d"];
-    NSString *sDayString = [newFormat stringFromDate:sDate];
-    
-    self.eventDate.text = sDayString;
-    
-    NSString *fullStartTimeString = myEvent.time_start;
-    NSString *fullEndTimeString = myEvent.time_end;
-    NSDateFormatter *longFormat = [[NSDateFormatter alloc] init];
-    [longFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-    NSDate *fullStartDate = [longFormat dateFromString:fullStartTimeString];
-    NSDate *fullEndDate = [longFormat dateFromString:fullEndTimeString];
-    
-    
-    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"h:mm a"];
-    NSString *sTimeString = [outputFormatter stringFromDate:fullStartDate];
-    NSString *eTimeString = [outputFormatter stringFromDate:fullEndDate];
-    
-    //Hardcoded AM and PM --> FIX!!!
-    NSString *timeString = [sTimeString stringByAppendingString:@" - "];
-    timeString = [timeString stringByAppendingString:eTimeString];
-    //timeString = [timeString stringByAppendingString:@"am"];
-    
-    self.eventTime.text = timeString;
-    
+    if (myEvent.time_start && myEvent.time_end) {
+        NSString *eventDay = [myEvent.time_start substringToIndex:[myEvent.time_start rangeOfString:@" "].location];
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"YYYY-MM-dd"];
+        NSDate *sDate = [dateFormat dateFromString:eventDay];
+        
+        NSDateFormatter *newFormat = [[NSDateFormatter alloc] init];
+        [newFormat setDateFormat:@"EEEE, MMMM d"];
+        NSString *sDayString = [newFormat stringFromDate:sDate];
+        
+        self.eventDate.text = sDayString;
+        
+        NSString *fullStartTimeString = myEvent.time_start;
+        NSString *fullEndTimeString = myEvent.time_end;
+        NSDateFormatter *longFormat = [[NSDateFormatter alloc] init];
+        [longFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+        NSDate *fullStartDate = [longFormat dateFromString:fullStartTimeString];
+        NSDate *fullEndDate = [longFormat dateFromString:fullEndTimeString];
+        
+        
+        NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+        [outputFormatter setDateFormat:@"h:mm a"];
+        NSString *sTimeString = [outputFormatter stringFromDate:fullStartDate];
+        NSString *eTimeString = [outputFormatter stringFromDate:fullEndDate];
+        
+        //Hardcoded AM and PM --> FIX!!!
+        NSString *timeString = [sTimeString stringByAppendingString:@" - "];
+        timeString = [timeString stringByAppendingString:eTimeString];
+        
+        self.eventTime.text = timeString;
+    } 
+    //else leave time field blank
 }
 - (void)setUserWithNetid {
     //How to access netid from AppDelegate??
@@ -165,16 +159,14 @@
     sender.hidden = YES;
     sender.enabled = NO;
     self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
-
+    
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
-    /*if([segue.identifier isEqualToString:@"See Friends Attending Event"]) {
-        [segue.destinationViewController setFriendsList:(friendsList)];
-        [segue.destinationViewController setUser:user];
-        [segue.destinationViewController setEvent:myEvent];
-    }*/
+    /*
+     Segue to Aki's Friends TableView
+     }*/
 }
 
 

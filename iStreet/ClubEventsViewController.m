@@ -52,19 +52,18 @@
     NSError *error;
     
     NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
-        
+    
     [self setPropertiesWithNewEventData:events];
     
     [eventsList reloadData];
-
+    
     NSLog(@"Finished loading core data.");
     
     NSLog(@"Beginning loading web data.");
     
     //Get event data from server
     [self getListOfEvents: club.name];
-    //[activityIndicator stopAnimating];
-    
+    [activityIndicator stopAnimating];
 }
 
 - (void) getListOfEvents: (NSString *) clubName
@@ -82,8 +81,6 @@
     [request setHTTPMethod:@"GET"];
     
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    
-    //NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     if (conn) {
         receivedData = [NSMutableData data];
     } else {
@@ -157,8 +154,6 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -170,14 +165,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//#warning Potentially incomplete method implementation.
     return [eventsArray count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//#warning Incomplete method implementation.
-    //return [events count];
     return 1;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -185,16 +177,20 @@
     Event *e = [eventsArray objectAtIndex:section];
     
     // Fix start date string
-    NSString *eventDate = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"YYYY-MM-dd"];
-    NSDate *sDate = [dateFormat dateFromString:eventDate];
-    
-    NSDateFormatter *newFormat = [[NSDateFormatter alloc] init];
-    [newFormat setDateFormat:@"EEEE, MMMM d"];
-    NSString *sTimeString = [newFormat stringFromDate:sDate];
-
-    return sTimeString;
+    if (e.time_start && e.time_end) {
+        NSString *eventDate = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"YYYY-MM-dd"];
+        NSDate *sDate = [dateFormat dateFromString:eventDate];
+        
+        NSDateFormatter *newFormat = [[NSDateFormatter alloc] init];
+        [newFormat setDateFormat:@"EEEE, MMMM d"];
+        NSString *sTimeString = [newFormat stringFromDate:sDate];
+        
+        return sTimeString;
+    } else {
+        return e.title;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -211,15 +207,57 @@
     // Configure the cell...
     
     Event *event = [eventsArray objectAtIndex: indexPath.section];
+    NSString *clubName = event.name;
     
     if ([cell packCellWithEventInformation:event
                                atIndexPath:indexPath
                             whileScrolling:(self.eventsList.dragging == YES 
                                             || self.eventsList.decelerating == YES)]) {
-        [self startIconDownload:event forIndexPath:indexPath];
+                                [self startIconDownload:event forIndexPath:indexPath];
+                            }
+    if (event.title) {
+        if ([event.title isEqualToString:@""] || [event.title isEqualToString:clubName]) {
+            cell.textLabel.text = @"On Tap";
+        } else {
+            cell.textLabel.text = event.title;
+        }
     }
-     
+    cell.detailTextLabel.text = [self setSubtitle:event];
     return cell;
+}
+-(NSString *)setSubtitle:(Event *)event {
+    NSString *entry = event.entry;
+    NSString *entry_descrip;
+    if (event.entry_description) {
+        entry_descrip = event.entry_description;
+    } else {
+        entry_descrip = @"";
+    }
+    NSString *pass = [NSString stringWithFormat:@"Pa"];
+    NSString *puid = [NSString stringWithFormat:@"Pu"];
+    NSString *member = [NSString stringWithFormat:@"Mp"];
+    NSString *list = [NSString stringWithFormat:@"Gu"];
+    NSString *entry_final;
+    if ([entry isEqualToString:puid]) {
+        entry_final = @"PUID";
+    } else if ([entry isEqualToString:pass]) {
+        entry_final = @"Pass";
+        // Look at description to get color
+        if (![entry_descrip isEqualToString:@""]) {
+            entry_final = [entry_final stringByAppendingString:@": "];
+            entry_final = [entry_final stringByAppendingString:entry_descrip];
+        }
+    } else if ([entry isEqualToString:member]) {
+        entry_final = @"Members plus";
+        // Search entry_description for a number: assume it is members + this number
+        if (![entry_descrip isEqualToString:@""]) {
+            entry_final = [entry_final stringByAppendingString:@" "];
+            entry_final = [entry_final stringByAppendingString:entry_descrip];
+        }
+    } else if ([entry isEqualToString:list]) {
+        entry_final = @"Guest List";
+    }
+    return entry_final;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -290,14 +328,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-      *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-    
     // set event based on row selected
     Event *selectedEvent = [eventsArray objectAtIndex: indexPath.section];
     [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
