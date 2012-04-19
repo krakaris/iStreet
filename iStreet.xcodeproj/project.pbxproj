@@ -12,23 +12,16 @@
 		4163B68E153BCC0A00D7B2DC /* iStreet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4163B68C153BCC0A00D7B2DC /* iStreet.xcdatamodeld */; };
 		4163B6E9153E549E00D7B2DC /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4163B6DC153E549E00D7B2DC /* FBDialog.bundle */; };
 		4163B6EA153E549E00D7B2DC /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4163B6E2153E549E00D7B2DC /* libfacebook_ios_sdk.a */; };
-		4163B6EE153E563C00D7B2DC /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
 		4163B6F0153E572E00D7B2DC /* fconnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 4163B6EF153E572E00D7B2DC /* fconnect.png */; };
-		5B15518F153F266600F2834D /* Club.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B155188153F266600F2834D /* Club.m */; };
-		5B155190153F266600F2834D /* Club+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B15518A153F266600F2834D /* Club+Create.m */; };
 		5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */; };
 		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
 		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
 		5B2CD5ED153F2C4E00EE3E9A /* Event+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF9EE41153CBA3F00E53F6E /* Event+Create.m */; };
-		5B37574B153F654F004A1BD9 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B37574A153F654F004A1BD9 /* Event.m */; };
-		5B37574F153F654F004A1BD9 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B37574E153F654F004A1BD9 /* User.m */; };
 		5B63654615338AB700845082 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 5B63654515338AB700845082 /* README */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
 		5BA1F61315112DA7002CA7F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */; };
 		5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */; };
-		5BC0D9E7153BF30E004D560A /* OldClub.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0D9E4153BF30E004D560A /* OldClub.m */; };
-		5BC0D9E8153BF30E004D560A /* OldEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0D9E6153BF30E004D560A /* OldEvent.m */; };
 		5BC0D9F3153BF379004D560A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC0D9F2153BF379004D560A /* CoreData.framework */; };
 		5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AA15165A1F008E6C1F /* ChatViewController.m */; };
 		5BCE63AE15165D83008E6C1F /* ClubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AD15165D83008E6C1F /* ClubsViewController.m */; };
@@ -40,6 +33,11 @@
 		9D197B69153B51B800604080 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B61153B51B800604080 /* EventCell.m */; };
 		9D197B6A153B51B800604080 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B63153B51B800604080 /* EventsViewController.m */; };
 		9D197B6B153B51B800604080 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B65153B51B800604080 /* IconDownloader.m */; };
+		9D208D7815409335004515E9 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
+		9D208D7915409335004515E9 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B37574E153F654F004A1BD9 /* User.m */; };
+		9D208D7A15409335004515E9 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B37574A153F654F004A1BD9 /* Event.m */; };
+		9D208D7B15409335004515E9 /* Club.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B155188153F266600F2834D /* Club.m */; };
+		9D208D7C15409335004515E9 /* Club+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B15518A153F266600F2834D /* Club+Create.m */; };
 		9D464B191537482600468729 /* grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B171537482600468729 /* grey.png */; };
 		9D464B1A1537482600468729 /* light_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B181537482600468729 /* light_orange.png */; };
 		9D464B211537631C00468729 /* Princeton Crest 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B201537631C00468729 /* Princeton Crest 3.png */; };
@@ -110,10 +108,6 @@
 		5BA1F61C15112DA7002CA7F3 /* iStreet-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iStreet-Prefix.pch"; sourceTree = "<group>"; };
 		5BA1F61D15112DA7002CA7F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5BC0D9E3153BF305004D560A /* OldClub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldClub.h; sourceTree = "<group>"; };
-		5BC0D9E4153BF30E004D560A /* OldClub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldClub.m; sourceTree = "<group>"; };
-		5BC0D9E5153BF30E004D560A /* OldEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldEvent.h; sourceTree = "<group>"; };
-		5BC0D9E6153BF30E004D560A /* OldEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldEvent.m; sourceTree = "<group>"; };
 		5BC0D9F2153BF379004D560A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5BCE63A915165A1F008E6C1F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		5BCE63AA15165A1F008E6C1F /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
@@ -315,10 +309,6 @@
 				9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */,
 				5BCE63AC15165D83008E6C1F /* ClubsViewController.h */,
 				5BCE63AD15165D83008E6C1F /* ClubsViewController.m */,
-				5BC0D9E3153BF305004D560A /* OldClub.h */,
-				5BC0D9E4153BF30E004D560A /* OldClub.m */,
-				5BC0D9E5153BF30E004D560A /* OldEvent.h */,
-				5BC0D9E6153BF30E004D560A /* OldEvent.m */,
 			);
 			name = Clubs;
 			sourceTree = "<group>";
@@ -487,6 +477,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D208D7815409335004515E9 /* FriendsViewController.m in Sources */,
+				9D208D7915409335004515E9 /* User.m in Sources */,
+				9D208D7A15409335004515E9 /* Event.m in Sources */,
+				9D208D7B15409335004515E9 /* Club.m in Sources */,
+				9D208D7C15409335004515E9 /* Club+Create.m in Sources */,
 				5B2CD5ED153F2C4E00EE3E9A /* Event+Create.m in Sources */,
 				5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */,
 				5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */,
@@ -502,13 +497,6 @@
 				9D197B6A153B51B800604080 /* EventsViewController.m in Sources */,
 				9D197B6B153B51B800604080 /* IconDownloader.m in Sources */,
 				4163B68E153BCC0A00D7B2DC /* iStreet.xcdatamodeld in Sources */,
-				5BC0D9E7153BF30E004D560A /* OldClub.m in Sources */,
-				5BC0D9E8153BF30E004D560A /* OldEvent.m in Sources */,
-				4163B6EE153E563C00D7B2DC /* FriendsViewController.m in Sources */,
-				5B15518F153F266600F2834D /* Club.m in Sources */,
-				5B155190153F266600F2834D /* Club+Create.m in Sources */,
-				5B37574B153F654F004A1BD9 /* Event.m in Sources */,
-				5B37574F153F654F004A1BD9 /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

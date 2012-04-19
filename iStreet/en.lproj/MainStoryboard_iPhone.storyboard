@@ -392,6 +392,7 @@
                     <navigationItem key="navigationItem" title="Clubs" id="CSP-kJ-94R"/>
                     <connections>
                         <outlet property="dateLabel" destination="5I3-Lj-qG6" id="87p-U8-qNq"/>
+                        <outlet property="view" destination="pA2-Yy-ENC" id="Zmv-ye-VL7"/>
                     </connections>
                 </viewController>
             </objects>
@@ -425,6 +426,10 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" id="XV1-LZ-0VO">
+                            <rect key="frame" x="0.0" y="66" width="320" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Club Event" textLabel="jtB-D9-58i" detailTextLabel="wUD-7O-qoe" style="IBUITableViewCellStyleSubtitle" id="IDJ-vU-4Wh">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
@@ -460,6 +465,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="m1f-WA-aAf"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="XV1-LZ-0VO" id="yWP-cT-4Ou"/>
                         <outlet property="eventsList" destination="xoj-t7-ooj" id="63s-aI-Oxv"/>
                         <segue destination="xZq-Pq-Unb" kind="push" identifier="ShowEventDetails" id="gZz-0c-lrR"/>
                     </connections>
@@ -515,14 +521,38 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="MsM-9b-zol">
                                         <rect key="frame" x="20" y="310" width="280" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" red="0.17449842683859684" green="0.60319674744897966" blue="0.10805635528506057" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="17"/>
+                                        <state key="normal" title="I plan to attend this event!">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="attend:" destination="xZq-Pq-Unb" eventType="touchUpInside" id="J1L-LE-3yF"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" id="dCS-sl-Q6w">
+                                        <rect key="frame" x="20" y="318" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bJD-ba-HzR">
+                                        <rect key="frame" x="20" y="265" width="280" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="See all Friends attending this Event">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="Bv7-0j-XFh" kind="push" identifier="See Friends Attending Event" id="B5b-bU-7Ei"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.50022758140000001" blue="0.1220668298" alpha="1" colorSpace="calibratedRGB"/>
@@ -532,16 +562,61 @@
                     </view>
                     <navigationItem key="navigationItem" id="FVB-zF-wHJ"/>
                     <connections>
+                        <outlet property="attendButton" destination="MsM-9b-zol" id="GzM-yY-YWF"/>
+                        <outlet property="attending" destination="dCS-sl-Q6w" id="Hpk-oj-c1P"/>
                         <outlet property="eventDate" destination="mcr-LK-g6w" id="h3A-ta-Wb0"/>
                         <outlet property="eventDescription" destination="aQK-xL-t2d" id="yWk-T8-FxV"/>
                         <outlet property="eventImage" destination="rHP-V8-lBI" id="oLh-Kx-B60"/>
                         <outlet property="eventTime" destination="1I9-zV-etb" id="QVv-H4-kGo"/>
                         <outlet property="eventTitle" destination="1RG-s2-R8n" id="qTx-t3-wrn"/>
+                        <outlet property="seeAllFriendsAttending" destination="bJD-ba-HzR" id="q1N-BH-Qne"/>
                         <outlet property="view" destination="l57-XW-jk1" id="0Tw-X6-fkG"/>
                     </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="1338" y="209"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="1Bs-mT-vqk">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="khA-eK-j9I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="Bv7-0j-XFh" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Xq0-HF-eol">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Friend Cell" textLabel="gcK-1q-J3f" style="IBUITableViewCellStyleDefault" id="RNV-qf-aai">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gcK-1q-J3f">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Bv7-0j-XFh" id="6PT-Yt-a8a"/>
+                            <outlet property="delegate" destination="Bv7-0j-XFh" id="P6o-v2-iBR"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="DT2-KX-CTD"/>
+                    <connections>
+                        <outlet property="view" destination="Xq0-HF-eol" id="xjd-Sq-GFr"/>
+                    </connections>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="1755" y="215"/>
         </scene>
     </scenes>
     <resources>
@@ -577,6 +652,7 @@
         <class className="ClubEventsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubEventsViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="edvController" candidateClass="EventDetailsViewController"/>
                 <relationship kind="outlet" name="eventsList" candidateClass="UITableView"/>
             </relationships>
@@ -601,11 +677,15 @@
         <class className="EventDetailsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EventDetailsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="attend:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="attendButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="attending" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="eventDate" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="eventDescription" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="eventImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="eventTime" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="eventTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="seeAllFriendsAttending" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="EventsViewController" superclassName="UIViewController">
@@ -629,6 +709,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="1j5-I8-HT3"/>
+        <segue reference="2op-RL-HQb"/>
     </inferredMetricsTieBreakers>
 </document>

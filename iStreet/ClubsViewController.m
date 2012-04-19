@@ -7,8 +7,10 @@
 //
 
 #import "ClubsViewController.h"
-#import "OldClub.h"
+#import "Club.h"
+#import "Club+Create.h"
 #import "ClubEventsViewController.h"
+#import "AppDelegate.h"
 
 @interface ClubsViewController ()
 
@@ -39,16 +41,48 @@
     //self.datelabel.text = dateString;
     dateLabel.text = dateString;
     
+    //Get all clubs from Core Data
+    BOOL dataDidLoad = [(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded];
+    
+    if(!dataDidLoad)
+    {
+        NSLog(@"Setting up notifications.");
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData:) name:@"App Data Loaded" object:nil];
+    }
+    else
+    {
+        NSLog(@"No need for notification, data already loade.");
+        [self loadData:nil];
+    }
 }
-
+- (void)loadData:(NSNotification *)notification
+{
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    
+    if(notification)
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];                
+    NSError *error;
+    
+    NSArray *clubsArray = [document.managedObjectContext executeFetchRequest:request error:&error];
+    [self setClubListWithNewData:clubsArray];
+    NSLog(@"Finished loading core data.");
+    
+}
+- (void)setClubListWithNewData:(NSArray *)clubData;
+{
+    clubsList = [NSMutableArray array];
+    for (int i = 0; i < [clubData count]; i++) {
+        Club *c = (Club *)[clubData objectAtIndex:i];
+        if (![clubsList containsObject:c]) {
+            [clubsList addObject:c];
+        }
+    }
+    NSLog(@"List of clubs: %@\n", clubsList);
+}
 - (void)viewDidUnload
 {
-    /*Cloister = nil;
-    //_datelabel = nil;
-    //[self setDatelabel:nil];
-    //dateLabel = nil;
-    dateLabel = nil;
-     */
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -58,28 +92,16 @@
     return YES;
     //return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    OldClub *club = [OldClub alloc];
-    [club setClubName:segue.identifier];
     NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
-    
-    [segue.destinationViewController setClub:(club)];
-    
+    NSString *clubName = segue.identifier;
+    for (Club *club in clubsList){
+        if ([club.name isEqualToString:clubName]){
+            [segue.destinationViewController setClub:(club)];
+            NSLog(@"Destination club: %@\n", club.name);
+        }
+    }
 }
-/*
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- 
- Servery *servery = [ServeryCache.instance.serveries objectForKey:segue.identifier];
- 
- if(servery)
- {
- [segue.destinationViewController setServery:(servery)];
- }
- 
- }
-*/
 
 @end

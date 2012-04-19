@@ -21,11 +21,13 @@
     IBOutlet UIButton *Tower;
     //UIButton *Campus;
     IBOutlet UIButton *Charter;
-     
+    NSMutableData *receivedData; 
+    NSMutableArray *clubsList;
     
     __weak IBOutlet UILabel *dateLabel;
     
 }
 //@property (weak, nonatomic) IBOutlet UILabel *datelabel;
+
 
 @end

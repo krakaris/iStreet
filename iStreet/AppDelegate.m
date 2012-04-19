@@ -85,7 +85,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
                  NSLog(@"%@: %@", club.name, events);
                  }
                  */
-                /*
+                
                  //List all events in data
                  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
                  NSError *error;
@@ -95,7 +95,8 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
                  {
                  Event *event = [events objectAtIndex:i];
                  NSLog(@"%@", event.title);
-                 }*/
+                 }
+                NSLog(@"done loading events in data");
             }
             if (!success) NSLog(@"couldn’t open document at %@", [dataURL path]);
         }]; 
