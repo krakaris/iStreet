@@ -47,6 +47,7 @@
     NSEnumerator *keyEnumerator = [eventData keyEnumerator];
     for(NSString *key in keyEnumerator)
     {
+        NSLog(@"%@", key);
         // see Event.h for an explanation for this seemingly peculiar if-statement
         if(![key isEqualToString:@"description"])
             [event setValue:[eventData objectForKey:key] forKey:key];

@@ -13,6 +13,7 @@
 #import "Event.h"
 #import "Event+Create.h"
 #import "AppDelegate.h"
+#import "EventDetailsViewController.h"
 
 #import "Club.h"
 
@@ -243,8 +244,7 @@
     
     // Configure the cell...
         
-    EventsArray *ea = [eventsByDate objectAtIndex:indexPath.section];
-    Event *event = [ea.array objectAtIndex:indexPath.row];
+    Event *event = [self eventAtIndexPath:indexPath];
     
     if([cell packCellWithEventInformation:event 
                            atIndexPath:indexPath 
@@ -273,12 +273,28 @@
     return dateString;
 }
 
+- (Event *)eventAtIndexPath:(NSIndexPath *)indexPath
+{
+    return (Event *)[((EventsArray *)[eventsByDate objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row];
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
+    Event *selectedEvent = [self eventAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:@"ShowEventDetails" sender:selectedEvent];
+    [self.eventsTable deselectRowAtIndexPath:indexPath animated:YES];
+    
 }
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ShowEventDetails"])
+        [segue.destinationViewController setMyEvent:sender];
+}
+
 
 #pragma mark -
 #pragma mark Table cell image support
@@ -330,7 +346,7 @@
     NSArray *visiblePaths = [self.eventsTable indexPathsForVisibleRows];
     for (NSIndexPath *indexPath in visiblePaths)
     {
-        Event *event = [((EventsArray *)[eventsByDate objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row]; // the event for the cell at that index path
+        Event *event = [self eventAtIndexPath:indexPath]; // the event for the cell at that index path
         
         // start downloading the icon if the event doesn't have an icon but has a link to one
         if (!event.posterImageData && ![event.poster isEqualToString:@""])
@@ -338,31 +354,5 @@
     }
 }
 
-#pragma mark - Table view delegate
-//
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    // Navigation logic may go here. Create and push another view controller.
-//    /*
-//     *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-//     // ...
-//     // Pass the selected object to the new view controller.
-//     [self.navigationController pushViewController:detailViewController animated:YES];
-////     */
-////    
-////    // set event based on row selected
-////    //selectedEvent = [eventsArray objectAtIndex: indexPath.section];
-////    [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
-////    [self performSegueWithIdentifier:@"ShowEventDetails" sender:self];
-////    
-////}
-////-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-////{
-////    if ([segue.identifier isEqualToString:@"ShowEventDetails"])
-////    {
-////        [segue.destinationViewController setMyEvent:selectedEvent];
-//    }
-//}
-//
 
 @end

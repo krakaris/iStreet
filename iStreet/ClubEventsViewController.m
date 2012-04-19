@@ -337,9 +337,7 @@
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"ShowEventDetails"])
-    {
         [segue.destinationViewController setMyEvent:sender];
-    }
 }
 
 

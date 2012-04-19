@@ -118,7 +118,7 @@
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    //request.predicate = [NSPredicate predicateWithFormat:@"netid = %@", id];
+    //request.predicate = [NSPredicate predicateWithFormat:@"netid == %@", id];
     
     NSError *error;
     NSArray *users = [document.managedObjectContext executeFetchRequest:request error:&error];
