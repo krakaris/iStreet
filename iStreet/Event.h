@@ -2,7 +2,7 @@
 //  Event.h
 //  iStreet
 //
-//  Created by Rishi on 4/17/12.
+//  Created by Rishi on 4/18/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -25,6 +25,6 @@
 @property (nonatomic, retain) NSString * time_start;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) Club *whichClub;
-@property (nonatomic, retain) User *usersAttending;
+@property (nonatomic, retain) User *userAttending;
 
 @end

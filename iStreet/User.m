@@ -2,7 +2,7 @@
 //  User.m
 //  iStreet
 //
-//  Created by Rishi on 4/17/12.
+//  Created by Rishi on 4/18/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -15,6 +15,6 @@
 @dynamic fb_friends;
 @dynamic fb_id;
 @dynamic netid;
-@dynamic attendingTheseEvents;
+@dynamic attendingEvents;
 
 @end

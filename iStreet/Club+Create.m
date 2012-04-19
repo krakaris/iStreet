@@ -9,6 +9,8 @@
 #import "Club+Create.h"
 #import "AppDelegate.h"
 
+#import "Event.h"
+
 @implementation Club (Create)
 
 + (Club *)clubWithData:(NSDictionary *)clubData
@@ -27,9 +29,7 @@
     
     Club *club;
     if ([clubs count] == 0) 
-    {
         club = [NSEntityDescription insertNewObjectForEntityForName:@"Club" inManagedObjectContext:document.managedObjectContext];
-    }
     else 
         club = [clubs objectAtIndex:0];
     
