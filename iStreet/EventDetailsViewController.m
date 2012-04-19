@@ -61,13 +61,11 @@
     
     // Fix date and time strings
     [self formatDates];
+       
+    /*self.eventDescription.text = myEvent.event_description;
+    CGSize maximumLabelSize = CGSizeMake(280,180);
     
-    self.eventDescription.text = myEvent.event_description;
-    CGSize maximumLabelSize = CGSizeMake(280,200);
-    
-    CGSize expectedLabelSize = [self.eventDescription.text sizeWithFont:self.eventDescription.font 
-                                                      constrainedToSize:maximumLabelSize 
-                                                          lineBreakMode:UILineBreakModeWordWrap]; 
+    CGSize expectedLabelSize = 
     
     //adjust the label the the new height.
     CGRect newFrame = self.eventDescription.frame;
