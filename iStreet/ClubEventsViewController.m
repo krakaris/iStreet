@@ -48,7 +48,7 @@
     
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"]; 
-    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", club.name];
+    request.predicate = [NSPredicate predicateWithFormat:@"name == %@", club.name];
     NSError *error;
     
     NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
@@ -72,16 +72,13 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     //Build url for server
-    //encode url correctly!
-    clubName = [clubName stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     NSString *urlString = 
     [NSString stringWithFormat:
      @"http://istreetsvr.herokuapp.com/clubevents?name=%@", clubName];
-    //NSURL *url = [NSURL URLWithString:urlString];
-    //NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
+    NSString *url = [urlString stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setTimeoutInterval:8];
-    [request setURL:[NSURL URLWithString: urlString]];
+    [request setURL:[NSURL URLWithString: url]];
     [request setHTTPMethod:@"GET"];
     
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
