@@ -51,17 +51,17 @@
         userIsAttending = NO;
         attendButton.enabled = YES;
         attendButton.hidden = NO;
-}
+    }
     
     // Fix date and time strings
     [self formatDates];
-       
+    
     self.eventDescription.text = myEvent.event_description;
-        CGSize maximumLabelSize = CGSizeMake(280,200);
+    CGSize maximumLabelSize = CGSizeMake(280,200);
     
     CGSize expectedLabelSize = [self.eventDescription.text sizeWithFont:self.eventDescription.font 
-        constrainedToSize:maximumLabelSize 
-        lineBreakMode:UILineBreakModeWordWrap]; 
+                                                      constrainedToSize:maximumLabelSize 
+                                                          lineBreakMode:UILineBreakModeWordWrap]; 
     
     //adjust the label the the new height.
     CGRect newFrame = self.eventDescription.frame;
@@ -118,7 +118,7 @@
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    //request.predicate = [NSPredicate predicateWithFormat:@"netid = %@", id];
+    //request.predicate = [NSPredicate predicateWithFormat:@"netid == %@", id];
     
     NSError *error;
     NSArray *users = [document.managedObjectContext executeFetchRequest:request error:&error];
@@ -159,16 +159,16 @@
     sender.hidden = YES;
     sender.enabled = NO;
     self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
-
+    
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
     /*if([segue.identifier isEqualToString:@"See Friends Attending Event"]) {
-        [segue.destinationViewController setFriendsList:(friendsList)];
-        [segue.destinationViewController setUser:user];
-        [segue.destinationViewController setEvent:myEvent];
-    }*/
+     [segue.destinationViewController setFriendsList:(friendsList)];
+     [segue.destinationViewController setUser:user];
+     [segue.destinationViewController setEvent:myEvent];
+     }*/
 }
 
 

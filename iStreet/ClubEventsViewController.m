@@ -54,7 +54,7 @@
     
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"]; 
-    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", club.name];
+    request.predicate = [NSPredicate predicateWithFormat:@"name == %@", club.name];
     NSError *error;
     
     NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
@@ -346,9 +346,7 @@
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"ShowEventDetails"])
-    {
         [segue.destinationViewController setMyEvent:sender];
-    }
 }
 
 
