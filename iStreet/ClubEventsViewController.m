@@ -12,6 +12,7 @@
 #import "EventCell.h"
 #import "EventDetailsViewController.h"
 #import "AppDelegate.h"
+#import "User.h"
 
 @interface ClubEventsViewController ()
 
@@ -43,33 +44,33 @@
     // Initialize our arrays
     eventsArray = [[NSMutableArray alloc] init];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
+    
+    [activityIndicator startAnimating];
        
     //eventsList.dataSource = self;
     //eventsList.delegate = self;
     
     NSLog(@"Beginning loading core data.");
     
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"]; 
+    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", club.name];
+    NSError *error;
+    
+    NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
+        
+    [self setPropertiesWithNewEventData:events];
+    
     [eventsList reloadData];
 
     NSLog(@"Finished loading core data.");
+    
     NSLog(@"Beginning loading web data.");
     
     //Get event data from server
     [self getListOfEvents: club.name];
     //[activityIndicator stopAnimating];
     
-    //Make sure names are consistent!
-    /*
-     NSString* imagePath = [[NSBundle mainBundle] pathForResource:club.clubName ofType:@"png"];
-     
-     club.clubCrest = [[UIImage alloc] initWithContentsOfFile:imagePath];
-     */
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidUnload
@@ -172,6 +173,10 @@
     return cell;
     */
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return kCellHeight;
+}
 
 #pragma mark -
 #pragma mark Table cell image support
@@ -243,6 +248,7 @@
     //NSURL *url = [NSURL URLWithString:urlString];
     //NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setTimeoutInterval:8];
     [request setURL:[NSURL URLWithString: urlString]];
     [request setHTTPMethod:@"GET"];
     
@@ -251,13 +257,12 @@
     //NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     if (conn) {
         receivedData = [NSMutableData data];
+    } else {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }
-    
- //else do nothing
 
  }
 
-//Rishi Chat code:
 /*
  Runs when the sufficient server response data has been received.
  */
@@ -274,6 +279,11 @@
     [receivedData appendData:data];
 } 
 
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+}
+
 /*
  Runs when the connection has successfully finished loading all data
  */
@@ -289,37 +299,30 @@
         return; // do nothing if can't recieve messages
     }
     
+    NSMutableArray *eventsTempArray = [NSMutableArray arrayWithCapacity:[eventsDictionaryArray count]];
+    
     for(NSDictionary *dict in eventsDictionaryArray)
     {
         Event *e = [Event eventWithData:dict];
-        [eventsArray addObject:e];
+        [eventsTempArray addObject:e];
     }
-    
+    [self setPropertiesWithNewEventData:eventsTempArray];
     [eventsList reloadData];
-    /*
-        if (e.title == nil) {
-            [e setTitle:@"On Tap"];
-        }
-        if ([e.event_descrip isEqualToString:@""]) {
-            e.event_descrip = @"On Tap";
-        }
-        e.event_descrip = [e.event_descrip stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
-       
-        // Fix start date string
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"YYYY-MM-dd"];
-        NSDate *sDate = [dateFormat dateFromString:e.startDate];
-        
-        NSDateFormatter *newFormat = [[NSDateFormatter alloc] init];
-        [newFormat setDateFormat:@"EEEE, MMMM d"];
-        NSString *sTimeString = [newFormat stringFromDate:sDate];
-        e.startDate = sTimeString;
-     */
-    NSLog(@"Events: %@\n", eventsArray);
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         
 }
-    
-    
+- (void)setPropertiesWithNewEventData:(NSArray *)eventData;
+{
+    eventsArray = [NSMutableArray array];    
+    for (int i = 0; i < [eventData count]; i++) {
+        Event *e = (Event *)[eventData objectAtIndex:i];
+        
+        //Determine if eventsArray already contains the event. Else add it
+        if (![eventsArray containsObject:e]){
+            [eventsArray addObject:e];
+        }
+    }
+}
 
 
 #pragma mark - Table view delegate

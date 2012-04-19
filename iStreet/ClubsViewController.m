@@ -42,10 +42,45 @@
     dateLabel.text = dateString;
     
     //Get all clubs from Core Data
+    BOOL dataDidLoad = [(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded];
     
-    [self getClubsData];
+    if(!dataDidLoad)
+    {
+        NSLog(@"Setting up notifications.");
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData:) name:@"App Data Loaded" object:nil];
+    }
+    else
+    {
+        NSLog(@"No need for notification, data already loade.");
+        [self loadData:nil];
+    }
 }
-
+- (void)loadData:(NSNotification *)notification
+{
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    
+    if(notification)
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];                
+    NSError *error;
+    
+    NSArray *clubsArray = [document.managedObjectContext executeFetchRequest:request error:&error];
+    [self setClubListWithNewData:clubsArray];
+    NSLog(@"Finished loading core data.");
+    
+}
+- (void)setClubListWithNewData:(NSArray *)clubData;
+{
+    clubsList = [NSMutableArray array];
+    for (int i = 0; i < [clubData count]; i++) {
+        Club *c = (Club *)[clubData objectAtIndex:i];
+        if (![clubsList containsObject:c]) {
+            [clubsList addObject:c];
+        }
+    }
+    NSLog(@"List of clubs: %@\n", clubsList);
+}
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -57,64 +92,8 @@
     return YES;
     //return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
--(void)getClubsData
-{
-    NSString *url = @"http://istreetsvr.herokuapp.com/clubslist";
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:url]];
-    [request setHTTPMethod:@"GET"];
-    
-    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    if (conn)
-        receivedData = [NSMutableData data];
-    NSLog(@"get clubs data\n");
-
-}
-/*
- Runs when the sufficient server response data has been received.
- */
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{  
-    [receivedData setLength:0];
-    NSLog(@"Connection received response\n");
-}  
-
-/*
- Runs as the connection loads data from the server.
- */
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data  
-{  
-    [receivedData appendData:data];
-    NSLog(@"connection received data\n");
-} 
-
-/*
- Runs when the connection has successfully finished loading all data
- */
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    NSLog(@"Finish loading\n");
-    NSError *error;
-    NSArray *clubsDictionaryArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
-    if(!clubsDictionaryArray)
-    {
-        NSLog(@"%@", [error localizedDescription]);
-        return;
-    }
-    //NSMutableArray *clubsArray = [NSMutableArray arrayWithCapacity:[clubsDictionaryArray count]];
-    
-    for(NSDictionary *dict in clubsDictionaryArray)
-        [clubsList addObject:[Club clubWithData:dict]];
-    
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    /*Club *club = [Club alloc];
-    //[club setName:segue.identifier];
-    club.name = segue.identifier;
-     */
     NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
     NSString *clubName = segue.identifier;
     for (Club *club in clubsList){
@@ -123,9 +102,6 @@
             NSLog(@"Destination club: %@\n", club.name);
         }
     }
-    
-    //[segue.destinationViewController setClub:(club)];
-    
 }
 
 @end

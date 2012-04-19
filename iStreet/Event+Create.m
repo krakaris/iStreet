@@ -25,11 +25,16 @@
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];
     request.predicate = [NSPredicate predicateWithFormat:@"event_id = %d", eventID];
+    NSLog(@"Predicate: %@\n", request.predicate);
     
     NSError *error;
     NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
     if([events count] > 1)
-        [NSException raise:@"More than one event in core data with a given id" format:nil];
+    {
+        Event *one = [events objectAtIndex:0];
+        Event *two = [events objectAtIndex:1];
+        [NSException raise:@"More than one event in core data with a given id" format:@"%d, %@, %@, %@, %@", [events count], one.event_id, one.title, two.event_id, two.title];
+    }
          
     Event *event;
     if ([events count] == 0) 

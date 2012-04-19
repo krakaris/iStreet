@@ -12,16 +12,11 @@
 		4163B68E153BCC0A00D7B2DC /* iStreet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4163B68C153BCC0A00D7B2DC /* iStreet.xcdatamodeld */; };
 		4163B6E9153E549E00D7B2DC /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4163B6DC153E549E00D7B2DC /* FBDialog.bundle */; };
 		4163B6EA153E549E00D7B2DC /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4163B6E2153E549E00D7B2DC /* libfacebook_ios_sdk.a */; };
-		4163B6EE153E563C00D7B2DC /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
 		4163B6F0153E572E00D7B2DC /* fconnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 4163B6EF153E572E00D7B2DC /* fconnect.png */; };
-		5B15518F153F266600F2834D /* Club.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B155188153F266600F2834D /* Club.m */; };
-		5B155190153F266600F2834D /* Club+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B15518A153F266600F2834D /* Club+Create.m */; };
 		5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */; };
 		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
 		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
 		5B2CD5ED153F2C4E00EE3E9A /* Event+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF9EE41153CBA3F00E53F6E /* Event+Create.m */; };
-		5B37574B153F654F004A1BD9 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B37574A153F654F004A1BD9 /* Event.m */; };
-		5B37574F153F654F004A1BD9 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B37574E153F654F004A1BD9 /* User.m */; };
 		5B63654615338AB700845082 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 5B63654515338AB700845082 /* README */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
@@ -38,11 +33,15 @@
 		9D197B69153B51B800604080 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B61153B51B800604080 /* EventCell.m */; };
 		9D197B6A153B51B800604080 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B63153B51B800604080 /* EventsViewController.m */; };
 		9D197B6B153B51B800604080 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B65153B51B800604080 /* IconDownloader.m */; };
+		9D208D7815409335004515E9 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
+		9D208D7915409335004515E9 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B37574E153F654F004A1BD9 /* User.m */; };
+		9D208D7A15409335004515E9 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B37574A153F654F004A1BD9 /* Event.m */; };
+		9D208D7B15409335004515E9 /* Club.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B155188153F266600F2834D /* Club.m */; };
+		9D208D7C15409335004515E9 /* Club+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B15518A153F266600F2834D /* Club+Create.m */; };
 		9D464B191537482600468729 /* grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B171537482600468729 /* grey.png */; };
 		9D464B1A1537482600468729 /* light_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B181537482600468729 /* light_orange.png */; };
 		9D464B211537631C00468729 /* Princeton Crest 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B201537631C00468729 /* Princeton Crest 3.png */; };
 		9D4ED4A315338DA700680D1D /* ClubEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */; };
-		9D671CB3153F7D7B001B3CBA /* FriendsAttendingEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D671CB2153F7D7B001B3CBA /* FriendsAttendingEventViewController.m */; };
 		9DA1BF0B153A08DE005CCC13 /* EventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA1BF0A153A08DE005CCC13 /* EventDetailsViewController.m */; };
 		9DA5B1FC15362AFC00F2FC68 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5B1FB15362AFC00F2FC68 /* Message.m */; };
 		9DB903CA151BC6A900A13461 /* Charter.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903BF151BC6A900A13461 /* Charter.png */; };
@@ -137,8 +136,6 @@
 		9D464B201537631C00468729 /* Princeton Crest 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 3.png"; sourceTree = "<group>"; };
 		9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubEventsViewController.h; sourceTree = "<group>"; };
 		9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClubEventsViewController.m; sourceTree = "<group>"; };
-		9D671CB1153F7D7B001B3CBA /* FriendsAttendingEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsAttendingEventViewController.h; sourceTree = "<group>"; };
-		9D671CB2153F7D7B001B3CBA /* FriendsAttendingEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsAttendingEventViewController.m; sourceTree = "<group>"; };
 		9DA1BF09153A08DE005CCC13 /* EventDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailsViewController.h; sourceTree = "<group>"; };
 		9DA1BF0A153A08DE005CCC13 /* EventDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailsViewController.m; sourceTree = "<group>"; };
 		9DA5B1FA15362AFC00F2FC68 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -306,8 +303,6 @@
 			isa = PBXGroup;
 			children = (
 				9DB903D6151BC6F500A13461 /* Club Images */,
-				9D671CB1153F7D7B001B3CBA /* FriendsAttendingEventViewController.h */,
-				9D671CB2153F7D7B001B3CBA /* FriendsAttendingEventViewController.m */,
 				9DA1BF09153A08DE005CCC13 /* EventDetailsViewController.h */,
 				9DA1BF0A153A08DE005CCC13 /* EventDetailsViewController.m */,
 				9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */,
@@ -482,6 +477,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D208D7815409335004515E9 /* FriendsViewController.m in Sources */,
+				9D208D7915409335004515E9 /* User.m in Sources */,
+				9D208D7A15409335004515E9 /* Event.m in Sources */,
+				9D208D7B15409335004515E9 /* Club.m in Sources */,
+				9D208D7C15409335004515E9 /* Club+Create.m in Sources */,
 				5B2CD5ED153F2C4E00EE3E9A /* Event+Create.m in Sources */,
 				5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */,
 				5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */,
@@ -497,12 +497,6 @@
 				9D197B6A153B51B800604080 /* EventsViewController.m in Sources */,
 				9D197B6B153B51B800604080 /* IconDownloader.m in Sources */,
 				4163B68E153BCC0A00D7B2DC /* iStreet.xcdatamodeld in Sources */,
-				5BF9EE42153CBA3F00E53F6E /* Event+Create.m in Sources */,
-				5B3C20C4153D119200B3B1B9 /* Club+Create.m in Sources */,
-				5B3C20E1153D275D00B3B1B9 /* Club.m in Sources */,
-				5B3C20E7153D275E00B3B1B9 /* User.m in Sources */,
-				5B3C20EA153D33AE00B3B1B9 /* Event.m in Sources */,
-				9D671CB3153F7D7B001B3CBA /* FriendsAttendingEventViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

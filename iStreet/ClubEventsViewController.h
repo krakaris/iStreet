@@ -24,9 +24,6 @@
     NSMutableDictionary *iconsBeingDownloaded;
     
     IBOutlet EventDetailsViewController *edvController;
-    
-//    NSString *clubName;
-//    UIImage *clubCrest;
 
 }
 

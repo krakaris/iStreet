@@ -8,7 +8,6 @@
 
 #import "EventDetailsViewController.h"
 #import "AppDelegate.h"
-#import "FriendsAttendingEventViewController.m"
 
 @interface EventDetailsViewController ()
 
@@ -42,7 +41,7 @@
     self.eventTitle.text = myEvent.title;
     [self setUserWithNetid];
     friendsList = [user.fb_friends componentsSeparatedByString:@","];
-    if ([user.attendingTheseEvents containsObject:myEvent]) {
+    if ([user.attendingEvents containsObject:myEvent]) {
         userIsAttending = YES;
         //hide the button
         attendButton.enabled = NO;
@@ -52,13 +51,12 @@
         userIsAttending = NO;
         attendButton.enabled = YES;
         attendButton.hidden = NO;
-        [attendButton setBackgroundColor:[UIColor greenColor]];
-    }
+}
     
     // Fix date and time strings
     [self formatDates];
        
-    self.eventDescription.text = myEvent.description;
+    self.eventDescription.text = myEvent.event_description;
         CGSize maximumLabelSize = CGSizeMake(280,200);
     
     CGSize expectedLabelSize = [self.eventDescription.text sizeWithFont:self.eventDescription.font 
@@ -78,13 +76,7 @@
         NSString *imageName = [NSString stringWithFormat:@"%@.png", myEvent.name];
         eventImage.image = [UIImage imageNamed:imageName]; 
     }
-        /* commented by Aki
-    NSString *imageName = [NSString stringWithFormat:@"%@.png", myEvent.name];
-    NSLog(@"Event club: %@\n", myEvent.name);
-    NSLog(@"Image: %@\n", imageName);
-    self.eventImage.image = [UIImage imageNamed:imageName];
-         */
-                       
+    
 }
 - (void)formatDates {
     NSString *eventDay = [myEvent.time_start substringToIndex:[myEvent.time_start rangeOfString:@" "].location];
@@ -107,26 +99,26 @@
     
     
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"h:mm"];
+    [outputFormatter setDateFormat:@"h:mm a"];
     NSString *sTimeString = [outputFormatter stringFromDate:fullStartDate];
     NSString *eTimeString = [outputFormatter stringFromDate:fullEndDate];
     
     //Hardcoded AM and PM --> FIX!!!
-    NSString *timeString = [sTimeString stringByAppendingString:@"pm - "];
+    NSString *timeString = [sTimeString stringByAppendingString:@" - "];
     timeString = [timeString stringByAppendingString:eTimeString];
-    timeString = [timeString stringByAppendingString:@"am"];
+    //timeString = [timeString stringByAppendingString:@"am"];
     
     self.eventTime.text = timeString;
     
 }
 - (void)setUserWithNetid {
     //How to access netid from AppDelegate??
-    NSString *id = @"netid";
+    //NSString *id = @"netid";
     
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"netid = %@", id];
+    //request.predicate = [NSPredicate predicateWithFormat:@"netid = %@", id];
     
     NSError *error;
     NSArray *users = [document.managedObjectContext executeFetchRequest:request error:&error];
@@ -162,7 +154,7 @@
 }
 
 - (IBAction)attend:(UIButton *)sender {
-    [user addAttendingTheseEventsObject:myEvent];
+    [user addAttendingEventsObject:myEvent];
     userIsAttending = YES;
     sender.hidden = YES;
     sender.enabled = NO;
@@ -172,11 +164,11 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
-    if([segue.identifier isEqualToString:@"See Friends Attending Event"]) {
+    /*if([segue.identifier isEqualToString:@"See Friends Attending Event"]) {
         [segue.destinationViewController setFriendsList:(friendsList)];
         [segue.destinationViewController setUser:user];
         [segue.destinationViewController setEvent:myEvent];
-    }
+    }*/
 }
 
 
