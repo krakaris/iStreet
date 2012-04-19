@@ -35,6 +35,7 @@
     if ([events count] == 0) 
     {
         event = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:document.managedObjectContext];
+        NSLog(@"Event inserted with event_id (%@) and title (%@)", [eventData objectForKey:@"event_id"], [eventData objectForKey:@"title"]);
     }
     else 
         event = [events objectAtIndex:0];

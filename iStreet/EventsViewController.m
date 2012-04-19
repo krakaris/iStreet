@@ -45,11 +45,11 @@
     if(!dataDidLoad)
     {
         NSLog(@"Setting up notifications.");
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData:) name:@"App Data Loaded" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData:) name:DataLoadedNotificationString object:nil];
     }
     else
     {
-        NSLog(@"No need for notification, data already loade.");
+        NSLog(@"No need for notification, data already loaded.");
         [self loadData:nil];
     }
 }
