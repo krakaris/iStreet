@@ -20,7 +20,7 @@
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];
-    request.predicate = [NSPredicate predicateWithFormat:@"club_id = %d", clubID];
+    request.predicate = [NSPredicate predicateWithFormat:@"club_id == %d", clubID];
     
     NSError *error;
     NSArray *clubs = [document.managedObjectContext executeFetchRequest:request error:&error];

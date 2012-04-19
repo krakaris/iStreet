@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "FBConnect.h"
 
+extern NSString *const DataLoadedNotificationString;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

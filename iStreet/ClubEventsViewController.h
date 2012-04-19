@@ -18,13 +18,10 @@
     UIActivityIndicatorView *activityIndicator;
     
     NSMutableArray *eventsArray;
-    Event *selectedEvent;
+   // Event *selectedEvent;
     
     NSMutableData *receivedData;
     NSMutableDictionary *iconsBeingDownloaded;
-    
-    IBOutlet EventDetailsViewController *edvController;
-
 }
 
 @property(nonatomic, retain) Club *club;

@@ -208,7 +208,7 @@
     if (cell == nil) 
     {
         cell = [[EventCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
     }
     
     // Configure the cell...
@@ -295,28 +295,23 @@
 {
     // Navigation logic may go here. Create and push another view controller.
     /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+      *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
      // ...
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
     
     // set event based on row selected
-     selectedEvent = [eventsArray objectAtIndex: indexPath.section];
-     [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
-    
-    EventDetailsViewController *detailsViewController = [[EventDetailsViewController alloc] initWithNibName:@"EventDetailsViewController" bundle:nil];
-    
-    detailsViewController.navigationItem.title = selectedEvent.title;
-    detailsViewController.myEvent = selectedEvent;
-    [self performSegueWithIdentifier:@"ShowEventDetails" sender:self];
+    Event *selectedEvent = [eventsArray objectAtIndex: indexPath.section];
+    [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
+    [self performSegueWithIdentifier:@"ShowEventDetails" sender:selectedEvent];
     
 }
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"ShowEventDetails"])
     {
-        [segue.destinationViewController setMyEvent:selectedEvent];
+        [segue.destinationViewController setMyEvent:sender];
     }
 }
 

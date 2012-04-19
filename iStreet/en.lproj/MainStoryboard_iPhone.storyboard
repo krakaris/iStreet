@@ -57,6 +57,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="2Lq-WE-aZm" id="hgc-V4-jYA"/>
                         <outlet property="eventsTable" destination="Pym-Su-YSk" id="ttc-Xb-Eaf"/>
+                        <segue destination="xZq-Pq-Unb" kind="push" identifier="ShowEventDetails" id="Hyg-kK-m3l"/>
                     </connections>
                 </viewController>
             </objects>
@@ -660,17 +661,6 @@
         <class className="ClubsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubsViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="Cannon" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Cap" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Charter" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Cloister" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Colonial" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Cottage" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Ivy" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Quad" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="TI" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Terrace" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="Tower" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
@@ -710,5 +700,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="2op-RL-HQb"/>
+        <segue reference="Hyg-kK-m3l"/>
     </inferredMetricsTieBreakers>
 </document>

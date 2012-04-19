@@ -24,8 +24,7 @@
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];
-    request.predicate = [NSPredicate predicateWithFormat:@"event_id = %d", eventID];
-    NSLog(@"Predicate: %@\n", request.predicate);
+    request.predicate = [NSPredicate predicateWithFormat:@"event_id == %@", eventIDString];
     
     NSError *error;
     NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
@@ -40,6 +39,7 @@
     if ([events count] == 0) 
     {
         event = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:document.managedObjectContext];
+        //NSLog(@"Event inserted with event_id (%@) and title (%@)", [eventData objectForKey:@"event_id"], [eventData objectForKey:@"title"]);
     }
     else 
         event = [events objectAtIndex:0];

@@ -10,8 +10,9 @@
 #import "Club+Create.h"
 #import "User.h"
 
-//temp
 #import "Event.h"  
+
+NSString *const DataLoadedNotificationString = @"Application data finished loading";
 
 @interface AppDelegate ()
 - (void)setupCoreData;
@@ -47,8 +48,22 @@
             if (success) 
             {
                 NSLog(@"successfully opened database!");
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"App Data Loaded" object:self];
+                
+                /*
+                NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];
+                request.predicate = [NSPredicate predicateWithFormat:@"event_id = %d", 100];
+                
+                NSError *error;
+                NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
+                for(int i = 0; i < [events count]; i++)
+                {
+                    Event *e = [events objectAtIndex:i];
+                    NSLog(@"%@: %@", e.event_id, e.title);
+                }
+                
+                */
                 appDataLoaded = YES;
+                [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
                 /*
                  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];                
                  NSError *error;
@@ -73,7 +88,7 @@
                  */
                 
                  //List all events in data
-                 NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
+                 /*NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
                  NSError *error;
                  NSLog(@"listing events in data...");
                  NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
@@ -82,7 +97,7 @@
                  Event *event = [events objectAtIndex:i];
                  NSLog(@"%@", event.title);
                  }
-                NSLog(@"done loading events in data");
+                NSLog(@"done loading events in data");*/
             }
             if (!success) NSLog(@"couldn’t open document at %@", [dataURL path]);
         }]; 
@@ -94,9 +109,9 @@
                    if (success) 
                    {
                        [self setupCoreData];
-                       NSLog(@"successfully created database!");   
-                       [[NSNotificationCenter defaultCenter] postNotificationName:@"App Data Loaded" object:self];
+                       NSLog(@"successfully created database!");  
                        appDataLoaded = YES;
+                       [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
                    }
                    if (!success) NSLog(@"couldn’t create document at %@", [dataURL path]);
                    
