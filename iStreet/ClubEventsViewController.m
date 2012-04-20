@@ -44,6 +44,7 @@
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
     
     [activityIndicator startAnimating];
+    self.eventsList.separatorColor = [UIColor blackColor];
     
     NSLog(@"Beginning loading core data.");
     

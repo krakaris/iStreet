@@ -39,6 +39,8 @@
     eventsByDate = [NSMutableArray array];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
         
+    self.eventsTable.separatorColor = [UIColor blackColor]; 
+    
     [activityIndicator startAnimating];
     
     BOOL dataDidLoad = [(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded];
