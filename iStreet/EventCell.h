@@ -9,11 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "Event.h"
 
-enum constants {
+enum cellConstants {
     kLoadingIndicatorTag = 1,
+    kCellHeight =45
 };
-
-#define kCellHeight 45
 
 @interface EventCell : UITableViewCell
 

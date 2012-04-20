@@ -183,7 +183,7 @@
 }
 - (NSString *)formatTime:(Event *)event {
     if (event.time_start && event.time_end) {
-        NSString *eventDate = [event.time_start substringToIndex:[event.time_start rangeOfString:@" "].location];
+        NSString *eventDate = event.stringForStartDate;
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:@"YYYY-MM-dd"];
         NSDate *sDate = [dateFormat dateFromString:eventDate];

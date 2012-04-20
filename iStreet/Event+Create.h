@@ -12,4 +12,7 @@
 
 + (Event *)eventWithData:(NSDictionary *)eventData;
 
+/* Get the event's start date stripped of the time */ 
+- (NSString *)stringForStartDate;
+
 @end
