@@ -9,6 +9,8 @@
 #import "Club+Create.h"
 #import "AppDelegate.h"
 
+#import "Event.h"
+
 @implementation Club (Create)
 
 + (Club *)clubWithData:(NSDictionary *)clubData
@@ -18,7 +20,7 @@
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];
-    request.predicate = [NSPredicate predicateWithFormat:@"club_id = %d", clubID];
+    request.predicate = [NSPredicate predicateWithFormat:@"club_id == %d", clubID];
     
     NSError *error;
     NSArray *clubs = [document.managedObjectContext executeFetchRequest:request error:&error];
@@ -27,9 +29,7 @@
     
     Club *club;
     if ([clubs count] == 0) 
-    {
         club = [NSEntityDescription insertNewObjectForEntityForName:@"Club" inManagedObjectContext:document.managedObjectContext];
-    }
     else 
         club = [clubs objectAtIndex:0];
     

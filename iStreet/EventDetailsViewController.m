@@ -7,6 +7,7 @@
 //
 
 #import "EventDetailsViewController.h"
+#import "AppDelegate.h"
 
 @interface EventDetailsViewController ()
 
@@ -17,15 +18,16 @@
 @synthesize eventTitle;
 @synthesize eventDate;
 @synthesize eventTime;
-@synthesize eventDescription;
 @synthesize eventImage;
+@synthesize attending;
+@synthesize attendButton;
+@synthesize descriptionText;
+@synthesize seeAllFriendsAttending;
+@synthesize eventEntry;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 
@@ -33,34 +35,147 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    [self setUserWithNetid];
+    friendsList = [user.fb_friends componentsSeparatedByString:@","];
+    
+    //Set main Titles and Labels
     self.navigationItem.title = myEvent.title;
-    self.eventTitle.text = myEvent.title;
-    self.eventDate.text = myEvent.startDate;
-    NSString *sTimeString = myEvent.startTime;
-    NSString *timeString = [sTimeString stringByAppendingString:@"pm - "];
-    timeString = [timeString stringByAppendingString:myEvent.endTime];
-    timeString = [timeString stringByAppendingString:@"am"];
+    if (myEvent.title != nil) {
+        self.eventTitle.text = myEvent.title;
+    } else {
+        self.eventTitle.text = @"On Tap";
+    }
+    self.descriptionText.text = myEvent.event_description;
+    self.seeAllFriendsAttending.titleLabel.textColor = [UIColor orangeColor];
+    // Fix date and time strings
+    [self formatDates];
     
-    self.eventTime.text = timeString;
-    self.eventDescription.text = myEvent.description;
-        CGSize maximumLabelSize = CGSizeMake(280,130);
+    //Set entry and entry description
+    eventEntry.text = [self setEntry:myEvent];
     
-    CGSize expectedLabelSize = [self.eventDescription.text sizeWithFont:self.eventDescription.font 
-        constrainedToSize:maximumLabelSize 
-        lineBreakMode:UILineBreakModeWordWrap]; 
+    //Set "Attending" Button/Label
+    if ([user.attendingEvents containsObject:myEvent]) {
+        userIsAttending = YES;
+        //[attendButton.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:15.0]];
+        attendButton.titleLabel.textColor = [UIColor orangeColor];
+        //hide the button
+        attendButton.enabled = NO;
+        attendButton.hidden = YES;
+        
+        //FIX this
+        [self.attending.text sizeWithFont:self.attending.font 
+                        constrainedToSize:self.attending.frame.size
+                            lineBreakMode:UILineBreakModeWordWrap]; 
+        self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
+        self.attending.textColor = [UIColor colorWithRed:255.0/255.0 green:70.0/255.0 blue:0 alpha:1.0];
+    } else {
+        //[attendButton.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:15.0]];
+        userIsAttending = NO;
+        attendButton.enabled = YES;
+        attendButton.hidden = NO;
+        attendButton.titleLabel.textColor = [UIColor orangeColor];
+    }
     
-    //adjust the label the the new height.
-    CGRect newFrame = self.eventDescription.frame;
-    newFrame.size.height = expectedLabelSize.height;
-    self.eventDescription.frame = newFrame;
+    //Set image
+    if (myEvent.posterImageData)
+    {
+        [eventImage setImage:[UIImage imageWithData:myEvent.posterImageData]];
+    } else {
+        NSString *imageName = [NSString stringWithFormat:@"%@.png", myEvent.name];
+        eventImage.image = [UIImage imageNamed:imageName]; 
+    }
     
-        /* commented by Aki
-    NSString *imageName = [NSString stringWithFormat:@"%@.png", myEvent.name];
-    NSLog(@"Event club: %@\n", myEvent.name);
-    NSLog(@"Image: %@\n", imageName);
-    self.eventImage.image = [UIImage imageNamed:imageName];
-         */
-                       
+}
+-(NSString *)setEntry:(Event *)event {
+    NSString *entry = event.entry;
+    NSString *entry_descrip;
+    if (event.entry_description) {
+        entry_descrip = event.entry_description;
+    } else {
+        entry_descrip = @"";
+    }
+    NSString *pass = [NSString stringWithFormat:@"Pa"];
+    NSString *puid = [NSString stringWithFormat:@"Pu"];
+    NSString *member = [NSString stringWithFormat:@"Mp"];
+    NSString *list = [NSString stringWithFormat:@"Gu"];
+    NSString *entry_final;
+    if ([entry isEqualToString:puid]) {
+        entry_final = @"PUID";
+    } else if ([entry isEqualToString:pass]) {
+        entry_final = @"Pass";
+        // Look at description to get color
+        if (![entry_descrip isEqualToString:@""]) {
+            entry_final = [entry_final stringByAppendingString:@": "];
+            entry_final = [entry_final stringByAppendingString:entry_descrip];
+        }
+    } else if ([entry isEqualToString:member]) {
+        entry_final = @"Members plus";
+        // Search entry_description for a number: assume it is members + this number
+        if (![entry_descrip isEqualToString:@""]) {
+            entry_final = [entry_final stringByAppendingString:@" "];
+            entry_final = [entry_final stringByAppendingString:entry_descrip];
+        }
+    } else if ([entry isEqualToString:list]) {
+        entry_final = @"Guest List";
+    }
+    return entry_final;
+}
+
+- (void)formatDates {
+    if (myEvent.time_start && myEvent.time_end) {
+        NSString *eventDay = [myEvent.time_start substringToIndex:[myEvent.time_start rangeOfString:@" "].location];
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"YYYY-MM-dd"];
+        NSDate *sDate = [dateFormat dateFromString:eventDay];
+        
+        NSDateFormatter *newFormat = [[NSDateFormatter alloc] init];
+        [newFormat setDateFormat:@"EEEE, MMMM d"];
+        NSString *sDayString = [newFormat stringFromDate:sDate];
+        
+        self.eventDate.text = sDayString;
+        
+        NSString *fullStartTimeString = myEvent.time_start;
+        NSString *fullEndTimeString = myEvent.time_end;
+        NSDateFormatter *longFormat = [[NSDateFormatter alloc] init];
+        [longFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+        NSDate *fullStartDate = [longFormat dateFromString:fullStartTimeString];
+        NSDate *fullEndDate = [longFormat dateFromString:fullEndTimeString];
+        
+        
+        NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+        [outputFormatter setDateFormat:@"h:mm a"];
+        NSString *sTimeString = [outputFormatter stringFromDate:fullStartDate];
+        NSString *eTimeString = [outputFormatter stringFromDate:fullEndDate];
+        
+        //Hardcoded AM and PM --> FIX!!!
+        NSString *timeString = [sTimeString stringByAppendingString:@" - "];
+        timeString = [timeString stringByAppendingString:eTimeString];
+        
+        self.eventTime.text = timeString;
+    } 
+    //else leave time field blank
+}
+- (void)setUserWithNetid {
+    //How to access netid from AppDelegate??
+    //NSString *id = @"netid";
+    
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    //request.predicate = [NSPredicate predicateWithFormat:@"netid == %@", id];
+    
+    NSError *error;
+    NSArray *users = [document.managedObjectContext executeFetchRequest:request error:&error];
+    if([users count] > 1)
+        [NSException raise:@"More than one user in core data with a given netid" format:nil];
+    if([users count] == 0)
+        [NSException raise:@"User does not exist!" format:nil];
+    
+    for (User *u in users) {
+        user = u;
+        NSLog(@"Number of matching users: %d\n", [users count]);
+    }
 }
 
 - (void)viewDidUnload
@@ -69,8 +184,12 @@
     [self setEventTitle:nil];
     [self setEventDate:nil];
     [self setEventTime:nil];
-    [self setEventDescription:nil];
     [self setEventImage:nil];
+    [self setAttending:nil];
+    [self setAttendButton:nil];
+    [self setSeeAllFriendsAttending:nil];
+    [self setDescriptionText:nil];
+    [self setEventEntry:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -79,5 +198,23 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+- (IBAction)attend:(UIButton *)sender {
+    [user addAttendingEventsObject:myEvent];
+    userIsAttending = YES;
+    sender.hidden = YES;
+    sender.enabled = NO;
+    self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
+    self.attending.textColor = [UIColor colorWithRed:255.0/255.0 green:70.0/255.0 blue:0 alpha:1.0];
+    
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
+    /*
+     Segue to Aki's Friends TableView
+     }*/
+}
+
 
 @end

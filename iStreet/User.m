@@ -15,6 +15,6 @@
 @dynamic fb_friends;
 @dynamic fb_id;
 @dynamic netid;
-@dynamic attendingTheseEvents;
+@dynamic attendingEvents;
 
 @end

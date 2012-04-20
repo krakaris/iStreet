@@ -16,12 +16,12 @@
     UIActivityIndicatorView *activityIndicator;
     
     NSMutableData *receivedData;
-    NSMutableArray *eventsByDate; 
+    NSMutableArray *eventsByNight; 
     /* an array of arrays of events of a given date (considered making this a dictionary (date : events array), but the events must be ordered, which a dictionary is not.
      For example:
-     eventsByDate[0] --> an array of events on 4/14/2012
-     eventsByDate[1] --> an array of events on 4/12/2012
-     eventsByDate[2] --> an array of events on 4/07/2012
+     eventsByNight[0] --> an array of events on 4/14/2012
+     eventsByNight[1] --> an array of events on 4/12/2012
+     eventsByNight[2] --> an array of events on 4/07/2012
      etc.
      */
     

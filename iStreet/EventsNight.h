@@ -10,9 +10,9 @@
 #import "Event.h"
 
 /*
- An EventsArray is an array of events for a given night. It's only additional property is the date.
+ An EventsNight is an array of events for a given night. It's only additional property is the date.
  */
-@interface EventsArray : NSObject
+@interface EventsNight : NSObject
 
 @property(nonatomic, retain) NSMutableArray *array;
 @property(nonatomic, retain) NSString *date;

@@ -9,11 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "Event.h"
 
-enum constants {
+enum cellConstants {
     kLoadingIndicatorTag = 1,
+    kCellHeight =45
 };
-
-#define kCellHeight 45
 
 @interface EventCell : UITableViewCell
 
@@ -23,5 +22,4 @@ enum constants {
  Returns true if the cell needs its icon to be downloaded, or false otherwise.
  */
 - (BOOL)packCellWithEventInformation:(Event *)event atIndexPath:(NSIndexPath *)indexPath whileScrolling:(BOOL)isScrolling;
-
 @end

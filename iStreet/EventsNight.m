@@ -6,9 +6,10 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "EventsArray.h"
+#import "EventsNight.h"
+#import "Event+Create.h"
 
-@implementation EventsArray
+@implementation EventsNight
 
 @synthesize date, array;
 
@@ -20,11 +21,11 @@
     return self;
 }
 
-- (void)addEvent:(Event *)e
+- (void)addEvent:(Event *)event
 {
-    NSString *eventDate = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
+    NSString *eventDate = [event stringForStartDate];
     if ([eventDate isEqualToString:[self date]])
-        [self.array addObject:e];
+        [self.array addObject:event];
     else
         [NSException raise:@"Invalid argument exception" format:@"Mismatched date"];
 }

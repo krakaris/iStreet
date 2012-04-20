@@ -10,12 +10,8 @@
 		41386594152D15EB007A2327 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41386592152D15EB007A2327 /* LoginViewController.m */; };
 		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
 		4163B68E153BCC0A00D7B2DC /* iStreet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4163B68C153BCC0A00D7B2DC /* iStreet.xcdatamodeld */; };
-		4163B6CE153CAEA900D7B2DC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6CD153CAEA900D7B2DC /* User.m */; };
-		4163B6D1153CAEA900D7B2DC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6D0153CAEA900D7B2DC /* Event.m */; };
-		4163B6D4153CAEA900D7B2DC /* Club.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6D3153CAEA900D7B2DC /* Club.m */; };
 		4163B6E9153E549E00D7B2DC /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4163B6DC153E549E00D7B2DC /* FBDialog.bundle */; };
 		4163B6EA153E549E00D7B2DC /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4163B6E2153E549E00D7B2DC /* libfacebook_ios_sdk.a */; };
-		4163B6EE153E563C00D7B2DC /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
 		4163B6F0153E572E00D7B2DC /* fconnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 4163B6EF153E572E00D7B2DC /* fconnect.png */; };
 		4163B6F7153F4AB700D7B2DC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6F6153F4AB700D7B2DC /* Event.m */; };
 		4163B6FB153F4AB700D7B2DC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6FA153F4AB700D7B2DC /* User.m */; };
@@ -23,13 +19,12 @@
 		5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */; };
 		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
 		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
+		5B2CD5ED153F2C4E00EE3E9A /* Event+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF9EE41153CBA3F00E53F6E /* Event+Create.m */; };
 		5B63654615338AB700845082 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 5B63654515338AB700845082 /* README */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
 		5BA1F61315112DA7002CA7F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */; };
 		5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */; };
-		5BC0D9E7153BF30E004D560A /* OldClub.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0D9E4153BF30E004D560A /* OldClub.m */; };
-		5BC0D9E8153BF30E004D560A /* OldEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0D9E6153BF30E004D560A /* OldEvent.m */; };
 		5BC0D9F3153BF379004D560A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC0D9F2153BF379004D560A /* CoreData.framework */; };
 		5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AA15165A1F008E6C1F /* ChatViewController.m */; };
 		5BCE63AE15165D83008E6C1F /* ClubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AD15165D83008E6C1F /* ClubsViewController.m */; };
@@ -37,10 +32,15 @@
 		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
 		5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */; };
-		9D197B68153B51B800604080 /* EventsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B5F153B51B800604080 /* EventsArray.m */; };
+		9D197B68153B51B800604080 /* EventsNight.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B5F153B51B800604080 /* EventsNight.m */; };
 		9D197B69153B51B800604080 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B61153B51B800604080 /* EventCell.m */; };
 		9D197B6A153B51B800604080 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B63153B51B800604080 /* EventsViewController.m */; };
 		9D197B6B153B51B800604080 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B65153B51B800604080 /* IconDownloader.m */; };
+		9D208D7815409335004515E9 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
+		9D208D7915409335004515E9 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B37574E153F654F004A1BD9 /* User.m */; };
+		9D208D7A15409335004515E9 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B37574A153F654F004A1BD9 /* Event.m */; };
+		9D208D7B15409335004515E9 /* Club.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B155188153F266600F2834D /* Club.m */; };
+		9D208D7C15409335004515E9 /* Club+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B15518A153F266600F2834D /* Club+Create.m */; };
 		9D464B191537482600468729 /* grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B171537482600468729 /* grey.png */; };
 		9D464B1A1537482600468729 /* light_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B181537482600468729 /* light_orange.png */; };
 		9D464B211537631C00468729 /* Princeton Crest 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B201537631C00468729 /* Princeton Crest 3.png */; };
@@ -103,6 +103,10 @@
 		5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		5B227E4D15367D5200B5DD52 /* aqua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aqua.png; sourceTree = "<group>"; };
 		5B227E4E15367D5200B5DD52 /* orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange.png; sourceTree = "<group>"; };
+		5B375749153F654F004A1BD9 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		5B37574A153F654F004A1BD9 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		5B37574D153F654F004A1BD9 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		5B37574E153F654F004A1BD9 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		5B63654515338AB700845082 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		5BA1F60A15112DA7002CA7F3 /* iStreet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStreet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA1F60E15112DA7002CA7F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -112,10 +116,6 @@
 		5BA1F61C15112DA7002CA7F3 /* iStreet-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iStreet-Prefix.pch"; sourceTree = "<group>"; };
 		5BA1F61D15112DA7002CA7F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5BC0D9E3153BF305004D560A /* OldClub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldClub.h; sourceTree = "<group>"; };
-		5BC0D9E4153BF30E004D560A /* OldClub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldClub.m; sourceTree = "<group>"; };
-		5BC0D9E5153BF30E004D560A /* OldEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldEvent.h; sourceTree = "<group>"; };
-		5BC0D9E6153BF30E004D560A /* OldEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldEvent.m; sourceTree = "<group>"; };
 		5BC0D9F2153BF379004D560A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5BCE63A915165A1F008E6C1F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		5BCE63AA15165A1F008E6C1F /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
@@ -315,10 +315,6 @@
 				9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */,
 				5BCE63AC15165D83008E6C1F /* ClubsViewController.h */,
 				5BCE63AD15165D83008E6C1F /* ClubsViewController.m */,
-				5BC0D9E3153BF305004D560A /* OldClub.h */,
-				5BC0D9E4153BF30E004D560A /* OldClub.m */,
-				5BC0D9E5153BF30E004D560A /* OldEvent.h */,
-				5BC0D9E6153BF30E004D560A /* OldEvent.m */,
 			);
 			name = Clubs;
 			sourceTree = "<group>";
@@ -340,8 +336,8 @@
 		5BFB45021533845000960C81 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				9D197B5E153B51B800604080 /* EventsArray.h */,
-				9D197B5F153B51B800604080 /* EventsArray.m */,
+				9D197B5E153B51B800604080 /* EventsNight.h */,
+				9D197B5F153B51B800604080 /* EventsNight.m */,
 				9D197B60153B51B800604080 /* EventCell.h */,
 				9D197B61153B51B800604080 /* EventCell.m */,
 				9D197B62153B51B800604080 /* EventsViewController.h */,
@@ -487,6 +483,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D208D7815409335004515E9 /* FriendsViewController.m in Sources */,
+				9D208D7915409335004515E9 /* User.m in Sources */,
+				9D208D7A15409335004515E9 /* Event.m in Sources */,
+				9D208D7B15409335004515E9 /* Club.m in Sources */,
+				9D208D7C15409335004515E9 /* Club+Create.m in Sources */,
+				5B2CD5ED153F2C4E00EE3E9A /* Event+Create.m in Sources */,
 				5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */,
 				5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */,
 				5BCE63AE15165D83008E6C1F /* ClubsViewController.m in Sources */,
@@ -496,7 +498,7 @@
 				9DA5B1FC15362AFC00F2FC68 /* Message.m in Sources */,
 				5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */,
 				9DA1BF0B153A08DE005CCC13 /* EventDetailsViewController.m in Sources */,
-				9D197B68153B51B800604080 /* EventsArray.m in Sources */,
+				9D197B68153B51B800604080 /* EventsNight.m in Sources */,
 				9D197B69153B51B800604080 /* EventCell.m in Sources */,
 				9D197B6A153B51B800604080 /* EventsViewController.m in Sources */,
 				9D197B6B153B51B800604080 /* IconDownloader.m in Sources */,

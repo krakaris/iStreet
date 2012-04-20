@@ -7,22 +7,23 @@
 //
 
 #import "ClubEventsViewController.h"
-#import "OldEvent.h"
+#import "Event.h"
+#import "Event+Create.h"
+#import "EventCell.h"
 #import "EventDetailsViewController.h"
+#import "AppDelegate.h"
+#import "User.h"
 
 @interface ClubEventsViewController ()
 
 @end
 
 @implementation ClubEventsViewController
-@synthesize club, eventsList, sections;
+@synthesize club, eventsList, activityIndicator;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }    
     return self;
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -35,217 +36,61 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.title = self.club.clubName;
-    
+    self.navigationItem.title = self.club.name;
+    eventsList.backgroundView.backgroundColor = [UIColor greenColor];
+
     // Initialize our arrays
-    events = [[NSMutableArray alloc] init];
-    eventTitles = [[NSMutableArray alloc] init];
-    eventImages = [[NSMutableArray alloc] init];
-    eventStartDates  = [[NSMutableArray alloc] init];
-    eventStartTimes = [[NSMutableArray alloc] init];
-    eventEndTimes = [[NSMutableArray alloc] init];
+    eventsArray = [[NSMutableArray alloc] init];
+    iconsBeingDownloaded = [NSMutableDictionary dictionary];
     
-    eventsList.dataSource = self;
-    eventsList.delegate = self;
+    [activityIndicator startAnimating];
+    self.eventsList.separatorColor = [UIColor blackColor];
+    
+    NSLog(@"Beginning loading core data.");
+    
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"]; 
+    request.predicate = [NSPredicate predicateWithFormat:@"name == %@", club.name];
+    NSError *error;
+    
+    NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
+    
+    [self setPropertiesWithNewEventData:events];
+    
+    [eventsList reloadData];
+    
+    NSLog(@"Finished loading core data.");
+    
+    NSLog(@"Beginning loading web data.");
     
     //Get event data from server
-    [self getListOfEvents: club.clubName];
-    
-    //Make sure names are consistent!
-    /*
-     NSString* imagePath = [[NSBundle mainBundle] pathForResource:club.clubName ofType:@"png"];
-     
-     club.clubCrest = [[UIImage alloc] initWithContentsOfFile:imagePath];
-     */
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self getListOfEvents: club.name];
+    [activityIndicator stopAnimating];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-//#warning Potentially incomplete method implementation.
-    return [events count];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-//#warning Incomplete method implementation.
-    //return [events count];
-    return 1;
-}
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    OldEvent *e = [events objectAtIndex:section];
-    return e.startDate;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Club Event";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil) 
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    }
-    
-    // Configure the cell...
-    OldEvent *event = [events objectAtIndex: indexPath.section];
-    //NSString *title = [eventTitles objectAtIndex: indexPath.section];
-    NSString *title = event.title;
-    
-    if ([title isEqualToString:@""] || [title isEqualToString:club.clubName]) {
-        event.title = @"On Tap";
-        title = @"On Tap";
-    }
-    
-    // Format Times appropriately for Subtitle
-    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-    [inputFormatter setDateFormat:@"HH:mm:ss"];
-    NSDate *sTime = [inputFormatter dateFromString:event.startTime];
-    
-    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"h:mm"];
-    NSString *sTimeString = [outputFormatter stringFromDate:sTime];
-    event.startTime = sTimeString;
-    
-    NSDate *eTime = [inputFormatter dateFromString:event.endTime];
-    NSString *eTimeString = [outputFormatter stringFromDate:eTime];
-    event.endTime = eTimeString;
-    
-    //Hardcoded AM and PM --> FIX!!!
-    NSString *timeString = [sTimeString stringByAppendingString:@"pm - "];
-    timeString = [timeString stringByAppendingString:eTimeString];
-    timeString = [timeString stringByAppendingString:@"am"];
-        
-    [cell.textLabel setText:title];
-    [cell.detailTextLabel setText:timeString];
-    
-    return cell;
-}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-// Online Flickr Tutorial - not sure if correct?
-/*- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data 
-{
-    // Store incoming data into a string
-    //IS it UTF8 or LATIN-1 encoding???
-    NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    // Create a dictionary from the JSON string
-    
-    //NSDictionary *results = [jsonString JSONValue];
-    NSDictionary *results;
-    
-    // Build an array of events from the dictionary for easy access to each entry
-    //NSArray *events = [[results objectForKey:@""];
-    for (NSString *key in results) {
-        [eventTitles addObject:[results objectForKey:@"title"]];
-        NSString *picture = [results objectForKey:@"poster"];
-        // If there is a field for "poster", use it
-        [eventImages addObject:(picture.length > 0 ? picture : @"")];
-        
-        //Create url for event images:
-        if (![picture isEqualToString:@""]) {
-            NSString *imageURLString = 
-        [NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", picture];
-        } else {
-            //Use default crest if no image provided
-            NSString *imageURLString = [NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", clubName];
-        }
-         
-        [eventDates addObject:[results objectForKey:@"DATE(time_start)"]];
-    }
-}
-*/ 
 - (void) getListOfEvents: (NSString *) clubName
 {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
     //Build url for server
     NSString *urlString = 
     [NSString stringWithFormat:
      @"http://istreetsvr.herokuapp.com/clubevents?name=%@", clubName];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    if (connection) {
+    NSString *url = [urlString stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setTimeoutInterval:8];
+    [request setURL:[NSURL URLWithString: url]];
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    if (conn) {
         receivedData = [NSMutableData data];
+    } else {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }
     
- //else do nothing
-
- }
-
-- (void) getImageForEvent: (OldEvent *) event
-{
-    //Build url for server
-    NSString *urlString = 
-    [NSString stringWithFormat:
-     @"http://pam.tigerapps.org/media/%@", event.poster];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    if (connection) {
-        receivedData = [NSMutableData data];
-    }
 }
 
-//Rishi Chat code:
 /*
  Runs when the sufficient server response data has been received.
  */
@@ -262,109 +107,263 @@
     [receivedData appendData:data];
 } 
 
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+}
+
 /*
  Runs when the connection has successfully finished loading all data
  */
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {      
+    NSLog(@"Connection finished loading\n");
     NSError *error;
-    NSArray *eventsArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
-    if(!eventsArray)
+    NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
+    if(!eventsDictionaryArray)
     {
         NSLog(@"%@", [error localizedDescription]);
         return; // do nothing if can't recieve messages
     }
     
-    for(NSDictionary *dict in eventsArray)
+    NSMutableArray *eventsTempArray = [NSMutableArray arrayWithCapacity:[eventsDictionaryArray count]];
+    
+    for(NSDictionary *dict in eventsDictionaryArray)
     {
-         OldEvent *e = [[OldEvent alloc] initWithDictionary:dict];
-        [events addObject:e];
-        if (e.title != nil) {
-            [eventTitles addObject:e.title];
-        } else {
-            [e setTitle:@"On Tap"];
-            [eventTitles addObject:e.title];
+        Event *e = [Event eventWithData:dict];
+        [eventsTempArray addObject:e];
+    }
+    [self setPropertiesWithNewEventData:eventsTempArray];
+    [eventsList reloadData];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    
+}
+
+- (void)setPropertiesWithNewEventData:(NSArray *)eventData;
+{
+    eventsArray = [NSMutableArray array];    
+    for (int i = 0; i < [eventData count]; i++) {
+        Event *e = (Event *)[eventData objectAtIndex:i];
+        
+        //Determine if eventsArray already contains the event. Else add it
+        if (![eventsArray containsObject:e]){
+            [eventsArray addObject:e];
         }
-        if ([e.description isEqualToString:@""]) {
-            e.description = @"On Tap";
-        }
-        e.description = [e.description stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
-       
-        // Fix start date string
+    }
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [eventsArray count];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    Event *e = [eventsArray objectAtIndex:section];
+    
+    // Fix start date string
+    return [self formatTime:e];
+}
+- (NSString *)formatTime:(Event *)event {
+    if (event.time_start && event.time_end) {
+        NSString *eventDate = event.stringForStartDate;
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:@"YYYY-MM-dd"];
-        NSDate *sDate = [dateFormat dateFromString:e.startDate];
+        NSDate *sDate = [dateFormat dateFromString:eventDate];
         
         NSDateFormatter *newFormat = [[NSDateFormatter alloc] init];
         [newFormat setDateFormat:@"EEEE, MMMM d"];
         NSString *sTimeString = [newFormat stringFromDate:sDate];
-        e.startDate = sTimeString;
         
-        [eventStartDates addObject:e.startDate];
-        [eventStartTimes addObject:e.startTime];
-        [eventEndTimes addObject:e.endTime];
+        return sTimeString;
+    } else {
+        return event.title;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"event cell";
+    EventCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil) 
+    {
+        cell = [[EventCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
     }
     
-    [eventsList reloadData];
+    // Configure the cell...
     
-    //Add images to Array: "eventImages"
-    /*for (Event *event in events)
-    {
-        
-        
-        
-        // If there is a field for "poster", use it
-        //[eventImages addObject:(event.poster.length > 0 ? event.poster : @"")];
-        
-        //Create url for event images:
-        if (![event.poster isEqualToString:@""]) {
-            NSString *imageURLString = 
-            [NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", event.poster];
-            //UIImage *eventImage = get Image!
-            UIImage *eventImage = nil;
-            
-            [eventImages addObject:eventImage];
+    Event *event = [eventsArray objectAtIndex: indexPath.section];
+    NSString *clubName = event.name;
+    
+    if ([cell packCellWithEventInformation:event
+                               atIndexPath:indexPath
+                            whileScrolling:(self.eventsList.dragging == YES 
+                                            || self.eventsList.decelerating == YES)]) {
+                                [self startIconDownload:event forIndexPath:indexPath];
+                            }
+    if (event.title) {
+        if ([event.title isEqualToString:@""] || [event.title isEqualToString:clubName]) {
+            cell.textLabel.text = @"On Tap";
         } else {
-            NSString *name = [NSString stringWithFormat:@"%@", club.clubName];
-            //Use default crest if no image provided
-            UIImage *eventImage = [UIImage imageNamed: name]; 
-            [eventImages addObject:eventImage];
-            
+            cell.textLabel.text = event.title;
         }
-    }*/
-    
+    }
+    cell.detailTextLabel.text = [self setSubtitle:event];
+    return cell;
 }
+-(NSString *)setSubtitle:(Event *)event {
+    NSString *entry = event.entry;
+    NSString *entry_descrip;
+    if (event.entry_description) {
+        entry_descrip = event.entry_description;
+    } else {
+        entry_descrip = @"";
+    }
+    NSString *pass = [NSString stringWithFormat:@"Pa"];
+    NSString *puid = [NSString stringWithFormat:@"Pu"];
+    NSString *member = [NSString stringWithFormat:@"Mp"];
+    NSString *list = [NSString stringWithFormat:@"Gu"];
+    NSString *entry_final;
+    if ([entry isEqualToString:puid]) {
+        entry_final = @"PUID";
+    } else if ([entry isEqualToString:pass]) {
+        entry_final = @"Pass";
+        // Look at description to get color
+        if (![entry_descrip isEqualToString:@""]) {
+            entry_final = [entry_final stringByAppendingString:@": "];
+            entry_final = [entry_final stringByAppendingString:entry_descrip];
+        }
+    } else if ([entry isEqualToString:member]) {
+        entry_final = @"Members plus";
+        // Search entry_description for a number: assume it is members + this number
+        if (![entry_descrip isEqualToString:@""]) {
+            entry_final = [entry_final stringByAppendingString:@" "];
+            entry_final = [entry_final stringByAppendingString:entry_descrip];
+        }
+    } else if ([entry isEqualToString:list]) {
+        entry_final = @"Guest List";
+    }
+    return entry_final;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return kCellHeight;
+}
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 25;
+}
+
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
+{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 25)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 25)];
+    Event *e = (Event *)[eventsArray objectAtIndex:section];
+    label.text = [self formatTime:e];
+    label.textAlignment = UITextAlignmentCenter;
+    label.textColor = [UIColor orangeColor];
+    label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+    //label.alpha = 0.7;
+    [label setFont:[UIFont fontWithName:@"Trebuchet MS" size:17.0]];
+    //label.textColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+    [headerView addSubview:label];
+
+    return headerView;
+}
+
+#pragma mark -
+#pragma mark Table cell image support
+
+- (void)startIconDownload:(Event *)event forIndexPath:(NSIndexPath *)indexPath
+{
+    IconDownloader *iconDownloader = [iconsBeingDownloaded objectForKey:indexPath];
+    if (iconDownloader == nil) //if there isn't already a download in progress for that event
+    {
+        iconDownloader = [[IconDownloader alloc] init];
+        iconDownloader.event = event;
+        iconDownloader.indexPathInTableView = indexPath;
+        iconDownloader.delegate = self;
+        [iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
+        [iconDownloader startDownload];
+    }
+}
+
+// called by our ImageDownloader when an icon is ready to be displayed
+- (void)appImageDidLoad:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [self.eventsList cellForRowAtIndexPath:indexPath];
+    [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kLoadingIndicatorTag] stopAnimating];
+    [eventsList reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [iconsBeingDownloaded removeObjectForKey:indexPath];
+}
+
+
+#pragma mark -
+#pragma mark Deferred image loading (UIScrollViewDelegate)
+
+// Load images for all onscreen rows when scrolling is finished
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate)
+	{
+        [self loadImagesForOnscreenRows];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadImagesForOnscreenRows];
+}
+
+// this method is used when the user scrolls into a set of cells that don't have their app icons yet
+- (void)loadImagesForOnscreenRows
+{
+    NSArray *visiblePaths = [self.eventsList indexPathsForVisibleRows];
+    for (NSIndexPath *indexPath in visiblePaths)
+    {
+        Event *event = [eventsArray objectAtIndex:indexPath.row]; // the event for the cell at that index path
+        
+        // start downloading the icon if the event doesn't have an icon but has a link to one
+        if (!event.posterImageData && ![event.poster isEqualToString:@""])
+            [self startIconDownload:event forIndexPath:indexPath];
+    }
+}
+
+
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-    
     // set event based on row selected
-     selectedEvent = [events objectAtIndex: indexPath.section];
-     [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
-    
-    EventDetailsViewController *detailsViewController = [[EventDetailsViewController alloc] initWithNibName:@"EventDetailsViewController" bundle:nil];
-    
-    detailsViewController.navigationItem.title = selectedEvent.title;
-    detailsViewController.myEvent = selectedEvent;
-    [self performSegueWithIdentifier:@"ShowEventDetails" sender:self];
+    Event *selectedEvent = [eventsArray objectAtIndex: indexPath.section];
+    [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
+    [self performSegueWithIdentifier:@"ShowEventDetails" sender:selectedEvent];
     
 }
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"ShowEventDetails"])
-    {
-        [segue.destinationViewController setMyEvent:selectedEvent];
-    }
+        [segue.destinationViewController setMyEvent:sender];
 }
 
 
