@@ -10,6 +10,22 @@
 
 @implementation EventCell
 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        // ALEXA - insert custom background code, label fonts, etc. here.
+        //example:
+        [self.textLabel setBackgroundColor:[UIColor clearColor]]; //necessary
+        [self.detailTextLabel setBackgroundColor:[UIColor clearColor]]; //necessary
+        [self.contentView setBackgroundColor:[UIColor greenColor]]; //this obviously isn't the permanent color, just to show you though.
+        //random font...
+        [self.textLabel setFont:[UIFont fontWithName:@"Optima" size:16]];
+        [self.detailTextLabel setFont:[UIFont fontWithName:@"Optima" size:12]];
+    }
+    return self;
+}
+
 - (void)setImage:(UIImage *)image
 {
     CGSize itemSize = CGSizeMake(kCellHeight, kCellHeight);
