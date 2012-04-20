@@ -17,6 +17,9 @@
 		4163B6EA153E549E00D7B2DC /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4163B6E2153E549E00D7B2DC /* libfacebook_ios_sdk.a */; };
 		4163B6EE153E563C00D7B2DC /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
 		4163B6F0153E572E00D7B2DC /* fconnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 4163B6EF153E572E00D7B2DC /* fconnect.png */; };
+		4163B6F7153F4AB700D7B2DC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6F6153F4AB700D7B2DC /* Event.m */; };
+		4163B6FB153F4AB700D7B2DC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6FA153F4AB700D7B2DC /* User.m */; };
+		4163B6FE153F4AB800D7B2DC /* Club.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6FD153F4AB800D7B2DC /* Club.m */; };
 		5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */; };
 		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
 		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
@@ -31,7 +34,6 @@
 		5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AA15165A1F008E6C1F /* ChatViewController.m */; };
 		5BCE63AE15165D83008E6C1F /* ClubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AD15165D83008E6C1F /* ClubsViewController.m */; };
 		5BE7E2B1153A5E54008EFCA0 /* Placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BE7E2B0153A5E54008EFCA0 /* Placeholder.png */; };
-		5BF9EE42153CBA3F00E53F6E /* Event+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF9EE41153CBA3F00E53F6E /* Event+Create.m */; };
 		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
 		5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */; };
@@ -70,11 +72,8 @@
 		41386592152D15EB007A2327 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		41386593152D15EB007A2327 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		4163B68D153BCC0A00D7B2DC /* iStreet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iStreet.xcdatamodel; sourceTree = "<group>"; };
-		4163B6CC153CAEA900D7B2DC /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		4163B6CD153CAEA900D7B2DC /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		4163B6CF153CAEA900D7B2DC /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		4163B6D0153CAEA900D7B2DC /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
-		4163B6D2153CAEA900D7B2DC /* Club.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Club.h; sourceTree = "<group>"; };
 		4163B6D3153CAEA900D7B2DC /* Club.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Club.m; sourceTree = "<group>"; };
 		4163B6DA153E549E00D7B2DC /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		4163B6DB153E549E00D7B2DC /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBConnect.h; sourceTree = "<group>"; };
@@ -94,6 +93,12 @@
 		4163B6EC153E563C00D7B2DC /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		4163B6ED153E563C00D7B2DC /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		4163B6EF153E572E00D7B2DC /* fconnect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fconnect.png; sourceTree = "<group>"; };
+		4163B6F5153F4AB700D7B2DC /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		4163B6F6153F4AB700D7B2DC /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		4163B6F9153F4AB700D7B2DC /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		4163B6FA153F4AB700D7B2DC /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		4163B6FC153F4AB800D7B2DC /* Club.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Club.h; sourceTree = "<group>"; };
+		4163B6FD153F4AB800D7B2DC /* Club.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Club.m; sourceTree = "<group>"; };
 		5B227E49153673F200B5DD52 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
 		5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		5B227E4D15367D5200B5DD52 /* aqua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aqua.png; sourceTree = "<group>"; };
@@ -124,7 +129,7 @@
 		5BFB450F153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		9D197B5E153B51B800604080 /* EventsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsArray.h; sourceTree = "<group>"; };
 		9D197B5F153B51B800604080 /* EventsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsArray.m; sourceTree = "<group>"; };
-		9D197B60153B51B800604080 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; path = EventCell.h; sourceTree = "<group>"; };
+		9D197B60153B51B800604080 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		9D197B61153B51B800604080 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		9D197B62153B51B800604080 /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
 		9D197B63153B51B800604080 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
@@ -182,16 +187,14 @@
 		4163B690153BD08D00D7B2DC /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				5B3C20E5153D275E00B3B1B9 /* User.h */,
-				5B3C20E6153D275E00B3B1B9 /* User.m */,
-				5B3C20E8153D33AE00B3B1B9 /* Event.h */,
-				5B3C20E9153D33AE00B3B1B9 /* Event.m */,
 				5BF9EE40153CBA3F00E53F6E /* Event+Create.h */,
 				5BF9EE41153CBA3F00E53F6E /* Event+Create.m */,
-				5B3C20DF153D275D00B3B1B9 /* Club.h */,
-				5B3C20E0153D275D00B3B1B9 /* Club.m */,
-				5B3C20C2153D119200B3B1B9 /* Club+Create.h */,
-				5B3C20C3153D119200B3B1B9 /* Club+Create.m */,
+				4163B6FC153F4AB800D7B2DC /* Club.h */,
+				4163B6FD153F4AB800D7B2DC /* Club.m */,
+				4163B6F9153F4AB700D7B2DC /* User.h */,
+				4163B6FA153F4AB700D7B2DC /* User.m */,
+				4163B6F5153F4AB700D7B2DC /* Event.h */,
+				4163B6F6153F4AB700D7B2DC /* Event.m */,
 			);
 			name = "Data Model";
 			sourceTree = "<group>";
@@ -504,6 +507,9 @@
 				4163B6D1153CAEA900D7B2DC /* Event.m in Sources */,
 				4163B6D4153CAEA900D7B2DC /* Club.m in Sources */,
 				4163B6EE153E563C00D7B2DC /* FriendsViewController.m in Sources */,
+				4163B6F7153F4AB700D7B2DC /* Event.m in Sources */,
+				4163B6FB153F4AB700D7B2DC /* User.m in Sources */,
+				4163B6FE153F4AB800D7B2DC /* Club.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
