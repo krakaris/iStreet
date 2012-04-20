@@ -6,9 +6,13 @@ Aki - CAS / FB / friends
 
 Conventions (uniformity!)
 next line curly braces
-Use /* ... */ for comments
+Use /* ... */ for method comments and big comments, but // for comment stubs
 Use #pragma mark <section_title> to organize related methods
-avoid magic numbers!! (use enums...what to do about one-time-use local constants? like kConnectionTimeout)
+avoid magic numbers!! (use enums...what to do about one-time-use local constants? like kConnectionTimeout?)
 
 for the future:
 don't forget to delete unnecessary core data objects!!
+carefully handle *EVERY* situation when the wifi might fail. *especially in the chat room*
+CAS stuff - ticketed server access?
+update timeline!!
+make empty cells appear to fill up rest of screen (see icon loading app for details)

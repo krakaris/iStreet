@@ -177,12 +177,12 @@ enum eventsViewConstants {
 }
 
 // attempting to change this method to work with the current eventsByDate
-- (void)setPropertiesWithNewEventData:(NSArray *)eventData;
+- (void)setPropertiesWithNewEventData:(NSArray *)newData;
 {
-    eventsByNight = [NSMutableArray array];
-    for(int i = [eventData count] - 1; i >= 0; i--)
+    //eventsByNight = [NSMutableArray array];
+    for(int i = [newData count] - 1; i >= 0; i--)
     {
-        Event *event = (Event *)[eventData objectAtIndex:i];
+        Event *event = (Event *)[newData objectAtIndex:i];
         NSString *dateOfEvent = [event.time_start substringToIndex:[event.time_start rangeOfString:@" "].location];
         
         //Find the EventsNight in eventsByDate that corresponds to the event
@@ -192,13 +192,15 @@ enum eventsViewConstants {
                 night = existingNight;
         
         //If the EventsNight wasn't found, create a new EventsNight for that date, and add it to eventsByNight
-        if(night == nil)
+        if(!night)
         {
             night = [[EventsNight alloc] initWithDate:dateOfEvent];
             [eventsByNight addObject:night];
         }
         
-        [night addEvent:event];
+        // only add the event if it already exists
+        if(![night.array containsObject:event])
+            [night addEvent:event];
     }
     
     [eventsByNight sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
@@ -208,7 +210,7 @@ enum eventsViewConstants {
         return [ea1.date compare:ea2.date];
     }];
     
-    eventsByNight = eventsByNight;
+   // eventsByNight = eventsByNight;
 }
 
 #pragma mark - Table view data source
