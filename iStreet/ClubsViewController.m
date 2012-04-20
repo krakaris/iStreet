@@ -40,7 +40,7 @@
     NSString *dateString = [dateFormat stringFromDate:date];
     //self.datelabel.text = dateString;
     dateLabel.text = dateString;
-    [dateLabel setFont:[UIFont fontWithName:@"noteworthy" size:18.0]];  
+    [dateLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:18.0]];  
 
     //Get all clubs from Core Data
     BOOL dataDidLoad = [(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded];

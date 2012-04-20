@@ -40,6 +40,8 @@ enum eventsViewConstants {
     eventsByNight = [NSMutableArray array];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
         
+    self.eventsTable.separatorColor = [UIColor blackColor]; 
+    
     [activityIndicator startAnimating];
     
     BOOL dataDidLoad = [(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded];
@@ -279,7 +281,7 @@ enum eventsViewConstants {
     label.textColor = [UIColor blackColor];
     label.backgroundColor = [UIColor orangeColor];
     label.alpha = 0.7;
-    [label setFont:[UIFont fontWithName:@"Optima-Bold" size:16.0]];
+    [label setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:16.0]];
 
     [headerView addSubview:label];
     
