@@ -18,10 +18,13 @@
         //example:
         [self.textLabel setBackgroundColor:[UIColor clearColor]]; //necessary
         [self.detailTextLabel setBackgroundColor:[UIColor clearColor]]; //necessary
-        [self.contentView setBackgroundColor:[UIColor colorWithWhite:0 alpha:.7]]; //this obviously isn't the permanent color, just to show you though.
-        //random font...
+        
+        //[self.contentView setBackgroundColor:[UIColor colorWithWhite:0 alpha:.5]]; //this obviously isn't the permanent color, just to show you though.
+        [self.contentView setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0]];
+        
         [self.textLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:16]];
-        self.textLabel.textColor = [UIColor orangeColor];
+        //self.textLabel.textColor = [UIColor orangeColor];
+        self.textLabel.textColor = [UIColor blackColor];
         self.detailTextLabel.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
         [self.detailTextLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:12]];
     }

@@ -290,9 +290,10 @@
     
     label.text = dateString;
     label.textAlignment = UITextAlignmentCenter;
-    label.textColor = [UIColor blackColor];
-    label.backgroundColor = [UIColor orangeColor];
-    label.alpha = 0.7;
+    //label.textColor = [UIColor whiteColor];
+    label.textColor = [UIColor orangeColor];
+    label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
+    //label.alpha = 0.7;
     [label setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:16.0]];
 
     [headerView addSubview:label];

@@ -57,7 +57,7 @@
     //Set "Attending" Button/Label
     if ([user.attendingEvents containsObject:myEvent]) {
         userIsAttending = YES;
-        [attendButton.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:15.0]];
+        //[attendButton.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:15.0]];
         attendButton.titleLabel.textColor = [UIColor orangeColor];
         //hide the button
         attendButton.enabled = NO;
@@ -68,9 +68,9 @@
                         constrainedToSize:self.attending.frame.size
                             lineBreakMode:UILineBreakModeWordWrap]; 
         self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
-        self.attending.textColor = [UIColor colorWithRed:255.0/255.0 green:70.0/255.0 blue:0 alpha:1.0];;
+        self.attending.textColor = [UIColor colorWithRed:255.0/255.0 green:70.0/255.0 blue:0 alpha:1.0];
     } else {
-        [attendButton.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:15.0]];
+        //[attendButton.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:15.0]];
         userIsAttending = NO;
         attendButton.enabled = YES;
         attendButton.hidden = NO;

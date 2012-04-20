@@ -280,11 +280,11 @@
     Event *e = (Event *)[eventsArray objectAtIndex:section];
     label.text = [self formatTime:e];
     label.textAlignment = UITextAlignmentCenter;
-    //label.textColor = [UIColor blackColor];
-    label.backgroundColor = [UIColor orangeColor];
-    label.alpha = 0.7;
+    label.textColor = [UIColor orangeColor];
+    label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+    //label.alpha = 0.7;
     [label setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:16.0]];
-    label.textColor = [UIColor colorWithWhite:0.0 alpha:1.0];
+    //label.textColor = [UIColor colorWithWhite:1.0 alpha:0.5];
     [headerView addSubview:label];
 
     return headerView;
