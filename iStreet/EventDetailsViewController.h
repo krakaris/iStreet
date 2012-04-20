@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *attendButton;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionText;
 @property (weak, nonatomic) IBOutlet UIButton *seeAllFriendsAttending;
+@property (weak, nonatomic) IBOutlet UILabel *eventEntry;
 
 - (IBAction)attend:(UIButton *)sender;
 

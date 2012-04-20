@@ -37,7 +37,8 @@
     [super viewDidLoad];
     
     self.navigationItem.title = self.club.name;
-    
+    eventsList.backgroundView.backgroundColor = [UIColor greenColor];
+
     // Initialize our arrays
     eventsArray = [[NSMutableArray alloc] init];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
@@ -177,8 +178,11 @@
     Event *e = [eventsArray objectAtIndex:section];
     
     // Fix start date string
-    if (e.time_start && e.time_end) {
-        NSString *eventDate = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
+    return [self formatTime:e];
+}
+- (NSString *)formatTime:(Event *)event {
+    if (event.time_start && event.time_end) {
+        NSString *eventDate = [event.time_start substringToIndex:[event.time_start rangeOfString:@" "].location];
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:@"YYYY-MM-dd"];
         NSDate *sDate = [dateFormat dateFromString:eventDate];
@@ -189,7 +193,7 @@
         
         return sTimeString;
     } else {
-        return e.title;
+        return event.title;
     }
 }
 
@@ -205,6 +209,7 @@
     }
     
     // Configure the cell...
+    cell.backgroundColor = [UIColor redColor];
     
     Event *event = [eventsArray objectAtIndex: indexPath.section];
     NSString *clubName = event.name;
@@ -262,6 +267,27 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return kCellHeight;
+}
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 25;
+}
+
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
+{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    Event *e = (Event *)[eventsArray objectAtIndex:section];
+    label.text = [self formatTime:e];
+    label.textAlignment = UITextAlignmentCenter;
+    label.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    label.backgroundColor = [UIColor orangeColor];
+    label.alpha = 0.7;
+    [label setFont:[UIFont fontWithName:@"noteworthy" size:16.0]];
+    
+    [headerView addSubview:label];
+
+    return headerView;
 }
 
 #pragma mark -

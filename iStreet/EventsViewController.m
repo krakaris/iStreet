@@ -272,7 +272,31 @@
     
     return dateString;
 }
+//Added by Alexa for section color
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
+{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    
+    EventsArray *ea = [eventsByDate objectAtIndex:section];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [formatter dateFromString:ea.date];
+    [formatter setDateFormat:@"MMMM d, yyyy"];
+    NSString *dateString = [formatter stringFromDate:date];
+    
+    label.text = dateString;
+    label.textAlignment = UITextAlignmentCenter;
+    label.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    label.backgroundColor = [UIColor orangeColor];
+    label.alpha = 0.7;
+    [label setFont:[UIFont fontWithName:@"noteworthy" size:16.0]];
 
+    [headerView addSubview:label];
+    
+    return headerView;
+}
 - (Event *)eventAtIndexPath:(NSIndexPath *)indexPath
 {
     return (Event *)[((EventsArray *)[eventsByDate objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row];

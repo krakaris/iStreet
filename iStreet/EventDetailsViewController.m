@@ -23,6 +23,7 @@
 @synthesize attendButton;
 @synthesize descriptionText;
 @synthesize seeAllFriendsAttending;
+@synthesize eventEntry;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,6 +49,9 @@
     self.descriptionText.text = myEvent.event_description;
     // Fix date and time strings
     [self formatDates];
+    
+    //Set entry and entry description
+    eventEntry.text = [self setEntry:myEvent];
     
     //Set "Attending" Button/Label
     if ([user.attendingEvents containsObject:myEvent]) {
@@ -77,6 +81,41 @@
     }
     
 }
+-(NSString *)setEntry:(Event *)event {
+    NSString *entry = event.entry;
+    NSString *entry_descrip;
+    if (event.entry_description) {
+        entry_descrip = event.entry_description;
+    } else {
+        entry_descrip = @"";
+    }
+    NSString *pass = [NSString stringWithFormat:@"Pa"];
+    NSString *puid = [NSString stringWithFormat:@"Pu"];
+    NSString *member = [NSString stringWithFormat:@"Mp"];
+    NSString *list = [NSString stringWithFormat:@"Gu"];
+    NSString *entry_final;
+    if ([entry isEqualToString:puid]) {
+        entry_final = @"PUID";
+    } else if ([entry isEqualToString:pass]) {
+        entry_final = @"Pass";
+        // Look at description to get color
+        if (![entry_descrip isEqualToString:@""]) {
+            entry_final = [entry_final stringByAppendingString:@": "];
+            entry_final = [entry_final stringByAppendingString:entry_descrip];
+        }
+    } else if ([entry isEqualToString:member]) {
+        entry_final = @"Members plus";
+        // Search entry_description for a number: assume it is members + this number
+        if (![entry_descrip isEqualToString:@""]) {
+            entry_final = [entry_final stringByAppendingString:@" "];
+            entry_final = [entry_final stringByAppendingString:entry_descrip];
+        }
+    } else if ([entry isEqualToString:list]) {
+        entry_final = @"Guest List";
+    }
+    return entry_final;
+}
+
 - (void)formatDates {
     if (myEvent.time_start && myEvent.time_end) {
         NSString *eventDay = [myEvent.time_start substringToIndex:[myEvent.time_start rangeOfString:@" "].location];
@@ -144,6 +183,7 @@
     [self setAttendButton:nil];
     [self setSeeAllFriendsAttending:nil];
     [self setDescriptionText:nil];
+    [self setEventEntry:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

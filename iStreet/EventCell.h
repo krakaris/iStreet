@@ -23,5 +23,4 @@ enum constants {
  Returns true if the cell needs its icon to be downloaded, or false otherwise.
  */
 - (BOOL)packCellWithEventInformation:(Event *)event atIndexPath:(NSIndexPath *)indexPath whileScrolling:(BOOL)isScrolling;
-
 @end
