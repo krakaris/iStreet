@@ -281,7 +281,8 @@
     label.text = [self formatTime:e];
     label.textAlignment = UITextAlignmentCenter;
     label.textColor = [UIColor orangeColor];
-    label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+    //label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+    label.backgroundColor = [UIColor darkGrayColor];
     //label.alpha = 0.7;
     [label setFont:[UIFont fontWithName:@"Trebuchet MS" size:17.0]];
     //label.textColor = [UIColor colorWithWhite:1.0 alpha:0.5];

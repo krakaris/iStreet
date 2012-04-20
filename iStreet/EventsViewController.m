@@ -282,7 +282,8 @@ enum eventsViewConstants {
     label.textAlignment = UITextAlignmentCenter;
     //label.textColor = [UIColor whiteColor];
     label.textColor = [UIColor orangeColor];
-    label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
+    //label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
+    label.backgroundColor = [UIColor darkGrayColor];
     //label.alpha = 0.7;
     [label setFont:[UIFont fontWithName:@"Trebuchet MS" size:17.0]];
 

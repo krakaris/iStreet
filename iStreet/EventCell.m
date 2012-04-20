@@ -26,7 +26,7 @@
         //self.textLabel.textColor = [UIColor orangeColor];
         self.textLabel.textColor = [UIColor blackColor];
         self.detailTextLabel.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
-        [self.detailTextLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:12]];
+        [self.detailTextLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:13]];
     }
     return self;
 }
