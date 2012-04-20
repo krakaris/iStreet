@@ -47,6 +47,7 @@
         self.eventTitle.text = @"On Tap";
     }
     self.descriptionText.text = myEvent.event_description;
+    self.seeAllFriendsAttending.titleLabel.textColor = [UIColor orangeColor];
     // Fix date and time strings
     [self formatDates];
     
@@ -56,6 +57,8 @@
     //Set "Attending" Button/Label
     if ([user.attendingEvents containsObject:myEvent]) {
         userIsAttending = YES;
+        [attendButton.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:15.0]];
+        attendButton.titleLabel.textColor = [UIColor orangeColor];
         //hide the button
         attendButton.enabled = NO;
         attendButton.hidden = YES;
@@ -65,10 +68,13 @@
                         constrainedToSize:self.attending.frame.size
                             lineBreakMode:UILineBreakModeWordWrap]; 
         self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
+        self.attending.textColor = [UIColor colorWithRed:255.0/255.0 green:70.0/255.0 blue:0 alpha:1.0];;
     } else {
+        [attendButton.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:15.0]];
         userIsAttending = NO;
         attendButton.enabled = YES;
         attendButton.hidden = NO;
+        attendButton.titleLabel.textColor = [UIColor orangeColor];
     }
     
     //Set image
@@ -199,6 +205,7 @@
     sender.hidden = YES;
     sender.enabled = NO;
     self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
+    self.attending.textColor = [UIColor colorWithRed:255.0/255.0 green:70.0/255.0 blue:0 alpha:1.0];
     
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

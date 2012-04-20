@@ -280,11 +280,10 @@
     label.text = [self formatTime:e];
     label.textAlignment = UITextAlignmentCenter;
     //label.textColor = [UIColor blackColor];
-    label.textColor = [UIColor colorWithWhite:0.0 alpha:1.0];
     label.backgroundColor = [UIColor orangeColor];
     label.alpha = 0.7;
-    [label setFont:[UIFont fontWithName:@"Optima-Bold" size:16.0]];
-    
+    [label setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:16.0]];
+    label.textColor = [UIColor colorWithWhite:0.0 alpha:1.0];
     [headerView addSubview:label];
 
     return headerView;
