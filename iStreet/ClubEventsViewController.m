@@ -209,7 +209,6 @@
     }
     
     // Configure the cell...
-    cell.backgroundColor = [UIColor redColor];
     
     Event *event = [eventsArray objectAtIndex: indexPath.section];
     NSString *clubName = event.name;
