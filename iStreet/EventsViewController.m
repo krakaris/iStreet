@@ -288,10 +288,10 @@
     
     label.text = dateString;
     label.textAlignment = UITextAlignmentCenter;
-    label.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    label.textColor = [UIColor blackColor];
     label.backgroundColor = [UIColor orangeColor];
     label.alpha = 0.7;
-    [label setFont:[UIFont fontWithName:@"noteworthy" size:16.0]];
+    [label setFont:[UIFont fontWithName:@"Optima-Bold" size:16.0]];
 
     [headerView addSubview:label];
     

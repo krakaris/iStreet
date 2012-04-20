@@ -274,15 +274,16 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
 {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 25)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 25)];
     Event *e = (Event *)[eventsArray objectAtIndex:section];
     label.text = [self formatTime:e];
     label.textAlignment = UITextAlignmentCenter;
-    label.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    //label.textColor = [UIColor blackColor];
+    label.textColor = [UIColor colorWithWhite:0.0 alpha:1.0];
     label.backgroundColor = [UIColor orangeColor];
     label.alpha = 0.7;
-    [label setFont:[UIFont fontWithName:@"noteworthy" size:16.0]];
+    [label setFont:[UIFont fontWithName:@"Optima-Bold" size:16.0]];
     
     [headerView addSubview:label];
 
