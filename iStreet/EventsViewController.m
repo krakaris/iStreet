@@ -37,7 +37,7 @@ enum eventsViewConstants {
     [super viewDidLoad];
     loggedIn = NO;
     
-    eventsByDate = [NSMutableArray array];
+    eventsByNight = [NSMutableArray array];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
         
     [activityIndicator startAnimating];
@@ -174,51 +174,52 @@ enum eventsViewConstants {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
+// attempting to change this method to work with the current eventsByDate
 - (void)setPropertiesWithNewEventData:(NSArray *)eventData;
 {
-    NSMutableArray *newEventsByDate = [NSMutableArray array];
+    eventsByNight = [NSMutableArray array];
     for(int i = [eventData count] - 1; i >= 0; i--)
     {
-        Event *e = (Event *)[eventData objectAtIndex:i];
-        NSString *dateOfEvent = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
+        Event *event = (Event *)[eventData objectAtIndex:i];
+        NSString *dateOfEvent = [event.time_start substringToIndex:[event.time_start rangeOfString:@" "].location];
         
-        //Find the array in newEventsByDate that has events on the same date as e
-        EventsNight *eventsSameDate = nil;
-        for(EventsNight *events in newEventsByDate)
-            if([[events date] isEqualToString:dateOfEvent])
-                eventsSameDate = events;
+        //Find the EventsNight in eventsByDate that corresponds to the event
+        EventsNight *night = nil;
+        for(EventsNight *existingNight in eventsByNight)
+            if([[existingNight date] isEqualToString:dateOfEvent])
+                night = existingNight;
         
-        //If the array wasn't found, create a new array of events for that night.
-        if(eventsSameDate == nil)
+        //If the EventsNight wasn't found, create a new EventsNight for that date, and add it to eventsByNight
+        if(night == nil)
         {
-            eventsSameDate = [[EventsNight alloc] initWithDate:dateOfEvent];
-            [newEventsByDate addObject:eventsSameDate];
+            night = [[EventsNight alloc] initWithDate:dateOfEvent];
+            [eventsByNight addObject:night];
         }
         
-        [eventsSameDate addEvent:e];
+        [night addEvent:event];
     }
     
-    [newEventsByDate sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+    [eventsByNight sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         EventsNight *ea1 = (EventsNight *)obj1;
         EventsNight *ea2 = (EventsNight *)obj2;
         
         return [ea1.date compare:ea2.date];
     }];
     
-    eventsByDate = newEventsByDate;
+    eventsByNight = eventsByNight;
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {    
-    return [eventsByDate count];
+    return [eventsByNight count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    EventsNight *ea = [eventsByDate objectAtIndex:section];
+    EventsNight *ea = [eventsByNight objectAtIndex:section];
     return [ea.array count];
 }
 
@@ -249,7 +250,7 @@ enum eventsViewConstants {
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    EventsNight *ea = [eventsByDate objectAtIndex:section];
+    EventsNight *ea = [eventsByNight objectAtIndex:section];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
@@ -265,7 +266,7 @@ enum eventsViewConstants {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
     
-    EventsNight *ea = [eventsByDate objectAtIndex:section];
+    EventsNight *ea = [eventsByNight objectAtIndex:section];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
@@ -286,7 +287,7 @@ enum eventsViewConstants {
 }
 - (Event *)eventAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (Event *)[((EventsNight *)[eventsByDate objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row];
+    return (Event *)[((EventsNight *)[eventsByNight objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row];
 }
 
 #pragma mark - Table view delegate

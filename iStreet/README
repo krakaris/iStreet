@@ -1,11 +1,14 @@
 What everyone is working on:
 
-Rishi - make chatroom look better, also clean up the code...
-Alexa - clubs
-Aki - CAS / FB / friends - PLEASE MAKE NETID A GLOBAL VARIABLE IN THE APPDELEGATE
+Rishi - caching improvements
+Alexa - clubs, pretty-ifying
+Aki - CAS / FB / friends
 
 Conventions (uniformity!)
 next line curly braces
 Use /* ... */ for comments
 Use #pragma mark <section_title> to organize related methods
 avoid magic numbers!! (use enums...what to do about one-time-use local constants? like kConnectionTimeout)
+
+for the future:
+don't forget to delete unnecessary core data objects!!
