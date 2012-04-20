@@ -8,3 +8,4 @@ Conventions (uniformity!)
 next line curly braces
 Use /* ... */ for comments
 Use #pragma mark <section_title> to organize related methods
+avoid magic numbers!! (use enums...what to do about one-time-use local constants? like kConnectionTimeout)

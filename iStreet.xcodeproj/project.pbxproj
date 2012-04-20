@@ -29,7 +29,7 @@
 		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
 		5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */; };
-		9D197B68153B51B800604080 /* EventsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B5F153B51B800604080 /* EventsArray.m */; };
+		9D197B68153B51B800604080 /* EventsNight.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B5F153B51B800604080 /* EventsNight.m */; };
 		9D197B69153B51B800604080 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B61153B51B800604080 /* EventCell.m */; };
 		9D197B6A153B51B800604080 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B63153B51B800604080 /* EventsViewController.m */; };
 		9D197B6B153B51B800604080 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B65153B51B800604080 /* IconDownloader.m */; };
@@ -119,8 +119,8 @@
 		5BFB44F8153382E800960C81 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5BFB450D153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5BFB450F153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		9D197B5E153B51B800604080 /* EventsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsArray.h; sourceTree = "<group>"; };
-		9D197B5F153B51B800604080 /* EventsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsArray.m; sourceTree = "<group>"; };
+		9D197B5E153B51B800604080 /* EventsNight.h */ = {isa = PBXFileReference; fileEncoding = 4; path = EventsNight.h; sourceTree = "<group>"; };
+		9D197B5F153B51B800604080 /* EventsNight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsNight.m; sourceTree = "<group>"; };
 		9D197B60153B51B800604080 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		9D197B61153B51B800604080 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		9D197B62153B51B800604080 /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
@@ -330,8 +330,8 @@
 		5BFB45021533845000960C81 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				9D197B5E153B51B800604080 /* EventsArray.h */,
-				9D197B5F153B51B800604080 /* EventsArray.m */,
+				9D197B5E153B51B800604080 /* EventsNight.h */,
+				9D197B5F153B51B800604080 /* EventsNight.m */,
 				9D197B60153B51B800604080 /* EventCell.h */,
 				9D197B61153B51B800604080 /* EventCell.m */,
 				9D197B62153B51B800604080 /* EventsViewController.h */,
@@ -492,7 +492,7 @@
 				9DA5B1FC15362AFC00F2FC68 /* Message.m in Sources */,
 				5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */,
 				9DA1BF0B153A08DE005CCC13 /* EventDetailsViewController.m in Sources */,
-				9D197B68153B51B800604080 /* EventsArray.m in Sources */,
+				9D197B68153B51B800604080 /* EventsNight.m in Sources */,
 				9D197B69153B51B800604080 /* EventCell.m in Sources */,
 				9D197B6A153B51B800604080 /* EventsViewController.m in Sources */,
 				9D197B6B153B51B800604080 /* IconDownloader.m in Sources */,

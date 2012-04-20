@@ -8,17 +8,19 @@
 //  A good deal of the code for synchronously loading event icons in the table cells (and all of the logic) is from Apple's LazyTable sample project. The IconDownloader.h/.m code is almost completely Apple's. A lot of code was eliminated, however, and several customizations were made.
 
 #import "EventsViewController.h"
-#import "EventsArray.h"
+#import "EventsNight.h"
 #import "EventCell.h"
 #import "Event.h"
 #import "Event+Create.h"
 #import "AppDelegate.h"
 #import "EventDetailsViewController.h"
 
-#import "Club.h"
+enum eventsViewConstants {
+    kConnectionTimeout = 8,  
+};
 
 @interface EventsViewController ()
-- (void)getEventsData;
+- (void)getServerEventsData;
 - (void)loadImagesForOnscreenRows;
 /* Probably incomplete */
 @end
@@ -33,7 +35,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     loggedIn = NO;
     
     eventsByDate = [NSMutableArray array];
@@ -43,44 +44,29 @@
     
     BOOL dataDidLoad = [(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded];
     
+    // If Core Data has not finished loading, register for a notification for when it does. Otherwise, load the data.
     if(!dataDidLoad)
-    {
-        NSLog(@"Setting up notifications.");
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData:) name:DataLoadedNotificationString object:nil];
-    }
     else
-    {
-        NSLog(@"No need for notification, data already loaded.");
         [self loadData:nil];
-    }
 }
 
 - (void)loadData:(NSNotification *)notification
-{
-    NSLog(@"Notification received!");
-    
+{    
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
 
     if(notification)
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    NSLog(@"Beginning loading core data.");
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
-    NSError *error;
-    
-    NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
+        
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                    
+    NSArray *events = [document.managedObjectContext executeFetchRequest:request error:NULL];
     
     [self setPropertiesWithNewEventData:events];
     
     [eventsTable reloadData];
     [activityIndicator stopAnimating];
     
-    NSLog(@"Finished loading core data.");
-    
-    NSLog(@"Beginning loading web data (maybe).");
-    [self getEventsData];
-
+    [self getServerEventsData];
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -122,16 +108,16 @@
     return interfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
-#pragma mark Receiving Events Data
+#pragma mark Retrieving Events Data from Server
 
-- (void)getEventsData
+- (void)getServerEventsData
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     NSString *url = @"http://istreetsvr.herokuapp.com/eventslist";
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setTimeoutInterval:8];
+    [request setTimeoutInterval:kConnectionTimeout];
     [request setURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:@"GET"];
     
@@ -168,13 +154,13 @@
  */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSError *error;
-    NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
+    NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:NULL];
     if(!eventsDictionaryArray)
     {
-        NSLog(@"%@", [error localizedDescription]);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         return;
     }
+    
     NSMutableArray *eventsArray = [NSMutableArray arrayWithCapacity:[eventsDictionaryArray count]];
     
     for(NSDictionary *dict in eventsDictionaryArray)
@@ -190,35 +176,36 @@
 
 - (void)setPropertiesWithNewEventData:(NSArray *)eventData;
 {
-    eventsByDate = [NSMutableArray array];
+    NSMutableArray *newEventsByDate = [NSMutableArray array];
     for(int i = [eventData count] - 1; i >= 0; i--)
     {
         Event *e = (Event *)[eventData objectAtIndex:i];
         NSString *dateOfEvent = [e.time_start substringToIndex:[e.time_start rangeOfString:@" "].location];
         
-        //Find the array in eventsByDate that has events on the same date as e
-        EventsArray *eventsSameDate = nil;
-        for(EventsArray *events in eventsByDate)
+        //Find the array in newEventsByDate that has events on the same date as e
+        EventsNight *eventsSameDate = nil;
+        for(EventsNight *events in newEventsByDate)
             if([[events date] isEqualToString:dateOfEvent])
                 eventsSameDate = events;
         
         //If the array wasn't found, create a new array of events for that night.
         if(eventsSameDate == nil)
         {
-            eventsSameDate = [[EventsArray alloc] initWithDate:dateOfEvent];
-            [eventsByDate addObject:eventsSameDate];
+            eventsSameDate = [[EventsNight alloc] initWithDate:dateOfEvent];
+            [newEventsByDate addObject:eventsSameDate];
         }
         
         [eventsSameDate addEvent:e];
     }
     
-    [eventsByDate sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        EventsArray *ea1 = (EventsArray *)obj1;
-        EventsArray *ea2 = (EventsArray *)obj2;
+    [newEventsByDate sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        EventsNight *ea1 = (EventsNight *)obj1;
+        EventsNight *ea2 = (EventsNight *)obj2;
         
         return [ea1.date compare:ea2.date];
     }];
-
+    
+    eventsByDate = newEventsByDate;
 }
 
 #pragma mark - Table view data source
@@ -231,7 +218,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    EventsArray *ea = [eventsByDate objectAtIndex:section];
+    EventsNight *ea = [eventsByDate objectAtIndex:section];
     return [ea.array count];
 }
 
@@ -262,7 +249,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    EventsArray *ea = [eventsByDate objectAtIndex:section];
+    EventsNight *ea = [eventsByDate objectAtIndex:section];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
@@ -278,7 +265,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
     
-    EventsArray *ea = [eventsByDate objectAtIndex:section];
+    EventsNight *ea = [eventsByDate objectAtIndex:section];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
@@ -299,7 +286,7 @@
 }
 - (Event *)eventAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (Event *)[((EventsArray *)[eventsByDate objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row];
+    return (Event *)[((EventsNight *)[eventsByDate objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row];
 }
 
 #pragma mark - Table view delegate
@@ -373,7 +360,7 @@
         Event *event = [self eventAtIndexPath:indexPath]; // the event for the cell at that index path
         
         // start downloading the icon if the event doesn't have an icon but has a link to one
-        if (!event.posterImageData && ![event.poster isEqualToString:@""])
+        if (!event.posterImageData && event.poster && ![event.poster isEqualToString:@""])
             [self startIconDownload:event forIndexPath:indexPath];
     }
 }
