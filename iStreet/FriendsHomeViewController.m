@@ -1,22 +1,20 @@
 //
-//  FriendsViewController.m
+//  FriendsHomeViewController.m
 //  iStreet
 //
-//  Created by Akarshan Kumar on 4/17/12.
+//  Created by Akarshan Kumar on 4/21/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "FriendsViewController.h"
-#import "FriendsTableViewController.h"
+#import "FriendsHomeViewController.h"
 
-@interface FriendsViewController ()
+@interface FriendsHomeViewController ()
 
 @end
 
-
 static NSString *appID = @"128188007305619";
 
-@implementation FriendsViewController
+@implementation FriendsHomeViewController
 
 @synthesize fConnectButton;
 @synthesize facebook;
@@ -26,16 +24,31 @@ static NSString *appID = @"128188007305619";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
     }
     return self;
+}
+
+
+- (IBAction)fbconnect:(id)sender
+{
+    NSLog(@"Did click!");
+    
+    if (![facebook isSessionValid]) 
+    {
+        [facebook authorize:nil];
+    }
+    else {
+        self.fConnectButton.enabled = NO;
+        NSLog(@"Valid Session!");
+    }
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
     //if ([facebook isSessionValid])
     {
-
+        
     }
 }
 
@@ -113,40 +126,13 @@ static NSString *appID = @"128188007305619";
     NSLog(@"Asking for friends!!");
 }
 
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (IBAction)fbconnect:(id)sender
-{
-    NSLog(@"Did click!");
-
-    if (![facebook isSessionValid]) 
-    {
-        [facebook authorize:nil];
-    }
-    else {
-        self.fConnectButton.enabled = NO;
-        NSLog(@"Valid Session!");
-    }
-    
-}
-
 - (void) request:(FBRequest *)request didLoad:(id)result
 {
     //NSLog(@"Received response! Yay! %@", result);
     
-  
+    
     NSLog(@"%@", [result objectForKey:@"data"]);
-
+    
     NSArray *dataWeGot = [result objectForKey:@"data"];
     
     //NSString *className = NSStringFromClass([dataWeGot class]);
@@ -157,24 +143,22 @@ static NSString *appID = @"128188007305619";
         NSLog(@"%@ and %@", [user valueForKey:@"id"], [user valueForKey:@"name"]);
     }
     
-    //[self performSegueWithIdentifier:@"FriendsSegue" sender:self];
+    [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     
-    FriendsTableViewController *ftvc = [[FriendsTableViewController alloc] init];
-    [self presentModalViewController:ftvc animated:YES];
-     
+    
     //NSData *onlyDataString = [result objectForKey:@"data"];
     //NSDictionary *friends = [NSJSONSerialization JSONObjectWithData:onlyDataString options:NSJSONReadingMutableContainers error:nil];
     //NSDictionary *results = [responseString JSONValue];
     
-     //NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableContainers error:nil];
-     
-     //SBJSON *parser = [[SBJSON alloc] init];
-     //NSDictionary *allData = (NSDictionary *) [parser objectWithString:result error:nil];
-     //NSArray *relevantData = [allData objectForKey:@"data"];
-     
-     
-     //NSData *responseData = result;
-     //NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    //NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableContainers error:nil];
+    
+    //SBJSON *parser = [[SBJSON alloc] init];
+    //NSDictionary *allData = (NSDictionary *) [parser objectWithString:result error:nil];
+    //NSArray *relevantData = [allData objectForKey:@"data"];
+    
+    
+    //NSData *responseData = result;
+    //NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     
     //SBJsonParser *parser = [SBJsonParser alloc];
     
@@ -187,7 +171,7 @@ static NSString *appID = @"128188007305619";
     //NSString *friendsData = [result objectForKey:@"data"];
     
     //SBJsonParser *parser = [[SBJSON alloc] init];
-
+    
     //NSMutableArray *myFriends = [parser objectWithString:[result objectForKey:@"data"]];
     //NSDictionary *friendsList = [parser objectWithString:result error:nil];
     
@@ -198,10 +182,10 @@ static NSString *appID = @"128188007305619";
     //NSString friendsData = [jsonContents objectForKey:@"data"];
     
     /*for (NSDictionary *friend in friendsList)
-    {
-        //NSString *id = [friend objectForKey:@"id"];
-        NSLog(@"%@ and %@", [friend objectForKey:@"id"], [friend objectForKey:@"name"]);
-    }*/
+     {
+     //NSString *id = [friend objectForKey:@"id"];
+     NSLog(@"%@ and %@", [friend objectForKey:@"id"], [friend objectForKey:@"name"]);
+     }*/
     
     //[self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     
@@ -209,10 +193,10 @@ static NSString *appID = @"128188007305619";
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-        
-         
+    
+    
 }
-     
+
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     return [self.facebook handleOpenURL:url];
 }
@@ -227,6 +211,19 @@ static NSString *appID = @"128188007305619";
 - (void) loggedInLoadFriendsNow
 {
     NSLog(@"Guess I'm logged in now!");
+}
+
+
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end
