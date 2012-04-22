@@ -70,6 +70,9 @@
 {
     static NSString *CellIdentifier = @"Friends cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if(cell == nil)
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    
     cell.textLabel.text =  @"Hey there!";
     // Configure the cell...
     
