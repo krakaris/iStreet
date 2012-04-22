@@ -203,15 +203,10 @@ static NSString *appID = @"128188007305619";
         NSLog(@"%@ and %@", [friend objectForKey:@"id"], [friend objectForKey:@"name"]);
     }*/
     
-    //[self performSegueWithIdentifier:@"FriendsSegue" sender:self];
+    //[self performSegueWithIdentifier:@"Friendslist" sender:self];
     
 }
 
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-        
-         
-}
      
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     return [self.facebook handleOpenURL:url];

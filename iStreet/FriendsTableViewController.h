@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FriendsTableViewController : UITableViewController
+@interface FriendsTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
+
+
+
+@property (nonatomic, retain) IBOutlet UITableView *friendsTableView;
 
 @end

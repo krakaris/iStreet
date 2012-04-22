@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller - Events-->
@@ -157,11 +157,11 @@
             </objects>
             <point key="canvasLocation" x="107" y="237"/>
         </scene>
-        <!--Friends Home View Controller - Friends-->
+        <!--Navigation Controller - Friends-->
         <scene sceneID="462-Ww-c9D">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j9K-aT-h4p" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController definesPresentationContext="YES" id="ZY4-BK-d7C" customClass="FriendsHomeViewController" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" id="ZY4-BK-d7C" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Friends" image="Friend icon.png" id="JWP-yN-eHA"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" barStyle="blackOpaque" id="bCF-h9-LJd">
@@ -185,7 +185,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Bgt-ID-d0Q">
-                                <rect key="frame" x="83" y="206" width="155" height="48"/>
+                                <rect key="frame" x="83" y="160" width="155" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="fconnect.png">
@@ -205,7 +205,7 @@
                     <navigationItem key="navigationItem" title="Friends" id="LyX-lb-n4x"/>
                     <connections>
                         <outlet property="fConnectButton" destination="Bgt-ID-d0Q" id="YGh-YS-8OM"/>
-                        <segue destination="w3F-a2-bcT" kind="push" identifier="FriendsSegue" id="zaW-Cd-2KK"/>
+                        <segue destination="w3F-a2-bcT" kind="push" identifier="Friendslist" id="zaW-Cd-2KK"/>
                     </connections>
                 </viewController>
             </objects>
@@ -221,12 +221,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FriendsCell" id="bMn-Qb-1VH">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Friends cell" textLabel="5uE-60-G6d" style="IBUITableViewCellStyleDefault" id="bMn-Qb-1VH">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5uE-60-G6d">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableViewCell>
@@ -238,6 +247,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="6e8-FY-mzB"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="friendsTableView" destination="nXq-Vc-UBw" id="1OG-Ue-AaL"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="94" y="873"/>
@@ -696,71 +708,6 @@
         <image name="Tower.png" width="78" height="101"/>
         <image name="fconnect.png" width="331" height="100"/>
     </resources>
-    <classes>
-        <class className="ChatViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sendClicked:"/>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="messageField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="ClubEventsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubEventsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="eventsList" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="ClubsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EventDetailsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="attend:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="attendButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="attending" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionText" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="eventDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventEntry" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="eventTime" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="seeAllFriendsAttending" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="EventsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="eventsTable" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="FriendsHomeViewController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsHomeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="fbconnect:"/>
-                <relationship kind="outlet" name="fConnectButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="FriendsTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsTableViewController.h"/>
-        </class>
-        <class className="FriendsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="fbconnect:"/>
-                <relationship kind="outlet" name="fConnectButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
