@@ -239,7 +239,6 @@
 				41263F91154137B6006DD5D6 /* Club.m */,
 				41263F8D154131B1006DD5D6 /* EventsNight.h */,
 				41263F8E154131B1006DD5D6 /* EventsNight.m */,
-				41263F8B154130E6006DD5D6 /* QuartzCore.framework */,
 				41263F871541306C006DD5D6 /* EventsViewController.h */,
 				41263F881541306C006DD5D6 /* EventsViewController.m */,
 				5BA1F61415112DA7002CA7F3 /* iStreet */,
@@ -259,6 +258,7 @@
 		5BA1F60D15112DA7002CA7F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				41263F8B154130E6006DD5D6 /* QuartzCore.framework */,
 				5BC0D9F2153BF379004D560A /* CoreData.framework */,
 				5BA1F60E15112DA7002CA7F3 /* UIKit.framework */,
 				5BA1F61015112DA7002CA7F3 /* Foundation.framework */,
