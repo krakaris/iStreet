@@ -17,7 +17,6 @@
 		41263FB115437A2C006DD5D6 /* FriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41263FB015437A2C006DD5D6 /* FriendsTableViewController.m */; };
 		41386594152D15EB007A2327 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41386592152D15EB007A2327 /* LoginViewController.m */; };
 		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
-		4163B68E153BCC0A00D7B2DC /* iStreet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4163B68C153BCC0A00D7B2DC /* iStreet.xcdatamodeld */; };
 		4163B6F0153E572E00D7B2DC /* fconnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 4163B6EF153E572E00D7B2DC /* fconnect.png */; };
 		4163B6F7153F4AB700D7B2DC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6F6153F4AB700D7B2DC /* Event.m */; };
 		4163B6FB153F4AB700D7B2DC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6FA153F4AB700D7B2DC /* User.m */; };
@@ -26,6 +25,7 @@
 		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
 		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
 		5B2CD5ED153F2C4E00EE3E9A /* Event+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF9EE41153CBA3F00E53F6E /* Event+Create.m */; };
+		5B5B40BA15448399006426CF /* iStreet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B40B815448399006426CF /* iStreet.xcdatamodeld */; };
 		5B63654615338AB700845082 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 5B63654515338AB700845082 /* README */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
@@ -68,14 +68,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		41263F871541306C006DD5D6 /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventsViewController.h; path = iStreet/EventsViewController.h; sourceTree = "<group>"; };
-		41263F881541306C006DD5D6 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventsViewController.m; path = iStreet/EventsViewController.m; sourceTree = "<group>"; };
+		41263F871541306C006DD5D6 /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
+		41263F881541306C006DD5D6 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		41263F8B154130E6006DD5D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		41263F8D154131B1006DD5D6 /* EventsNight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventsNight.h; path = iStreet/EventsNight.h; sourceTree = "<group>"; };
-		41263F8E154131B1006DD5D6 /* EventsNight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventsNight.m; path = iStreet/EventsNight.m; sourceTree = "<group>"; };
-		41263F90154137B6006DD5D6 /* Club.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Club.h; path = iStreet/Club.h; sourceTree = "<group>"; };
-		41263F91154137B6006DD5D6 /* Club.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Club.m; path = iStreet/Club.m; sourceTree = "<group>"; };
-		41263F931541389D006DD5D6 /* Club+Create.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Club+Create.m"; path = "iStreet/Club+Create.m"; sourceTree = "<group>"; };
+		41263F8D154131B1006DD5D6 /* EventsNight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsNight.h; sourceTree = "<group>"; };
+		41263F8E154131B1006DD5D6 /* EventsNight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsNight.m; sourceTree = "<group>"; };
+		41263F90154137B6006DD5D6 /* Club.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Club.h; sourceTree = "<group>"; };
+		41263F91154137B6006DD5D6 /* Club.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Club.m; sourceTree = "<group>"; };
+		41263F931541389D006DD5D6 /* Club+Create.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Club+Create.m"; sourceTree = "<group>"; };
 		41263F9A1543378A006DD5D6 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		41263F9B1543378A006DD5D6 /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBConnect.h; sourceTree = "<group>"; };
 		41263F9C1543378A006DD5D6 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBDialog.bundle; sourceTree = "<group>"; };
@@ -96,7 +96,6 @@
 		41386591152D15EB007A2327 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		41386592152D15EB007A2327 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		41386593152D15EB007A2327 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
-		4163B68D153BCC0A00D7B2DC /* iStreet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iStreet.xcdatamodel; sourceTree = "<group>"; };
 		4163B6EC153E563C00D7B2DC /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		4163B6ED153E563C00D7B2DC /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		4163B6EF153E572E00D7B2DC /* fconnect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fconnect.png; sourceTree = "<group>"; };
@@ -108,6 +107,8 @@
 		5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		5B227E4D15367D5200B5DD52 /* aqua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aqua.png; sourceTree = "<group>"; };
 		5B227E4E15367D5200B5DD52 /* orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange.png; sourceTree = "<group>"; };
+		5B5B40B71544837D006426CF /* Club+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Club+Create.h"; sourceTree = "<group>"; };
+		5B5B40B915448399006426CF /* iStreet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iStreet.xcdatamodel; sourceTree = "<group>"; };
 		5B63654515338AB700845082 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		5BA1F60A15112DA7002CA7F3 /* iStreet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStreet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA1F60E15112DA7002CA7F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -207,12 +208,16 @@
 		4163B690153BD08D00D7B2DC /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				5BF9EE40153CBA3F00E53F6E /* Event+Create.h */,
-				5BF9EE41153CBA3F00E53F6E /* Event+Create.m */,
+				41263F90154137B6006DD5D6 /* Club.h */,
+				41263F91154137B6006DD5D6 /* Club.m */,
+				5B5B40B71544837D006426CF /* Club+Create.h */,
+				41263F931541389D006DD5D6 /* Club+Create.m */,
 				4163B6F9153F4AB700D7B2DC /* User.h */,
 				4163B6FA153F4AB700D7B2DC /* User.m */,
 				4163B6F5153F4AB700D7B2DC /* Event.h */,
 				4163B6F6153F4AB700D7B2DC /* Event.m */,
+				5BF9EE40153CBA3F00E53F6E /* Event+Create.h */,
+				5BF9EE41153CBA3F00E53F6E /* Event+Create.m */,
 			);
 			name = "Data Model";
 			sourceTree = "<group>";
@@ -231,13 +236,6 @@
 		5BA1F5FF15112DA7002CA7F3 = {
 			isa = PBXGroup;
 			children = (
-				41263F931541389D006DD5D6 /* Club+Create.m */,
-				41263F90154137B6006DD5D6 /* Club.h */,
-				41263F91154137B6006DD5D6 /* Club.m */,
-				41263F8D154131B1006DD5D6 /* EventsNight.h */,
-				41263F8E154131B1006DD5D6 /* EventsNight.m */,
-				41263F871541306C006DD5D6 /* EventsViewController.h */,
-				41263F881541306C006DD5D6 /* EventsViewController.m */,
 				5BA1F61415112DA7002CA7F3 /* iStreet */,
 				5BA1F60D15112DA7002CA7F3 /* Frameworks */,
 				5BA1F60B15112DA7002CA7F3 /* Products */,
@@ -287,7 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				4163B6EF153E572E00D7B2DC /* fconnect.png */,
-				4163B68C153BCC0A00D7B2DC /* iStreet.xcdatamodeld */,
+				5B5B40B815448399006426CF /* iStreet.xcdatamodeld */,
 				5B63654515338AB700845082 /* README */,
 				9D34B7731524D5D000DB6C13 /* calendar.png */,
 				9D34B76F1524D55600DB6C13 /* Settings icon.png */,
@@ -342,6 +340,10 @@
 		5BFB45021533845000960C81 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				41263F8D154131B1006DD5D6 /* EventsNight.h */,
+				41263F8E154131B1006DD5D6 /* EventsNight.m */,
+				41263F871541306C006DD5D6 /* EventsViewController.h */,
+				41263F881541306C006DD5D6 /* EventsViewController.m */,
 				9D197B60153B51B800604080 /* EventCell.h */,
 				9D197B61153B51B800604080 /* EventCell.m */,
 				9D197B64153B51B800604080 /* IconDownloader.h */,
@@ -500,13 +502,13 @@
 				9DA1BF0B153A08DE005CCC13 /* EventDetailsViewController.m in Sources */,
 				9D197B69153B51B800604080 /* EventCell.m in Sources */,
 				9D197B6B153B51B800604080 /* IconDownloader.m in Sources */,
-				4163B68E153BCC0A00D7B2DC /* iStreet.xcdatamodeld in Sources */,
 				4163B6F7153F4AB700D7B2DC /* Event.m in Sources */,
 				4163B6FB153F4AB700D7B2DC /* User.m in Sources */,
 				41263F891541306C006DD5D6 /* EventsViewController.m in Sources */,
 				41263F8F154131B1006DD5D6 /* EventsNight.m in Sources */,
 				41263F92154137B6006DD5D6 /* Club.m in Sources */,
 				41263FB115437A2C006DD5D6 /* FriendsTableViewController.m in Sources */,
+				5B5B40BA15448399006426CF /* iStreet.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,12 +641,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		4163B68C153BCC0A00D7B2DC /* iStreet.xcdatamodeld */ = {
+		5B5B40B815448399006426CF /* iStreet.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				4163B68D153BCC0A00D7B2DC /* iStreet.xcdatamodel */,
+				5B5B40B915448399006426CF /* iStreet.xcdatamodel */,
 			);
-			currentVersion = 4163B68D153BCC0A00D7B2DC /* iStreet.xcdatamodel */;
+			currentVersion = 5B5B40B915448399006426CF /* iStreet.xcdatamodel */;
 			path = iStreet.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

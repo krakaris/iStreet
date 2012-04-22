@@ -74,6 +74,9 @@ enum eventsViewConstants {
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+    NSIndexPath *selectedRow = [self.eventsTable indexPathForSelectedRow];
+    if(selectedRow)
+        [self.eventsTable deselectRowAtIndexPath:selectedRow animated:NO];
     
     loggedIn = YES;
     if (loggedIn != YES)
@@ -301,9 +304,7 @@ enum eventsViewConstants {
 {
     // Navigation logic may go here. Create and push another view controller.
     Event *selectedEvent = [self eventAtIndexPath:indexPath];
-    [self performSegueWithIdentifier:@"ShowEventDetails" sender:selectedEvent];
-    [self.eventsTable deselectRowAtIndexPath:indexPath animated:YES];
-    
+    [self performSegueWithIdentifier:@"ShowEventDetails" sender:selectedEvent];    
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
