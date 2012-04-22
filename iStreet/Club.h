@@ -2,7 +2,7 @@
 //  Club.h
 //  iStreet
 //
-//  Created by Rishi on 4/17/12.
+//  Created by Akarshan Kumar on 4/16/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -13,8 +13,10 @@
 
 @interface Club : NSManagedObject
 
-@property (nonatomic, retain) NSString * club_id;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * id;
+@property (nonatomic, retain) NSData * imageData;
+@property (nonatomic, retain) NSString * imageURL;
 @property (nonatomic, retain) NSSet *whichEvents;
 @end
 
