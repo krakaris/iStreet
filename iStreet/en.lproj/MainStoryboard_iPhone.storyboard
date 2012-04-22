@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller - Events-->
@@ -78,8 +78,8 @@
                     <connections>
                         <segue destination="WCo-Zm-bLh" kind="relationship" relationship="viewControllers" id="s6N-Ut-cba"/>
                         <segue destination="wyn-DU-M0b" kind="relationship" relationship="viewControllers" id="Z8g-GV-BEt"/>
-                        <segue destination="rXC-yw-ECj" kind="relationship" relationship="viewControllers" id="ocL-bF-wSQ"/>
                         <segue destination="vtS-QH-gNE" kind="relationship" relationship="viewControllers" id="otY-OD-E85"/>
+                        <segue destination="ZY4-BK-d7C" kind="relationship" relationship="viewControllers" id="xHC-TC-nuy"/>
                     </connections>
                 </tabBarController>
             </objects>
@@ -158,26 +158,30 @@
             <point key="canvasLocation" x="107" y="237"/>
         </scene>
         <!--Friends Home View Controller - Friends-->
-        <scene sceneID="CfW-4D-yDY">
+        <scene sceneID="462-Ww-c9D">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wFz-Zf-BBQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="rXC-yw-ECj" customClass="FriendsHomeViewController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Friends" image="Friend icon.png" id="jDn-u2-hgD"/>
-                    <navigationItem key="navigationItem" id="knB-KP-JpR"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j9K-aT-h4p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController definesPresentationContext="YES" id="ZY4-BK-d7C" customClass="FriendsHomeViewController" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Friends" image="Friend icon.png" id="JWP-yN-eHA"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" barStyle="blackOpaque" id="bCF-h9-LJd">
+                        <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
                     <connections>
-                        <outlet property="fConnectButton" destination="Bgt-ID-d0Q" id="2CT-Tc-KJ5"/>
+                        <segue destination="Yh9-Sd-2Cb" kind="relationship" relationship="rootViewController" id="tqC-2y-LGH"/>
                     </connections>
-                </viewController>
+                </navigationController>
             </objects>
-            <point key="canvasLocation" x="-683" y="873"/>
+            <point key="canvasLocation" x="-682" y="883"/>
         </scene>
-        <!--Friends View Controller-->
+        <!--Friends View Controller - Friends-->
         <scene sceneID="aHT-gt-e0L">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pgM-oI-Efl" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Yh9-Sd-2Cb" customClass="FriendsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BhC-Y7-8sA">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Bgt-ID-d0Q">
@@ -192,20 +196,20 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="fbconnect:" destination="wFz-Zf-BBQ" eventType="touchUpInside" id="AgA-Jq-qlQ"/>
-                                    <action selector="fbconnect:" destination="rXC-yw-ECj" eventType="touchUpInside" id="TKc-Hy-gce"/>
                                     <action selector="fbconnect:" destination="pgM-oI-Efl" eventType="touchUpInside" id="U0s-Nw-pIB"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Friends" id="LyX-lb-n4x"/>
                     <connections>
                         <outlet property="fConnectButton" destination="Bgt-ID-d0Q" id="YGh-YS-8OM"/>
+                        <segue destination="w3F-a2-bcT" kind="push" identifier="FriendsSegue" id="zaW-Cd-2KK"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-317" y="873"/>
+            <point key="canvasLocation" x="-308" y="883"/>
         </scene>
         <!--Friends Table View Controller-->
         <scene sceneID="Lr4-AG-iS2">
@@ -213,7 +217,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="COw-Ri-AbY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="w3F-a2-bcT" customClass="FriendsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="nXq-Vc-UBw">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
