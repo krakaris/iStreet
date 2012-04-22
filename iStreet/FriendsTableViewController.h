@@ -12,6 +12,5 @@
 
 
 
-@property (nonatomic, retain) IBOutlet UITableView *friendsTableView;
 
 @end

@@ -157,10 +157,10 @@ static NSString *appID = @"128188007305619";
         NSLog(@"%@ and %@", [user valueForKey:@"id"], [user valueForKey:@"name"]);
     }
     
-    //[self performSegueWithIdentifier:@"FriendsSegue" sender:self];
+    [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     
-    FriendsTableViewController *ftvc = [[FriendsTableViewController alloc] init];
-    [self presentModalViewController:ftvc animated:YES];
+    //FriendsTableViewController *ftvc = [[FriendsTableViewController alloc] init];
+    //[self presentModalViewController:ftvc animated:YES];
      
     //NSData *onlyDataString = [result objectForKey:@"data"];
     //NSDictionary *friends = [NSJSONSerialization JSONObjectWithData:onlyDataString options:NSJSONReadingMutableContainers error:nil];

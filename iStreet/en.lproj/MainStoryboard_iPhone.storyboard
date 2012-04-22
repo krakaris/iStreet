@@ -173,7 +173,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-682" y="883"/>
+            <point key="canvasLocation" x="-683" y="883"/>
         </scene>
         <!--Friends View Controller - Friends-->
         <scene sceneID="aHT-gt-e0L">
@@ -205,11 +205,11 @@
                     <navigationItem key="navigationItem" title="Friends" id="LyX-lb-n4x"/>
                     <connections>
                         <outlet property="fConnectButton" destination="Bgt-ID-d0Q" id="YGh-YS-8OM"/>
-                        <segue destination="w3F-a2-bcT" kind="push" identifier="Friendslist" id="zaW-Cd-2KK"/>
+                        <segue destination="w3F-a2-bcT" kind="push" identifier="FriendsSegue" id="zaW-Cd-2KK"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-308" y="883"/>
+            <point key="canvasLocation" x="-280" y="883"/>
         </scene>
         <!--Friends Table View Controller-->
         <scene sceneID="Lr4-AG-iS2">
@@ -252,7 +252,7 @@
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="94" y="873"/>
+            <point key="canvasLocation" x="135" y="883"/>
         </scene>
         <!--Clubs View Controller - Clubs-->
         <scene sceneID="kGI-zX-x0v">

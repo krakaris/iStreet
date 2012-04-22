@@ -14,8 +14,6 @@
 
 @implementation FriendsTableViewController
 
-@synthesize friendsTableView;
-
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -29,8 +27,6 @@
 {
     [super viewDidLoad];
 
-    self.friendsTableView.dataSource = self;
-    self.friendsTableView.delegate = self;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -70,6 +66,7 @@
 {
     static NSString *CellIdentifier = @"Friends cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    cell = [[UITableViewCell alloc] init];
     cell.textLabel.text =  @"Hey there!";
     // Configure the cell...
     
