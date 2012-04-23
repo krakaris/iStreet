@@ -20,6 +20,7 @@ static NSString *appID = @"128188007305619";
 
 @synthesize fConnectButton;
 @synthesize facebook;
+@synthesize spinner;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,6 +34,7 @@ static NSString *appID = @"128188007305619";
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    [self.navigationItem setHidesBackButton:YES animated:NO];
     //if ([facebook isSessionValid])
     {
 
@@ -55,62 +57,72 @@ static NSString *appID = @"128188007305619";
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    NSLog(@"Did load!");
+    //[self.view addSubview:self.spinner];
+    //[self.spinner startAnimating];
     
-    //doing initial fb setup
-    NSLog(@"Initial fb setup");
-    if (!facebook)
+    if (alreadyLoadedFriends && [facebook isSessionValid])
     {
-        NSLog(@"Alloc-ing fb instance if none exists.");
-        facebook = [[Facebook alloc] initWithAppId:appID andDelegate:self];
-        self.facebook.sessionDelegate = self;
-        //[facebook setSessionDelegate:self];
+        [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     }
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    if ([defaults objectForKey:@"FBAccessTokenKey"] 
-        && [defaults objectForKey:@"FBExpirationDateKey"]) {
-        facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
-        facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
-    }
-    
-    // Now check that the URL scheme fb[app_id]://authorize is in the .plist and can
-    // be opened, doing a simple check without local app id factored in here
-    NSString *url = [NSString stringWithFormat:@"fb%@://authorize",appID];
-    BOOL bSchemeInPlist = NO; // find out if the sceme is in the plist file.
-    NSArray* aBundleURLTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleURLTypes"];
-    if ([aBundleURLTypes isKindOfClass:[NSArray class]] &&
-        ([aBundleURLTypes count] > 0)) {
-        NSDictionary* aBundleURLTypes0 = [aBundleURLTypes objectAtIndex:0];
-        if ([aBundleURLTypes0 isKindOfClass:[NSDictionary class]]) {
-            NSArray* aBundleURLSchemes = [aBundleURLTypes0 objectForKey:@"CFBundleURLSchemes"];
-            if ([aBundleURLSchemes isKindOfClass:[NSArray class]] &&
-                ([aBundleURLSchemes count] > 0)) {
-                NSString *scheme = [aBundleURLSchemes objectAtIndex:0];
-                if ([scheme isKindOfClass:[NSString class]] &&
-                    [url hasPrefix:scheme]) {
-                    bSchemeInPlist = YES;
+    else {
+        NSLog(@"Did load!");
+        
+        //doing initial fb setup
+        NSLog(@"Initial fb setup");
+        if (!facebook)
+        {
+            NSLog(@"Alloc-ing fb instance if none exists.");
+            facebook = [[Facebook alloc] initWithAppId:appID andDelegate:self];
+            self.facebook.sessionDelegate = self;
+            //[facebook setSessionDelegate:self];
+        }
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        if ([defaults objectForKey:@"FBAccessTokenKey"] 
+            && [defaults objectForKey:@"FBExpirationDateKey"]) {
+            facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+            facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+        }
+        
+        // Now check that the URL scheme fb[app_id]://authorize is in the .plist and can
+        // be opened, doing a simple check without local app id factored in here
+        NSString *url = [NSString stringWithFormat:@"fb%@://authorize",appID];
+        BOOL bSchemeInPlist = NO; // find out if the sceme is in the plist file.
+        NSArray* aBundleURLTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleURLTypes"];
+        if ([aBundleURLTypes isKindOfClass:[NSArray class]] &&
+            ([aBundleURLTypes count] > 0)) {
+            NSDictionary* aBundleURLTypes0 = [aBundleURLTypes objectAtIndex:0];
+            if ([aBundleURLTypes0 isKindOfClass:[NSDictionary class]]) {
+                NSArray* aBundleURLSchemes = [aBundleURLTypes0 objectForKey:@"CFBundleURLSchemes"];
+                if ([aBundleURLSchemes isKindOfClass:[NSArray class]] &&
+                    ([aBundleURLSchemes count] > 0)) {
+                    NSString *scheme = [aBundleURLSchemes objectAtIndex:0];
+                    if ([scheme isKindOfClass:[NSString class]] &&
+                        [url hasPrefix:scheme]) {
+                        bSchemeInPlist = YES;
+                    }
                 }
             }
         }
+        
+        // Check if the authorization callback will work
+        BOOL bCanOpenUrl = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString: url]];
+        if (!bSchemeInPlist || !bCanOpenUrl) {
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@"Setup Error"
+                                      message:@"Invalid or missing URL scheme. You cannot run the app until you set up a valid URL scheme in your .plist."
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil,
+                                      nil];
+            [alertView show];
+        }
+        
+        [facebook requestWithGraphPath:@"me/friends" andDelegate:self];
+        NSLog(@"Asking for friends!!");
     }
-    
-    // Check if the authorization callback will work
-    BOOL bCanOpenUrl = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString: url]];
-    if (!bSchemeInPlist || !bCanOpenUrl) {
-        UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle:@"Setup Error"
-                                  message:@"Invalid or missing URL scheme. You cannot run the app until you set up a valid URL scheme in your .plist."
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil,
-                                  nil];
-        [alertView show];
-    }
-    
-    [facebook requestWithGraphPath:@"me/friends" andDelegate:self];
-    NSLog(@"Asking for friends!!");
+
 }
 
 
@@ -149,18 +161,23 @@ static NSString *appID = @"128188007305619";
 
     NSArray *dataWeGot = [result objectForKey:@"data"];
     
+    friendsArray = dataWeGot;
+    
+    alreadyLoadedFriends = YES;
+    
+    [self performSegueWithIdentifier:@"Friendseg" sender:self];
+    
     //NSString *className = NSStringFromClass([dataWeGot class]);
     //NSLog(@"%@", className);
     
-    for (NSDictionary *user in dataWeGot)
-    {
-        NSLog(@"%@ and %@", [user valueForKey:@"id"], [user valueForKey:@"name"]);
-    }
+    /*for (NSDictionary *user in dataWeGot)
+     {
+     NSLog(@"%@ and %@", [user valueForKey:@"id"], [user valueForKey:@"name"]);
+     }
+     */
     
-    [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
-    
-//    FriendsTableViewController *ftvc = [[FriendsTableViewController alloc] init];
-//    [self presentModalViewController:ftvc animated:YES];
+    //FriendsTableViewController *ftvc = [[FriendsTableViewController alloc] init];
+    //[self presentModalViewController:ftvc animated:YES];
      
     //NSData *onlyDataString = [result objectForKey:@"data"];
     //NSDictionary *friends = [NSJSONSerialization JSONObjectWithData:onlyDataString options:NSJSONReadingMutableContainers error:nil];
@@ -205,6 +222,12 @@ static NSString *appID = @"128188007305619";
     
     //[self performSegueWithIdentifier:@"Friendslist" sender:self];
     
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    FriendsTableViewController *ftvc = (FriendsTableViewController *) segue.destinationViewController;
+    ftvc.friendslist = friendsArray;
 }
 
      

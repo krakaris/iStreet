@@ -13,12 +13,14 @@
 @interface FriendsViewController : UIViewController <FBSessionDelegate, FBRequestDelegate>
 {
     Facebook *facebook;
-    
+    NSArray *friendsArray;
+    BOOL alreadyLoadedFriends;
 }
 
 
 @property (nonatomic, retain) IBOutlet UIButton *fConnectButton;
 @property (nonatomic, retain) Facebook *facebook;
+@property (nonatomic, retain) UIActivityIndicatorView *spinner;
 
 - (IBAction)fbconnect:(id)sender;
 - (void) loggedInLoadFriendsNow;

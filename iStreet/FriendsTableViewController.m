@@ -14,7 +14,7 @@
 
 @implementation FriendsTableViewController
 
-@synthesize friendsTableView;
+@synthesize friendslist;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -22,20 +22,34 @@
     if (self) {
         // Custom initialization
     }
+    
+    //[self.navigationItem setHidesBackButton:YES animated:NO];
+    //self.navigationItem.title = @"Friends";
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.navigationItem setHidesBackButton:YES];
+    self.navigationItem.title = @"Friends";
+    
+    NSLog(@"#friends = %d", [friendslist count]);
 
-    self.friendsTableView.dataSource = self;
-    self.friendsTableView.delegate = self;
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    
+    /*
+    for (NSDictionary *user in friendslist)
+    {
+        NSLog(@"%@ and %@", [user valueForKey:@"id"], [user valueForKey:@"name"]);
+    }
+     */
 }
 
 - (void)viewDidUnload
@@ -63,17 +77,15 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 10;
+    return [friendslist count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Friends cell";
+    static NSString *CellIdentifier = @"Friends Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(cell == nil)
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    
-    cell.textLabel.text =  @"Hey there!";
+    cell = [[UITableViewCell alloc] init];
+    cell.textLabel.text =  [[friendslist objectAtIndex:indexPath.row] valueForKey:@"name"];
     // Configure the cell...
     
     return cell;
