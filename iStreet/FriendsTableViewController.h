@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FriendsTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
+@interface FriendsTableViewController : UITableViewController
 
 
-
+@property (nonatomic, retain) NSArray *friendslist;
 
 @end

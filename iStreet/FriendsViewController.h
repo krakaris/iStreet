@@ -13,7 +13,8 @@
 @interface FriendsViewController : UIViewController <FBSessionDelegate, FBRequestDelegate>
 {
     Facebook *facebook;
-    
+    NSArray *friendsArray;
+    BOOL alreadyLoadedFriends;
 }
 
 

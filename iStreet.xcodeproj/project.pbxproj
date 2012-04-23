@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4112762515439512008ED4AF /* FriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4112762415439511008ED4AF /* FriendsTableViewController.m */; };
 		41263F891541306C006DD5D6 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41263F881541306C006DD5D6 /* EventsViewController.m */; };
 		41263F8C154130E6006DD5D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41263F8B154130E6006DD5D6 /* QuartzCore.framework */; };
 		41263F8F154131B1006DD5D6 /* EventsNight.m in Sources */ = {isa = PBXBuildFile; fileRef = 41263F8E154131B1006DD5D6 /* EventsNight.m */; };
@@ -14,7 +15,6 @@
 		41263F941541389D006DD5D6 /* Club+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 41263F931541389D006DD5D6 /* Club+Create.m */; };
 		41263FA91543378A006DD5D6 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41263F9C1543378A006DD5D6 /* FBDialog.bundle */; };
 		41263FAA1543378A006DD5D6 /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41263FA21543378A006DD5D6 /* libfacebook_ios_sdk.a */; };
-		41263FB115437A2C006DD5D6 /* FriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41263FB015437A2C006DD5D6 /* FriendsTableViewController.m */; };
 		41386594152D15EB007A2327 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41386592152D15EB007A2327 /* LoginViewController.m */; };
 		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
 		4163B68E153BCC0A00D7B2DC /* iStreet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4163B68C153BCC0A00D7B2DC /* iStreet.xcdatamodeld */; };
@@ -68,6 +68,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4112762315439511008ED4AF /* FriendsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsTableViewController.h; sourceTree = "<group>"; };
+		4112762415439511008ED4AF /* FriendsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsTableViewController.m; sourceTree = "<group>"; };
 		41263F871541306C006DD5D6 /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventsViewController.h; path = iStreet/EventsViewController.h; sourceTree = "<group>"; };
 		41263F881541306C006DD5D6 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventsViewController.m; path = iStreet/EventsViewController.m; sourceTree = "<group>"; };
 		41263F8B154130E6006DD5D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -91,8 +93,6 @@
 		41263FA61543378A006DD5D6 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
 		41263FA71543378A006DD5D6 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
 		41263FA81543378A006DD5D6 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		41263FAF15437A2C006DD5D6 /* FriendsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsTableViewController.h; sourceTree = "<group>"; };
-		41263FB015437A2C006DD5D6 /* FriendsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsTableViewController.m; sourceTree = "<group>"; };
 		41386591152D15EB007A2327 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		41386592152D15EB007A2327 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		41386593152D15EB007A2327 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -305,8 +305,8 @@
 			children = (
 				4163B6EC153E563C00D7B2DC /* FriendsViewController.h */,
 				4163B6ED153E563C00D7B2DC /* FriendsViewController.m */,
-				41263FAF15437A2C006DD5D6 /* FriendsTableViewController.h */,
-				41263FB015437A2C006DD5D6 /* FriendsTableViewController.m */,
+				4112762315439511008ED4AF /* FriendsTableViewController.h */,
+				4112762415439511008ED4AF /* FriendsTableViewController.m */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -506,7 +506,7 @@
 				41263F891541306C006DD5D6 /* EventsViewController.m in Sources */,
 				41263F8F154131B1006DD5D6 /* EventsNight.m in Sources */,
 				41263F92154137B6006DD5D6 /* Club.m in Sources */,
-				41263FB115437A2C006DD5D6 /* FriendsTableViewController.m in Sources */,
+				4112762515439512008ED4AF /* FriendsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
