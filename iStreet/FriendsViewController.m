@@ -20,6 +20,7 @@ static NSString *appID = @"128188007305619";
 
 @synthesize fConnectButton;
 @synthesize facebook;
+@synthesize spinner;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,6 +56,9 @@ static NSString *appID = @"128188007305619";
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    //[self.view addSubview:self.spinner];
+    //[self.spinner startAnimating];
     
     if (alreadyLoadedFriends && [facebook isSessionValid])
     {
