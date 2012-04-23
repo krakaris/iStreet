@@ -315,23 +315,24 @@ enum eventsViewConstants {
 
 
 #pragma mark -
-#pragma mark Table cell image support
+#pragma mark Icon Downloading
 
 - (void)startIconDownload:(Event *)event forIndexPath:(NSIndexPath *)indexPath
 {
     IconDownloader *iconDownloader = [iconsBeingDownloaded objectForKey:indexPath];
-    if (iconDownloader == nil) //if there isn't already a download in progress for that event
-    {
-        iconDownloader = [[IconDownloader alloc] init];
-        iconDownloader.event = event;
-        iconDownloader.indexPathInTableView = indexPath;
-        iconDownloader.delegate = self;
-        [iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
-        [iconDownloader startDownload];
-    }
+    if (iconDownloader) //if there is already a download in progress for that event, return.
+        return;
+    
+    // start the download
+    iconDownloader = [[IconDownloader alloc] init];
+    [iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", event.poster]];
+    
+    [iconDownloader startDownloadFromURL:url forImageKey:@"posterImageData" ofObject:event forDisplayAtIndexPath:indexPath atDelegate:self];
 }
 
-// called by our ImageDownloader when an icon is ready to be displayed
+// called by our ImageDownloader when an icon is ready to be displayed (i.e. has been associated with its Event)
 - (void)appImageDidLoad:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.eventsTable cellForRowAtIndexPath:indexPath];
