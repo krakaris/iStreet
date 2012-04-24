@@ -54,7 +54,8 @@
 
 @implementation IconDownloader
 
-@synthesize event;
+@synthesize targetObject;
+@synthesize imageKey;
 @synthesize indexPathInTableView;
 @synthesize delegate;
 @synthesize receivedData;
@@ -63,16 +64,18 @@
 #pragma mark
 #pragma mark Public methods
 
-- (void)startDownload
+- (void)startDownloadFromURL:(NSURL *)imageURL forImageKey:(NSString *)key ofObject:(NSObject *)object forDisplayAtIndexPath:(NSIndexPath *)indexPath atDelegate:(id <IconDownloaderDelegate>)d
 {
-    self.receivedData = [NSMutableData data];
-    NSString *url = [NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", event.poster];
+    [self setTargetObject:object];
+    [self setImageKey:key];
+    [self setIndexPathInTableView:indexPath];
+    [self setDelegate:d];
+    [self setReceivedData:[NSMutableData data]];
+    
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:
-                             [NSURLRequest requestWithURL:
-                              [NSURL URLWithString:url]] delegate:self];
+                             [NSURLRequest requestWithURL:imageURL] delegate:self];
     self.imageConnection = conn;
 }
-
 
 #pragma mark -
 #pragma mark Download support (NSURLConnectionDelegate)
@@ -92,7 +95,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     // Set the event icon and clear temporary data/image
-    self.event.posterImageData = self.receivedData;
+    [self.targetObject setValue:self.receivedData forKey:imageKey];
     
     self.receivedData = nil;
     self.imageConnection = nil;

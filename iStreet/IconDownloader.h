@@ -50,32 +50,31 @@
   
  */
 
-#import "Event.h"
-
 @protocol IconDownloaderDelegate;
 
 @interface IconDownloader : NSObject
 {
-    Event  *event;
+    NSObject  *targetObject;
+    NSString *imageKey;
+    
     NSIndexPath *indexPathInTableView;
     
     NSMutableData *receivedData;
     NSURLConnection *imageConnection;
 }
 
-@property (nonatomic, retain) Event *event;
+@property (nonatomic, retain) NSObject *targetObject;
+@property (nonatomic, retain) NSString *imageKey;
 @property (nonatomic, retain) NSIndexPath *indexPathInTableView;
-@property __weak id <IconDownloaderDelegate> delegate;
-
 @property (nonatomic, retain) NSMutableData *receivedData;
 @property (nonatomic, retain) NSURLConnection *imageConnection;
 
-- (void)startDownload;
+@property __weak id <IconDownloaderDelegate> delegate;
+
+- (void)startDownloadFromURL:(NSURL *)imageURL forImageKey:(NSString *)imageKey ofObject:(NSObject *)object forDisplayAtIndexPath:(NSIndexPath *)indexPath atDelegate:(id <IconDownloaderDelegate>)delegate;
 
 @end
 
 @protocol IconDownloaderDelegate 
-
 - (void)appImageDidLoad:(NSIndexPath *)indexPath;
-
 @end
