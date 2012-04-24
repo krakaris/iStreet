@@ -19,19 +19,22 @@
 @implementation ClubsViewController
 //@synthesize datelabel = _datelabel;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-       
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //https://fed.princeton.edu
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
+    //NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString: @"https://fed.princeton.edu" ]];
+    NSLog(@"BEGIN COOKIES!");
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMMM d, yyyy h:mm a"];
+    for(NSHTTPCookie *cookie in cookies)
+    {
+        NSString *date = [formatter stringFromDate:cookie.expiresDate];
+        NSLog(@"comment: %@\n value: %@\ndomain: %@\npath:%@\nexpires:%@", [cookie comment], [cookie value], cookie.domain, cookie.path, date);
+    }
+    
     
 	// Do any additional setup after loading the view.
     NSDate *date = [NSDate date];

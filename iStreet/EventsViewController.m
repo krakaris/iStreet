@@ -78,7 +78,7 @@ enum eventsViewConstants {
     if(selectedRow)
         [self.eventsTable deselectRowAtIndexPath:selectedRow animated:NO];
     
-    loggedIn = YES;
+    //loggedIn = YES;
     if (loggedIn != YES)
     {
         NSString *casURL = @"https://fed.princeton.edu/cas/login";

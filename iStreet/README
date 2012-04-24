@@ -1,8 +1,8 @@
 What everyone is working on:
 
-Rishi - caching improvements
-Alexa - clubs, pretty-ifying
-Aki - CAS / FB / friends
+Rishi - CAS stuff
+Alexa - documents, pretty-ifying
+Aki - FB / friends
 
 Conventions (uniformity!)
 next line curly braces
@@ -15,4 +15,4 @@ don't forget to delete unnecessary core data objects!!
 carefully handle *EVERY* situation when the wifi might fail. *especially in the chat room*
 CAS stuff - ticketed server access?
 update timeline!!
-make empty cells appear to fill up rest of screen (see icon loading app for details)
+make empty cells appear to fill up rest of screen (see icon loading app for details) (even at startup)

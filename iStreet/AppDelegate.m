@@ -24,6 +24,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     netID = @"<skipped login>";
     appDataLoaded = NO;
     // Override point for customization after application launch.
