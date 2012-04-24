@@ -199,12 +199,17 @@
                                     <action selector="fbconnect:" destination="pgM-oI-Efl" eventType="touchUpInside" id="U0s-Nw-pIB"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="M9H-He-4B7">
+                                <rect key="frame" x="151" y="164" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Friends" id="LyX-lb-n4x"/>
                     <connections>
                         <outlet property="fConnectButton" destination="Bgt-ID-d0Q" id="YGh-YS-8OM"/>
+                        <outlet property="spinner" destination="M9H-He-4B7" id="Xqn-uF-Uja"/>
                         <segue destination="HDH-qv-0n4" kind="push" identifier="FriendsSegue" id="UfO-zV-shE"/>
                     </connections>
                 </viewController>
@@ -755,6 +760,7 @@
             <relationships>
                 <relationship kind="action" name="fbconnect:"/>
                 <relationship kind="outlet" name="fConnectButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
             </relationships>
         </class>
     </classes>

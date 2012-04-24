@@ -29,7 +29,6 @@
 }
 
 // will be moved...
-@property (assign) BOOL loggedIn;
 @property (nonatomic, retain) NSString *netid;
 - (void)screenGotCancelled:(id) sender;
 

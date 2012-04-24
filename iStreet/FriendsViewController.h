@@ -20,7 +20,7 @@
 
 @property (nonatomic, retain) IBOutlet UIButton *fConnectButton;
 @property (nonatomic, retain) Facebook *facebook;
-@property (nonatomic, retain) UIActivityIndicatorView *spinner;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
 
 - (IBAction)fbconnect:(id)sender;
 - (void) loggedInLoadFriendsNow;

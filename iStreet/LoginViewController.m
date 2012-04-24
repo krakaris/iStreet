@@ -64,7 +64,7 @@
 {
     NSString *netid;
     
-    if ([(EventsViewController *)self.delegate loggedIn] == NO)
+    if ([(AppDelegate *)self.delegate loggedIn] == NO)
     {
         netid = [webView stringByEvaluatingJavaScriptFromString:@"document.getElementById('username').value;"];
 
