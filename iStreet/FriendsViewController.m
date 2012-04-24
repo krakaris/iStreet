@@ -62,7 +62,11 @@ static NSString *appID = @"128188007305619";
     
     if (alreadyLoadedFriends && [facebook isSessionValid])
     {
+        [self.fConnectButton setHidden:YES];
+        self.fConnectButton.hidden = YES;
+        [self.spinner startAnimating];
         [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
+        [self.spinner stopAnimating];
     }
     else {
         NSLog(@"Did load!");
@@ -165,7 +169,7 @@ static NSString *appID = @"128188007305619";
     
     alreadyLoadedFriends = YES;
     
-    [self performSegueWithIdentifier:@"Friendseg" sender:self];
+    [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     
     //NSString *className = NSStringFromClass([dataWeGot class]);
     //NSLog(@"%@", className);

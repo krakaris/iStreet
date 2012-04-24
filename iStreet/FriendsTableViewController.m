@@ -14,19 +14,13 @@
 
 @implementation FriendsTableViewController
 
+@synthesize isFiltered;
 @synthesize friendslist;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    
-    //[self.navigationItem setHidesBackButton:YES animated:NO];
-    //self.navigationItem.title = @"Friends";
-    return self;
-}
+@synthesize filteredFriendsList;
+@synthesize justFriendNames;
+@synthesize sectionsIndex;
+@synthesize searchBar;
+@synthesize friendsTableView;
 
 - (void)viewDidLoad
 {
@@ -35,8 +29,35 @@
     self.navigationItem.title = @"Friends";
     
     NSLog(@"#friends = %d", [friendslist count]);
+    
+    searchBar.delegate = self;
+    isFiltered = NO; 
+    
+    self.friendsTableView.delegate = self;
+    self.friendsTableView.dataSource = self;
 
-
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    [friendslist sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    
+    sectionsIndex = [[NSMutableArray alloc] init];
+    justFriendNames = [[NSMutableArray alloc] init];
+    
+    int length = [friendslist count];
+    
+    for (int i = 0; i < length; i++)
+    {
+        //copying over names
+        [justFriendNames addObject:[[friendslist objectAtIndex:i] objectForKey:@"name"]];
+        
+        char alpha = [[[friendslist objectAtIndex:i] objectForKey:@"name"] characterAtIndex:0];
+        NSString *firstChar = [NSString stringWithFormat:@"%C", alpha];
+        
+        if (![sectionsIndex containsObject:firstChar])
+            [sectionsIndex addObject:firstChar];
+        
+    }
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -50,6 +71,42 @@
         NSLog(@"%@ and %@", [user valueForKey:@"id"], [user valueForKey:@"name"]);
     }
      */
+}
+
+- (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [self.searchBar resignFirstResponder];
+}
+
+- (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self.searchBar resignFirstResponder];
+}
+
+- (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    
+    if(searchText.length == 0)
+    {
+        isFiltered = NO;
+    }
+    else
+    {
+        isFiltered = YES;
+        filteredFriendsList = [[NSMutableArray alloc] init];
+        
+        for (NSDictionary *user in friendslist)
+        {
+            NSRange nameRange = [[user objectForKey:@"name"] rangeOfString:searchText options:NSCaseInsensitiveSearch];
+
+            if(nameRange.location != NSNotFound)
+            {
+                [filteredFriendsList addObject:user];
+            }
+        }
+    }
+    
+    [self.friendsTableView reloadData];
 }
 
 - (void)viewDidUnload
@@ -70,24 +127,78 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    //return 1;
+    if (self.isFiltered)
+        return 1;
+    else {
+        return [sectionsIndex count];
+    }
+}
+
+- (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (self.isFiltered)
+        //return just one section if something being searched for
+        return nil;
+    else
+        return [sectionsIndex objectAtIndex:section];
+}
+
+- (NSArray *) sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    return sectionsIndex;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [friendslist count];
+    
+    int rowCount;
+    
+    if (self.isFiltered)
+    {
+        rowCount = [filteredFriendsList count];
+    }
+    else {
+        rowCount = [friendslist count];
+        
+        //source - http://www.devx.com/wireless/Article/43374/1763
+        NSString *alpha = [sectionsIndex objectAtIndex:section];
+        NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
+        //Getting the names that begin with that first letter
+        NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
+        rowCount = [names count];
+    }
+
+    return rowCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Friends Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell = [[UITableViewCell alloc] init];
-    cell.textLabel.text =  [[friendslist objectAtIndex:indexPath.row] valueForKey:@"name"];
+
     // Configure the cell...
+    cell = [[UITableViewCell alloc] init];
     
+    if (self.isFiltered)
+    {
+        cell.textLabel.text =  [[filteredFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
+    }
+    else 
+    {
+        NSString *alpha = [sectionsIndex objectAtIndex:[indexPath section]];
+        NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
+        //Getting the names that begin with that first letter
+        NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
+        if ([names count] > 0)
+            {
+                NSString *friendName = [names objectAtIndex:indexPath.row];
+                cell.textLabel.text = friendName;
+            }
+    }
+
     return cell;
 }
 
@@ -141,6 +252,8 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    
+    [self.searchBar resignFirstResponder];
 }
 
 @end

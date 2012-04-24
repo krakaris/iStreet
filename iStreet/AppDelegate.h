@@ -13,8 +13,15 @@ extern NSString *const DataLoadedNotificationString;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+@property (assign) BOOL loggedIn;
 @property (nonatomic, retain) NSString *netID;
+
+@property (nonatomic, retain) UINavigationController *navController;
+
 @property (nonatomic, retain) UIManagedDocument *document;
 @property (nonatomic, assign) BOOL appDataLoaded;
+
+- (void) screenGotCancelled:(id) sender;
 
 @end

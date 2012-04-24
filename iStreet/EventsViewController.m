@@ -27,7 +27,6 @@ enum eventsViewConstants {
 
 @implementation EventsViewController
 
-@synthesize loggedIn;
 @synthesize netid;
 
 @synthesize activityIndicator, eventsTable;
@@ -35,7 +34,6 @@ enum eventsViewConstants {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    loggedIn = NO;
     
     eventsByNight = [NSMutableArray array];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];

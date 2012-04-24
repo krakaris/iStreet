@@ -7,9 +7,9 @@
 // 
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
 #import "Club+Create.h"
 #import "User.h"
-
 #import "Event.h"  
 
 NSString *const DataLoadedNotificationString = @"Application data finished loading";
@@ -21,16 +21,42 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 @implementation AppDelegate
 
 @synthesize window = _window, netID, document, appDataLoaded;
+@synthesize loggedIn;
+@synthesize navController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
     netID = @"<skipped login>";
     appDataLoaded = NO;
+    loggedIn = NO;
     // Override point for customization after application launch.
     //UIView *loginWebView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     //[self.view presentModalViewController:loginWebView animated:YES completion:^{}];
     //[self.window.subviews.lastObject presentModalViewController:loginWebView animated:YES];
+    
+    //loggedIn = YES;
+    if (loggedIn != YES)
+    {
+        NSString *casURL = @"https://fed.princeton.edu/cas/login";
+        
+        LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NSURL URLWithString:casURL]];
+        
+        //LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NS
+        loginView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;   
+        loginView.delegate = self;
+        
+        [self.window makeKeyAndVisible];
+        
+        UIViewController *viewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+        self.navController = [[UINavigationController alloc]
+                               initWithRootViewController:viewController];
+        
+        [self.window addSubview: [navController view]];
+        
+        //[self.navController presentModalViewController:loginView animated: YES];
+        [self screenGotCancelled:self];
+    }
     
     NSLog(@"going to sleep for NSFileManager startup (only for simulator)...");
     //[NSThread sleepForTimeInterval:5];
@@ -121,6 +147,27 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
     }    
     
     return YES;
+}
+
+
+
+- (void) screenGotCancelled:(id) sender
+{
+    NSLog(@"WHAZOO!");
+    loggedIn = YES;
+    
+    // NSString *netid;
+    // netid = self.loginView.
+    
+    [self.navController dismissModalViewControllerAnimated:YES];
+    //[[navController view] removeFromSuperview];
+    [self.navController.view removeFromSuperview];
+    [self.navController removeFromParentViewController];
+
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logged In!" message:[NSString stringWithFormat:@"Welcome to iStreet, %@!", self.netID] delegate:self cancelButtonTitle:@"Start!" otherButtonTitles:nil];
+    [alert show];
+    
 }
 
 /*

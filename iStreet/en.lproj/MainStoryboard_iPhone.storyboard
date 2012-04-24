@@ -199,48 +199,53 @@
                                     <action selector="fbconnect:" destination="pgM-oI-Efl" eventType="touchUpInside" id="U0s-Nw-pIB"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="M9H-He-4B7">
+                                <rect key="frame" x="151" y="164" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Friends" id="LyX-lb-n4x"/>
                     <connections>
                         <outlet property="fConnectButton" destination="Bgt-ID-d0Q" id="YGh-YS-8OM"/>
-                        <segue destination="DkK-DI-bFc" kind="push" identifier="Friendseg" id="rs8-Pp-qrl"/>
+                        <outlet property="spinner" destination="M9H-He-4B7" id="Xqn-uF-Uja"/>
+                        <segue destination="HDH-qv-0n4" kind="push" identifier="FriendsSegue" id="UfO-zV-shE"/>
                     </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="-280" y="883"/>
         </scene>
         <!--Friends Table View Controller-->
-        <scene sceneID="EZ9-By-bZ0">
+        <scene sceneID="q2s-BE-Qk5">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6cx-QX-R1w" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="DkK-DI-bFc" customClass="FriendsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5WI-dQ-gVG">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cWX-Vx-ryx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="HDH-qv-0n4" customClass="FriendsTableViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RFt-Bh-eqs">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="gmU-do-VSE">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="DkK-DI-bFc" id="T6R-59-e90"/>
-                            <outlet property="delegate" destination="DkK-DI-bFc" id="xwI-46-236"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="8qx-3w-T0k"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
-                </tableViewController>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="jpf-cc-iMk">
+                                <rect key="frame" x="0.0" y="44" width="320" height="323"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <searchBar contentMode="redraw" barStyle="blackOpaque" id="edX-6j-teO">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="bFG-au-ewV"/>
+                    <connections>
+                        <outlet property="friendsTableView" destination="jpf-cc-iMk" id="VQd-iY-gKi"/>
+                        <outlet property="searchBar" destination="edX-6j-teO" id="NlV-Xz-u5i"/>
+                    </connections>
+                </viewController>
             </objects>
-            <point key="canvasLocation" x="172" y="888"/>
+            <point key="canvasLocation" x="124" y="850"/>
         </scene>
         <!--Clubs View Controller - Clubs-->
         <scene sceneID="kGI-zX-x0v">
@@ -743,14 +748,19 @@
                 <relationship kind="outlet" name="eventsTable" candidateClass="UITableView"/>
             </relationships>
         </class>
-        <class className="FriendsTableViewController" superclassName="UITableViewController">
+        <class className="FriendsTableViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="friendsTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
         </class>
         <class className="FriendsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
             <relationships>
                 <relationship kind="action" name="fbconnect:"/>
                 <relationship kind="outlet" name="fConnectButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
             </relationships>
         </class>
     </classes>
