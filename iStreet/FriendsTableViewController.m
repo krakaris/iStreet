@@ -14,7 +14,10 @@
 
 @implementation FriendsTableViewController
 
+@synthesize isFiltered;
 @synthesize friendslist;
+@synthesize filteredFriendsList;
+@synthesize searchBar;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,7 +38,10 @@
     self.navigationItem.title = @"Friends";
     
     NSLog(@"#friends = %d", [friendslist count]);
-
+    
+    self.tableView.delegate = self;
+    searchBar.delegate = self;
+    isFiltered = NO; 
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -50,6 +56,40 @@
         NSLog(@"%@ and %@", [user valueForKey:@"id"], [user valueForKey:@"name"]);
     }
      */
+}
+
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSLog(@"Did scroll1");
+    searchBar.frame = CGRectMake(0, MAX(0, scrollView.contentOffset.y), 320, 44);
+    originalSearchBarFrame = searchBar.frame;
+    
+}
+
+- (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    
+    if(searchText.length == 0)
+    {
+        isFiltered = NO;
+    }
+    else
+    {
+        isFiltered = YES;
+        filteredFriendsList = [[NSMutableArray alloc] init];
+        
+        for (NSDictionary *user in friendslist)
+        {
+            NSRange nameRange = [[user objectForKey:@"name"] rangeOfString:searchText options:NSCaseInsensitiveSearch];
+
+            if(nameRange.location != NSNotFound)
+            {
+                [filteredFriendsList addObject:user];
+            }
+        }
+    }
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewDidUnload
@@ -77,17 +117,33 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [friendslist count];
+    
+    int rowCount;
+    
+    if (self.isFiltered)
+    {
+        rowCount = [filteredFriendsList count];
+    }
+    else {
+        rowCount = [friendslist count];
+    }
+
+    return rowCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Friends Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell = [[UITableViewCell alloc] init];
-    cell.textLabel.text =  [[friendslist objectAtIndex:indexPath.row] valueForKey:@"name"];
+
     // Configure the cell...
+    cell = [[UITableViewCell alloc] init];
     
+    if (self.isFiltered)
+        cell.textLabel.text =  [[filteredFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
+    else 
+        cell.textLabel.text =  [[friendslist objectAtIndex:indexPath.row] valueForKey:@"name"];     
+
     return cell;
 }
 

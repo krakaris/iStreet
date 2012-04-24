@@ -8,9 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FriendsTableViewController : UITableViewController
+@interface FriendsTableViewController : UITableViewController <UISearchBarDelegate, UIScrollViewDelegate>
+{
+    
+    BOOL isFiltered;
+    CGRect originalSearchBarFrame;
+}
 
+@property (assign) BOOL isFiltered;
 
-@property (nonatomic, retain) NSArray *friendslist;
+@property (strong, nonatomic) NSMutableArray *friendslist;
+@property (strong, nonatomic) NSMutableArray *filteredFriendsList;
+
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
