@@ -165,7 +165,7 @@ static NSString *appID = @"128188007305619";
     
     alreadyLoadedFriends = YES;
     
-    [self performSegueWithIdentifier:@"Friendseg" sender:self];
+    [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     
     //NSString *className = NSStringFromClass([dataWeGot class]);
     //NSLog(@"%@", className);
