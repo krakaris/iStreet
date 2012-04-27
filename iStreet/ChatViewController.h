@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ServerCommunication.h"
 //#import "SBJsonParser.h"
 
-@interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ServerCommunicationDelegate>
 {
     UITextField *messageField;
     UIButton *sendButton;

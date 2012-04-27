@@ -14,10 +14,7 @@
 #import "Event+Create.h"
 #import "AppDelegate.h"
 #import "EventDetailsViewController.h"
-
-enum eventsViewConstants {
-    kConnectionTimeout = 8,  
-};
+#import "ServerCommunication.h"
 
 @interface EventsViewController ()
 - (void)getServerEventsData;
@@ -76,7 +73,7 @@ enum eventsViewConstants {
     if(selectedRow)
         [self.eventsTable deselectRowAtIndexPath:selectedRow animated:NO];
     
-    //loggedIn = YES;
+    BOOL loggedIn = YES;
     if (loggedIn != YES)
     {
         NSString *casURL = @"https://fed.princeton.edu/cas/login";
@@ -95,7 +92,7 @@ enum eventsViewConstants {
 - (void) screenGotCancelled:(id) sender
 {
     NSLog(@"WHAZOO!");
-    loggedIn = YES;
+    //loggedIn = YES;
     
     // NSString *netid;
     // netid = self.loginView.
@@ -114,55 +111,20 @@ enum eventsViewConstants {
 #pragma mark Retrieving Events Data from Server
 
 - (void)getServerEventsData
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    NSString *url = @"http://istreetsvr.herokuapp.com/eventslist";
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setTimeoutInterval:kConnectionTimeout];
-    [request setURL:[NSURL URLWithString:url]];
-    [request setHTTPMethod:@"GET"];
-    
-    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    if (conn)
-        receivedData = [NSMutableData data];
-    else
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-}
-
-/*
- Runs when the sufficient server response data has been received.
- */
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{  
-    [receivedData setLength:0];
-}  
-
-/*
- Runs as the connection loads data from the server.
- */
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data  
-{  
-    [receivedData appendData:data];
-} 
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+{    
+    //NSString *url = @"http://istreetsvr.herokuapp.com/eventslist";
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:@"/eventslist" withPOSTBody:nil forViewController:self];
 }
 
 /*
  Runs when the connection has successfully finished loading all data
  */
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+- (void)finishedReceivingData:(NSData *)data
 {
-    NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:NULL];
+    NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
     if(!eventsDictionaryArray)
-    {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         return;
-    }
     
     NSMutableArray *eventsArray = [NSMutableArray arrayWithCapacity:[eventsDictionaryArray count]];
     
@@ -174,7 +136,6 @@ enum eventsViewConstants {
     
     [self setPropertiesWithNewEventData:eventsArray];
     [eventsTable reloadData];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 // attempting to change this method to work with the current eventsByDate

@@ -10,8 +10,9 @@
 #import "Club.h"
 #import "EventDetailsViewController.h"
 #import "IconDownloader.h"
+#import "ServerCommunication.h"
 
-@interface ClubEventsViewController : UITableViewController <UIWebViewDelegate, IconDownloaderDelegate>
+@interface ClubEventsViewController : UITableViewController <UIWebViewDelegate, IconDownloaderDelegate, ServerCommunicationDelegate>
 {
     //Information we want to get from server
     UITableView *eventsList;

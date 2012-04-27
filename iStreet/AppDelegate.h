@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ServerCommunication.h"
 
 extern NSString *const DataLoadedNotificationString;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, ServerCommunicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

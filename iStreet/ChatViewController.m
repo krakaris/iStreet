@@ -78,43 +78,26 @@
 {
     if(gettingNewMessages)
         return;
+    
     gettingNewMessages = YES;
-    NSString *url = [NSString stringWithFormat:@"http://istreetsvr.herokuapp.com/get?past=%d", lastMessageID];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:url]];
-    [request setHTTPMethod:@"GET"];
-    
-    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    if (conn)
-        receivedData = [NSMutableData data];
-    else
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    if(![sc sendAsynchronousRequestForDataAtRelativeURL:[NSString stringWithFormat:@"/get?past=%d", lastMessageID] withPOSTBody:nil forViewController:self])
         gettingNewMessages = NO;
 }
-
-/*
- Runs when the sufficient server response data has been received.
- */
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{  
-    [receivedData setLength:0];
-}  
-
-/*
- Runs as the connection loads data from the server.
- */
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data  
-{  
-    [receivedData appendData:data];
-} 
+  
+- (void)connectionFailed
+{
+    /* */
+}
 
 /*
  Runs when the connection has successfully finished loading all data
  */
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+- (void)finishedReceivingData:(NSData *)data
 {      
     NSError *error;
-    NSArray *messagesArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
+    NSArray *messagesArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     if(!messagesArray)
     {
         NSLog(@"%@", [error localizedDescription]);
@@ -158,20 +141,10 @@
     [messageField setTextColor:[UIColor grayColor]];
     [activityIndicator startAnimating];
     
-    NSString *url = [NSString stringWithFormat:@"http://istreetsvr.herokuapp.com/add"];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:url]];
-    [request setHTTPMethod:@"POST"];
-    
     NSString *myNetID = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
     
-    NSMutableData *body = [NSMutableData data];
-    [body appendData:[[NSString stringWithFormat:@"user_id=%@&message=%@", myNetID, messageField.text] dataUsingEncoding:NSUTF8StringEncoding]];
-    [request setHTTPBody:body];
-    
-    NSHTTPURLResponse *response = nil;
-    NSError *error = [[NSError alloc] init];
-    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    [sc sendSynchronousRequestForDataAtRelativeURL:@"/add" withPOSTBody:[NSString stringWithFormat:@"user_id=%@&message=%@", myNetID, messageField.text] forViewController:self];
     
     messageField.text = @"";
     [messageField setTextColor:[UIColor blackColor]];

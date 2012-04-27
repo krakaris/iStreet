@@ -26,6 +26,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [_window makeKeyAndVisible];
     
     netID = @"<skipped login>";
     appDataLoaded = NO;
@@ -35,7 +36,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
     //[self.view presentModalViewController:loginWebView animated:YES completion:^{}];
     //[self.window.subviews.lastObject presentModalViewController:loginWebView animated:YES];
     
-    //loggedIn = YES;
+    loggedIn = YES;
     if (loggedIn != YES)
     {
         NSString *casURL = @"https://fed.princeton.edu/cas/login";
@@ -59,7 +60,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
     }
     
     NSLog(@"going to sleep for NSFileManager startup (only for simulator)...");
-    //[NSThread sleepForTimeInterval:5];
+    [NSThread sleepForTimeInterval:3];
     NSLog(@"wakie wakie eggs and bakie");
     
     
@@ -176,12 +177,8 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 - (void)setupCoreData
 {
     NSLog(@"setting up core data...");
-    int CONNECTION_TIMEOUT = 8;
-    NSURL *clubsURL = [NSURL URLWithString:@"http://istreetsvr.heroku.com/clubslist"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:clubsURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:CONNECTION_TIMEOUT];
-    NSURLResponse *response;
     NSLog(@"sending request for clubs list...");
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:NULL];
+    NSData *data = [[[ServerCommunication alloc] init] sendSynchronousRequestForDataAtRelativeURL:@"/clubslist" withPOSTBody:nil forViewController:(UITabBarController <ServerCommunicationDelegate> *)self.window.rootViewController];
     NSLog(@"data recieved!");
     if(!data)
     {

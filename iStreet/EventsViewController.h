@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "LoginViewController.h"
 #import "IconDownloader.h"
+#import "ServerCommunication.h"
 
-@interface EventsViewController : UIViewController <LoginViewControllerDelegate, UIWebViewDelegate, IconDownloaderDelegate>
+@interface EventsViewController : UIViewController <LoginViewControllerDelegate, UIWebViewDelegate, IconDownloaderDelegate, ServerCommunicationDelegate>
 {
     UITableView *eventsTable;
     UIActivityIndicatorView *activityIndicator;
     
-    NSMutableData *receivedData;
     NSMutableArray *eventsByNight; 
     /* an array of arrays of events of a given date (considered making this a dictionary (date : events array), but the events must be ordered, which a dictionary is not.
      For example:

@@ -69,58 +69,30 @@
 }
 
 - (void) getListOfEvents: (NSString *) clubName
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
+{    
     //Build url for server
-    NSString *urlString = 
-    [NSString stringWithFormat:
-     @"http://istreetsvr.herokuapp.com/clubevents?name=%@", clubName];
-    NSString *url = [urlString stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setTimeoutInterval:8];
-    [request setURL:[NSURL URLWithString: url]];
-    [request setHTTPMethod:@"GET"];
-    
-    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    if (conn) {
-        receivedData = [NSMutableData data];
-    } else {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    }
-    
+    NSString *relativeURL = 
+    [NSString stringWithFormat:@"/clubevents?name=%@", clubName];
+    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];
+
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self];
 }
 
-/*
- Runs when the sufficient server response data has been received.
- */
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{  
-    [receivedData setLength:0];
-}  
-
-/*
- Runs as the connection loads data from the server.
- */
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data  
-{  
-    [receivedData appendData:data];
-} 
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+- (void)connectionFailed
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    
 }
 
 /*
  Runs when the connection has successfully finished loading all data
  */
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+- (void)finishedReceivingData:(NSData *)data
 {      
     NSLog(@"Connection finished loading\n");
     NSError *error;
-    NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&error];
+    NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     if(!eventsDictionaryArray)
     {
         NSLog(@"%@", [error localizedDescription]);
