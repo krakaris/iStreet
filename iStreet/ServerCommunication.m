@@ -14,13 +14,19 @@ enum connectionConstants {
 
 @implementation ServerCommunication
 
-@synthesize receivedData, viewController;
+@synthesize receivedData, viewController, delegate, serverResponse, description;
 
-- (BOOL)sendAsynchronousRequestForDataAtRelativeURL:(NSString *)relativeURL withPOSTBody:(NSString *)post forViewController:(UIViewController <ServerCommunicationDelegate> *)vc
+- (BOOL)sendAsynchronousRequestForDataAtRelativeURL:(NSString *)rel withPOSTBody:(NSString *)p forViewController:(UIViewController *)vc withDelegate:(id <ServerCommunicationDelegate>)del andDescription:(NSString *)d;
 {
+    //static NSString *serverURL = @"http://localhost:5000";
     static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
-    NSString *absoluteURL = [serverURL stringByAppendingString:relativeURL];
+    NSString *absoluteURL = [serverURL stringByAppendingString:rel];
     [self setViewController:vc];
+    [self setDescription:d];
+    [self setDelegate:del];
+    relativeURL = rel;
+    post = p;
+    
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         
@@ -28,12 +34,12 @@ enum connectionConstants {
     [request setTimeoutInterval:kConnectionTimeout];
     [request setURL:[NSURL URLWithString:absoluteURL]];
     
-    if(!post)
+    if(!p)
         [request setHTTPMethod:@"GET"];
     else {
         [request setHTTPMethod:@"POST"];
         NSMutableData *body = [NSMutableData data];
-        [body appendData:[post dataUsingEncoding:NSISOLatin1StringEncoding]];
+        [body appendData:[p dataUsingEncoding:NSISOLatin1StringEncoding]];
         [request setHTTPBody:body];
     }
     
@@ -46,6 +52,7 @@ enum connectionConstants {
     else
     {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        // TELL DELEGATE THE MISSION FAILED.
         return NO;
     }
 }
@@ -57,6 +64,7 @@ enum connectionConstants {
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {  
     [receivedData setLength:0];
+    [self setServerResponse:response];
 }  
 
 /*
@@ -69,9 +77,10 @@ enum connectionConstants {
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    NSLog(@"%@", [error localizedDescription]);
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    if(self.viewController)
-        [self.viewController connectionFailed];
+    if(self.delegate /*&& [self.delegate respondsToSelector: @selector(connectionFailed::)]*/)
+        [self.delegate connectionFailed:description];
 }
 
 /*
@@ -79,18 +88,49 @@ enum connectionConstants {
  */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    if(self.viewController)
-        [self.viewController finishedReceivingData:receivedData];
+    // if the url is CAS, log in, and do the connection until it succeeds.
+    if ([[[serverResponse URL] absoluteString] rangeOfString:@"fed.princeton.edu/cas/"].location != NSNotFound) 
+    {
+        NSLog(@"Creating LVC");
+        LoginViewController *lvc = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andHTMLString:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding] withDelegate:self];
+        //LoginViewController *lvc = [[LoginViewController alloc] init];
+//        UIWebView *webView = [[UIWebView alloc] initWithFrame:lvc.view.frame];
+//        [lvc.view addSubview:webView];
+//        lvc.loginWebView = webView;
+
+        [lvc setHtml:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding]];
+        [lvc setDelegate:self];
+
+        lvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self.viewController presentModalViewController:lvc animated:YES];
+    }
+    else 
+    {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        //BOOL shouldSend = [self.delegate respondsToSelector: @selector(connectionWithDescription:finishedReceivingData:)];
+        BOOL shouldSend = YES;
+        if(self.delegate && shouldSend)
+            [self.delegate connectionWithDescription:description finishedReceivingData:receivedData];
+    }
 }
 
+
+- (void)userLoggedIn:(id)sender
+{
+    NSLog(@"duplicate call from delegate!!! HOORAY");
+    [self sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:post forViewController:viewController withDelegate:self.delegate andDescription:description];
+    NSLog(@"that was it.");
+}
+
+
+/*
 - (NSData *)sendSynchronousRequestForDataAtRelativeURL:(NSString *)relativeURL withPOSTBody:(NSString *)post forViewController:(UIViewController <ServerCommunicationDelegate> *)vc
 {
-    static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
+    static NSString *serverURL = @"http://localhost:5000";
     NSString *absoluteURL = [serverURL stringByAppendingString:relativeURL];
     [self setViewController:vc];
         
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    request = [[NSMutableURLRequest alloc] init];
     [request setTimeoutInterval:kConnectionTimeout];
     [request setURL:[NSURL URLWithString:absoluteURL]];
     
@@ -109,7 +149,21 @@ enum connectionConstants {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     NSData *returnedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    return returnedData;
+    NSLog(@"%@", [[NSString alloc] initWithData:returnedData encoding:NSISOLatin1StringEncoding]);
+    NSLog(@"%@", [response URL]);
+    
+    // if the url is CAS, log in, and do the connection until it succeeds
+    if ([[[response URL] absoluteString] rangeOfString:@"fed.princeton.edu/cas/"].location != NSNotFound) 
+    {
+        // launch aki's login view controller
+        LoginViewController *lvc = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andHTMLString:[[NSString alloc] initWithData:returnedData encoding:NSISOLatin1StringEncoding]];
+        lvc.delegate = self;
+        lvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self.viewController presentModalViewController:lvc animated:YES];
+        return nil;
+    }
+    else
+        return returnedData;
 }
-
+*/
 @end

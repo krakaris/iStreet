@@ -50,7 +50,7 @@
     
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"]; 
-    request.predicate = [NSPredicate predicateWithFormat:@"name == %@", club.name];
+    request.predicate = [NSPredicate predicateWithFormat:@"name == %@", self.club.name];
     NSError *error;
     
     NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
@@ -64,22 +64,21 @@
     NSLog(@"Beginning loading web data.");
     
     //Get event data from server
-    [self getListOfEvents: club.name];
+    [self getListOfEvents: self.club.name];
     [activityIndicator stopAnimating];
 }
 
-- (void) getListOfEvents: (NSString *) clubName
+- (void) getListOfEvents:(NSString *)clubName
 {    
     //Build url for server
-    NSString *relativeURL = 
-    [NSString stringWithFormat:@"/clubevents?name=%@", clubName];
+    NSString *relativeURL = [NSString stringWithFormat:@"/clubevents?name=%@", clubName];
     relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];
 
     ServerCommunication *sc = [[ServerCommunication alloc] init];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self  withDelegate:self andDescription:nil];
 }
 
-- (void)connectionFailed
+- (void)connectionFailed:(NSString *)description
 {
     
 }
@@ -88,7 +87,7 @@
  Runs when the connection has successfully finished loading all data
  */
 
-- (void)finishedReceivingData:(NSData *)data
+- (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {      
     NSLog(@"Connection finished loading\n");
     NSError *error;
