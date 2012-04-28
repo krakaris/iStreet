@@ -26,7 +26,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 {
     [_window makeKeyAndVisible];
     
-    netID = @"<skipped login>";
+    netID = nil;
     appDataLoaded = NO;
     // Override point for customization after application launch.
     //UIView *loginWebView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
