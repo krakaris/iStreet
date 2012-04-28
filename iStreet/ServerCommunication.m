@@ -7,6 +7,7 @@
 //
 
 #import "ServerCommunication.h"
+#import "AppDelegate.h"
 
 enum connectionConstants {
     kConnectionTimeout = 8,  
@@ -18,8 +19,8 @@ enum connectionConstants {
 
 - (BOOL)sendAsynchronousRequestForDataAtRelativeURL:(NSString *)rel withPOSTBody:(NSString *)p forViewController:(UIViewController *)vc withDelegate:(id <ServerCommunicationDelegate>)del andDescription:(NSString *)d;
 {
-    //static NSString *serverURL = @"http://localhost:5000";
-    static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
+    static NSString *serverURL = @"http://localhost:5000";
+    //static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
     NSString *absoluteURL = [serverURL stringByAppendingString:rel];
     [self setViewController:vc];
     [self setDescription:d];
@@ -77,9 +78,9 @@ enum connectionConstants {
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    NSLog(@"%@", [error localizedDescription]);
+    NSLog(@"Connection failed (ServerCommunication.m): %@", [error localizedDescription]);
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    if(self.delegate /*&& [self.delegate respondsToSelector: @selector(connectionFailed::)]*/)
+    if(self.delegate && [self.delegate respondsToSelector: @selector(connectionFailed::)])
         [self.delegate connectionFailed:description];
 }
 
@@ -88,11 +89,12 @@ enum connectionConstants {
  */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    // if the url is CAS, log in, and do the connection until it succeeds.
+    // if CAS Login is required
     if ([[[serverResponse URL] absoluteString] rangeOfString:@"fed.princeton.edu/cas/"].location != NSNotFound) 
     {
-        NSLog(@"Creating LVC");
+        NSLog(@"Requesting new cookie through CAS");
         LoginViewController *lvc = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andHTMLString:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding] withDelegate:self];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         //LoginViewController *lvc = [[LoginViewController alloc] init];
 //        UIWebView *webView = [[UIWebView alloc] initWithFrame:lvc.view.frame];
 //        [lvc.view addSubview:webView];
@@ -104,66 +106,27 @@ enum connectionConstants {
         lvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         [self.viewController presentModalViewController:lvc animated:YES];
     }
+    else if ([[[serverResponse URL] absoluteString] rangeOfString:@"/login?ticket="].location != NSNotFound)
+    {
+        // if the server redirected to CAS Login and got an immediate redirect back because of a CAS cookie, 
+        NSString *netid = [[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding] substringFromIndex:[@"SUCCESS: " length]];
+        [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:netid];
+        [self userLoggedIn:self];
+    }
     else 
     {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        //BOOL shouldSend = [self.delegate respondsToSelector: @selector(connectionWithDescription:finishedReceivingData:)];
-        BOOL shouldSend = YES;
-        if(self.delegate && shouldSend)
+        if(self.delegate && [self.delegate respondsToSelector:@selector(connectionWithDescription:finishedReceivingData:) ])
             [self.delegate connectionWithDescription:description finishedReceivingData:receivedData];
     }
 }
 
 
-- (void)userLoggedIn:(id)sender
+- (void)userLoggedIn:(id)sender;
 {
-    NSLog(@"duplicate call from delegate!!! HOORAY");
-    [self sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:post forViewController:viewController withDelegate:self.delegate andDescription:description];
-    NSLog(@"that was it.");
-}
-
-
-/*
-- (NSData *)sendSynchronousRequestForDataAtRelativeURL:(NSString *)relativeURL withPOSTBody:(NSString *)post forViewController:(UIViewController <ServerCommunicationDelegate> *)vc
-{
-    static NSString *serverURL = @"http://localhost:5000";
-    NSString *absoluteURL = [serverURL stringByAppendingString:relativeURL];
-    [self setViewController:vc];
-        
-    request = [[NSMutableURLRequest alloc] init];
-    [request setTimeoutInterval:kConnectionTimeout];
-    [request setURL:[NSURL URLWithString:absoluteURL]];
-    
-    if(!post)
-        [request setHTTPMethod:@"GET"];
-    else {
-        [request setHTTPMethod:@"POST"];
-        NSMutableData *body = [NSMutableData data];
-        [body appendData:[post dataUsingEncoding:NSISOLatin1StringEncoding]];
-        [request setHTTPBody:body];
-    }
-    
-    NSHTTPURLResponse *response = nil;
-    NSError *error = [[NSError alloc] init];
-    
+    NSLog(@"Successful authentication and cookie recieved! Sending the call again.");
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    NSData *returnedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    NSLog(@"%@", [[NSString alloc] initWithData:returnedData encoding:NSISOLatin1StringEncoding]);
-    NSLog(@"%@", [response URL]);
-    
-    // if the url is CAS, log in, and do the connection until it succeeds
-    if ([[[response URL] absoluteString] rangeOfString:@"fed.princeton.edu/cas/"].location != NSNotFound) 
-    {
-        // launch aki's login view controller
-        LoginViewController *lvc = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andHTMLString:[[NSString alloc] initWithData:returnedData encoding:NSISOLatin1StringEncoding]];
-        lvc.delegate = self;
-        lvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        [self.viewController presentModalViewController:lvc animated:YES];
-        return nil;
-    }
-    else
-        return returnedData;
+    [self sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:post forViewController:viewController withDelegate:self.delegate andDescription:description];
 }
-*/
+
 @end

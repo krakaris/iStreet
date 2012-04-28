@@ -23,8 +23,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        html = markup;
-        delegate = theDelegate;
         [self setHtml:markup];
         [self setDelegate:theDelegate];
     }
@@ -75,10 +73,15 @@
 
 -(void) webViewDidFinishLoad:(UIWebView *)webView
 {
+    static NSString *prefix = @"SUCCESS: ";
+    int prefixLength = [prefix length];
+
     NSString *textContent = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.textContent"];
-    if([textContent isEqualToString:@"SUCCESS"])
+    if([textContent length] >= prefixLength && [[textContent substringToIndex:prefixLength] isEqualToString:prefix])
     {
-        NSLog(@"telling delegate!");
+        NSLog(@"logged in, telling delegate!");
+        NSString *netid = [textContent substringFromIndex:prefixLength];
+        [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:netid];
         [self.delegate userLoggedIn:self];
         [self dismissModalViewControllerAnimated:YES];
     }

@@ -36,6 +36,17 @@
 {
     [super viewDidLoad];
     
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"http://localhost:5000"]];
+    NSLog(@"Cookie count: %d", [cookies count]);
+    for(NSHTTPCookie *cookie in cookies)
+    {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"MMMM d, yyyy h:mm a"];
+        NSString *timestamp = [formatter stringFromDate:[cookie expiresDate]];
+        NSLog(@"COOKIE! expires: %@", timestamp);
+    }
+
+    
     self.navigationItem.title = self.club.name;
     eventsList.backgroundView.backgroundColor = [UIColor greenColor];
 

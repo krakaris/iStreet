@@ -127,7 +127,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 {
     NSLog(@"setting up core data...");
     NSLog(@"sending request for clubs list...");
-    [[[ServerCommunication alloc] init] sendAsynchronousRequestForDataAtRelativeURL:@"/clubslist" withPOSTBody:nil forViewController:(UITabBarController <ServerCommunicationDelegate> *)self.window.rootViewController  withDelegate:self andDescription:nil];
+    [[[ServerCommunication alloc] init] sendAsynchronousRequestForDataAtRelativeURL:@"/clubslist" withPOSTBody:nil forViewController:self.window.rootViewController  withDelegate:self andDescription:nil];
 }
 
 - (void)connectionFailed:(NSString *)description

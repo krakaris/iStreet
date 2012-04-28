@@ -17,16 +17,15 @@
 }
 
 @property (nonatomic, retain) NSString *html;
-
 @property (nonatomic, retain) IBOutlet UIWebView *loginWebView;
-@property __weak id <LoginViewControllerDelegate> delegate;
+@property __strong id <LoginViewControllerDelegate> delegate;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andHTMLString: (NSString *)h withDelegate:(id <LoginViewControllerDelegate>)d;
 @end
 
 @protocol LoginViewControllerDelegate <NSObject>
-- (void) userLoggedIn:(id)sender;
+- (void)userLoggedIn:(id)sender;
 @end
 
 

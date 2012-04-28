@@ -49,7 +49,7 @@
 
 @end
 
-@protocol ServerCommunicationDelegate
+@protocol ServerCommunicationDelegate <NSObject>
 
 @optional
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data;

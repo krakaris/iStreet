@@ -48,23 +48,6 @@
     
     timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(getNewMessages) userInfo:nil repeats:YES];
     [self getNewMessages];
-    
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];
-    
-    NSError *error;
-    NSArray *clubs = [document.managedObjectContext executeFetchRequest:request error:&error];
-    NSLog(@"clubs count %d", [clubs count]);
-    for(int i = 0; i < [clubs count]; i++)
-    {
-        Club *club = [clubs objectAtIndex:i];
-        NSLog(@"%@", club.name);
-    }
-    
-    request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    
-    NSArray *users = [document.managedObjectContext executeFetchRequest:request error:&error];
-    NSLog(@"user count %d", [users count]);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -110,7 +93,8 @@
         NSArray *messagesArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
         if(!messagesArray)
         {
-            NSLog(@"%@", [error localizedDescription]);
+            NSLog(@"parsing error: %@", [error localizedDescription]);
+            NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding]);
             gettingNewMessages = NO;
             return; // do nothing if can't recieve messages
         }

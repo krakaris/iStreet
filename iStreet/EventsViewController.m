@@ -48,6 +48,7 @@
 
 - (void)loadData:(NSNotification *)notification
 {    
+    NSLog(@"Beginning loading events data!!");
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
 
     if(notification)
