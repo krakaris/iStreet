@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ServerCommunication.h"
+#import "EventsAttendingTableViewController.h"
 
-@interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, ServerCommunicationDelegate>
 {
-    
+    EventsAttendingTableViewController *eatvc;
     BOOL isFiltered;
     CGRect originalSearchBarFrame;
 }

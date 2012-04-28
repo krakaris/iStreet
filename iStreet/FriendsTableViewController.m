@@ -7,6 +7,7 @@
 //
 
 #import "FriendsTableViewController.h"
+#import "EventsAttendingTableViewController.h"
 
 @interface FriendsTableViewController ()
 
@@ -119,6 +120,11 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - Table view data source
@@ -254,6 +260,106 @@
      */
     
     [self.searchBar resignFirstResponder];
+    
+    NSString *name = @"";
+    NSString *faceID = @"";
+    
+    if (self.isFiltered)
+    {
+        NSInteger currentRow = [[self.friendsTableView indexPathForSelectedRow] row];
+        faceID = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"id"];
+        name = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"name"];
+        
+        NSLog(@"%@ and %@", faceID, name);
+    }
+    else 
+    {
+        NSString *alpha = [sectionsIndex objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] section]]; 
+        NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
+        
+        //Getting the names that begin with that first letter
+        NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
+        
+        if ([names count] > 0)
+        {
+            NSString *friendName = [names objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] row]];
+            name = friendName;
+            for  (NSDictionary *user in friendslist)
+            {
+                if (friendName == [user objectForKey:@"name"])
+                    faceID = [user objectForKey:@"id"];
+            }
+        }
+        
+        NSLog(@"%@ and %@", faceID, name);
+    }
+    
+    //Build url for server
+    NSString *relativeURL = [NSString stringWithFormat:@"/getEventsForUser?fb_id=%@", faceID];
+    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+    
+    NSLog(@"relativeURL is %@", relativeURL);
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    [sc sendSynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self];
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    eatvc = (EventsAttendingTableViewController *) segue.destinationViewController;
+    
+    NSString *faceID = @"";
+    NSString *name = @"";
+    
+    if (self.isFiltered)
+    {
+        NSInteger currentRow = [[self.friendsTableView indexPathForSelectedRow] row];
+        faceID = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"id"];
+        name = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"name"];
+        
+        NSLog(@"%@ and %@", faceID, name);
+    }
+    else 
+    {
+        NSString *alpha = [sectionsIndex objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] section]]; 
+        NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
+        
+        //Getting the names that begin with that first letter
+        NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
+       
+        if ([names count] > 0)
+        {
+            NSString *friendName = [names objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] row]];
+            name = friendName;
+            for  (NSDictionary *user in friendslist)
+            {
+                if (friendName == [user objectForKey:@"name"])
+                    faceID = [user objectForKey:@"id"];
+            }
+        }
+        
+        NSLog(@"%@ and %@", faceID, name);
+    }
+    
+    eatvc.fbid = faceID;
+    eatvc.name = name;
+    NSLog(@"Passed to eatvc - %@ and %@", faceID, name);
+    
+
+}
+
+- (void) finishedReceivingData:(NSData *)data
+{
+    NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"Response is!!! %@", response);   
+    eatvc.eventsAttending = [response componentsSeparatedByString:@", "];
+    
+    for (NSString *event in eatvc.eventsAttending)
+    {
+        NSLog(@" %@", event);
+    }
+    
+    [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];
 }
 
 @end

@@ -20,6 +20,7 @@
 		4163B6F7153F4AB700D7B2DC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6F6153F4AB700D7B2DC /* Event.m */; };
 		4163B6FB153F4AB700D7B2DC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6FA153F4AB700D7B2DC /* User.m */; };
 		4185BB6E1541297B001E85E3 /* AnimatedUIPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */; };
+		419D3797154AD59E00447D2B /* EventsAttendingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 419D3796154AD59E00447D2B /* EventsAttendingTableViewController.m */; };
 		5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */; };
 		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
 		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
@@ -103,6 +104,8 @@
 		4163B6F6153F4AB700D7B2DC /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		4163B6F9153F4AB700D7B2DC /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		4163B6FA153F4AB700D7B2DC /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		419D3795154AD59E00447D2B /* EventsAttendingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsAttendingTableViewController.h; sourceTree = "<group>"; };
+		419D3796154AD59E00447D2B /* EventsAttendingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsAttendingTableViewController.m; sourceTree = "<group>"; };
 		5B227E49153673F200B5DD52 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
 		5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		5B227E4D15367D5200B5DD52 /* aqua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aqua.png; sourceTree = "<group>"; };
@@ -310,6 +313,8 @@
 				4163B6ED153E563C00D7B2DC /* FriendsViewController.m */,
 				4112762315439511008ED4AF /* FriendsTableViewController.h */,
 				4112762415439511008ED4AF /* FriendsTableViewController.m */,
+				419D3795154AD59E00447D2B /* EventsAttendingTableViewController.h */,
+				419D3796154AD59E00447D2B /* EventsAttendingTableViewController.m */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -515,6 +520,7 @@
 				5B6E6FA415451DC600BB3AA2 /* EventsViewController.m in Sources */,
 				5BC710CB1545E70300A7659F /* iStreet.xcdatamodeld in Sources */,
 				5B608A5A154A602D00BDCA28 /* ServerCommunication.m in Sources */,
+				419D3797154AD59E00447D2B /* EventsAttendingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -50,6 +50,8 @@ static NSString *appID = @"128188007305619";
     [defaults synchronize];
     NSLog(@"defaults just synchronized!");
     [self loggedInLoadFriendsNow];
+    
+
 }
 
 - (void)viewDidLoad
@@ -125,10 +127,34 @@ static NSString *appID = @"128188007305619";
         
         [facebook requestWithGraphPath:@"me/friends" andDelegate:self];
         NSLog(@"Asking for friends!!");
+        
+        
+        //Build url for server
+         
+        NSString *relativeURL = [NSString stringWithFormat:@"/updateUser?fb_id=571438200"];
+        relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+         
+        ServerCommunication *sc = [[ServerCommunication alloc] init];
+        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Rishi Narang"forViewController:self];       
+        NSLog(@"user updated!");
+        
+        relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=571438200"];
+        relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+        
+        sc = [[ServerCommunication alloc] init];
+        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=99"forViewController:self];       
+        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=100"forViewController:self];       
+        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=101"forViewController:self];       
+        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=88"forViewController:self];       
+       
+        NSLog(@"user updated!");
     }
-
 }
 
+- (void) finishedReceivingData:(NSData *)data
+{
+    
+}
 
 - (void)viewDidUnload
 {
