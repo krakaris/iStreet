@@ -24,8 +24,6 @@
 
 @implementation EventsViewController
 
-@synthesize netid;
-
 @synthesize activityIndicator, eventsTable;
 
 - (void)viewDidLoad
@@ -50,6 +48,7 @@
 
 - (void)loadData:(NSNotification *)notification
 {    
+    NSLog(@"Beginning loading events data!!");
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
 
     if(notification)
@@ -73,6 +72,7 @@
     if(selectedRow)
         [self.eventsTable deselectRowAtIndexPath:selectedRow animated:NO];
     
+    /*
     BOOL loggedIn = YES;
     if (loggedIn != YES)
     {
@@ -86,21 +86,7 @@
         
         [self presentModalViewController:loginView animated:YES];
     }
-}
-
-
-- (void) screenGotCancelled:(id) sender
-{
-    NSLog(@"WHAZOO!");
-    //loggedIn = YES;
-    
-    // NSString *netid;
-    // netid = self.loginView.
-    
-    [self dismissModalViewControllerAnimated:YES];
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logged In!" message:[NSString stringWithFormat:@"Welcome to iStreet, %@!", self.netid] delegate:self cancelButtonTitle:@"Start!" otherButtonTitles:nil];
-    [alert show];
+     */
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -114,13 +100,13 @@
 {    
     //NSString *url = @"http://istreetsvr.herokuapp.com/eventslist";
     ServerCommunication *sc = [[ServerCommunication alloc] init];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:@"/eventslist" withPOSTBody:nil forViewController:self];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:@"/eventslist" withPOSTBody:nil forViewController:self  withDelegate:self andDescription:nil];
 }
 
 /*
  Runs when the connection has successfully finished loading all data
  */
-- (void)finishedReceivingData:(NSData *)data
+- (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
     if(!eventsDictionaryArray)

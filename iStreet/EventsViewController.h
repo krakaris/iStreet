@@ -11,7 +11,7 @@
 #import "IconDownloader.h"
 #import "ServerCommunication.h"
 
-@interface EventsViewController : UIViewController <LoginViewControllerDelegate, UIWebViewDelegate, IconDownloaderDelegate, ServerCommunicationDelegate>
+@interface EventsViewController : UIViewController <IconDownloaderDelegate, ServerCommunicationDelegate>
 {
     UITableView *eventsTable;
     UIActivityIndicatorView *activityIndicator;
@@ -27,10 +27,6 @@
     
     NSMutableDictionary *iconsBeingDownloaded;
 }
-
-// will be moved...
-@property (nonatomic, retain) NSString *netid;
-- (void)screenGotCancelled:(id) sender;
 
 // actual events code
 @property(nonatomic, retain) IBOutlet UITableView *eventsTable;
