@@ -48,23 +48,6 @@
     
     timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(getNewMessages) userInfo:nil repeats:YES];
     [self getNewMessages];
-    
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];
-    
-    NSError *error;
-    NSArray *clubs = [document.managedObjectContext executeFetchRequest:request error:&error];
-    NSLog(@"clubs count %d", [clubs count]);
-    for(int i = 0; i < [clubs count]; i++)
-    {
-        Club *club = [clubs objectAtIndex:i];
-        NSLog(@"%@", club.name);
-    }
-    
-    request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    
-    NSArray *users = [document.managedObjectContext executeFetchRequest:request error:&error];
-    NSLog(@"user count %d", [users count]);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -82,11 +65,11 @@
     gettingNewMessages = YES;
     
     ServerCommunication *sc = [[ServerCommunication alloc] init];
-    if(![sc sendAsynchronousRequestForDataAtRelativeURL:[NSString stringWithFormat:@"/get?past=%d", lastMessageID] withPOSTBody:nil forViewController:self])
+    if(![sc sendAsynchronousRequestForDataAtRelativeURL:[NSString stringWithFormat:@"/get?past=%d", lastMessageID] withPOSTBody:nil forViewController:self withDelegate:self andDescription:@"get"])
         gettingNewMessages = NO;
 }
   
-- (void)connectionFailed
+- (void)connectionFailed:(NSString *)description
 {
     /* */
 }
@@ -94,40 +77,52 @@
 /*
  Runs when the connection has successfully finished loading all data
  */
-- (void)finishedReceivingData:(NSData *)data
+- (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {      
-    NSError *error;
-    NSArray *messagesArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    if(!messagesArray)
+    if([description isEqualToString:@"add"])
     {
-        NSLog(@"%@", [error localizedDescription]);
+        messageField.text = @"";
+        [messageField setTextColor:[UIColor blackColor]];
+        
+        [self getNewMessages];
+    }
+    else 
+    { // get
+        
+        NSError *error;
+        NSArray *messagesArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if(!messagesArray)
+        {
+            NSLog(@"parsing error: %@", [error localizedDescription]);
+            NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding]);
+            gettingNewMessages = NO;
+            return; // do nothing if can't recieve messages
+        }
+        
+        receivedNewMessages = YES;
+        int oldLastID = 0;
+        if([messages count] > 0)
+        {
+            oldLastID = ((Message *)[messages objectAtIndex:([messages count]-1)]).ID;
+        }
+        
+        NSEnumerator *realMessageOrder = [messagesArray reverseObjectEnumerator];
+        NSDictionary *dict;
+        while (dict = [realMessageOrder nextObject])
+        {
+            Message *m = [[Message alloc] initWithDictionary:dict];
+            [messages addObject:m];
+        }
+        
+        if([messages count] > 0)
+            lastMessageID = ((Message *)[messages objectAtIndex:([messages count]-1)]).ID;            
+        
+        [messagesTable reloadData];
+        if(lastMessageID > oldLastID) // if new messages were received, scroll to the new message(s)
+            [messagesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([messages count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [activityIndicator stopAnimating];
         gettingNewMessages = NO;
-        return; // do nothing if can't recieve messages
     }
-    
-    receivedNewMessages = YES;
-    int oldLastID = 0;
-    if([messages count] > 0)
-    {
-        oldLastID = ((Message *)[messages objectAtIndex:([messages count]-1)]).ID;
-    }
-    
-    NSEnumerator *realMessageOrder = [messagesArray reverseObjectEnumerator];
-    NSDictionary *dict;
-    while (dict = [realMessageOrder nextObject])
-    {
-        Message *m = [[Message alloc] initWithDictionary:dict];
-        [messages addObject:m];
-    }
-    
-    if([messages count] > 0)
-        lastMessageID = ((Message *)[messages objectAtIndex:([messages count]-1)]).ID;            
-    
-    [messagesTable reloadData];
-    if(lastMessageID > oldLastID) // if new messages were received, scroll to the new message(s)
-        [messagesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([messages count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    [activityIndicator stopAnimating];
-    gettingNewMessages = NO;
 }
 
 #pragma mark Sending Messages
@@ -144,12 +139,7 @@
     NSString *myNetID = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
     
     ServerCommunication *sc = [[ServerCommunication alloc] init];
-    [sc sendSynchronousRequestForDataAtRelativeURL:@"/add" withPOSTBody:[NSString stringWithFormat:@"user_id=%@&message=%@", myNetID, messageField.text] forViewController:self];
-    
-    messageField.text = @"";
-    [messageField setTextColor:[UIColor blackColor]];
-    
-    [self getNewMessages];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:@"/add" withPOSTBody:[NSString stringWithFormat:@"user_id=%@&message=%@", myNetID, messageField.text] forViewController:self  withDelegate:self andDescription:@"add"];
 }
 
 #pragma mark UITableViewController Data Source

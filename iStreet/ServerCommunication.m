@@ -7,6 +7,7 @@
 //
 
 #import "ServerCommunication.h"
+#import "AppDelegate.h"
 
 enum connectionConstants {
     kConnectionTimeout = 8,  
@@ -14,13 +15,19 @@ enum connectionConstants {
 
 @implementation ServerCommunication
 
-@synthesize receivedData, viewController;
+@synthesize receivedData, viewController, delegate, serverResponse, description;
 
-- (BOOL)sendAsynchronousRequestForDataAtRelativeURL:(NSString *)relativeURL withPOSTBody:(NSString *)post forViewController:(UIViewController <ServerCommunicationDelegate> *)vc
+- (BOOL)sendAsynchronousRequestForDataAtRelativeURL:(NSString *)rel withPOSTBody:(NSString *)p forViewController:(UIViewController *)vc withDelegate:(id <ServerCommunicationDelegate>)del andDescription:(NSString *)d;
 {
-    static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
-    NSString *absoluteURL = [serverURL stringByAppendingString:relativeURL];
+    static NSString *serverURL = @"http://localhost:5000";
+    //static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
+    NSString *absoluteURL = [serverURL stringByAppendingString:rel];
     [self setViewController:vc];
+    [self setDescription:d];
+    [self setDelegate:del];
+    relativeURL = rel;
+    post = p;
+    
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         
@@ -28,12 +35,12 @@ enum connectionConstants {
     [request setTimeoutInterval:kConnectionTimeout];
     [request setURL:[NSURL URLWithString:absoluteURL]];
     
-    if(!post)
+    if(!p)
         [request setHTTPMethod:@"GET"];
     else {
         [request setHTTPMethod:@"POST"];
         NSMutableData *body = [NSMutableData data];
-        [body appendData:[post dataUsingEncoding:NSISOLatin1StringEncoding]];
+        [body appendData:[p dataUsingEncoding:NSISOLatin1StringEncoding]];
         [request setHTTPBody:body];
     }
     
@@ -46,6 +53,7 @@ enum connectionConstants {
     else
     {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        // TELL DELEGATE THE MISSION FAILED.
         return NO;
     }
 }
@@ -57,6 +65,7 @@ enum connectionConstants {
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {  
     [receivedData setLength:0];
+    [self setServerResponse:response];
 }  
 
 /*
@@ -69,9 +78,10 @@ enum connectionConstants {
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    NSLog(@"Connection failed (ServerCommunication.m): %@", [error localizedDescription]);
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    if(self.viewController)
-        [self.viewController connectionFailed];
+    if(self.delegate && [self.delegate respondsToSelector: @selector(connectionFailed::)])
+        [self.delegate connectionFailed:description];
 }
 
 /*
@@ -79,37 +89,44 @@ enum connectionConstants {
  */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    if(self.viewController)
-        [self.viewController finishedReceivingData:receivedData];
+    // if CAS Login is required
+    if ([[[serverResponse URL] absoluteString] rangeOfString:@"fed.princeton.edu/cas/"].location != NSNotFound) 
+    {
+        NSLog(@"Requesting new cookie through CAS");
+        LoginViewController *lvc = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andHTMLString:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding] withDelegate:self];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        //LoginViewController *lvc = [[LoginViewController alloc] init];
+//        UIWebView *webView = [[UIWebView alloc] initWithFrame:lvc.view.frame];
+//        [lvc.view addSubview:webView];
+//        lvc.loginWebView = webView;
+
+        [lvc setHtml:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding]];
+        [lvc setDelegate:self];
+
+        lvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self.viewController presentModalViewController:lvc animated:YES];
+    }
+    else if ([[[serverResponse URL] absoluteString] rangeOfString:@"/login?ticket="].location != NSNotFound)
+    {
+        // if the server redirected to CAS Login and got an immediate redirect back because of a CAS cookie, 
+        NSString *netid = [[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding] substringFromIndex:[@"SUCCESS: " length]];
+        [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:netid];
+        [self userLoggedIn:self];
+    }
+    else 
+    {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        if(self.delegate && [self.delegate respondsToSelector:@selector(connectionWithDescription:finishedReceivingData:) ])
+            [self.delegate connectionWithDescription:description finishedReceivingData:receivedData];
+    }
 }
 
-- (NSData *)sendSynchronousRequestForDataAtRelativeURL:(NSString *)relativeURL withPOSTBody:(NSString *)post forViewController:(UIViewController <ServerCommunicationDelegate> *)vc
+
+- (void)userLoggedIn:(id)sender;
 {
-    static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
-    NSString *absoluteURL = [serverURL stringByAppendingString:relativeURL];
-    [self setViewController:vc];
-        
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setTimeoutInterval:kConnectionTimeout];
-    [request setURL:[NSURL URLWithString:absoluteURL]];
-    
-    if(!post)
-        [request setHTTPMethod:@"GET"];
-    else {
-        [request setHTTPMethod:@"POST"];
-        NSMutableData *body = [NSMutableData data];
-        [body appendData:[post dataUsingEncoding:NSISOLatin1StringEncoding]];
-        [request setHTTPBody:body];
-    }
-    
-    NSHTTPURLResponse *response = nil;
-    NSError *error = [[NSError alloc] init];
-    
+    NSLog(@"Successful authentication and cookie recieved! Sending the call again.");
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    NSData *returnedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    return returnedData;
+    [self sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:post forViewController:viewController withDelegate:self.delegate andDescription:description];
 }
 
 @end

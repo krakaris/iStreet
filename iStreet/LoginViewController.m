@@ -16,18 +16,15 @@
 
 @implementation LoginViewController
 
-@synthesize loginWebView;
-@synthesize urlToLoad;
-@synthesize cancelButton;
-@synthesize delegate;
+@synthesize loginWebView, delegate, html;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andURL: (NSURL *) thisURL
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andHTMLString: (NSString *)markup withDelegate:(id <LoginViewControllerDelegate>)theDelegate
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.urlToLoad = thisURL;
-        
+        [self setHtml:markup];
+        [self setDelegate:theDelegate];
     }
     return self;
 }
@@ -35,55 +32,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"view loaded!");
     // Do any additional setup after loading the view from its nib.
-}
-
--(void) webViewDidFinishLoad:(UIWebView *)webView
-{
-    NSLog(@"Finished Loading!!");
-   
-    NSString *html = [webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"];
-    //NSLog(html);
-        
-    NSString *stringToMatch = @"successfully logged into";
-    
-    if ([html rangeOfString:stringToMatch].location == NSNotFound)
-    {
-        NSLog(@"Not found");
-    }
-    else {
-        NSLog(@"Found it!");
-        [self.delegate screenGotCancelled:self];
-    }
-    
-    NSLog(@"%@", webView.request.URL.absoluteString);
-    
-}
-
-- (void) webViewDidStartLoad:(UIWebView *)webView
-{
-    NSString *netid;
-    
-    if ([(AppDelegate *)self.delegate loggedIn] == NO)
-    {
-        netid = [webView stringByEvaluatingJavaScriptFromString:@"document.getElementById('username').value;"];
-
-        EventsViewController *cvc = (EventsViewController *) self.delegate;
-        cvc.netid = netid;
-
-        NSLog(@"Net id is this -- %@", netid);
-        [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:netid];
-        NSLog(@"Bazinga!");
-    }
-    else {
-        NSLog(@"YAMAHA!");
-    }
-    
-}
-
-- (void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:YES];
     
     //Declaring itself as the delegate
     self.loginWebView.delegate = self;
@@ -92,8 +42,54 @@
     self.loginWebView.scrollView.scrollEnabled = NO;
     //We DON'T want them to scroll down
     
-    NSURLRequest *req = [[NSURLRequest alloc] initWithURL:self.urlToLoad];
-    [self.loginWebView loadRequest:req];
+    if(html)
+    {
+        [self.loginWebView loadHTMLString:html baseURL:[NSURL URLWithString:@"https://fed.princeton.edu/cas/login"]];
+    }
+}
+
+- (void) webViewDidStartLoad:(UIWebView *)webView
+{
+    /*
+    NSString *netid;
+    
+    if ([(AppDelegate *)self.delegate loggedIn] == NO)
+    {
+        netid = [webView stringByEvaluatingJavaScriptFromString:@"document.getElementById('username').value;"];
+        
+        EventsViewController *cvc = (EventsViewController *) self.delegate;
+        cvc.netid = netid;
+        
+        NSLog(@"Net id is this -- %@", netid);
+        [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:netid];
+        NSLog(@"Bazinga!");
+    }
+    else {
+        NSLog(@"YAMAHA!");
+    }
+     */
+    
+}
+
+-(void) webViewDidFinishLoad:(UIWebView *)webView
+{
+    static NSString *prefix = @"SUCCESS: ";
+    int prefixLength = [prefix length];
+
+    NSString *textContent = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.textContent"];
+    if([textContent length] >= prefixLength && [[textContent substringToIndex:prefixLength] isEqualToString:prefix])
+    {
+        NSLog(@"logged in, telling delegate!");
+        NSString *netid = [textContent substringFromIndex:prefixLength];
+        [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:netid];
+        [self.delegate userLoggedIn:self];
+        [self dismissModalViewControllerAnimated:YES];
+    }
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
 }
 
 - (void)viewDidUnload
@@ -106,12 +102,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (IBAction)cancelThisScreen:(id)sender
-{
-    NSLog(@"Canceling!!");
-    [self.delegate screenGotCancelled:self];
 }
 
 @end

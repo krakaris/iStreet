@@ -21,50 +21,23 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 @implementation AppDelegate
 
 @synthesize window = _window, netID, document, appDataLoaded;
-@synthesize loggedIn;
-@synthesize navController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [_window makeKeyAndVisible];
     
-    netID = @"<skipped login>";
+    netID = nil;
     appDataLoaded = NO;
-    loggedIn = NO;
     // Override point for customization after application launch.
     //UIView *loginWebView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     //[self.view presentModalViewController:loginWebView animated:YES completion:^{}];
     //[self.window.subviews.lastObject presentModalViewController:loginWebView animated:YES];
-    
-    loggedIn = YES;
-    if (loggedIn != YES)
-    {
-        NSString *casURL = @"https://fed.princeton.edu/cas/login";
-        
-        LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NSURL URLWithString:casURL]];
-        
-        //LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NS
-        loginView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;   
-        loginView.delegate = self;
-        
-        [self.window makeKeyAndVisible];
-        
-        UIViewController *viewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
-        self.navController = [[UINavigationController alloc]
-                               initWithRootViewController:viewController];
-        
-        [self.window addSubview: [navController view]];
-        
-        //[self.navController presentModalViewController:loginView animated: YES];
-        [self screenGotCancelled:self];
-    }
     
     NSLog(@"going to sleep for NSFileManager startup (only for simulator)...");
     [NSThread sleepForTimeInterval:3];
     NSLog(@"wakie wakie eggs and bakie");
     
     
-    /* THIS CODE SHOULD BE CALLED ONLY AFTER A SUCCESSFUL CAS LOGIN */ 
     NSFileManager *fm = [NSFileManager defaultManager];
     NSURL *dataURL = [[fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     dataURL = [dataURL URLByAppendingPathComponent:@"database"];
@@ -78,18 +51,18 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
                 NSLog(@"successfully opened database!");
                 
                 /*
-                NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];
-                request.predicate = [NSPredicate predicateWithFormat:@"event_id = %d", 100];
-                
-                NSError *error;
-                NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
-                for(int i = 0; i < [events count]; i++)
-                {
-                    Event *e = [events objectAtIndex:i];
-                    NSLog(@"%@: %@", e.event_id, e.title);
-                }
-                
-                */
+                 NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];
+                 request.predicate = [NSPredicate predicateWithFormat:@"event_id = %d", 100];
+                 
+                 NSError *error;
+                 NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
+                 for(int i = 0; i < [events count]; i++)
+                 {
+                 Event *e = [events objectAtIndex:i];
+                 NSLog(@"%@: %@", e.event_id, e.title);
+                 }
+                 
+                 */
                 appDataLoaded = YES;
                 [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
                 /*
@@ -115,8 +88,8 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
                  }
                  */
                 
-                 //List all events in data
-                 /*NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
+                //List all events in data
+                /*NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
                  NSError *error;
                  NSLog(@"listing events in data...");
                  NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
@@ -125,7 +98,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
                  Event *event = [events objectAtIndex:i];
                  NSLog(@"%@", event.title);
                  }
-                NSLog(@"done loading events in data");*/
+                 NSLog(@"done loading events in data");*/
             }
             if (!success) NSLog(@"couldn’t open document at %@", [dataURL path]);
         }]; 
@@ -137,9 +110,6 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
                    if (success) 
                    {
                        [self setupCoreData];
-                       NSLog(@"successfully created database!");  
-                       appDataLoaded = YES;
-                       [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
                    }
                    if (!success) NSLog(@"couldn’t create document at %@", [dataURL path]);
                    
@@ -150,27 +120,6 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
     return YES;
 }
 
-
-
-- (void) screenGotCancelled:(id) sender
-{
-    NSLog(@"WHAZOO!");
-    loggedIn = YES;
-    
-    // NSString *netid;
-    // netid = self.loginView.
-    
-    [self.navController dismissModalViewControllerAnimated:YES];
-    //[[navController view] removeFromSuperview];
-    [self.navController.view removeFromSuperview];
-    [self.navController removeFromParentViewController];
-
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logged In!" message:[NSString stringWithFormat:@"Welcome to iStreet, %@!", self.netID] delegate:self cancelButtonTitle:@"Start!" otherButtonTitles:nil];
-    [alert show];
-    
-}
-
 /*
  Is called the first time that the application runs in order to create the database.
  */
@@ -178,24 +127,34 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 {
     NSLog(@"setting up core data...");
     NSLog(@"sending request for clubs list...");
-    NSData *data = [[[ServerCommunication alloc] init] sendSynchronousRequestForDataAtRelativeURL:@"/clubslist" withPOSTBody:nil forViewController:(UITabBarController <ServerCommunicationDelegate> *)self.window.rootViewController];
+    [[[ServerCommunication alloc] init] sendAsynchronousRequestForDataAtRelativeURL:@"/clubslist" withPOSTBody:nil forViewController:self.window.rootViewController  withDelegate:self andDescription:nil];
+}
+
+- (void)connectionFailed:(NSString *)description
+{
+    NSLog(@"clubs list connection failed");
+}
+
+- (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
+{
     NSLog(@"data recieved!");
-    if(!data)
-    {
-        //APPROPRIATELY HANDLE WEB FAILURE!
-        NSLog(@"clubs list connection failed");
-        return;
-    }
     
     NSArray *clubs = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+    // WHAT IF THIS FAILS??
     for (NSDictionary *clubInformation in clubs)
     {
         NSLog(@"%@", [clubInformation objectForKey:@"name"]);
         [Club clubWithData:clubInformation];
     }
     
+    //OR HERE??
+    
     User *thisUser = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:document.managedObjectContext];
     [thisUser setNetid:netID];
+    
+    NSLog(@"successfully created database!");  
+    appDataLoaded = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
