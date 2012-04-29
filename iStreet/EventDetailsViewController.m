@@ -19,8 +19,8 @@
 @synthesize eventDate;
 @synthesize eventTime;
 @synthesize eventImage;
-@synthesize attending;
 @synthesize attendButton;
+@synthesize unattendButton;
 @synthesize descriptionText;
 @synthesize seeAllFriendsAttending;
 @synthesize eventEntry;
@@ -54,27 +54,26 @@
     //Set entry and entry description
     eventEntry.text = [self setEntry:myEvent];
     
-    //Set "Attending" Button/Label
+    //Set "Attending"/"Unattending" Button
     if ([user.attendingEvents containsObject:myEvent]) {
         userIsAttending = YES;
-        //[attendButton.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:15.0]];
         attendButton.titleLabel.textColor = [UIColor orangeColor];
-        //hide the button
+        //hide the Attend button
         attendButton.enabled = NO;
         attendButton.hidden = YES;
-        
-        //FIX this
-        [self.attending.text sizeWithFont:self.attending.font 
-                        constrainedToSize:self.attending.frame.size
-                            lineBreakMode:UILineBreakModeWordWrap]; 
-        self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
-        self.attending.textColor = [UIColor colorWithRed:255.0/255.0 green:70.0/255.0 blue:0 alpha:1.0];
+        //Show the unattend button
+        unattendButton.titleLabel.textColor = [UIColor orangeColor];
+        //self.unattendButton.titleLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:70.0/255.0 blue:0 alpha:1.0];
+        unattendButton.enabled = YES;
+        unattendButton.hidden = NO;
+
     } else {
-        //[attendButton.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS-Bold" size:15.0]];
         userIsAttending = NO;
         attendButton.enabled = YES;
         attendButton.hidden = NO;
         attendButton.titleLabel.textColor = [UIColor orangeColor];
+        unattendButton.enabled = NO;
+        unattendButton.hidden = YES;
     }
     
     //Set image
@@ -185,11 +184,11 @@
     [self setEventDate:nil];
     [self setEventTime:nil];
     [self setEventImage:nil];
-    [self setAttending:nil];
     [self setAttendButton:nil];
     [self setSeeAllFriendsAttending:nil];
     [self setDescriptionText:nil];
     [self setEventEntry:nil];
+    [self setUnattendButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -204,10 +203,26 @@
     userIsAttending = YES;
     sender.hidden = YES;
     sender.enabled = NO;
-    self.attending.text = [NSString stringWithFormat: @"You are attending %@!", myEvent.title];
-    self.attending.textColor = [UIColor colorWithRed:255.0/255.0 green:70.0/255.0 blue:0 alpha:1.0];
+    unattendButton.hidden = NO;
+    unattendButton.enabled = YES;
+    unattendButton.titleLabel.textColor = [UIColor orangeColor];
+    
+    // UPDATE USER'S EVENTS IN DB HERE!!! ATTEND EVENT
     
 }
+
+- (IBAction)unattend:(UIButton *)sender {
+    [user removeAttendingEventsObject:myEvent];
+    userIsAttending = NO;
+    sender.hidden = YES;
+    sender.enabled = NO;
+    attendButton.hidden = NO;
+    attendButton.enabled = YES;
+    attendButton.titleLabel.textColor = [UIColor orangeColor];
+
+    //UPDATE USER'S EVENTS IN DB HERE!!! UN-ATTEND EVENT
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
