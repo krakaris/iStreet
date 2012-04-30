@@ -20,14 +20,13 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 
 @implementation AppDelegate
 
-@synthesize window = _window, netID, document, appDataLoaded;
+@synthesize window = _window, netID = _netID, document = _document, appDataLoaded = _appDataLoaded;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [_window makeKeyAndVisible];
     
-    netID = nil;
-    appDataLoaded = NO;
+    _appDataLoaded = NO;
     // Override point for customization after application launch.
     //UIView *loginWebView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     //[self.view presentModalViewController:loginWebView animated:YES completion:^{}];
@@ -49,71 +48,31 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
             if (success) 
             {
                 NSLog(@"successfully opened database!");
+                _appDataLoaded = YES;
+                NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
                 
-                /*
-                 NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];
-                 request.predicate = [NSPredicate predicateWithFormat:@"event_id = %d", 100];
-                 
-                 NSError *error;
-                 NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
-                 for(int i = 0; i < [events count]; i++)
-                 {
-                 Event *e = [events objectAtIndex:i];
-                 NSLog(@"%@: %@", e.event_id, e.title);
-                 }
-                 
-                 */
-                appDataLoaded = YES;
+                NSError *error;
+                NSArray *clubs = [_document.managedObjectContext executeFetchRequest:request error:&error];
+                if(clubs)
+                {
+                    User *thisUser = [clubs objectAtIndex:0];
+                    _netID = [thisUser netid];
+                }
                 [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
-                /*
-                 NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];                
-                 NSError *error;
-                 NSLog(@"listing clubs in data...");
-                 NSArray *clubs = [document.managedObjectContext executeFetchRequest:request error:&error];
-                 for(int i = 0; i < [clubs count]; i++)
-                 {
-                 Club *club = [clubs objectAtIndex:i];
-                 //NSLog(@"%@", club.name);
-                 Club *sameClub = [Club clubWithData:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%@", club.club_id] forKey:@"club_id"]];
-                 }
-                 NSLog(@"testing again!");
-                 clubs = [document.managedObjectContext executeFetchRequest:request error:&error];
-                 for(int i = 0; i < [clubs count]; i++)
-                 {
-                 Club *club = [clubs objectAtIndex:i];
-                 NSString *events = @"";
-                 for(Event *event in club.whichEvents)
-                 events = [events stringByAppendingFormat:@"%@, ", event.title];
-                 NSLog(@"%@: %@", club.name, events);
-                 }
-                 */
-                
-                //List all events in data
-                /*NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                
-                 NSError *error;
-                 NSLog(@"listing events in data...");
-                 NSArray *events = [document.managedObjectContext executeFetchRequest:request error:&error];
-                 for(int i = 0; i < [events count]; i++)
-                 {
-                 Event *event = [events objectAtIndex:i];
-                 NSLog(@"%@", event.title);
-                 }
-                 NSLog(@"done loading events in data");*/
+    
             }
-            if (!success) NSLog(@"couldn’t open document at %@", [dataURL path]);
-        }]; 
+            if (!success) 
+                NSLog(@"couldn’t open document at %@", [dataURL path]);}]; 
     } 
     else 
     {
         [self.document saveToURL:dataURL forSaveOperation:UIDocumentSaveForCreating
                completionHandler:^(BOOL success) {
                    if (success) 
-                   {
                        [self setupCoreData];
-                   }
-                   if (!success) NSLog(@"couldn’t create document at %@", [dataURL path]);
                    
-               }];
+                   if (!success) 
+                       NSLog(@"couldn’t create document at %@", [dataURL path]);}];
         
     }    
     
@@ -149,11 +108,10 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
     
     //OR HERE??
     
-    User *thisUser = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:document.managedObjectContext];
-    [thisUser setNetid:netID];
+    [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:_document.managedObjectContext];
     
     NSLog(@"successfully created database!");  
-    appDataLoaded = YES;
+    _appDataLoaded = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
 }
 
@@ -182,6 +140,35 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)setNetID:(NSString *)netID
+{
+    // only set the instance variable if netID is a new netid. netID could be the notification sender.
+    if([netID isKindOfClass:[NSString class]])
+        _netID = netID;
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    
+    NSError *error;
+    NSArray *clubs = [_document.managedObjectContext executeFetchRequest:request error:&error];
+    if(!clubs)
+    {
+        NSLog(@"%@", [error localizedDescription]);
+        return;
+    }
+    if([clubs count] == 0)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNetID:) name:DataLoadedNotificationString object:self];
+        NSLog(@"registering for notification for setting net id");
+    }
+    else 
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        NSLog(@"setting netid!");
+        User *thisUser = [clubs objectAtIndex:0];
+        [thisUser setNetid:_netID];
+    }
 }
 
 @end
