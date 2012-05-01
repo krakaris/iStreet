@@ -43,6 +43,9 @@
 		9D197B69153B51B800604080 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B61153B51B800604080 /* EventCell.m */; };
 		9D197B6B153B51B800604080 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B65153B51B800604080 /* IconDownloader.m */; };
 		9D208D7815409335004515E9 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
+		9D293368154ECAE400B3F8A9 /* iStreet final icon 57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D293367154ECAE400B3F8A9 /* iStreet final icon 57x57.png */; };
+		9D29336C154ECB5700B3F8A9 /* iStreet final icon 114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D29336B154ECB5700B3F8A9 /* iStreet final icon 114x114.png */; };
+		9D293370154ECC0E00B3F8A9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D29336F154ECC0E00B3F8A9 /* Default.png */; };
 		9D464B191537482600468729 /* grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B171537482600468729 /* grey.png */; };
 		9D464B1A1537482600468729 /* light_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B181537482600468729 /* light_orange.png */; };
 		9D464B211537631C00468729 /* Princeton Crest 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B201537631C00468729 /* Princeton Crest 3.png */; };
@@ -139,6 +142,9 @@
 		9D197B61153B51B800604080 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		9D197B64153B51B800604080 /* IconDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconDownloader.h; sourceTree = "<group>"; };
 		9D197B65153B51B800604080 /* IconDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconDownloader.m; sourceTree = "<group>"; };
+		9D293367154ECAE400B3F8A9 /* iStreet final icon 57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iStreet final icon 57x57.png"; sourceTree = "<group>"; };
+		9D29336B154ECB5700B3F8A9 /* iStreet final icon 114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iStreet final icon 114x114.png"; sourceTree = "<group>"; };
+		9D29336F154ECC0E00B3F8A9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		9D34B76F1524D55600DB6C13 /* Settings icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings icon.png"; sourceTree = "<group>"; };
 		9D34B7731524D5D000DB6C13 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
 		9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedUIPickerView.h; sourceTree = "<group>"; };
@@ -252,6 +258,9 @@
 		5BA1F5FF15112DA7002CA7F3 = {
 			isa = PBXGroup;
 			children = (
+				9D29336F154ECC0E00B3F8A9 /* Default.png */,
+				9D29336B154ECB5700B3F8A9 /* iStreet final icon 114x114.png */,
+				9D293367154ECAE400B3F8A9 /* iStreet final icon 57x57.png */,
 				5BA1F61415112DA7002CA7F3 /* iStreet */,
 				5BA1F60D15112DA7002CA7F3 /* Frameworks */,
 				5BA1F60B15112DA7002CA7F3 /* Products */,
@@ -495,6 +504,9 @@
 				5BE7E2B1153A5E54008EFCA0 /* Placeholder.png in Resources */,
 				4163B6F0153E572E00D7B2DC /* fconnect.png in Resources */,
 				41263FA91543378A006DD5D6 /* FBDialog.bundle in Resources */,
+				9D293368154ECAE400B3F8A9 /* iStreet final icon 57x57.png in Resources */,
+				9D29336C154ECB5700B3F8A9 /* iStreet final icon 114x114.png in Resources */,
+				9D293370154ECC0E00B3F8A9 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +624,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/iStreet/facebook-ios-sdk\"",
+					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -623,6 +636,8 @@
 		5BA1F63815112DA7002CA7F3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iStreet/iStreet-Prefix.pch";
 				INFOPLIST_FILE = "iStreet/iStreet-Info.plist";
@@ -630,8 +645,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/iStreet/facebook-ios-sdk\"",
+					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
