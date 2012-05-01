@@ -8,10 +8,15 @@
 
 #import "ServerCommunication.h"
 #import "AppDelegate.h"
+#import <CommonCrypto/CommonDigest.h>
 
 enum connectionConstants {
     kConnectionTimeout = 8,  
 };
+
+@interface ServerCommunication()
++ (NSString *)md5HexDigest:(NSString *)input;
+@end
 
 @implementation ServerCommunication
 
@@ -19,8 +24,8 @@ enum connectionConstants {
 
 - (BOOL)sendAsynchronousRequestForDataAtRelativeURL:(NSString *)rel withPOSTBody:(NSString *)p forViewController:(UIViewController *)vc withDelegate:(id <ServerCommunicationDelegate>)del andDescription:(NSString *)d;
 {
-    //static NSString *serverURL = @"http://localhost:5000";
-    static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
+    static NSString *serverURL = @"http://localhost:5000";
+    //static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
     NSString *absoluteURL = [serverURL stringByAppendingString:rel];
     [self setViewController:vc];
     [self setDescription:d];
@@ -127,6 +132,54 @@ enum connectionConstants {
     NSLog(@"Successful authentication and cookie recieved! Sending the call again.");
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:post forViewController:viewController withDelegate:self.delegate andDescription:description];
+}
+
+
+#pragma mark NSURLConnectionDelegate methods
+
+- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace
+{
+    return YES;
+}
+
+- (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+{
+    NSString *host = [[challenge protectionSpace] host];
+    //NSLog(@"YOU HAVE BEEN CHALLENGED!: %@", host);
+    if(!([host isEqualToString:@"localhost"] || [host isEqualToString:@"istreetsvr.herokuapp.com"]))
+    {
+        //NSLog(@"skipping without credentials");
+        [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
+        return;
+    }
+    
+    if ([challenge previousFailureCount] > 3) 
+        [[challenge sender] cancelAuthenticationChallenge:challenge];
+    
+    static NSString *PRIVATE_KEY = @"q{4fI&druS9Rz:)!o@0i";
+
+    NSString *contents = [[challenge protectionSpace] realm]; // of the form "user_message: <challenge_key>"
+    NSString *challengeKey = [contents substringFromIndex:([contents rangeOfString:@": "].location + 2)];
+    NSString *unencodedResponse = [challengeKey stringByAppendingString:PRIVATE_KEY];
+    NSString *encodedResponse = [ServerCommunication md5HexDigest:unencodedResponse];
+    
+    NSURLCredential *credential = [NSURLCredential credentialWithUser:@"" password:encodedResponse persistence:NSURLCredentialPersistenceNone];
+    
+    [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+}
+
+// From Facebook Connect source code (
++ (NSString *)md5HexDigest:(NSString *)input 
+{
+    const char *str = [input UTF8String];
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(str, strlen(str), result);
+
+    NSMutableString *hash = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH*2];
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) 
+        [hash appendFormat:@"%02x", result[i]];
+    
+    return hash;
 }
 
 @end

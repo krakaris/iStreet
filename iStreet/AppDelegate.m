@@ -97,7 +97,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     NSLog(@"data recieved!");
-    
+    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSArray *clubs = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
     // WHAT IF THIS FAILS??
     for (NSDictionary *clubInformation in clubs)
