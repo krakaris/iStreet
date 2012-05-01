@@ -527,6 +527,7 @@
 				5B6E6FA415451DC600BB3AA2 /* EventsViewController.m in Sources */,
 				5BC710CB1545E70300A7659F /* iStreet.xcdatamodeld in Sources */,
 				5B608A5A154A602D00BDCA28 /* ServerCommunication.m in Sources */,
+				5B3DEB2D154AA52A0023C651 /* LoginViewController.m in Sources */,
 				419D3797154AD59E00447D2B /* EventsAttendingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
