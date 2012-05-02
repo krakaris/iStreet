@@ -300,8 +300,8 @@
     
     NSLog(@"relativeURL is %@", relativeURL);
     ServerCommunication *sc = [[ServerCommunication alloc] init];
-    [sc sendSynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self];
+    //[sc sendSynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self];
+    //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self];
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

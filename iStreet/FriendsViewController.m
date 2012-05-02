@@ -29,6 +29,8 @@ static NSString *appID = @"128188007305619";
         // Custom initialization
         
     }
+    
+    alreadyLoadedFriends = NO;
     return self;
 }
 
@@ -64,32 +66,38 @@ static NSString *appID = @"128188007305619";
     
     if (alreadyLoadedFriends && [facebook isSessionValid])
     {
+        NSLog(@"Already loaded friends is YES!");
+        
         [self.fConnectButton setHidden:YES];
         self.fConnectButton.hidden = YES;
         [self.spinner startAnimating];
         [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
         [self.spinner stopAnimating];
     }
-    else {
-        NSLog(@"Did load!");
-        
+    else        
         //doing initial fb setup
+    {
+        NSLog(@"Already loaded friends is NO!");
         NSLog(@"Initial fb setup");
+        
         if (!facebook)
         {
             NSLog(@"Alloc-ing fb instance if none exists.");
             facebook = [[Facebook alloc] initWithAppId:appID andDelegate:self];
             self.facebook.sessionDelegate = self;
-            //[facebook setSessionDelegate:self];
         }
         
+        
+        //Setting defaults
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
         if ([defaults objectForKey:@"FBAccessTokenKey"] 
-            && [defaults objectForKey:@"FBExpirationDateKey"]) {
+            && [defaults objectForKey:@"FBExpirationDateKey"]) 
+        {
             facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
             facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
         }
+        
         
         // Now check that the URL scheme fb[app_id]://authorize is in the .plist and can
         // be opened, doing a simple check without local app id factored in here
@@ -97,15 +105,19 @@ static NSString *appID = @"128188007305619";
         BOOL bSchemeInPlist = NO; // find out if the sceme is in the plist file.
         NSArray* aBundleURLTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleURLTypes"];
         if ([aBundleURLTypes isKindOfClass:[NSArray class]] &&
-            ([aBundleURLTypes count] > 0)) {
+            ([aBundleURLTypes count] > 0)) 
+        {
             NSDictionary* aBundleURLTypes0 = [aBundleURLTypes objectAtIndex:0];
-            if ([aBundleURLTypes0 isKindOfClass:[NSDictionary class]]) {
+            if ([aBundleURLTypes0 isKindOfClass:[NSDictionary class]]) 
+            {
                 NSArray* aBundleURLSchemes = [aBundleURLTypes0 objectForKey:@"CFBundleURLSchemes"];
                 if ([aBundleURLSchemes isKindOfClass:[NSArray class]] &&
-                    ([aBundleURLSchemes count] > 0)) {
+                    ([aBundleURLSchemes count] > 0)) 
+                {
                     NSString *scheme = [aBundleURLSchemes objectAtIndex:0];
                     if ([scheme isKindOfClass:[NSString class]] &&
-                        [url hasPrefix:scheme]) {
+                        [url hasPrefix:scheme]) 
+                    {
                         bSchemeInPlist = YES;
                     }
                 }
@@ -114,7 +126,8 @@ static NSString *appID = @"128188007305619";
         
         // Check if the authorization callback will work
         BOOL bCanOpenUrl = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString: url]];
-        if (!bSchemeInPlist || !bCanOpenUrl) {
+        if (!bSchemeInPlist || !bCanOpenUrl) 
+        {
             UIAlertView *alertView = [[UIAlertView alloc]
                                       initWithTitle:@"Setup Error"
                                       message:@"Invalid or missing URL scheme. You cannot run the app until you set up a valid URL scheme in your .plist."
@@ -129,24 +142,25 @@ static NSString *appID = @"128188007305619";
         NSLog(@"Asking for friends!!");
         
         
+        
         //Build url for server
-         
-        NSString *relativeURL = [NSString stringWithFormat:@"/updateUser?fb_id=571438200"];
-        relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
-         
-        ServerCommunication *sc = [[ServerCommunication alloc] init];
-        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Rishi Narang"forViewController:self];       
-        NSLog(@"user updated!");
         
-        relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=571438200"];
-        relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+        //NSString *relativeURL = [NSString stringWithFormat:@"/updateUser?fb_id=571438200"];
+        //relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
         
-        sc = [[ServerCommunication alloc] init];
-        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=99"forViewController:self];       
-        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=100"forViewController:self];       
-        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=101"forViewController:self];       
-        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=88"forViewController:self];       
-       
+        //ServerCommunication *sc = [[ServerCommunication alloc] init];
+        //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Rishi Narang"forViewController:self];       
+        //NSLog(@"user updated!");
+        
+        //relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=571438200"];
+        //relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+        
+        //sc = [[ServerCommunication alloc] init];
+        //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=99"forViewController:self];       
+        //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=100"forViewController:self];       
+        //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=101"forViewController:self];       
+        //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=88"forViewController:self];       
+        
         NSLog(@"user updated!");
     }
 }
