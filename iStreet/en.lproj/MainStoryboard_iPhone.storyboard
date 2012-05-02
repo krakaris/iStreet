@@ -266,9 +266,6 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <connections>
-                                    <segue destination="xZq-Pq-Unb" kind="push" identifier="AttendingEventsToSpecific" id="cLG-f2-aq4"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -277,6 +274,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="0LZ-vA-sNN"/>
+                    <connections>
+                        <segue destination="xZq-Pq-Unb" kind="push" identifier="ListofEventsToSpecific" id="1av-XI-cGR"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="641" y="835"/>
@@ -749,7 +749,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="cLG-f2-aq4"/>
+        <segue reference="1av-XI-cGR"/>
         <segue reference="vbH-sP-fie"/>
     </inferredMetricsTieBreakers>
 </document>

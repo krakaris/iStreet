@@ -321,6 +321,13 @@
 {
     eatvc = (EventsAttendingTableViewController *) segue.destinationViewController;
     
+
+    eatvc.name = name_selected;
+    eatvc.fbid = fbid_selected;
+    eatvc.eventsAttendingIDs = eventsAttending_selected;
+    
+    
+    /*
     if (self.isFiltered)
     {
         NSInteger currentRow = [[self.friendsTableView indexPathForSelectedRow] row];
@@ -354,7 +361,7 @@
     eatvc.fbid = fbid_selected;
     eatvc.name = name_selected;
     NSLog(@"Passed to eatvc - %@ and %@", fbid_selected, name_selected);
-    
+    */
 
 }
 
@@ -409,7 +416,8 @@
             //Setting up the next controller
             eatvc.eventsAttendingIDs = eventsAttending_selected;
             
-            [self.navigationController pushViewController:eatvc animated:YES];
+            [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];
+            //[self.navigationController pushViewController:eatvc animated:YES];
         }
     }
 }

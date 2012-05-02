@@ -19,6 +19,7 @@
 {
     
     NSMutableDictionary *iconsBeingDownloaded;
+    EventDetailsViewController *eventDetailsController;
 }
 
 @property (nonatomic, retain) NSString *fbid;
@@ -27,6 +28,7 @@
 @property (nonatomic, retain) NSArray *nameComponents;
 @property (nonatomic, retain) NSArray *eventsAttendingIDs;
 @property (nonatomic, retain) NSMutableArray *eligibleEvents;
+@property (nonatomic, retain) EventDetailsViewController *eventDetailsController;
 @property (nonatomic, retain) Event *currentlySelectedEvent;
 
 @end

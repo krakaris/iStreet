@@ -36,7 +36,10 @@
     [super viewDidLoad];
     
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
-        
+    eligibleEvents = [[NSMutableArray alloc] init];
+    
+    eventDetailsController = [[EventDetailsViewController alloc] init];
+    
     nameComponents = [name componentsSeparatedByString:@" "];
     firstname = [nameComponents objectAtIndex:0];
     NSLog(@"first name is %@", firstname);
@@ -53,20 +56,22 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];      
     NSArray *events = [document.managedObjectContext executeFetchRequest:request error:NULL];
  
+    NSLog(@"events count is %d", [events count]);
+    NSLog(@"attending count is %d", [eventsAttendingIDs count]);
     //do this filtering with predicates instead
-    for (Event *event in events)
+    for (NSString *thisID in eventsAttendingIDs)
     {
         //NSLog(@" %@, and %@", event.event_id, event.name);
-        for (NSString *thisID in eventsAttendingIDs)
+        for (Event *event in events)
         {
-            if (event.event_id == thisID)
+            //NSLog(@"ABCDEF %@ AND %@", thisID, event.event_id);
+            if ([event.event_id isEqualToString:thisID])
             {
                 [eligibleEvents addObject:event];
                 NSLog(@"Added to Eligible!");
             }
         }
     }
-
     
     //[self setPropertiesWithNewEventData:events];
     
@@ -124,6 +129,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    [self setEligibleEvents:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -144,7 +150,8 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [eventsAttendingIDs count];
+    //return [eventsAttendingIDs count];
+    return [eligibleEvents count];
     NSLog(@"Data source!!!");
 }
 
@@ -248,17 +255,32 @@
      */
     
     NSLog(@"selected row %d", indexPath.row);
+    
+    NSLog(@"eligibleEvents count = %d", [eligibleEvents count]);
     currentlySelectedEvent = (Event *) [eligibleEvents objectAtIndex:indexPath.row];
     
+    eventDetailsController.myEvent = currentlySelectedEvent;
+    
+    
+    NSLog(@" %@ AND %@", currentlySelectedEvent.title, currentlySelectedEvent.event_description);
+    
+    [eventDetailsController setMyEvent:currentlySelectedEvent];
+    //[self.navigationController pushViewController:eventDetailsController animated:YES];
+    
     //perform segue - AttendingEventsToSpecific
-    [self performSegueWithIdentifier:@"AttendingEventsToSpecific" sender:self];
+    [self performSegueWithIdentifier:@"ListofEventsToSpecific" sender:currentlySelectedEvent];
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    /*
     EventDetailsViewController *eventDetailsController = (EventDetailsViewController *) [segue destinationViewController];
 
     eventDetailsController.myEvent = currentlySelectedEvent;
+     */
+    if ([segue.identifier isEqualToString:@"ListofEventsToSpecific"])
+        [segue.destinationViewController setMyEvent:sender];
+        
 }
 
 @end
