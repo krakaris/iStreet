@@ -15,7 +15,6 @@ extern NSString *const DataLoadedNotificationString;
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, retain) NSString *netID;
-
 @property (nonatomic, retain) UIManagedDocument *document;
 @property (nonatomic, assign) BOOL appDataLoaded;
 

@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "FBConnect.h"
 #import "JSON.h"
+#import "ServerCommunication.h"
 
-@interface FriendsViewController : UIViewController <FBSessionDelegate, FBRequestDelegate>
+@interface FriendsViewController : UIViewController <FBSessionDelegate, FBRequestDelegate, ServerCommunicationDelegate>
 {
     Facebook *facebook;
     NSArray *friendsArray;
