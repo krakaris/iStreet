@@ -16,6 +16,11 @@
 @implementation FriendsTableViewController
 
 @synthesize isFiltered;
+
+@synthesize fbid_selected;
+@synthesize name_selected;
+@synthesize eventsAttending_selected;
+
 @synthesize friendslist;
 @synthesize filteredFriendsList;
 @synthesize justFriendNames;
@@ -43,6 +48,13 @@
     
     sectionsIndex = [[NSMutableArray alloc] init];
     justFriendNames = [[NSMutableArray alloc] init];
+    eventsAttending_selected = [[NSMutableArray alloc] init];
+    eatvc = [[EventsAttendingTableViewController alloc] init];
+    
+    fbid_selected = [[NSString alloc] init];
+    name_selected = [[NSString alloc] init];
+    
+    
     
     int length = [friendslist count];
     
@@ -261,16 +273,13 @@
     
     [self.searchBar resignFirstResponder];
     
-    NSString *name = @"";
-    NSString *faceID = @"";
     
+    //detecting name and fb_id at that cell location   
     if (self.isFiltered)
     {
         NSInteger currentRow = [[self.friendsTableView indexPathForSelectedRow] row];
-        faceID = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"id"];
-        name = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"name"];
-        
-        NSLog(@"%@ and %@", faceID, name);
+        fbid_selected = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"id"];
+        name_selected = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"name"];
     }
     else 
     {
@@ -283,41 +292,42 @@
         if ([names count] > 0)
         {
             NSString *friendName = [names objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] row]];
-            name = friendName;
+            name_selected = friendName;
             for  (NSDictionary *user in friendslist)
             {
                 if (friendName == [user objectForKey:@"name"])
-                    faceID = [user objectForKey:@"id"];
+                    fbid_selected = [user objectForKey:@"id"];
             }
         }
-        
-        NSLog(@"%@ and %@", faceID, name);
     }
     
+    NSLog(@"%@ and %@", fbid_selected, name_selected);  
+    
+    //Setting next controller's attributes
+    eatvc.fbid = fbid_selected;
+    eatvc.name = name_selected;
+    
     //Build url for server
-    NSString *relativeURL = [NSString stringWithFormat:@"/getEventsForUser?fb_id=%@", faceID];
+    NSString *relativeURL = [NSString stringWithFormat:@"/getEventsForUser?fb_id=%@", fbid_selected];
     relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
     
     NSLog(@"relativeURL is %@", relativeURL);
     ServerCommunication *sc = [[ServerCommunication alloc] init];
-    //[sc sendSynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self];
-    //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self withDelegate:self andDescription:@"retrieve events"];
+     
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     eatvc = (EventsAttendingTableViewController *) segue.destinationViewController;
     
-    NSString *faceID = @"";
-    NSString *name = @"";
-    
     if (self.isFiltered)
     {
         NSInteger currentRow = [[self.friendsTableView indexPathForSelectedRow] row];
-        faceID = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"id"];
-        name = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"name"];
+        fbid_selected = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"id"];
+        name_selected = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"name"];
         
-        NSLog(@"%@ and %@", faceID, name);
+        NSLog(@"%@ and %@", fbid_selected, name_selected);
     }
     else 
     {
@@ -330,36 +340,79 @@
         if ([names count] > 0)
         {
             NSString *friendName = [names objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] row]];
-            name = friendName;
+            name_selected = friendName;
             for  (NSDictionary *user in friendslist)
             {
                 if (friendName == [user objectForKey:@"name"])
-                    faceID = [user objectForKey:@"id"];
+                    fbid_selected = [user objectForKey:@"id"];
             }
         }
         
-        NSLog(@"%@ and %@", faceID, name);
+        NSLog(@"%@ and %@", fbid_selected, name_selected);
     }
     
-    eatvc.fbid = faceID;
-    eatvc.name = name;
-    NSLog(@"Passed to eatvc - %@ and %@", faceID, name);
+    eatvc.fbid = fbid_selected;
+    eatvc.name = name_selected;
+    NSLog(@"Passed to eatvc - %@ and %@", fbid_selected, name_selected);
     
 
 }
 
-- (void) finishedReceivingData:(NSData *)data
+- (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
-    NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"Response is!!! %@", response);   
-    eatvc.eventsAttending = [response componentsSeparatedByString:@", "];
-    
-    for (NSString *event in eatvc.eventsAttending)
+    if (description == @"retrieve events")
     {
-        NSLog(@" %@", event);
+        NSLog(@"Events retrieved.");
+        
+        NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"Response is %@", response);
+        
+        //Checking for error/empty response        
+        NSRange thisRange = [response rangeOfString:@"ERROR" options:NSCaseInsensitiveSearch];
+
+        if ([response length] == 0 || thisRange.location != NSNotFound)
+        {
+            NSLog(@"Not found!!!");
+        }
+        else 
+        {
+            NSLog(@"Inside else!");
+            
+            NSArray *responseArray = [response componentsSeparatedByString:@", "];
+                        
+            for (NSString *event in responseArray)
+            {
+                if ([event isEqualToString:@" "] || [event isEqualToString:@"  "] ||
+                    [event isEqualToString:@""])
+                    NSLog(@"This will be deleted"); //do nothing
+                else 
+                    [eventsAttending_selected addObject:event];
+            }
+                       
+            /*
+            //#DEBUGGING
+            for (NSString *event_id in eventsAttending_selected)
+            {
+                //NSLog(@" %@", event_id);
+            }
+             */
+            
+             /*
+             //Build url for server
+             NSString *relativeURL = [NSString stringWithFormat:@"/eventinfo?event_id=%@", event_id];
+             relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+             
+             NSLog(@"relativeURL is %@", relativeURL);
+             [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self withDelegate:self andDescription:@"/eventinfo: retrieving specific event"];
+             */
+            
+            //Setting up the next controller
+            eatvc.eventsAttendingIDs = eventsAttending_selected;
+            
+            [self.navigationController pushViewController:eatvc animated:YES];
+        }
     }
-    
-    [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];
 }
+
 
 @end
