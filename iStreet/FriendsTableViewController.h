@@ -7,15 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ServerCommunication.h"
+#import "EventsAttendingTableViewController.h"
 
-@interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, ServerCommunicationDelegate>
 {
-    
+    EventsAttendingTableViewController *eatvc;
     BOOL isFiltered;
     CGRect originalSearchBarFrame;
+    
+    NSString *fbid_selected;
+    NSString *name_selected;
+    NSMutableArray *eventsAttending_selected;
 }
 
+
 @property (assign) BOOL isFiltered;
+
+@property (strong, nonatomic) NSString *fbid_selected;
+@property (strong, nonatomic) NSString *name_selected;
+@property (strong, nonatomic) NSMutableArray *eventsAttending_selected;
 
 @property (strong, nonatomic) NSMutableArray *friendslist;
 @property (strong, nonatomic) NSMutableArray *filteredFriendsList;
