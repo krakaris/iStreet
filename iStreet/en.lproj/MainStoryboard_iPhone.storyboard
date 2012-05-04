@@ -274,7 +274,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="0LZ-vA-sNN">
-                        <barButtonItem key="rightBarButtonItem" image="star_gray.png" id="JIV-1g-3t7"/>
+                        <nil key="title"/>
                     </navigationItem>
                     <connections>
                         <segue destination="xZq-Pq-Unb" kind="push" identifier="ListofEventsToSpecific" id="1av-XI-cGR"/>
@@ -724,7 +724,6 @@
         <image name="Tiger Inn.png" width="93" height="100"/>
         <image name="Tower.png" width="78" height="101"/>
         <image name="fconnect.png" width="331" height="100"/>
-        <image name="star_gray.png" width="600" height="573"/>
     </resources>
     <classes>
         <class className="AllEventsViewController" superclassName="EventsViewController">

@@ -22,6 +22,10 @@
 @synthesize eligibleEvents;
 @synthesize currentlySelectedEvent;
 
+@synthesize favButton;
+@synthesize isStarSelected;
+@synthesize isAlreadyFavorite;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -31,6 +35,196 @@
     return self;
 }
 
+- (void) makeFavorite
+{
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+
+    NSLog(@"Favorites button touched!");
+
+    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
+    
+    //There should be only 1 user entity - and with matching netid
+    //Check using global netid
+    NSString *globalnetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
+    
+    User *targetUser; // = [[User alloc] init];
+    
+    for (User *user in users)
+    {
+        if ([globalnetid isEqualToString:user.netid])
+        {
+            targetUser = user;
+            NSLog(@"Found target!");
+        }
+             
+        //NSLog(@"NETID of user is %@ and fb id is %@", user.netid, user.fb_id);
+        //NSLog(@"Global netid is %@", globalnetid);
+    }
+     
+    NSString *commaSepFavFBFriendsList = targetUser.fav_friends_commasep;
+    NSMutableArray *arrayOfFavFBFriendIDs = [NSMutableArray arrayWithArray:[commaSepFavFBFriendsList componentsSeparatedByString:@","]];
+    
+    NSLog(@"Comma-separated list received in response is %@", commaSepFavFBFriendsList);
+    
+    for (NSString *thisID in arrayOfFavFBFriendIDs)
+    {
+        //Getting rid of empty strings.
+        if ([thisID isEqualToString:@""])
+            [arrayOfFavFBFriendIDs removeObject:thisID];
+    }
+
+    //NSLog(@"comma sep list is %@", commaSepFavFBFriendsList);
+    //NSLog(@"array length is %d", [arrayOfFavFBFriendIDs count]);
+
+    if (isStarSelected)
+    {
+        NSLog(@"Star was SELected earlier, just DESELected!");
+        isStarSelected = NO;
+        starButton.selected = NO;
+        
+        if ([arrayOfFavFBFriendIDs containsObject:self.fbid])
+        {
+            NSLog(@"It does contain it!");
+            [arrayOfFavFBFriendIDs removeObject:self.fbid];
+        }
+    }
+    else 
+    {          
+        NSLog(@"Star was DESELected earlier, just SELected!");
+        isStarSelected = YES;
+        starButton.selected = YES;
+
+        NSLog(@"Adding to array!");
+        
+        //add current fbid to array
+        [arrayOfFavFBFriendIDs addObject:self.fbid];
+    }
+    
+    //If 0 favorite friends left
+    if ([arrayOfFavFBFriendIDs count] == 0)
+    {
+        NSLog(@"no favs left!");
+        targetUser.fav_friends_commasep = @"";
+        
+        NSLog(@"Number of elements in arrayOfFavFriends is %d", [arrayOfFavFBFriendIDs count]);
+        NSLog(@"Updated favorites list (count = 0) to %@", targetUser.fav_friends_commasep);
+    }
+    else if ([arrayOfFavFBFriendIDs count] == 1) //If 1 favorite friend total
+    {
+        targetUser.fav_friends_commasep = [NSString stringWithFormat:@"%@", [arrayOfFavFBFriendIDs lastObject]];
+        
+        NSLog(@"Number of elements in arrayOfFavFriends is %d", [arrayOfFavFBFriendIDs count]);
+        NSLog(@"Updated favorites list (count = 1) to %@", targetUser.fav_friends_commasep);
+    }
+    else //if more than 1 favorite friend in all
+    {
+        int count = 0;
+        NSString *buildingCommaSepString = @"";
+        for (NSString *facebookID in arrayOfFavFBFriendIDs)
+        {
+            if (count == 0)
+            {
+                buildingCommaSepString = facebookID;
+            }
+            else 
+            {
+                NSString *stringToAppend = [NSString stringWithFormat:@",%@", facebookID];
+                buildingCommaSepString = [buildingCommaSepString stringByAppendingString:stringToAppend];
+            }
+            count = count + 1;
+        }
+        
+        targetUser.fav_friends_commasep = buildingCommaSepString;
+        
+        NSLog(@"Number of elements in arrayOfFavFriends is %d", [arrayOfFavFBFriendIDs count]);
+        NSLog(@"Updated favorites list (count > 1) to %@", targetUser.fav_friends_commasep);
+    }
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    self.isStarSelected = NO;
+    
+    UIImage *grayStar = [UIImage imageNamed:@"star_gray.png"];
+    UIImage *orangeStar = [UIImage imageNamed:@"star_orange.png"];
+
+    starButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [starButton setBackgroundImage:grayStar forState:UIControlStateNormal];
+    [starButton setBackgroundImage:orangeStar forState:UIControlStateSelected];
+
+    starButton.frame = CGRectMake(0, 0, 28, 28);
+    [starButton addTarget:self action:@selector(makeFavorite) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *barStarButton = [[UIBarButtonItem alloc] initWithCustomView:starButton];
+    [barStarButton setStyle:UIBarButtonItemStylePlain];
+    
+    self.navigationItem.rightBarButtonItem = barStarButton;
+
+
+    //Checking if already a favorite
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    
+    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
+    
+    //There should be only 1 user entity - and with matching netid
+    //Check using global netid
+    NSString *globalnetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
+    
+    User *targetUser;
+    
+    for (User *user in users)
+    {
+        if ([globalnetid isEqualToString:user.netid])
+        {
+            targetUser = user;
+            NSLog(@"Found target!");
+        }
+        
+        //NSLog(@"NETID of user is %@ and fb id is %@", user.netid, user.fb_id);
+        //NSLog(@"Global netid is %@", globalnetid);
+    }
+    
+    NSString *commaSepFavFBFriendsList = targetUser.fav_friends_commasep;
+    NSMutableArray *arrayOfFavFBFriendIDs = [NSMutableArray arrayWithArray:[commaSepFavFBFriendsList componentsSeparatedByString:@","]];
+    
+    //Highlight star if fbid is present in fav fbid's list
+    if ([arrayOfFavFBFriendIDs containsObject:self.fbid])
+    {   
+        NSLog(@"Already a favorite!");
+        starButton.selected = YES;
+        isStarSelected = YES;
+        isAlreadyFavorite = YES;
+    }
+    else 
+    {
+        isAlreadyFavorite = NO;
+        isStarSelected = NO;
+    }
+
+    
+    /*
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage: [image stretchableImageWithLeftCapWidth:7.0 topCapHeight:0.0] forState:UIControlStateNormal];
+    [button setBackgroundImage: [[UIImage imageNamed: @"right_clicked.png"] stretchableImageWithLeftCapWidth:7.0 topCapHeight:0.0] forState:UIControlStateHighlighted];
+    
+    button.frame= CGRectMake(0.0, 0.0, image.size.width, image.size.height);
+    
+    [button addTarget:self action:@selector(AcceptData)    forControlEvents:UIControlEventTouchUpInside];
+    
+    UIView *v=[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, image.size.width, image.size.height) ];
+    
+    [v addSubview:button];
+    
+    UIBarButtonItem *forward = [[UIBarButtonItem alloc] initWithCustomView:v];
+    
+    self.navigationItem.rightBarButtonItem= forward;
+    
+    [v release];
+    [image release];
+     */
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -58,7 +252,8 @@
  
     NSLog(@"events count is %d", [events count]);
     NSLog(@"attending count is %d", [eventsAttendingIDs count]);
-    //do this filtering with predicates instead
+    
+    //maybe do this filtering with predicates instead
     for (NSString *thisID in eventsAttendingIDs)
     {
         //NSLog(@" %@, and %@", event.event_id, event.name);
@@ -68,17 +263,10 @@
             if ([event.event_id isEqualToString:thisID])
             {
                 [eligibleEvents addObject:event];
-                NSLog(@"Added to Eligible!");
+                //NSLog(@"Added to Eligible!");
             }
         }
     }
-    
-    //[self setPropertiesWithNewEventData:events];
-    
-    //[eventsTable reloadData];
-    //[activityIndicator stopAnimating];
-    
-    //[self getServerEventsData];
     
     /* #DEBUGGING
     for (NSString *event_id in eventsAttendingIDs)

@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "Event.h"
 #import "EventCell.h"
+#import "User.h"
 #import "IconDownloader.h"
 #import "EventDetailsViewController.h"
 #import <CoreData/CoreData.h>
@@ -20,6 +21,7 @@
     
     NSMutableDictionary *iconsBeingDownloaded;
     EventDetailsViewController *eventDetailsController;
+    UIButton *starButton;
 }
 
 @property (nonatomic, retain) NSString *fbid;
@@ -30,5 +32,10 @@
 @property (nonatomic, retain) NSMutableArray *eligibleEvents;
 @property (nonatomic, retain) EventDetailsViewController *eventDetailsController;
 @property (nonatomic, retain) Event *currentlySelectedEvent;
+
+@property (nonatomic, retain) IBOutlet UIButton *favButton;
+
+@property (assign) BOOL isStarSelected;
+@property (assign) BOOL isAlreadyFavorite;
 
 @end
