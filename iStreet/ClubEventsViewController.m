@@ -27,8 +27,7 @@
     return self;
 }
 - (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-    
+	[super viewWillAppear:animated];    
 	[self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -37,27 +36,23 @@
     [super viewDidLoad];
     
     NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"http://localhost:5000"]];
-    NSLog(@"Cookie count: %d", [cookies count]);
     for(NSHTTPCookie *cookie in cookies)
     {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"MMMM d, yyyy h:mm a"];
         NSString *timestamp = [formatter stringFromDate:[cookie expiresDate]];
-        NSLog(@"COOKIE! expires: %@", timestamp);
     }
-
     
     self.navigationItem.title = self.club.name;
-    eventsList.backgroundView.backgroundColor = [UIColor greenColor];
+    //self.view.backgroundColor = [UIColor orangeColor];
+    self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0];
+    self.eventsList.separatorColor = [UIColor blackColor];
 
-    // Initialize our arrays
+    // Initialize the arrays
     eventsArray = [[NSMutableArray alloc] init];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
     
     [activityIndicator startAnimating];
-    self.eventsList.separatorColor = [UIColor blackColor];
-    
-    NSLog(@"Beginning loading core data.");
     
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"]; 
@@ -69,10 +64,6 @@
     [self setPropertiesWithNewEventData:events];
     
     [eventsList reloadData];
-    
-    NSLog(@"Finished loading core data.");
-    
-    NSLog(@"Beginning loading web data.");
     
     //Get event data from server
     [self getListOfEvents: self.club.name];
@@ -91,7 +82,7 @@
 
 - (void)connectionFailed:(NSString *)description
 {
-    
+    NSLog(@"Connection Failed\n");
 }
 
 /*
@@ -100,7 +91,6 @@
 
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {      
-    NSLog(@"Connection finished loading\n");
     NSError *error;
     NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     if(!eventsDictionaryArray)
@@ -200,9 +190,11 @@
                                             || self.eventsList.decelerating == YES)]) {
                                 [self startIconDownload:event forIndexPath:indexPath];
                             }
+    // Update event title if none is given
     if (event.title) {
         if ([event.title isEqualToString:@""] || [event.title isEqualToString:clubName]) {
             cell.textLabel.text = @"On Tap";
+            event.title = @"On Tap";
         } else {
             cell.textLabel.text = event.title;
         }
@@ -210,6 +202,7 @@
     cell.detailTextLabel.text = [self setSubtitle:event];
     return cell;
 }
+// Determine entry description
 -(NSString *)setSubtitle:(Event *)event {
     NSString *entry = event.entry;
     NSString *entry_descrip;
@@ -222,6 +215,8 @@
     NSString *puid = [NSString stringWithFormat:@"Pu"];
     NSString *member = [NSString stringWithFormat:@"Mp"];
     NSString *list = [NSString stringWithFormat:@"Gu"];
+    NSString *custom = [NSString stringWithFormat:@"Cu"];
+    
     NSString *entry_final;
     if ([entry isEqualToString:puid]) {
         entry_final = @"PUID";
@@ -234,13 +229,15 @@
         }
     } else if ([entry isEqualToString:member]) {
         entry_final = @"Members plus";
-        // Search entry_description for a number: assume it is members + this number
+        // Search entry_description for a number: entry is members + this number
         if (![entry_descrip isEqualToString:@""]) {
             entry_final = [entry_final stringByAppendingString:@" "];
             entry_final = [entry_final stringByAppendingString:entry_descrip];
         }
     } else if ([entry isEqualToString:list]) {
         entry_final = @"Guest List";
+    } else if ([entry isEqualToString:custom]) {
+        entry_final = entry_descrip;
     }
     return entry_final;
 }
@@ -255,16 +252,14 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
 {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 25)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 25)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
     Event *e = (Event *)[eventsArray objectAtIndex:section];
     label.text = [self formatTime:e];
     label.textAlignment = UITextAlignmentCenter;
     label.textColor = [UIColor orangeColor];
-    label.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
-    //label.alpha = 0.7;
+    label.backgroundColor = [UIColor darkGrayColor];
     [label setFont:[UIFont fontWithName:@"Trebuchet MS" size:17.0]];
-    //label.textColor = [UIColor colorWithWhite:1.0 alpha:0.5];
     [headerView addSubview:label];
 
     return headerView;
