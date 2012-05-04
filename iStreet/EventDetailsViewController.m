@@ -241,6 +241,22 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
+
+    SeeFriendsAttendingTableViewController *seeFriendsController = (SeeFriendsAttendingTableViewController *)[segue destinationViewController];
+    seeFriendsController.eventID = myEvent.event_id;
+    
+    /*
+    //Getting list of events from server
+    //Build url for server
+    NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=%@", @"521832474"];
+    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+     
+    NSLog(@"relativeURL is %@", relativeURL);
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Stacey Wenjun Zhang"forViewController:self withDelegate:self andDescription:@"stacey"];
+     
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=102" forViewController:self withDelegate:self andDescription:@"adding event 99"];
+     */
     /*
      Segue to Aki's Friends TableView
      }*/

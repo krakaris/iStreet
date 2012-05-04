@@ -8,6 +8,7 @@
 
 #import "FriendsTableViewController.h"
 #import "EventsAttendingTableViewController.h"
+#include <stdlib.h>
 
 @interface FriendsTableViewController ()
 
@@ -22,11 +23,105 @@
 @synthesize eventsAttending_selected;
 
 @synthesize friendslist;
+@synthesize favoriteFriendsList;
 @synthesize filteredFriendsList;
 @synthesize justFriendNames;
 @synthesize sectionsIndex;
 @synthesize searchBar;
 @synthesize friendsTableView;
+
+@synthesize logoutButton;
+
+- (void) logoutOfFacebook:(id)sender
+{
+    NSLog(@"Logging out of facebook alert view!");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you sure you wish to log out of Facebook?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    
+    [alert show];    
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)   //do nothing, canceled
+        NSLog(@"yay!");
+    else                    //log out of facebook
+    {
+        NSLog(@"Nay!");
+        
+        
+    }
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    //Obtain the favorite friends
+    
+    favoriteFriendsList = [[NSMutableArray alloc] init];
+    
+    //Checking if already a favorite
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    
+    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
+    
+    //There should be only 1 user entity - and with matching netid
+    //Check using global netid
+    NSString *globalnetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
+    
+    User *targetUser;
+    
+    for (User *user in users)
+    {
+        if ([globalnetid isEqualToString:user.netid])
+        {
+            targetUser = user;
+            NSLog(@"Found target!");
+        }
+        
+        //NSLog(@"NETID of user is %@ and fb id is %@", user.netid, user.fb_id);
+        //NSLog(@"Global netid is %@", globalnetid);
+    }
+    
+    NSString *commaSepFavFBFriendsList = targetUser.fav_friends_commasep;
+    NSMutableArray *arrayOfFavFBFriendIDs = [NSMutableArray arrayWithArray:[commaSepFavFBFriendsList componentsSeparatedByString:@","]];
+    
+    for (NSString *thisFave in arrayOfFavFBFriendIDs)
+        NSLog(@"%@", thisFave);
+    
+    NSArray *allFriends = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
+    NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriends count]);
+    
+    //NSArray *objs = [dataManager anArray];
+    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@", [NSNumber numberWithInt:i]];
+    //NSArray *matchingObjs = [objs filteredArrayUsingPredicate:predicate];
+
+    for (NSString *thisFave in arrayOfFavFBFriendIDs)
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@", thisFave];
+        NSArray *matchingUsers = [allFriends filteredArrayUsingPredicate:predicate];
+        
+        if ([matchingUsers count] == 1)
+        {
+            NSLog(@"FOUND A FAVORITE! id = %@", thisFave);
+            [favoriteFriendsList addObject:[matchingUsers lastObject]];
+        }
+    }
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    [favoriteFriendsList sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    [self.friendsTableView reloadData];
+    
+    NSLog(@"Favorite friends count = %d", [favoriteFriendsList count]);
+
+
+    for (NSDictionary *user in allFriends)
+    {
+        NSLog(@"%@ and %@", [user valueForKey:@"name"], [user valueForKey:@"id"]);
+    }
+ 
+    
+}
 
 - (void)viewDidLoad
 {
@@ -54,6 +149,8 @@
     fbid_selected = [[NSString alloc] init];
     name_selected = [[NSString alloc] init];
     
+    //Adding "favorites" to section index
+    [sectionsIndex addObject:@"Favorites"];
     
     
     int length = [friendslist count];
@@ -84,11 +181,90 @@
         NSLog(@"%@ and %@", [user valueForKey:@"id"], [user valueForKey:@"name"]);
     }
      */
+    
+    [self.friendsTableView reloadData];
+    
+    
+    /*
+    //Randomizing Friends Attending different events
+    
+    NSArray *allEvents = [NSArray arrayWithObjects:@"71", @"111", @"88", @"89", @"93", @"96", @"69",
+                          @"81", @"95", @"106", @"107", @"79", @"85", @"86", @"87", @"97", @"103",
+                          @"105", @"112", @"110", @"78", @"90", @"99", @"102", @"84", @"94", @"98", @"108",
+                          @"115", @"116", @"114", @"92", @"100", nil];
+    
+    NSArray *allFriendsFB = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
+    
+    int count = 0;
+    while (count < 10)
+    {
+        NSDictionary *user = [allFriendsFB objectAtIndex:count];
+        int i = arc4random() % [allEvents count];
+        
+        NSString *userName = [user valueForKey:@"name"];
+        NSString *facebookID = [user valueForKey:@"id"];
+        
+        NSLog(@"Friend with name %@ and id %@ and index %d and random event %@", userName, facebookID, i, [allEvents objectAtIndex:i]);
+        
+        //Build url for server
+        NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=%@", facebookID];
+        relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+        
+        NSLog(@"relativeURL is %@", relativeURL);
+        ServerCommunication *sc = [[ServerCommunication alloc] init];
+        NSString *postBody = [NSString stringWithFormat:@"name=%@", userName];
+
+        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:postBody forViewController:self withDelegate:self andDescription:userName];
+        
+        for (int j = 0; j < 5; j++)
+        {
+            i = arc4random() % [allEvents count];
+            NSString *eventPostBody = [NSString stringWithFormat:@"event_id=%@", [allEvents objectAtIndex:i]];
+            [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:eventPostBody forViewController:self withDelegate:self andDescription:userName];
+        }
+        count ++;
+    }
+    */
+    
+    /*
+    //Build url for server
+    NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=%@", @"521832474"];
+    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+    
+    NSLog(@"relativeURL is %@", relativeURL);
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Stacey Wenjun Zhang"forViewController:self withDelegate:self andDescription:@"stacey"];
+    
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=102" forViewController:self withDelegate:self andDescription:@"adding event 99"];
+     */
+    /*
+    NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=571438200"];
+    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+    
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    
+     
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Rishi Narang" forViewController:self withDelegate:self andDescription:@"updating name"];
+    
+    //sc = [[ServerCommunication alloc] init];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=99" forViewController:self withDelegate:self andDescription:@"adding event 99"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=88" forViewController:self withDelegate:self andDescription:@"adding event 88"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=100" forViewController:self withDelegate:self andDescription:@"adding event 100"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=101" forViewController:self withDelegate:self andDescription:@"adding event 101"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=71" forViewController:self withDelegate:self andDescription:@"adding event 71"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=111" forViewController:self withDelegate:self andDescription:@"adding event 111"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=97" forViewController:self withDelegate:self andDescription:@"adding event 97"];
+     */
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     [self.searchBar resignFirstResponder];
+}
+
+- (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self.friendsTableView reloadData];
 }
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -178,7 +354,12 @@
     {
         rowCount = [filteredFriendsList count];
     }
-    else {
+    else if (section == 0)
+    {
+        rowCount = [favoriteFriendsList count];
+    }
+    else
+    {
         rowCount = [friendslist count];
         
         //source - http://www.devx.com/wireless/Article/43374/1763
@@ -203,18 +384,59 @@
     if (self.isFiltered)
     {
         cell.textLabel.text =  [[filteredFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
+        
+        NSString *currentUserName = [[filteredFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
+        
+        //Checking if favorite (to add star)
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
+        NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
+            
+        if ([matchingUsers count] != 0)
+        {
+            //Make it a special cell instead.
+            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_orange.png"]];
+            starView.frame = CGRectMake(230, 10, 20, 20);
+            [cell.contentView addSubview:starView];
+        }
     }
-    else 
+    else if (indexPath.section == 0)
+    {
+        UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_orange.png"]];
+        starView.frame = CGRectMake(230, 10, 20, 20);
+        cell.textLabel.text = [[favoriteFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
+        [cell.contentView addSubview:starView];
+    }
+    else
     {
         NSString *alpha = [sectionsIndex objectAtIndex:[indexPath section]];
         NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
         //Getting the names that begin with that first letter
         NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
+        
+        NSString *friendName;
         if ([names count] > 0)
-            {
-                NSString *friendName = [names objectAtIndex:indexPath.row];
-                cell.textLabel.text = friendName;
-            }
+        {
+            friendName = [names objectAtIndex:indexPath.row];
+            cell.textLabel.text = friendName;
+            //NSLog(@"Inside if with name %@", friendName);
+        }
+        else {
+            //NSLog(@"If not true!");
+        }
+        
+        NSString *currentUserName = friendName;
+        
+        //Checking if favorite (to add star)
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
+        NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
+        
+        if ([matchingUsers count] != 0)
+        {
+            //Make it a special cell instead.
+            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_orange.png"]];
+            starView.frame = CGRectMake(230, 10, 20, 20);
+            [cell.contentView addSubview:starView];
+        }
     }
 
     return cell;
@@ -281,7 +503,12 @@
         fbid_selected = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"id"];
         name_selected = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"name"];
     }
-    else 
+    else if ([[self.friendsTableView indexPathForSelectedRow] section] == 0) //If in Favorites section
+    {
+        NSIndexPath *currentPath = [self.friendsTableView indexPathForSelectedRow];
+        fbid_selected = [[favoriteFriendsList objectAtIndex:currentPath.row] valueForKey:@"id"];
+        name_selected = [[favoriteFriendsList objectAtIndex:currentPath.row] valueForKey:@"name"];
+    }
     {
         NSString *alpha = [sectionsIndex objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] section]]; 
         NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
@@ -320,12 +547,10 @@
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     eatvc = (EventsAttendingTableViewController *) segue.destinationViewController;
-    
 
     eatvc.name = name_selected;
     eatvc.fbid = fbid_selected;
     eatvc.eventsAttendingIDs = eventsAttending_selected;
-    
     
     /*
     if (self.isFiltered)
@@ -367,6 +592,9 @@
 
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
+    //Empty array needed each time
+    [eventsAttending_selected removeAllObjects];
+    
     if (description == @"retrieve events")
     {
         NSLog(@"Events retrieved.");
@@ -423,6 +651,10 @@
             [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];
             //[self.navigationController pushViewController:eatvc animated:YES];
         }
+    }
+    else {
+        NSString *resp = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"Received response for %@ is %@", description, resp);
     }
 }
 
