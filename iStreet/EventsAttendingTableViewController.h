@@ -20,6 +20,7 @@
     
     NSMutableDictionary *iconsBeingDownloaded;
     EventDetailsViewController *eventDetailsController;
+    UIButton *starButton;
 }
 
 @property (nonatomic, retain) NSString *fbid;
@@ -30,5 +31,9 @@
 @property (nonatomic, retain) NSMutableArray *eligibleEvents;
 @property (nonatomic, retain) EventDetailsViewController *eventDetailsController;
 @property (nonatomic, retain) Event *currentlySelectedEvent;
+
+@property (nonatomic, retain) IBOutlet UIButton *favButton;
+
+@property (assign) BOOL isStarSelected;
 
 @end

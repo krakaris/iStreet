@@ -22,6 +22,9 @@
 @synthesize eligibleEvents;
 @synthesize currentlySelectedEvent;
 
+@synthesize favButton;
+@synthesize isStarSelected;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -31,12 +34,86 @@
     return self;
 }
 
+- (void) makeFavorite
+{
+    NSLog(@"Favorites button touched!");
+    
+    if (isStarSelected)
+    {
+        NSLog(@"Star was SELected earlier, just DESELected!");
+        isStarSelected = NO;
+        starButton.selected = NO;
+        //[starButton setBackgroundImage:[UIImage imageNamed:@"star_gray.png"] forState:UIControlStateNormal];
+        
+    }
+    else 
+    {  
+        NSLog(@"Star was DESELected earlier, just SELected!");
+        isStarSelected = YES;
+        starButton.selected = YES;
+        //[starButton setBackgroundImage:[UIImage imageNamed:@"star_orange.png"] forState:UIControlStateNormal];
+    }
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    self.isStarSelected = NO;
+    
+    UIImage *grayStar = [UIImage imageNamed:@"star_gray.png"];
+    UIImage *orangeStar = [UIImage imageNamed:@"star_orange.png"];
+
+    starButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [starButton setBackgroundImage:grayStar forState:UIControlStateNormal];
+    [starButton setBackgroundImage:orangeStar forState:UIControlStateSelected];
+
+    starButton.frame = CGRectMake(0, 0, 28, 28);
+    [starButton addTarget:self action:@selector(makeFavorite) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *barStarButton = [[UIBarButtonItem alloc] initWithCustomView:starButton];
+    [barStarButton setStyle:UIBarButtonItemStylePlain];
+    
+    self.navigationItem.rightBarButtonItem = barStarButton;
+    
+    /*
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage: [image stretchableImageWithLeftCapWidth:7.0 topCapHeight:0.0] forState:UIControlStateNormal];
+    [button setBackgroundImage: [[UIImage imageNamed: @"right_clicked.png"] stretchableImageWithLeftCapWidth:7.0 topCapHeight:0.0] forState:UIControlStateHighlighted];
+    
+    button.frame= CGRectMake(0.0, 0.0, image.size.width, image.size.height);
+    
+    [button addTarget:self action:@selector(AcceptData)    forControlEvents:UIControlEventTouchUpInside];
+    
+    UIView *v=[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, image.size.width, image.size.height) ];
+    
+    [v addSubview:button];
+    
+    UIBarButtonItem *forward = [[UIBarButtonItem alloc] initWithCustomView:v];
+    
+    self.navigationItem.rightBarButtonItem= forward;
+    
+    [v release];
+    [image release];
+     */
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
     eligibleEvents = [[NSMutableArray alloc] init];
+    
+    //setting button attributes
+//    favButton = [[UIButtonTypeCustom alloc
+    //favButton = [[UIButton alloc] init]; //WithFrame:CGRectMake(0, 0, 70, 70)];
+    //[favButton setImage:[UIImage imageNamed:@"star_gray.png"] forState:UIControlStateNormal];
+   // favButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"star_gray.png" style:UIBarButtonItemStylePlain target:self action:nil]];
+
+    //favButton
+    
+
+    //WithImage:@"star_gray.png" style:UIBarButtonItemStylePlain target:self action:@selector(favButtonPressed);
+    //self.navigationItem.rightBarButtonItem = favButton;
+    
     
     eventDetailsController = [[EventDetailsViewController alloc] init];
     
