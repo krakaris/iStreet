@@ -20,7 +20,8 @@
         [self.detailTextLabel setBackgroundColor:[UIColor clearColor]]; //necessary
         
         //[self.contentView setBackgroundColor:[UIColor colorWithWhite:0 alpha:.5]]; //this obviously isn't the permanent color, just to show you though.
-        [self.contentView setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0]];
+        //[self.contentView setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0]];
+        [self.contentView setBackgroundColor:[UIColor clearColor]];
         
         [self.textLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:16]];
         //self.textLabel.textColor = [UIColor orangeColor];
