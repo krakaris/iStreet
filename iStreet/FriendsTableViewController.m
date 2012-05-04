@@ -22,11 +22,19 @@
 @synthesize eventsAttending_selected;
 
 @synthesize friendslist;
+@synthesize favoriteFriendsList;
 @synthesize filteredFriendsList;
 @synthesize justFriendNames;
 @synthesize sectionsIndex;
 @synthesize searchBar;
 @synthesize friendsTableView;
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    //Obtain the favorite friends
+
+    
+}
 
 - (void)viewDidLoad
 {

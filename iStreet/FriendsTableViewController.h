@@ -29,6 +29,7 @@
 @property (strong, nonatomic) NSMutableArray *eventsAttending_selected;
 
 @property (strong, nonatomic) NSMutableArray *friendslist;
+@property (strong, nonatomic) NSMutableArray *favoriteFriendsList;
 @property (strong, nonatomic) NSMutableArray *filteredFriendsList;
 @property (strong, nonatomic) NSMutableArray *justFriendNames;
 @property (strong, nonatomic) NSMutableArray *sectionsIndex;
