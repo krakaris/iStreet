@@ -37,6 +37,14 @@ static NSString *appID = @"128188007305619";
 - (void) viewWillAppear:(BOOL)animated
 {
     [self.navigationItem setHidesBackButton:YES animated:NO];
+    
+    /*
+    NSString *relativeURL = [NSString stringWithFormat:@"/updateUser"];
+    
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"fb_id=1186954339" forViewController:self withDelegate:self andDescription:@"updating name"];
+    */
     //if ([facebook isSessionValid])
     {
 

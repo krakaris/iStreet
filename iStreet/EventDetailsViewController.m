@@ -30,9 +30,17 @@
     return self;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [self.descriptionText flashScrollIndicators];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0]];
+    //green - 179, blue - 76
+    [self.descriptionText setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:176.0/255.0 blue:76.0/255.0 alpha:1.0]];
     
     [self setUserWithNetid];
     friendsList = [user.fb_friends componentsSeparatedByString:@","];
