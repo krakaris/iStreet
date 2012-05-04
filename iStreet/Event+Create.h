@@ -14,5 +14,6 @@
 
 /* Get the event's start date stripped of the time */ 
 - (NSString *)stringForStartDate;
+- (NSString *)fullEntryDescription;
 
 @end

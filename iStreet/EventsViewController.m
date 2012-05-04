@@ -30,11 +30,13 @@
 {
     [super viewDidLoad];
     
+    self.eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0];
+
     eventsByNight = [NSMutableArray array];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
         
     self.eventsTable.separatorColor = [UIColor blackColor]; 
-    self.view.backgroundColor = [UIColor orangeColor];
+    //self.view.backgroundColor = [UIColor orangeColor];
     
     [activityIndicator startAnimating];
     
@@ -49,11 +51,10 @@
 
 - (void)loadData:(NSNotification *)notification
 {    
-    NSLog(@"Beginning loading events data!!");
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-
     if(notification)
         [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
         
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                    
     NSArray *events = [document.managedObjectContext executeFetchRequest:request error:NULL];
@@ -72,22 +73,6 @@
     NSIndexPath *selectedRow = [self.eventsTable indexPathForSelectedRow];
     if(selectedRow)
         [self.eventsTable deselectRowAtIndexPath:selectedRow animated:NO];
-    
-    /*
-    BOOL loggedIn = YES;
-    if (loggedIn != YES)
-    {
-        NSString *casURL = @"https://fed.princeton.edu/cas/login";
-        
-        LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NSURL URLWithString:casURL]];
-        
-        //LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NS
-        loginView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;   
-        loginView.delegate = self;
-        
-        [self presentModalViewController:loginView animated:YES];
-    }
-     */
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -162,6 +147,11 @@
    // eventsByNight = eventsByNight;
 }
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -201,18 +191,6 @@
     return kCellHeight;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    EventsNight *ea = [eventsByNight objectAtIndex:section];
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    NSDate *date = [formatter dateFromString:ea.date];
-    [formatter setDateFormat:@"MMMM d, yyyy"];
-    NSString *dateString = [formatter stringFromDate:date];
-    
-    return dateString;
-}
 //Added by Alexa for section color
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
 {
@@ -230,7 +208,6 @@
     label.text = dateString;
     label.textAlignment = UITextAlignmentCenter;
     label.textColor = [UIColor orangeColor];
-    //label.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
     label.backgroundColor = [UIColor darkGrayColor];
     [label setFont:[UIFont fontWithName:@"Trebuchet MS" size:17.0]];
 

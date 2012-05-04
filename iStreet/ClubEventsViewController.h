@@ -14,10 +14,7 @@
 
 @interface ClubEventsViewController : UITableViewController <IconDownloaderDelegate, ServerCommunicationDelegate>
 {
-    //Information we want to get from server
-    UITableView *eventsList;
-    UIActivityIndicatorView *activityIndicator;
-    
+    //Information we want to get from server    
     NSMutableArray *eventsArray;
    // Event *selectedEvent;
     
@@ -26,10 +23,7 @@
 }
 
 @property(nonatomic, retain) Club *club;
-@property(nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (nonatomic, retain) IBOutlet UITableView *eventsList;
-//@property (nonatomic, retain) NSMutableDictionary *sections;
 
-- (void) getListOfEvents: (NSString *) clubName;
+- (void) getServerEventsData;
 
 @end
