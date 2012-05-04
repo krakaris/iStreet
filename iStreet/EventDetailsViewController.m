@@ -20,10 +20,9 @@
 @synthesize eventTime;
 @synthesize eventImage;
 @synthesize attendButton;
-@synthesize unattendButton;
 @synthesize descriptionText;
 @synthesize seeAllFriendsAttending;
-@synthesize eventEntry;
+@synthesize eventEntry, toggleAttendingIndicator;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,15 +38,19 @@
     friendsList = [user.fb_friends componentsSeparatedByString:@","];
     
     //Set main Titles and Labels
-    if (![myEvent.title isEqualToString:@""]) {
+    if (![myEvent.title isEqualToString:@""]) 
+    {
         self.eventTitle.text = myEvent.title;
         self.navigationItem.title = myEvent.title;
-    } else {
+    } else 
+    {
         self.eventTitle.text = @"On Tap";
         self.navigationItem.title = @"On Tap";
     }
+    
     self.descriptionText.text = myEvent.event_description;
-    self.seeAllFriendsAttending.titleLabel.textColor = [UIColor orangeColor];
+    //self.seeAllFriendsAttending.titleLabel.textColor = [UIColor orangeColor];
+    
     // Fix date and time strings
     [self formatDates];
     
@@ -55,26 +58,16 @@
     eventEntry.text = [self setEntry:myEvent];
     
     //Set "Attending"/"Unattending" Button
-    if ([user.attendingEvents containsObject:myEvent]) {
+    //attendButton.titleLabel.textColor = [UIColor orangeColor];
+    if ([user.attendingEvents containsObject:myEvent]) 
+    {
         userIsAttending = YES;
-        attendButton.titleLabel.textColor = [UIColor orangeColor];
-        
-        //hide the Attend button
-        attendButton.enabled = NO;
-        attendButton.hidden = YES;
-        
-        //Show the unattend button
-        unattendButton.titleLabel.textColor = [UIColor orangeColor];
-        unattendButton.enabled = YES;
-        unattendButton.hidden = NO;
-
-    } else {
+        [attendButton.titleLabel setText:@"Unattend"];
+    } 
+    else 
+    {
         userIsAttending = NO;
-        attendButton.enabled = YES;
-        attendButton.hidden = NO;
-        attendButton.titleLabel.textColor = [UIColor orangeColor];
-        unattendButton.enabled = NO;
-        unattendButton.hidden = YES;
+        [attendButton.titleLabel setText:@"Attend"];
     }
     
     //Set image
@@ -100,7 +93,7 @@
     NSString *member = [NSString stringWithFormat:@"Mp"];
     NSString *list = [NSString stringWithFormat:@"Gu"];
     NSString *custom = [NSString stringWithFormat:@"Cu"];
-
+    
     NSString *entry_final;
     if ([entry isEqualToString:puid]) {
         entry_final = @"PUID";
@@ -191,7 +184,6 @@
     [self setSeeAllFriendsAttending:nil];
     [self setDescriptionText:nil];
     [self setEventEntry:nil];
-    [self setUnattendButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -201,29 +193,49 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)attend:(UIButton *)sender {
-    [user addAttendingEventsObject:myEvent];
-    userIsAttending = YES;
-    sender.hidden = YES;
-    sender.enabled = NO;
-    unattendButton.hidden = NO;
-    unattendButton.enabled = YES;
-    unattendButton.titleLabel.textColor = [UIColor orangeColor];
+- (IBAction)attend:(UIButton *)sender 
+{
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    NSString *post = [NSString stringWithFormat:@"event_id=%@", self.myEvent.event_id];
     
-    // UPDATE USER'S EVENTS IN DB HERE!!! ATTEND EVENT
+    [attendButton setHidden:YES];
+    [toggleAttendingIndicator startAnimating];
+    if (userIsAttending) 
+    {    
+        [sc sendAsynchronousRequestForDataAtRelativeURL:@"/unattendEvent" withPOSTBody:post forViewController:self withDelegate:self andDescription:@"unattend"];
+    }
+    else 
+    {
+        [sc sendAsynchronousRequestForDataAtRelativeURL:@"/attendEvent" withPOSTBody:post forViewController:self withDelegate:self andDescription:@"attend"];
+    }
     
 }
 
-- (IBAction)unattend:(UIButton *)sender {
-    [user removeAttendingEventsObject:myEvent];
-    userIsAttending = NO;
-    sender.hidden = YES;
-    sender.enabled = NO;
-    attendButton.hidden = NO;
-    attendButton.enabled = YES;
-    attendButton.titleLabel.textColor = [UIColor orangeColor];
+- (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
+{
+    [attendButton setHidden:NO];
+    [toggleAttendingIndicator stopAnimating];
+    if(![[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] isEqualToString:@"SUCCESS"])
+        return;
+    
+    if([description isEqualToString:@"attend"])
+    {
+        [user addAttendingEventsObject:myEvent];
+        userIsAttending = YES;
+        [attendButton.titleLabel setText:@"Unattend"];
+    }
+    else if ([description isEqualToString:@"unattend"])
+    {
+        [user removeAttendingEventsObject:myEvent];
+        userIsAttending = NO;
+        [attendButton.titleLabel setText:@"Attend"];
+    }
+}
 
-    //UPDATE USER'S EVENTS IN DB HERE!!! UN-ATTEND EVENT
+- (void)connectionFailed:(NSString *)description
+{
+    [attendButton setHidden:NO];
+    [toggleAttendingIndicator stopAnimating];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

@@ -10,8 +10,9 @@
 #import "Event.h"
 #import "User.h"
 #import "SeeFriendsAttendingTableViewController.h"
+#import "ServerCommunication.h"
 
-@interface EventDetailsViewController : UIViewController
+@interface EventDetailsViewController : UIViewController <ServerCommunicationDelegate>
 {
     User *user;
     NSArray *friendsList;
@@ -24,13 +25,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventTime;
 @property (weak, nonatomic) IBOutlet UIImageView *eventImage;
 @property (weak, nonatomic) IBOutlet UIButton *attendButton;
-@property (weak, nonatomic) IBOutlet UIButton *unattendButton;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionText;
 @property (weak, nonatomic) IBOutlet UIButton *seeAllFriendsAttending;
 @property (weak, nonatomic) IBOutlet UILabel *eventEntry;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *toggleAttendingIndicator;
 
 - (IBAction)attend:(UIButton *)sender;
-- (IBAction)unattend:(UIButton *)sender;
-
 
 @end
