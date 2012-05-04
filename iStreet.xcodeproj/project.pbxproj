@@ -21,6 +21,8 @@
 		4163B6F7153F4AB700D7B2DC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6F6153F4AB700D7B2DC /* Event.m */; };
 		4185BB6E1541297B001E85E3 /* AnimatedUIPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */; };
 		419D3797154AD59E00447D2B /* EventsAttendingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 419D3796154AD59E00447D2B /* EventsAttendingTableViewController.m */; };
+		41B7438A15542BAC0080DA39 /* star_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B7438815542BAC0080DA39 /* star_gray.png */; };
+		41B7438B15542BAC0080DA39 /* star_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B7438915542BAC0080DA39 /* star_orange.png */; };
 		5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */; };
 		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
 		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
@@ -111,6 +113,8 @@
 		4163B6F6153F4AB700D7B2DC /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		419D3795154AD59E00447D2B /* EventsAttendingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsAttendingTableViewController.h; sourceTree = "<group>"; };
 		419D3796154AD59E00447D2B /* EventsAttendingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsAttendingTableViewController.m; sourceTree = "<group>"; };
+		41B7438815542BAC0080DA39 /* star_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_gray.png; sourceTree = "<group>"; };
+		41B7438915542BAC0080DA39 /* star_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_orange.png; sourceTree = "<group>"; };
 		5B227E49153673F200B5DD52 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
 		5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		5B227E4D15367D5200B5DD52 /* aqua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aqua.png; sourceTree = "<group>"; };
@@ -341,6 +345,8 @@
 				419D3796154AD59E00447D2B /* EventsAttendingTableViewController.m */,
 				415C30361553527A005FB5D7 /* SeeFriendsAttendingTableViewController.h */,
 				415C30371553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m */,
+				41B7438815542BAC0080DA39 /* star_gray.png */,
+				41B7438915542BAC0080DA39 /* star_orange.png */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -517,6 +523,8 @@
 				9D293368154ECAE400B3F8A9 /* iStreet final icon 57x57.png in Resources */,
 				9D29336C154ECB5700B3F8A9 /* iStreet final icon 114x114.png in Resources */,
 				9D293370154ECC0E00B3F8A9 /* Default.png in Resources */,
+				41B7438A15542BAC0080DA39 /* star_gray.png in Resources */,
+				41B7438B15542BAC0080DA39 /* star_orange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -52,8 +52,7 @@ static NSString *appID = @"128188007305619";
     [defaults synchronize];
     NSLog(@"defaults just synchronized!");
     [self loggedInLoadFriendsNow];
-    
-
+    [self.spinner startAnimating];
 }
 
 - (void)viewDidLoad
@@ -64,15 +63,16 @@ static NSString *appID = @"128188007305619";
     //[self.view addSubview:self.spinner];
     //[self.spinner startAnimating];
     
+    //self.facebook = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
+    
     if (alreadyLoadedFriends && [facebook isSessionValid])
     {
         NSLog(@"Already loaded friends is YES!");
         
         [self.fConnectButton setHidden:YES];
         self.fConnectButton.hidden = YES;
-        [self.spinner startAnimating];
-        [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
         [self.spinner stopAnimating];
+        [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     }
     else        
         //doing initial fb setup
@@ -82,6 +82,9 @@ static NSString *appID = @"128188007305619";
         
         alreadyLoadedFriends = YES;
         
+        //Facebook *fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
+        //facebook;
+
         if (!facebook)
         {
             NSLog(@"Alloc-ing fb instance if none exists.");
@@ -140,11 +143,15 @@ static NSString *appID = @"128188007305619";
             [alertView show];
         }
         
+        //Setting the global facebook variable to this one
+        //[(AppDelegate *)[[UIApplication sharedApplication] delegate] setFacebook:self.facebook];
+        
         [facebook requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
         NSLog(@"Asking for friends!!");
     }
     
     
+    /*
     //#DEBUGGING
     //Build url for server
     
@@ -165,6 +172,7 @@ static NSString *appID = @"128188007305619";
     [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=97" forViewController:self withDelegate:self andDescription:@"adding event 97"];
 
     NSLog(@"user updated!");
+     */
 }
 
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
@@ -214,6 +222,7 @@ static NSString *appID = @"128188007305619";
     
     alreadyLoadedFriends = YES;
     
+    [self.spinner stopAnimating];
     [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     
     //NSString *className = NSStringFromClass([dataWeGot class]);

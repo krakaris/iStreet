@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
@@ -209,7 +209,7 @@
                     <navigationItem key="navigationItem" title="Friends" id="LyX-lb-n4x"/>
                     <connections>
                         <outlet property="fConnectButton" destination="Bgt-ID-d0Q" id="YGh-YS-8OM"/>
-                        <outlet property="spinner" destination="M9H-He-4B7" id="Xqn-uF-Uja"/>
+                        <outlet property="spinner" destination="M9H-He-4B7" id="ZYn-jn-Sy7"/>
                         <segue destination="HDH-qv-0n4" kind="push" identifier="FriendsSegue" id="UfO-zV-shE"/>
                     </connections>
                 </viewController>
@@ -733,6 +733,9 @@
         <image name="fconnect.png" width="331" height="100"/>
     </resources>
     <classes>
+        <class className="AllEventsViewController" superclassName="EventsViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllEventsViewController.h"/>
+        </class>
         <class className="ChatViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
             <relationships>
@@ -744,12 +747,8 @@
                 <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
             </relationships>
         </class>
-        <class className="ClubEventsViewController" superclassName="UITableViewController">
+        <class className="ClubEventsViewController" superclassName="EventsViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubEventsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="eventsList" candidateClass="UITableView"/>
-            </relationships>
         </class>
         <class className="ClubsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubsViewController.h"/>
