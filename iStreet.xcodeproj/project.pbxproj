@@ -34,6 +34,9 @@
 		5BA1F61315112DA7002CA7F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */; };
 		5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */; };
 		5BADF93F155388ED00B82CC3 /* AllEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADF93E155388ED00B82CC3 /* AllEventsViewController.m */; };
+		5BADF9461553A86E00B82CC3 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BADF9451553A86E00B82CC3 /* star.png */; };
+		5BADF9491553A8EC00B82CC3 /* star_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BADF9471553A8EC00B82CC3 /* star_gray.png */; };
+		5BADF94A1553A8EC00B82CC3 /* star_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BADF9481553A8EC00B82CC3 /* star_orange.png */; };
 		5BC0D9F3153BF379004D560A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC0D9F2153BF379004D560A /* CoreData.framework */; };
 		5BC710CB1545E70300A7659F /* iStreet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BC710C91545E70300A7659F /* iStreet.xcdatamodeld */; };
 		5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AA15165A1F008E6C1F /* ChatViewController.m */; };
@@ -132,6 +135,9 @@
 		5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5BADF93D155388ED00B82CC3 /* AllEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllEventsViewController.h; sourceTree = "<group>"; };
 		5BADF93E155388ED00B82CC3 /* AllEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllEventsViewController.m; sourceTree = "<group>"; };
+		5BADF9451553A86E00B82CC3 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		5BADF9471553A8EC00B82CC3 /* star_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_gray.png; sourceTree = "<group>"; };
+		5BADF9481553A8EC00B82CC3 /* star_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_orange.png; sourceTree = "<group>"; };
 		5BC0D9F2153BF379004D560A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5BC710CA1545E70300A7659F /* iStreet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iStreet.xcdatamodel; sourceTree = "<group>"; };
 		5BCE63A915165A1F008E6C1F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -313,6 +319,9 @@
 		5BA1F61515112DA7002CA7F3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5BADF9471553A8EC00B82CC3 /* star_gray.png */,
+				5BADF9481553A8EC00B82CC3 /* star_orange.png */,
+				5BADF9451553A86E00B82CC3 /* star.png */,
 				9D29336F154ECC0E00B3F8A9 /* Default.png */,
 				9D29336B154ECB5700B3F8A9 /* iStreet final icon 114x114.png */,
 				9D293367154ECAE400B3F8A9 /* iStreet final icon 57x57.png */,
@@ -349,8 +358,6 @@
 			isa = PBXGroup;
 			children = (
 				9DB903D6151BC6F500A13461 /* Club Images */,
-				9DA1BF09153A08DE005CCC13 /* EventDetailsViewController.h */,
-				9DA1BF0A153A08DE005CCC13 /* EventDetailsViewController.m */,
 				9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */,
 				9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */,
 				5BCE63AC15165D83008E6C1F /* ClubsViewController.h */,
@@ -384,6 +391,8 @@
 				41263F8E154131B1006DD5D6 /* EventsNight.m */,
 				9D197B60153B51B800604080 /* EventCell.h */,
 				9D197B61153B51B800604080 /* EventCell.m */,
+				9DA1BF09153A08DE005CCC13 /* EventDetailsViewController.h */,
+				9DA1BF0A153A08DE005CCC13 /* EventDetailsViewController.m */,
 				9D197B64153B51B800604080 /* IconDownloader.h */,
 				9D197B65153B51B800604080 /* IconDownloader.m */,
 				5BE7E2B0153A5E54008EFCA0 /* Placeholder.png */,
@@ -517,6 +526,9 @@
 				9D293368154ECAE400B3F8A9 /* iStreet final icon 57x57.png in Resources */,
 				9D29336C154ECB5700B3F8A9 /* iStreet final icon 114x114.png in Resources */,
 				9D293370154ECC0E00B3F8A9 /* Default.png in Resources */,
+				5BADF9461553A86E00B82CC3 /* star.png in Resources */,
+				5BADF9491553A8EC00B82CC3 /* star_gray.png in Resources */,
+				5BADF94A1553A8EC00B82CC3 /* star_orange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
