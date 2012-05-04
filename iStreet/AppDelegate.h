@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "ServerCommunication.h"
+#import "Facebook.h"
 
 extern NSString *const DataLoadedNotificationString;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, ServerCommunicationDelegate>
 {
     int _networkActivityIndicatorCount;
+    //Facebook *facebook;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -21,6 +23,8 @@ extern NSString *const DataLoadedNotificationString;
 @property (nonatomic, retain) NSArray *allfbFriends;
 @property (nonatomic, retain) UIManagedDocument *document;
 @property (nonatomic, assign) BOOL appDataLoaded;
+
+//@property (nonatomic, retain) Facebook *facebook;
 
 - (void)useNetworkActivityIndicator;
 - (void)stopUsingNetworkActivityIndicator;
