@@ -380,6 +380,10 @@
         if ([response length] == 0 || thisRange.location != NSNotFound)
         {
             NSLog(@"Not found!!!");
+            
+            //Push view controller anyway - even if the user has no events, others should be able to
+            //favorite him or her
+            [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];
         }
         else 
         {

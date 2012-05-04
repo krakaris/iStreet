@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "Event.h"
 #import "EventCell.h"
+#import "User.h"
 #import "IconDownloader.h"
 #import "EventDetailsViewController.h"
 #import <CoreData/CoreData.h>
@@ -35,5 +36,6 @@
 @property (nonatomic, retain) IBOutlet UIButton *favButton;
 
 @property (assign) BOOL isStarSelected;
+@property (assign) BOOL isAlreadyFavorite;
 
 @end

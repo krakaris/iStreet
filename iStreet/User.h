@@ -2,7 +2,7 @@
 //  User.h
 //  iStreet
 //
-//  Created by Akarshan Kumar on 4/18/12.
+//  Created by Akarshan Kumar on 5/3/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSString * fb_friends;
 @property (nonatomic, retain) NSString * fb_id;
 @property (nonatomic, retain) NSString * netid;
+@property (nonatomic, retain) NSString * fav_friends_commasep;
 @property (nonatomic, retain) NSSet *attendingEvents;
 @end
 
