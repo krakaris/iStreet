@@ -8,6 +8,7 @@
 
 #import "FriendsTableViewController.h"
 #import "EventsAttendingTableViewController.h"
+#include <stdlib.h>
 
 @interface FriendsTableViewController ()
 
@@ -91,12 +92,12 @@
     
     NSLog(@"Favorite friends count = %d", [favoriteFriendsList count]);
 
-/*
+
     for (NSDictionary *user in allFriends)
     {
         NSLog(@"%@ and %@", [user valueForKey:@"name"], [user valueForKey:@"id"]);
     }
- */
+ 
     
 }
 
@@ -160,6 +161,78 @@
      */
     
     [self.friendsTableView reloadData];
+    
+    
+    /*
+    //Randomizing Friends Attending different events
+    
+    NSArray *allEvents = [NSArray arrayWithObjects:@"71", @"111", @"88", @"89", @"93", @"96", @"69",
+                          @"81", @"95", @"106", @"107", @"79", @"85", @"86", @"87", @"97", @"103",
+                          @"105", @"112", @"110", @"78", @"90", @"99", @"102", @"84", @"94", @"98", @"108",
+                          @"115", @"116", @"114", @"92", @"100", nil];
+    
+    NSArray *allFriendsFB = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
+    
+    int count = 0;
+    while (count < 10)
+    {
+        NSDictionary *user = [allFriendsFB objectAtIndex:count];
+        int i = arc4random() % [allEvents count];
+        
+        NSString *userName = [user valueForKey:@"name"];
+        NSString *facebookID = [user valueForKey:@"id"];
+        
+        NSLog(@"Friend with name %@ and id %@ and index %d and random event %@", userName, facebookID, i, [allEvents objectAtIndex:i]);
+        
+        //Build url for server
+        NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=%@", facebookID];
+        relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+        
+        NSLog(@"relativeURL is %@", relativeURL);
+        ServerCommunication *sc = [[ServerCommunication alloc] init];
+        NSString *postBody = [NSString stringWithFormat:@"name=%@", userName];
+
+        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:postBody forViewController:self withDelegate:self andDescription:userName];
+        
+        for (int j = 0; j < 5; j++)
+        {
+            i = arc4random() % [allEvents count];
+            NSString *eventPostBody = [NSString stringWithFormat:@"event_id=%@", [allEvents objectAtIndex:i]];
+            [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:eventPostBody forViewController:self withDelegate:self andDescription:userName];
+        }
+        count ++;
+    }
+    */
+    
+    /*
+    //Build url for server
+    NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=%@", @"521832474"];
+    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+    
+    NSLog(@"relativeURL is %@", relativeURL);
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Stacey Wenjun Zhang"forViewController:self withDelegate:self andDescription:@"stacey"];
+    
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=102" forViewController:self withDelegate:self andDescription:@"adding event 99"];
+     */
+    /*
+    NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=571438200"];
+    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+    
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    
+     
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Rishi Narang" forViewController:self withDelegate:self andDescription:@"updating name"];
+    
+    //sc = [[ServerCommunication alloc] init];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=99" forViewController:self withDelegate:self andDescription:@"adding event 99"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=88" forViewController:self withDelegate:self andDescription:@"adding event 88"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=100" forViewController:self withDelegate:self andDescription:@"adding event 100"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=101" forViewController:self withDelegate:self andDescription:@"adding event 101"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=71" forViewController:self withDelegate:self andDescription:@"adding event 71"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=111" forViewController:self withDelegate:self andDescription:@"adding event 111"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=97" forViewController:self withDelegate:self andDescription:@"adding event 97"];
+     */
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -452,12 +525,10 @@
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     eatvc = (EventsAttendingTableViewController *) segue.destinationViewController;
-    
 
     eatvc.name = name_selected;
     eatvc.fbid = fbid_selected;
     eatvc.eventsAttendingIDs = eventsAttending_selected;
-    
     
     /*
     if (self.isFiltered)
@@ -499,6 +570,9 @@
 
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
+    //Empty array needed each time
+    [eventsAttending_selected removeAllObjects];
+    
     if (description == @"retrieve events")
     {
         NSLog(@"Events retrieved.");
@@ -555,6 +629,10 @@
             [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];
             //[self.navigationController pushViewController:eatvc animated:YES];
         }
+    }
+    else {
+        NSString *resp = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"Received response for %@ is %@", description, resp);
     }
 }
 

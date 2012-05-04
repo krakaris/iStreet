@@ -683,17 +683,17 @@
             </objects>
             <point key="canvasLocation" x="1338" y="209"/>
         </scene>
-        <!--Table View Controller-->
+        <!--See Friends Attending Table View Controller-->
         <scene sceneID="1Bs-mT-vqk">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="khA-eK-j9I" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="Bv7-0j-XFh" sceneMemberID="viewController">
+                <tableViewController id="Bv7-0j-XFh" customClass="SeeFriendsAttendingTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Xq0-HF-eol">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Friend Cell" textLabel="gcK-1q-J3f" style="IBUITableViewCellStyleDefault" id="RNV-qf-aai">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FriendsAttendingCell" textLabel="gcK-1q-J3f" style="IBUITableViewCellStyleDefault" id="RNV-qf-aai">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -723,7 +723,7 @@
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="1755" y="215"/>
+            <point key="canvasLocation" x="1761" y="209"/>
         </scene>
     </scenes>
     <resources>

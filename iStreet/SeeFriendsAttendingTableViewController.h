@@ -7,10 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ServerCommunication.h"
+#import "AppDelegate.h"
 
-@interface SeeFriendsAttendingTableViewController : UITableViewController
+@interface SeeFriendsAttendingTableViewController : UITableViewController <ServerCommunicationDelegate, UIAlertViewDelegate>
 
 @property NSString * fbid_loggedInUser;
 @property NSArray * friendsFbidArray;
+@property NSMutableArray *listOfAttendingFriends;
+//@property NSArray *idListOfAttendingFriends;
+@property NSString *eventID;
+@property IBOutlet UIActivityIndicatorView *spinner;
+
 
 @end
