@@ -34,6 +34,7 @@
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
         
     self.eventsTable.separatorColor = [UIColor blackColor]; 
+    self.view.backgroundColor = [UIColor orangeColor];
     
     [activityIndicator startAnimating];
     
@@ -228,10 +229,9 @@
     
     label.text = dateString;
     label.textAlignment = UITextAlignmentCenter;
-    //label.textColor = [UIColor whiteColor];
     label.textColor = [UIColor orangeColor];
-    label.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
-    //label.alpha = 0.7;
+    //label.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
+    label.backgroundColor = [UIColor darkGrayColor];
     [label setFont:[UIFont fontWithName:@"Trebuchet MS" size:17.0]];
 
     [headerView addSubview:label];
