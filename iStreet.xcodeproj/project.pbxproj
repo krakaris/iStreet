@@ -15,6 +15,9 @@
 		41263FA91543378A006DD5D6 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41263F9C1543378A006DD5D6 /* FBDialog.bundle */; };
 		41263FAA1543378A006DD5D6 /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41263FA21543378A006DD5D6 /* libfacebook_ios_sdk.a */; };
 		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
+		415C30381553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C30371553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m */; };
+		415C303B1553565B005FB5D7 /* star_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 415C30391553565A005FB5D7 /* star_gray.png */; };
+		415C303C1553565B005FB5D7 /* star_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 415C303A1553565A005FB5D7 /* star_orange.png */; };
 		4163B6F0153E572E00D7B2DC /* fconnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 4163B6EF153E572E00D7B2DC /* fconnect.png */; };
 		4163B6F7153F4AB700D7B2DC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6F6153F4AB700D7B2DC /* Event.m */; };
 		4163B6FB153F4AB700D7B2DC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6FA153F4AB700D7B2DC /* User.m */; };
@@ -40,9 +43,6 @@
 		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
 		5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */; };
-		9D0E8E1C1551DB0000718751 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E8E1B1551DB0000718751 /* star.png */; };
-		9D0E8E231551DE3500718751 /* check icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E8E211551DE3500718751 /* check icon.png */; };
-		9D0E8E241551DE3500718751 /* red solo cup.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E8E221551DE3500718751 /* red solo cup.jpg */; };
 		9D197B69153B51B800604080 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B61153B51B800604080 /* EventCell.m */; };
 		9D197B6B153B51B800604080 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B65153B51B800604080 /* IconDownloader.m */; };
 		9D208D7815409335004515E9 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
@@ -101,6 +101,10 @@
 		41263FA81543378A006DD5D6 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		41386593152D15EB007A2327 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		4158565B154517C1002BCE7D /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
+		415C30361553527A005FB5D7 /* SeeFriendsAttendingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeeFriendsAttendingTableViewController.h; sourceTree = "<group>"; };
+		415C30371553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeeFriendsAttendingTableViewController.m; sourceTree = "<group>"; };
+		415C30391553565A005FB5D7 /* star_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_gray.png; sourceTree = "<group>"; };
+		415C303A1553565A005FB5D7 /* star_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_orange.png; sourceTree = "<group>"; };
 		4163B6EC153E563C00D7B2DC /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		4163B6ED153E563C00D7B2DC /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		4163B6EF153E572E00D7B2DC /* fconnect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fconnect.png; sourceTree = "<group>"; };
@@ -141,9 +145,6 @@
 		5BFB44F8153382E800960C81 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5BFB450D153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5BFB450F153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		9D0E8E1B1551DB0000718751 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = ../../../../../Desktop/iFrat/Buttons/star.png; sourceTree = "<group>"; };
-		9D0E8E211551DE3500718751 /* check icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check icon.png"; path = "../../../../../Desktop/iFrat/Buttons/check icon.png"; sourceTree = "<group>"; };
-		9D0E8E221551DE3500718751 /* red solo cup.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "red solo cup.jpg"; path = "../../../../../Desktop/iFrat/Buttons/red solo cup.jpg"; sourceTree = "<group>"; };
 		9D197B60153B51B800604080 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		9D197B61153B51B800604080 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		9D197B64153B51B800604080 /* IconDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconDownloader.h; sourceTree = "<group>"; };
@@ -267,6 +268,8 @@
 				9D29336F154ECC0E00B3F8A9 /* Default.png */,
 				9D29336B154ECB5700B3F8A9 /* iStreet final icon 114x114.png */,
 				9D293367154ECAE400B3F8A9 /* iStreet final icon 57x57.png */,
+				415C30391553565A005FB5D7 /* star_gray.png */,
+				415C303A1553565A005FB5D7 /* star_orange.png */,
 				5BA1F61415112DA7002CA7F3 /* iStreet */,
 				5BA1F60D15112DA7002CA7F3 /* Frameworks */,
 				5BA1F60B15112DA7002CA7F3 /* Products */,
@@ -301,9 +304,6 @@
 				5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */,
 				9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */,
 				9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */,
-				9D0E8E1B1551DB0000718751 /* star.png */,
-				9D0E8E211551DE3500718751 /* check icon.png */,
-				9D0E8E221551DE3500718751 /* red solo cup.jpg */,
 				5B608A5F154A7CCC00BDCA28 /* Server Communication */,
 				5BFB44FF1533842D00960C81 /* Friends */,
 				5BFB45001533843300960C81 /* Clubs */,
@@ -342,6 +342,8 @@
 				4112762415439511008ED4AF /* FriendsTableViewController.m */,
 				419D3795154AD59E00447D2B /* EventsAttendingTableViewController.h */,
 				419D3796154AD59E00447D2B /* EventsAttendingTableViewController.m */,
+				415C30361553527A005FB5D7 /* SeeFriendsAttendingTableViewController.h */,
+				415C30371553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -516,9 +518,8 @@
 				9D293368154ECAE400B3F8A9 /* iStreet final icon 57x57.png in Resources */,
 				9D29336C154ECB5700B3F8A9 /* iStreet final icon 114x114.png in Resources */,
 				9D293370154ECC0E00B3F8A9 /* Default.png in Resources */,
-				9D0E8E1C1551DB0000718751 /* star.png in Resources */,
-				9D0E8E231551DE3500718751 /* check icon.png in Resources */,
-				9D0E8E241551DE3500718751 /* red solo cup.jpg in Resources */,
+				415C303B1553565B005FB5D7 /* star_gray.png in Resources */,
+				415C303C1553565B005FB5D7 /* star_orange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,6 +554,7 @@
 				5B608A5A154A602D00BDCA28 /* ServerCommunication.m in Sources */,
 				5B3DEB2D154AA52A0023C651 /* LoginViewController.m in Sources */,
 				419D3797154AD59E00447D2B /* EventsAttendingTableViewController.m in Sources */,
+				415C30381553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
