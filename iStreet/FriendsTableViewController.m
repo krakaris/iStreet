@@ -30,6 +30,28 @@
 @synthesize searchBar;
 @synthesize friendsTableView;
 
+@synthesize logoutButton;
+
+- (void) logoutOfFacebook:(id)sender
+{
+    NSLog(@"Logging out of facebook alert view!");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you sure you wish to log out of Facebook?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    
+    [alert show];    
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)   //do nothing, canceled
+        NSLog(@"yay!");
+    else                    //log out of facebook
+    {
+        NSLog(@"Nay!");
+        
+        
+    }
+}
+
 - (void) viewWillAppear:(BOOL)animated
 {
     //Obtain the favorite friends

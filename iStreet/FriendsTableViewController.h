@@ -10,7 +10,7 @@
 #import "ServerCommunication.h"
 #import "EventsAttendingTableViewController.h"
 
-@interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, ServerCommunicationDelegate>
+@interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, ServerCommunicationDelegate, UIAlertViewDelegate>
 {
     EventsAttendingTableViewController *eatvc;
     BOOL isFiltered;
@@ -36,5 +36,9 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *friendsTableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *logoutButton;
+
+- (IBAction) logoutOfFacebook: (id) sender;
 
 @end
