@@ -39,11 +39,12 @@
     friendsList = [user.fb_friends componentsSeparatedByString:@","];
     
     //Set main Titles and Labels
-    self.navigationItem.title = myEvent.title;
-    if (myEvent.title != nil) {
+    if (![myEvent.title isEqualToString:@""]) {
         self.eventTitle.text = myEvent.title;
+        self.navigationItem.title = myEvent.title;
     } else {
         self.eventTitle.text = @"On Tap";
+        self.navigationItem.title = @"On Tap";
     }
     self.descriptionText.text = myEvent.event_description;
     self.seeAllFriendsAttending.titleLabel.textColor = [UIColor orangeColor];

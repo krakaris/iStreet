@@ -33,6 +33,7 @@
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
 		5BA1F61315112DA7002CA7F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */; };
 		5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */; };
+		5BADF93F155388ED00B82CC3 /* AllEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADF93E155388ED00B82CC3 /* AllEventsViewController.m */; };
 		5BC0D9F3153BF379004D560A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC0D9F2153BF379004D560A /* CoreData.framework */; };
 		5BC710CB1545E70300A7659F /* iStreet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BC710C91545E70300A7659F /* iStreet.xcdatamodeld */; };
 		5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AA15165A1F008E6C1F /* ChatViewController.m */; };
@@ -131,6 +132,8 @@
 		5BA1F61C15112DA7002CA7F3 /* iStreet-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iStreet-Prefix.pch"; sourceTree = "<group>"; };
 		5BA1F61D15112DA7002CA7F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5BADF93D155388ED00B82CC3 /* AllEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllEventsViewController.h; sourceTree = "<group>"; };
+		5BADF93E155388ED00B82CC3 /* AllEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllEventsViewController.m; sourceTree = "<group>"; };
 		5BC0D9F2153BF379004D560A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5BC710CA1545E70300A7659F /* iStreet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iStreet.xcdatamodel; sourceTree = "<group>"; };
 		5BCE63A915165A1F008E6C1F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -379,6 +382,8 @@
 			children = (
 				4158565B154517C1002BCE7D /* EventsViewController.h */,
 				5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */,
+				5BADF93D155388ED00B82CC3 /* AllEventsViewController.h */,
+				5BADF93E155388ED00B82CC3 /* AllEventsViewController.m */,
 				41263F8D154131B1006DD5D6 /* EventsNight.h */,
 				41263F8E154131B1006DD5D6 /* EventsNight.m */,
 				9D197B60153B51B800604080 /* EventCell.h */,
@@ -551,6 +556,7 @@
 				5B3DEB2D154AA52A0023C651 /* LoginViewController.m in Sources */,
 				419D3797154AD59E00447D2B /* EventsAttendingTableViewController.m in Sources */,
 				415C30381553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m in Sources */,
+				5BADF93F155388ED00B82CC3 /* AllEventsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

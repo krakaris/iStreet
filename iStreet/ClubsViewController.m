@@ -79,6 +79,7 @@
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    NSLog(@"preparing for segue");
     NSString *clubName = segue.identifier;
     for (Club *club in clubsList){
         if ([club.name isEqualToString:clubName]){

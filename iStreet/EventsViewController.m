@@ -17,7 +17,7 @@
 #import "ServerCommunication.h"
 
 @interface EventsViewController ()
-- (void)getServerEventsData;
+- (void)requestServerEventsData;
 - (void)loadImagesForOnscreenRows;
 /* Probably incomplete */
 @end
@@ -31,12 +31,12 @@
     [super viewDidLoad];
     
     self.eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0];
+    self.eventsTable.separatorColor = [UIColor blackColor];
 
     eventsByNight = [NSMutableArray array];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
         
     self.eventsTable.separatorColor = [UIColor blackColor]; 
-    //self.view.backgroundColor = [UIColor orangeColor];
     
     [activityIndicator startAnimating];
     
@@ -44,28 +44,33 @@
     
     // If Core Data has not finished loading, register for a notification for when it does. Otherwise, load the data.
     if(!dataDidLoad)
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData:) name:DataLoadedNotificationString object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getCachedData:) name:DataLoadedNotificationString object:nil];
     else
-        [self loadData:nil];
+        [self getCachedData:nil];
 }
 
-- (void)loadData:(NSNotification *)notification
+- (void)getCachedData:(NSNotification *)notification
 {    
     if(notification)
         [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-        
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                    
-    NSArray *events = [document.managedObjectContext executeFetchRequest:request error:NULL];
+    NSArray *events = [self getCoreDataEvents];
     
     [self setPropertiesWithNewEventData:events];
     
-    [eventsTable reloadData];
-    [activityIndicator stopAnimating];
+    [self.eventsTable reloadData];
+    //[NSThread sleepForTimeInterval:2];
+    [self.activityIndicator stopAnimating];
     
-    [self getServerEventsData];
+    [self requestServerEventsData];
 }
+
+- (NSArray *)getCoreDataEvents
+{
+    [NSException raise:@"Must override '- (NSArray *)getCoreDataEvents' in subclass of EventsViewController" format:@""];
+    return nil;
+}
+
 
 - (void) viewDidAppear:(BOOL)animated
 {
@@ -82,11 +87,9 @@
 
 #pragma mark Retrieving Events Data from Server
 
-- (void)getServerEventsData
+- (void)requestServerEventsData
 {    
-    //NSString *url = @"http://istreetsvr.herokuapp.com/eventslist";
-    ServerCommunication *sc = [[ServerCommunication alloc] init];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:@"/eventslist" withPOSTBody:nil forViewController:self  withDelegate:self andDescription:nil];
+    [NSException raise:@"Must override '- (void)requestServerEventsData' in subclass of EventsViewController" format:@""];
 }
 
 /*
@@ -113,7 +116,6 @@
 // attempting to change this method to work with the current eventsByDate
 - (void)setPropertiesWithNewEventData:(NSArray *)newData;
 {
-    //eventsByNight = [NSMutableArray array];
     for(int i = [newData count] - 1; i >= 0; i--)
     {
         Event *event = (Event *)[newData objectAtIndex:i];
@@ -155,7 +157,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{    
+{   
     return [eventsByNight count];
 }
 
