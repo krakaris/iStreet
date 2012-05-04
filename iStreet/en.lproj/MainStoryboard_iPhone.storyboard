@@ -591,10 +591,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="MsM-9b-zol">
-                                        <rect key="frame" x="20" y="322" width="128" height="25"/>
+                                        <rect key="frame" x="15" y="322" width="137" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="17"/>
-                                        <state key="normal" title="Attend!">
+                                        <state key="normal" title="Unattend">
                                             <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <state key="highlighted">
@@ -632,7 +632,7 @@
                                         <color key="textColor" red="0.99841959280000003" green="1" blue="0.97239422249999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="white" id="AS4-EG-668">
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="white" id="AS4-EG-668">
                                         <rect key="frame" x="75" y="324" width="20" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </activityIndicatorView>
@@ -722,6 +722,9 @@
         <image name="fconnect.png" width="331" height="100"/>
     </resources>
     <classes>
+        <class className="AllEventsViewController" superclassName="EventsViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllEventsViewController.h"/>
+        </class>
         <class className="ChatViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
             <relationships>
@@ -733,12 +736,8 @@
                 <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
             </relationships>
         </class>
-        <class className="ClubEventsViewController" superclassName="UITableViewController">
+        <class className="ClubEventsViewController" superclassName="EventsViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubEventsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="eventsList" candidateClass="UITableView"/>
-            </relationships>
         </class>
         <class className="ClubsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubsViewController.h"/>
