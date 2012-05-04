@@ -11,25 +11,10 @@
 #import "EventDetailsViewController.h"
 #import "IconDownloader.h"
 #import "ServerCommunication.h"
+#import "EventsViewController.h"
 
-@interface ClubEventsViewController : UITableViewController <IconDownloaderDelegate, ServerCommunicationDelegate>
-{
-    //Information we want to get from server
-    UITableView *eventsList;
-    UIActivityIndicatorView *activityIndicator;
-    
-    NSMutableArray *eventsArray;
-   // Event *selectedEvent;
-    
-    NSMutableData *receivedData;
-    NSMutableDictionary *iconsBeingDownloaded;
-}
+@interface ClubEventsViewController : EventsViewController
 
 @property(nonatomic, retain) Club *club;
-@property(nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (nonatomic, retain) IBOutlet UITableView *eventsList;
-//@property (nonatomic, retain) NSMutableDictionary *sections;
-
-- (void) getListOfEvents: (NSString *) clubName;
 
 @end

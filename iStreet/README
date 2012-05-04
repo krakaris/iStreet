@@ -9,6 +9,7 @@ next line curly braces
 Use /* ... */ for method comments and big comments, but // for comment stubs
 Use #pragma mark <section_title> to organize related methods
 avoid magic numbers!! (use enums...what to do about one-time-use local constants? like kConnectionTimeout?)
+ivar = _ivar
 
 for the future:
 don't forget to delete unnecessary core data objects!!

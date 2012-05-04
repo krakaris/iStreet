@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
@@ -24,11 +24,11 @@
             </objects>
             <point key="canvasLocation" x="-373" y="-393"/>
         </scene>
-        <!--Events View Controller - Events-->
+        <!--All Events View Controller - Events-->
         <scene sceneID="13">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="12" sceneMemberID="firstResponder"/>
-                <viewController title="Events" id="3" customClass="EventsViewController" sceneMemberID="viewController">
+                <viewController title="Events" id="3" customClass="AllEventsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Utm-iJ-Ph6">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -38,8 +38,8 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="3" id="WfK-Ha-skl"/>
-                                    <outlet property="delegate" destination="3" id="yOI-PI-cnM"/>
+                                    <outlet property="dataSource" destination="3" id="K8X-Ax-oe4"/>
+                                    <outlet property="delegate" destination="3" id="BFB-P2-2FS"/>
                                 </connections>
                             </tableView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" id="2Lq-WE-aZm">
@@ -290,6 +290,42 @@
             </objects>
             <point key="canvasLocation" x="641" y="835"/>
         </scene>
+        <!--Club Events View Controller-->
+        <scene sceneID="lgD-GY-Cri">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0fh-ap-YSw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="21X-kw-F03" customClass="ClubEventsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5CR-8h-XPy">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="UGK-yS-V2m">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="21X-kw-F03" id="0SP-FF-UwW"/>
+                                    <outlet property="delegate" destination="21X-kw-F03" id="Tpc-iJ-tnM"/>
+                                </connections>
+                            </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" id="RA5-Y4-27X">
+                                <rect key="frame" x="141" y="165" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" cocoaTouchSystemColor="darkTextColor"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="3BY-Sk-sVv"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="RA5-Y4-27X" id="mgy-xy-bEk"/>
+                        <outlet property="eventsTable" destination="UGK-yS-V2m" id="S4a-dJ-CLh"/>
+                        <segue destination="xZq-Pq-Unb" kind="push" identifier="ShowEventDetails" id="dJr-9i-Sko"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="3528" y="850"/>
+        </scene>
         <!--Clubs View Controller - Clubs-->
         <scene sceneID="kGI-zX-x0v">
             <objects>
@@ -319,7 +355,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DWK-0W-THd" kind="push" identifier="Charter" id="AqI-b2-QL5"/>
+                                            <segue destination="21X-kw-F03" kind="push" identifier="Charter" id="uHI-Ih-Y6n"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Er5-B0-UKh">
@@ -334,7 +370,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DWK-0W-THd" kind="push" identifier="Cannon" id="vbH-sP-fie"/>
+                                            <segue destination="21X-kw-F03" kind="push" identifier="Cannon" id="gfW-35-MTP"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jCS-qh-bZb">
@@ -349,7 +385,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DWK-0W-THd" kind="push" identifier="Cap and Gown" id="2op-RL-HQb"/>
+                                            <segue destination="21X-kw-F03" kind="push" identifier="Cap and Gown" id="Ks6-2V-2GP"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Dgw-9z-eKM">
@@ -364,7 +400,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DWK-0W-THd" kind="push" identifier="Cloister" id="wJC-67-ChH"/>
+                                            <segue destination="21X-kw-F03" kind="push" identifier="Cloister" id="psG-JL-tYV"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9mh-UT-uCJ">
@@ -379,7 +415,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DWK-0W-THd" kind="push" identifier="Colonial" id="xTr-XZ-lrn"/>
+                                            <segue destination="21X-kw-F03" kind="push" identifier="Colonial" id="GNX-xk-19t"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kYl-2e-ajG">
@@ -394,7 +430,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DWK-0W-THd" kind="push" identifier="Cottage" id="1j5-I8-HT3"/>
+                                            <segue destination="21X-kw-F03" kind="push" identifier="Cottage" id="6fS-cC-PVz"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yAN-yK-voU">
@@ -409,7 +445,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DWK-0W-THd" kind="push" identifier="Ivy" id="xLj-Ej-rmZ"/>
+                                            <segue destination="21X-kw-F03" kind="push" identifier="Ivy" id="NtX-G7-0gN"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="R48-p8-1x3">
@@ -424,7 +460,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DWK-0W-THd" kind="push" identifier="Quadrangle" id="qHy-N6-Mf9"/>
+                                            <segue destination="21X-kw-F03" kind="push" identifier="Quadrangle" id="PY7-NM-LF5"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KdJ-01-cK6">
@@ -439,7 +475,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DWK-0W-THd" kind="push" identifier="Tiger Inn" id="TAM-vJ-t2v"/>
+                                            <segue destination="21X-kw-F03" kind="push" identifier="Tiger Inn" id="CnQ-Zx-XMg"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uqH-Ej-iUS">
@@ -454,7 +490,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DWK-0W-THd" kind="push" identifier="Terrace" id="A36-YY-7Gq"/>
+                                            <segue destination="21X-kw-F03" kind="push" identifier="Terrace" id="WUe-Lu-kun"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oN7-Fd-I4V">
@@ -469,7 +505,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DWK-0W-THd" kind="push" identifier="Tower" id="LJx-HG-xg2"/>
+                                            <segue destination="21X-kw-F03" kind="push" identifier="Tower" id="ZqS-gV-4Tq"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="5I3-Lj-qG6">
@@ -516,62 +552,6 @@
             </objects>
             <point key="canvasLocation" x="2579" y="848"/>
         </scene>
-        <!--Club Events View Controller-->
-        <scene sceneID="A6X-jM-ROa">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Iq2-HS-eIH" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="DWK-0W-THd" customClass="ClubEventsViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="xoj-t7-ooj">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" id="XV1-LZ-0VO">
-                            <rect key="frame" x="0.0" y="66" width="320" height="20"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </activityIndicatorView>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Club Event" textLabel="jtB-D9-58i" detailTextLabel="wUD-7O-qoe" style="IBUITableViewCellStyleSubtitle" id="IDJ-vU-4Wh">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jtB-D9-58i">
-                                            <rect key="frame" x="10" y="2" width="38" height="22"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wUD-7O-qoe">
-                                            <rect key="frame" x="10" y="24" width="47" height="18"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="DWK-0W-THd" id="wej-I7-1vU"/>
-                            <outlet property="delegate" destination="DWK-0W-THd" id="Xai-Nr-SYs"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="m1f-WA-aAf"/>
-                    <connections>
-                        <outlet property="activityIndicator" destination="XV1-LZ-0VO" id="yWP-cT-4Ou"/>
-                        <outlet property="eventsList" destination="xoj-t7-ooj" id="63s-aI-Oxv"/>
-                        <segue destination="xZq-Pq-Unb" kind="push" identifier="ShowEventDetails" id="gZz-0c-lrR"/>
-                    </connections>
-                </tableViewController>
-            </objects>
-            <point key="canvasLocation" x="3410" y="848"/>
-        </scene>
         <!--Event Details View Controller-->
         <scene sceneID="Hog-8J-hRa">
             <objects>
@@ -586,7 +566,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="rHP-V8-lBI">
-                                        <rect key="frame" x="20" y="20" width="96" height="100"/>
+                                        <rect key="frame" x="20" y="20" width="96" height="99"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" id="1RG-s2-R8n">
@@ -625,7 +605,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bJD-ba-HzR">
-                                        <rect key="frame" x="172" y="322" width="128" height="27.5"/>
+                                        <rect key="frame" x="172" y="322" width="128" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="17"/>
                                         <state key="normal" title="See Friends">
@@ -836,7 +816,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="1av-XI-cGR"/>
-        <segue reference="vbH-sP-fie"/>
+        <segue reference="6fS-cC-PVz"/>
+        <segue reference="dJr-9i-Sko"/>
     </inferredMetricsTieBreakers>
 </document>

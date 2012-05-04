@@ -17,7 +17,7 @@
 #import "ServerCommunication.h"
 
 @interface EventsViewController ()
-- (void)getServerEventsData;
+- (void)requestServerEventsData;
 - (void)loadImagesForOnscreenRows;
 /* Probably incomplete */
 @end
@@ -30,11 +30,13 @@
 {
     [super viewDidLoad];
     
+    self.eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0];
+    self.eventsTable.separatorColor = [UIColor blackColor];
+
     eventsByNight = [NSMutableArray array];
     iconsBeingDownloaded = [NSMutableDictionary dictionary];
         
     self.eventsTable.separatorColor = [UIColor blackColor]; 
-    self.view.backgroundColor = [UIColor orangeColor];
     
     [activityIndicator startAnimating];
     
@@ -42,29 +44,33 @@
     
     // If Core Data has not finished loading, register for a notification for when it does. Otherwise, load the data.
     if(!dataDidLoad)
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData:) name:DataLoadedNotificationString object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getCachedData:) name:DataLoadedNotificationString object:nil];
     else
-        [self loadData:nil];
+        [self getCachedData:nil];
 }
 
-- (void)loadData:(NSNotification *)notification
+- (void)getCachedData:(NSNotification *)notification
 {    
-    NSLog(@"Beginning loading events data!!");
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-
     if(notification)
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-        
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];                    
-    NSArray *events = [document.managedObjectContext executeFetchRequest:request error:NULL];
+    
+    NSArray *events = [self getCoreDataEvents];
     
     [self setPropertiesWithNewEventData:events];
     
-    [eventsTable reloadData];
-    [activityIndicator stopAnimating];
+    [self.eventsTable reloadData];
+    //[NSThread sleepForTimeInterval:2];
+    [self.activityIndicator stopAnimating];
     
-    [self getServerEventsData];
+    [self requestServerEventsData];
 }
+
+- (NSArray *)getCoreDataEvents
+{
+    [NSException raise:@"Must override '- (NSArray *)getCoreDataEvents' in subclass of EventsViewController" format:@""];
+    return nil;
+}
+
 
 - (void) viewDidAppear:(BOOL)animated
 {
@@ -72,22 +78,6 @@
     NSIndexPath *selectedRow = [self.eventsTable indexPathForSelectedRow];
     if(selectedRow)
         [self.eventsTable deselectRowAtIndexPath:selectedRow animated:NO];
-    
-    /*
-    BOOL loggedIn = YES;
-    if (loggedIn != YES)
-    {
-        NSString *casURL = @"https://fed.princeton.edu/cas/login";
-        
-        LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NSURL URLWithString:casURL]];
-        
-        //LoginViewController *loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andURL:[NS
-        loginView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;   
-        loginView.delegate = self;
-        
-        [self presentModalViewController:loginView animated:YES];
-    }
-     */
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -97,11 +87,9 @@
 
 #pragma mark Retrieving Events Data from Server
 
-- (void)getServerEventsData
+- (void)requestServerEventsData
 {    
-    //NSString *url = @"http://istreetsvr.herokuapp.com/eventslist";
-    ServerCommunication *sc = [[ServerCommunication alloc] init];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:@"/eventslist" withPOSTBody:nil forViewController:self  withDelegate:self andDescription:nil];
+    [NSException raise:@"Must override '- (void)requestServerEventsData' in subclass of EventsViewController" format:@""];
 }
 
 /*
@@ -128,7 +116,6 @@
 // attempting to change this method to work with the current eventsByDate
 - (void)setPropertiesWithNewEventData:(NSArray *)newData;
 {
-    //eventsByNight = [NSMutableArray array];
     for(int i = [newData count] - 1; i >= 0; i--)
     {
         Event *event = (Event *)[newData objectAtIndex:i];
@@ -162,10 +149,15 @@
    // eventsByNight = eventsByNight;
 }
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{    
+{   
     return [eventsByNight count];
 }
 
@@ -201,18 +193,6 @@
     return kCellHeight;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    EventsNight *ea = [eventsByNight objectAtIndex:section];
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    NSDate *date = [formatter dateFromString:ea.date];
-    [formatter setDateFormat:@"MMMM d, yyyy"];
-    NSString *dateString = [formatter stringFromDate:date];
-    
-    return dateString;
-}
 //Added by Alexa for section color
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
 {
@@ -230,7 +210,6 @@
     label.text = dateString;
     label.textAlignment = UITextAlignmentCenter;
     label.textColor = [UIColor orangeColor];
-    //label.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
     label.backgroundColor = [UIColor darkGrayColor];
     [label setFont:[UIFont fontWithName:@"Trebuchet MS" size:17.0]];
 

@@ -27,6 +27,8 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
     [_window makeKeyAndVisible];
     
     _appDataLoaded = NO;
+    _networkActivityIndicatorCount = 0;
+
     // Override point for customization after application launch.
     //UIView *loginWebView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     //[self.view presentModalViewController:loginWebView animated:YES completion:^{}];
@@ -97,7 +99,6 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     NSLog(@"data recieved!");
-    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSArray *clubs = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
     // WHAT IF THIS FAILS??
     for (NSDictionary *clubInformation in clubs)
@@ -169,6 +170,23 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
         User *thisUser = [clubs objectAtIndex:0];
         [thisUser setNetid:_netID];
     }
+}
+
+- (void)useNetworkActivityIndicator
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    _networkActivityIndicatorCount++;
+}
+
+- (void)stopUsingNetworkActivityIndicator
+{
+    _networkActivityIndicatorCount--;
+    
+    if(_networkActivityIndicatorCount < 0)
+        _networkActivityIndicatorCount = 0;
+    
+    if(_networkActivityIndicatorCount == 0)
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 @end

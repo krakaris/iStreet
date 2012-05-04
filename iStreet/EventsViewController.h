@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 #import "IconDownloader.h"
 #import "ServerCommunication.h"
+#import "Event.h"
 
 @interface EventsViewController : UIViewController <IconDownloaderDelegate, ServerCommunicationDelegate>
 {
@@ -28,8 +29,16 @@
     NSMutableDictionary *iconsBeingDownloaded;
 }
 
-// actual events code
 @property(nonatomic, retain) IBOutlet UITableView *eventsTable;
 @property(nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
+
+- (Event *)eventAtIndexPath:(NSIndexPath *)indexPath;
+
+/* Must override */
+- (NSArray *)getCoreDataEvents;
+- (void)requestServerEventsData;
+
+/* Optional override (recommended to call [super ...] first) */
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

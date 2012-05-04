@@ -136,10 +136,8 @@
     [messageField setTextColor:[UIColor grayColor]];
     [activityIndicator startAnimating];
     
-    NSString *myNetID = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
-    
     ServerCommunication *sc = [[ServerCommunication alloc] init];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:@"/add" withPOSTBody:[NSString stringWithFormat:@"user_id=%@&message=%@", myNetID, messageField.text] forViewController:self  withDelegate:self andDescription:@"add"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:@"/add" withPOSTBody:[NSString stringWithFormat:@"message=%@", messageField.text] forViewController:self  withDelegate:self andDescription:@"add"];
 }
 
 #pragma mark UITableViewController Data Source

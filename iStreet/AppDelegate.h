@@ -12,11 +12,17 @@
 extern NSString *const DataLoadedNotificationString;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, ServerCommunicationDelegate>
+{
+    int _networkActivityIndicatorCount;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, retain) NSString *netID;
 @property (nonatomic, retain) NSArray *allfbFriends;
 @property (nonatomic, retain) UIManagedDocument *document;
 @property (nonatomic, assign) BOOL appDataLoaded;
+
+- (void)useNetworkActivityIndicator;
+- (void)stopUsingNetworkActivityIndicator;
 
 @end

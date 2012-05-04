@@ -63,7 +63,49 @@
 - (NSString *)stringForStartDate
 {
     //time_start is stored as yyyy-MM-dd HH:mm:ss (from server)
+    if(!self.time_start)
+        return @"";
+    
     return [self.time_start substringToIndex:[self.time_start rangeOfString:@" "].location];
+}
+
+// Determine entry description
+- (NSString *)fullEntryDescription
+{
+    static NSString *pass = @"Pa";
+    static NSString *puid = @"Pu";
+    static NSString *member = @"Mp";
+    static NSString *list = @"Gu";
+    //static NSString *custom = @"Cu"; <-- not used in code
+    
+    NSString *entry = self.entry;
+    NSString *entryDescription = nil;
+    
+    if (self.entry_description)
+        entryDescription = self.entry_description;
+    else
+        entryDescription = @"";
+    
+    if ([entry isEqualToString:puid])
+        return @"PUID";
+    
+    if ([entry isEqualToString:pass]) 
+        if (![entryDescription isEqualToString:@""]) 
+            return [NSString stringWithFormat:@"Pass: %@", entryDescription];
+        else
+            return @"Pass";
+    
+    if ([entry isEqualToString:member])
+        if (![entryDescription isEqualToString:@""])
+            return [NSString stringWithFormat:@"Members plus %@", entryDescription];
+        else
+            return @"Members plus";
+    
+    if ([entry isEqualToString:list])
+        return @"Guest list";
+    
+    // if this line is reached, entry is "Cu", or custom.
+    return entryDescription;
 }
 
 @end
