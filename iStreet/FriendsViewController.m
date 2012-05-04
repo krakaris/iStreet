@@ -207,6 +207,11 @@ static NSString *appID = @"128188007305619";
     
     friendsArray = dataWeGot;
     
+    //Setting global array
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setAllfbFriends:friendsArray];
+
+    //allFriends = friendsArray;
+    
     alreadyLoadedFriends = YES;
     
     [self performSegueWithIdentifier:@"FriendsSegue" sender:self];

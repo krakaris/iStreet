@@ -32,7 +32,71 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     //Obtain the favorite friends
+    
+    favoriteFriendsList = [[NSMutableArray alloc] init];
+    
+    //Checking if already a favorite
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    
+    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
+    
+    //There should be only 1 user entity - and with matching netid
+    //Check using global netid
+    NSString *globalnetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
+    
+    User *targetUser;
+    
+    for (User *user in users)
+    {
+        if ([globalnetid isEqualToString:user.netid])
+        {
+            targetUser = user;
+            NSLog(@"Found target!");
+        }
+        
+        //NSLog(@"NETID of user is %@ and fb id is %@", user.netid, user.fb_id);
+        //NSLog(@"Global netid is %@", globalnetid);
+    }
+    
+    NSString *commaSepFavFBFriendsList = targetUser.fav_friends_commasep;
+    NSMutableArray *arrayOfFavFBFriendIDs = [NSMutableArray arrayWithArray:[commaSepFavFBFriendsList componentsSeparatedByString:@","]];
+    
+    for (NSString *thisFave in arrayOfFavFBFriendIDs)
+        NSLog(@"%@", thisFave);
+    
+    NSArray *allFriends = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
+    NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriends count]);
+    
+    //NSArray *objs = [dataManager anArray];
+    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@", [NSNumber numberWithInt:i]];
+    //NSArray *matchingObjs = [objs filteredArrayUsingPredicate:predicate];
 
+    for (NSString *thisFave in arrayOfFavFBFriendIDs)
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@", thisFave];
+        NSArray *matchingUsers = [allFriends filteredArrayUsingPredicate:predicate];
+        
+        if ([matchingUsers count] == 1)
+        {
+            NSLog(@"FOUND A FAVORITE! id = %@", thisFave);
+            [favoriteFriendsList addObject:[matchingUsers lastObject]];
+        }
+    }
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    [favoriteFriendsList sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    [self.friendsTableView reloadData];
+    
+    NSLog(@"Favorite friends count = %d", [favoriteFriendsList count]);
+
+/*
+    for (NSDictionary *user in allFriends)
+    {
+        NSLog(@"%@ and %@", [user valueForKey:@"name"], [user valueForKey:@"id"]);
+    }
+ */
     
 }
 
@@ -62,6 +126,8 @@
     fbid_selected = [[NSString alloc] init];
     name_selected = [[NSString alloc] init];
     
+    //Adding "favorites" to section index
+    [sectionsIndex addObject:@"Favorites"];
     
     
     int length = [friendslist count];
@@ -92,11 +158,18 @@
         NSLog(@"%@ and %@", [user valueForKey:@"id"], [user valueForKey:@"name"]);
     }
      */
+    
+    [self.friendsTableView reloadData];
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     [self.searchBar resignFirstResponder];
+}
+
+- (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self.friendsTableView reloadData];
 }
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -186,7 +259,12 @@
     {
         rowCount = [filteredFriendsList count];
     }
-    else {
+    else if (section == 0)
+    {
+        rowCount = [favoriteFriendsList count];
+    }
+    else
+    {
         rowCount = [friendslist count];
         
         //source - http://www.devx.com/wireless/Article/43374/1763
@@ -211,18 +289,59 @@
     if (self.isFiltered)
     {
         cell.textLabel.text =  [[filteredFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
+        
+        NSString *currentUserName = [[filteredFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
+        
+        //Checking if favorite (to add star)
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
+        NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
+            
+        if ([matchingUsers count] != 0)
+        {
+            //Make it a special cell instead.
+            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_orange.png"]];
+            starView.frame = CGRectMake(230, 10, 20, 20);
+            [cell.contentView addSubview:starView];
+        }
     }
-    else 
+    else if (indexPath.section == 0)
+    {
+        UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_orange.png"]];
+        starView.frame = CGRectMake(230, 10, 20, 20);
+        cell.textLabel.text = [[favoriteFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
+        [cell.contentView addSubview:starView];
+    }
+    else
     {
         NSString *alpha = [sectionsIndex objectAtIndex:[indexPath section]];
         NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
         //Getting the names that begin with that first letter
         NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
+        
+        NSString *friendName;
         if ([names count] > 0)
-            {
-                NSString *friendName = [names objectAtIndex:indexPath.row];
-                cell.textLabel.text = friendName;
-            }
+        {
+            friendName = [names objectAtIndex:indexPath.row];
+            cell.textLabel.text = friendName;
+            //NSLog(@"Inside if with name %@", friendName);
+        }
+        else {
+            //NSLog(@"If not true!");
+        }
+        
+        NSString *currentUserName = friendName;
+        
+        //Checking if favorite (to add star)
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
+        NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
+        
+        if ([matchingUsers count] != 0)
+        {
+            //Make it a special cell instead.
+            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_orange.png"]];
+            starView.frame = CGRectMake(230, 10, 20, 20);
+            [cell.contentView addSubview:starView];
+        }
     }
 
     return cell;
@@ -289,7 +408,12 @@
         fbid_selected = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"id"];
         name_selected = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"name"];
     }
-    else 
+    else if ([[self.friendsTableView indexPathForSelectedRow] section] == 0) //If in Favorites section
+    {
+        NSIndexPath *currentPath = [self.friendsTableView indexPathForSelectedRow];
+        fbid_selected = [[favoriteFriendsList objectAtIndex:currentPath.row] valueForKey:@"id"];
+        name_selected = [[favoriteFriendsList objectAtIndex:currentPath.row] valueForKey:@"name"];
+    }
     {
         NSString *alpha = [sectionsIndex objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] section]]; 
         NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];

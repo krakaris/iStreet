@@ -20,7 +20,7 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 
 @implementation AppDelegate
 
-@synthesize window = _window, netID = _netID, document = _document, appDataLoaded = _appDataLoaded;
+@synthesize window = _window, netID = _netID, allfbFriends = _allfbFriends, document = _document, appDataLoaded = _appDataLoaded;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
