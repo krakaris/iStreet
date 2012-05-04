@@ -258,11 +258,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EventsAttendingSegue" id="FKf-ZK-WAP">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EventsAttendingSegue" id="FKf-ZK-WAP">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
@@ -273,13 +273,15 @@
                             <outlet property="delegate" destination="qUN-ax-IY3" id="aiH-eK-Yvh"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="0LZ-vA-sNN"/>
+                    <navigationItem key="navigationItem" id="0LZ-vA-sNN">
+                        <barButtonItem key="rightBarButtonItem" image="star_gray.png" id="JIV-1g-3t7"/>
+                    </navigationItem>
                     <connections>
-                        <segue destination="xZq-Pq-Unb" kind="push" id="KW4-1K-mJi"/>
+                        <segue destination="xZq-Pq-Unb" kind="push" identifier="ListofEventsToSpecific" id="1av-XI-cGR"/>
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="579" y="851"/>
+            <point key="canvasLocation" x="641" y="835"/>
         </scene>
         <!--Clubs View Controller - Clubs-->
         <scene sceneID="kGI-zX-x0v">
@@ -742,14 +744,82 @@
         <image name="Tiger Inn.png" width="93" height="100"/>
         <image name="Tower.png" width="78" height="101"/>
         <image name="fconnect.png" width="331" height="100"/>
+        <image name="star_gray.png" width="600" height="573"/>
     </resources>
+    <classes>
+        <class className="ChatViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendClicked:"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="messageField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ClubEventsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubEventsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="eventsList" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="ClubsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="EventDetailsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventDetailsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="attend:" candidateClass="UIButton"/>
+                <relationship kind="action" name="unattend:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="attendButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="descriptionText" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="eventDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventEntry" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="eventTime" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="seeAllFriendsAttending" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="unattendButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="EventsAttendingTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsAttendingTableViewController.h"/>
+        </class>
+        <class className="EventsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="eventsTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="FriendsTableViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="friendsTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="FriendsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="fbconnect:"/>
+                <relationship kind="outlet" name="fConnectButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="KW4-1K-mJi"/>
+        <segue reference="1av-XI-cGR"/>
         <segue reference="vbH-sP-fie"/>
     </inferredMetricsTieBreakers>
 </document>

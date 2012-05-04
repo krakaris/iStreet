@@ -18,7 +18,9 @@
 @synthesize name;
 @synthesize firstname;
 @synthesize nameComponents;
-@synthesize eventsAttending;
+@synthesize eventsAttendingIDs;
+@synthesize eligibleEvents;
+@synthesize currentlySelectedEvent;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -32,13 +34,59 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
+    iconsBeingDownloaded = [NSMutableDictionary dictionary];
+    eligibleEvents = [[NSMutableArray alloc] init];
+    
+    eventDetailsController = [[EventDetailsViewController alloc] init];
+    
     nameComponents = [name componentsSeparatedByString:@" "];
     firstname = [nameComponents objectAtIndex:0];
     NSLog(@"first name is %@", firstname);
 
     self.navigationItem.title = [NSString stringWithFormat:@"%@'s Events", firstname];
 
+    NSLog(@"Beginning loading events data!!");
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    
+    //#DEBUGGING
+    //if(notification)
+    //    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];      
+    NSArray *events = [document.managedObjectContext executeFetchRequest:request error:NULL];
+ 
+    NSLog(@"events count is %d", [events count]);
+    NSLog(@"attending count is %d", [eventsAttendingIDs count]);
+    //do this filtering with predicates instead
+    for (NSString *thisID in eventsAttendingIDs)
+    {
+        //NSLog(@" %@, and %@", event.event_id, event.name);
+        for (Event *event in events)
+        {
+            //NSLog(@"ABCDEF %@ AND %@", thisID, event.event_id);
+            if ([event.event_id isEqualToString:thisID])
+            {
+                [eligibleEvents addObject:event];
+                NSLog(@"Added to Eligible!");
+            }
+        }
+    }
+    
+    //[self setPropertiesWithNewEventData:events];
+    
+    //[eventsTable reloadData];
+    //[activityIndicator stopAnimating];
+    
+    //[self getServerEventsData];
+    
+    /* #DEBUGGING
+    for (NSString *event_id in eventsAttendingIDs)
+    {
+        NSLog(@"Inside table view");
+        NSLog(@" %@", event_id);
+    }
+    */
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -81,6 +129,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    [self setEligibleEvents:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -101,20 +150,57 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [eventsAttending count];
+    //return [eventsAttendingIDs count];
+    return [eligibleEvents count];
     NSLog(@"Data source!!!");
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"EventsAttendingCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell = [[UITableViewCell alloc] init];
-    cell.textLabel.text = [eventsAttending objectAtIndex:indexPath.row];
-    NSLog(@"This is!!!! %@", [eventsAttending objectAtIndex:indexPath.row]);
     // Configure the cell...
+
+    static NSString *CellIdentifier = @"event cell";
+    EventCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    //cell = [[UITableViewCell alloc] init];
+    if (cell == nil)
+        cell = [[EventCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    
+    Event *thisEvent = (Event *) [eligibleEvents objectAtIndex:indexPath.row];
+    if ([cell packCellWithEventInformation:thisEvent 
+                               atIndexPath:indexPath 
+                            whileScrolling:(self.tableView.dragging == YES || self.tableView.decelerating == YES)])
+    {
+        [self startIconDownload:thisEvent forIndexPath:indexPath];
+    }
     
     return cell;
+}
+              
+#pragma mark Icon Downloading
+              
+- (void)startIconDownload:(Event *)event forIndexPath:(NSIndexPath *)indexPath
+{
+    IconDownloader *iconDownloader = [iconsBeingDownloaded objectForKey:indexPath];
+    if (iconDownloader) //if there is already a download in progress for that event, return.
+        return;
+    
+    // start the download
+    iconDownloader = [[IconDownloader alloc] init];
+    [iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", event.poster]];
+    
+    [iconDownloader startDownloadFromURL:url forImageKey:@"posterImageData" ofObject:event forDisplayAtIndexPath:indexPath atDelegate:self];
+}
+
+// called by our ImageDownloader when an icon is ready to be displayed (i.e. has been associated with its Event)
+- (void)appImageDidLoad:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kLoadingIndicatorTag] stopAnimating];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [iconsBeingDownloaded removeObjectForKey:indexPath];
 }
 
 /*
@@ -167,6 +253,34 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    
+    NSLog(@"selected row %d", indexPath.row);
+    
+    NSLog(@"eligibleEvents count = %d", [eligibleEvents count]);
+    currentlySelectedEvent = (Event *) [eligibleEvents objectAtIndex:indexPath.row];
+    
+    eventDetailsController.myEvent = currentlySelectedEvent;
+    
+    
+    NSLog(@" %@ AND %@", currentlySelectedEvent.title, currentlySelectedEvent.event_description);
+    
+    [eventDetailsController setMyEvent:currentlySelectedEvent];
+    //[self.navigationController pushViewController:eventDetailsController animated:YES];
+    
+    //perform segue - AttendingEventsToSpecific
+    [self performSegueWithIdentifier:@"ListofEventsToSpecific" sender:currentlySelectedEvent];
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    /*
+    EventDetailsViewController *eventDetailsController = (EventDetailsViewController *) [segue destinationViewController];
+
+    eventDetailsController.myEvent = currentlySelectedEvent;
+     */
+    if ([segue.identifier isEqualToString:@"ListofEventsToSpecific"])
+        [segue.destinationViewController setMyEvent:sender];
+        
 }
 
 @end

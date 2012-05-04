@@ -80,6 +80,8 @@ static NSString *appID = @"128188007305619";
         NSLog(@"Already loaded friends is NO!");
         NSLog(@"Initial fb setup");
         
+        alreadyLoadedFriends = YES;
+        
         if (!facebook)
         {
             NSLog(@"Alloc-ing fb instance if none exists.");
@@ -138,36 +140,36 @@ static NSString *appID = @"128188007305619";
             [alertView show];
         }
         
-        [facebook requestWithGraphPath:@"me/friends" andDelegate:self];
+        [facebook requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
         NSLog(@"Asking for friends!!");
-        
-        
-        
-        //Build url for server
-        
-        //NSString *relativeURL = [NSString stringWithFormat:@"/updateUser?fb_id=571438200"];
-        //relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
-        
-        //ServerCommunication *sc = [[ServerCommunication alloc] init];
-        //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Rishi Narang"forViewController:self];       
-        //NSLog(@"user updated!");
-        
-        //relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=571438200"];
-        //relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
-        
-        //sc = [[ServerCommunication alloc] init];
-        //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=99"forViewController:self];       
-        //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=100"forViewController:self];       
-        //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=101"forViewController:self];       
-        //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=88"forViewController:self];       
-        
-        NSLog(@"user updated!");
     }
+    
+    
+    //#DEBUGGING
+    //Build url for server
+    
+    NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=571438200"];
+    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+    
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Rishi Narang" forViewController:self withDelegate:self andDescription:@"updating name"];
+
+    //sc = [[ServerCommunication alloc] init];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=99" forViewController:self withDelegate:self andDescription:@"adding event 99"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=88" forViewController:self withDelegate:self andDescription:@"adding event 88"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=100" forViewController:self withDelegate:self andDescription:@"adding event 100"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=101" forViewController:self withDelegate:self andDescription:@"adding event 101"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=71" forViewController:self withDelegate:self andDescription:@"adding event 71"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=111" forViewController:self withDelegate:self andDescription:@"adding event 111"];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=97" forViewController:self withDelegate:self andDescription:@"adding event 97"];
+
+    NSLog(@"user updated!");
 }
 
-- (void) finishedReceivingData:(NSData *)data
+- (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
-    
+    NSLog(@"received data!");
 }
 
 - (void)viewDidUnload
@@ -197,11 +199,9 @@ static NSString *appID = @"128188007305619";
 }
 
 - (void) request:(FBRequest *)request didLoad:(id)result
-{
-    //NSLog(@"Received response! Yay! %@", result);
-    
-  
-    NSLog(@"%@", [result objectForKey:@"data"]);
+{   
+    //logging JSON string received.
+    //NSLog(@"%@", [result objectForKey:@"data"]);
 
     NSArray *dataWeGot = [result objectForKey:@"data"];
     
