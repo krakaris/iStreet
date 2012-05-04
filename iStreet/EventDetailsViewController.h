@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Event.h"
 #import "User.h"
+#import "SeeFriendsAttendingTableViewController.h"
 #import "ServerCommunication.h"
 
 @interface EventDetailsViewController : UIViewController <ServerCommunicationDelegate>
