@@ -34,7 +34,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
     [self setUserWithNetid];
     friendsList = [user.fb_friends componentsSeparatedByString:@","];
@@ -58,12 +57,13 @@
     if ([user.attendingEvents containsObject:myEvent]) {
         userIsAttending = YES;
         attendButton.titleLabel.textColor = [UIColor orangeColor];
+        
         //hide the Attend button
         attendButton.enabled = NO;
         attendButton.hidden = YES;
+        
         //Show the unattend button
         unattendButton.titleLabel.textColor = [UIColor orangeColor];
-        //self.unattendButton.titleLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:70.0/255.0 blue:0 alpha:1.0];
         unattendButton.enabled = YES;
         unattendButton.hidden = NO;
 
@@ -98,6 +98,8 @@
     NSString *puid = [NSString stringWithFormat:@"Pu"];
     NSString *member = [NSString stringWithFormat:@"Mp"];
     NSString *list = [NSString stringWithFormat:@"Gu"];
+    NSString *custom = [NSString stringWithFormat:@"Cu"];
+
     NSString *entry_final;
     if ([entry isEqualToString:puid]) {
         entry_final = @"PUID";
@@ -110,13 +112,15 @@
         }
     } else if ([entry isEqualToString:member]) {
         entry_final = @"Members plus";
-        // Search entry_description for a number: assume it is members + this number
+        // Search entry_description for a number: entry is members + this number
         if (![entry_descrip isEqualToString:@""]) {
             entry_final = [entry_final stringByAppendingString:@" "];
             entry_final = [entry_final stringByAppendingString:entry_descrip];
         }
     } else if ([entry isEqualToString:list]) {
         entry_final = @"Guest List";
+    } else if ([entry isEqualToString:custom]) {
+        entry_final = entry_descrip;
     }
     return entry_final;
 }
@@ -147,7 +151,6 @@
         NSString *sTimeString = [outputFormatter stringFromDate:fullStartDate];
         NSString *eTimeString = [outputFormatter stringFromDate:fullEndDate];
         
-        //Hardcoded AM and PM --> FIX!!!
         NSString *timeString = [sTimeString stringByAppendingString:@" - "];
         timeString = [timeString stringByAppendingString:eTimeString];
         
@@ -173,7 +176,6 @@
     
     for (User *u in users) {
         user = u;
-        NSLog(@"Number of matching users: %d\n", [users count]);
     }
 }
 
