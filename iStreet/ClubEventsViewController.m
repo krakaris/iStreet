@@ -117,9 +117,7 @@
         [eventsTempArray addObject:e];
     }
     [self setPropertiesWithNewEventData:eventsTempArray];
-    [eventsList reloadData];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
+    [eventsList reloadData];    
 }
 
 - (void)setPropertiesWithNewEventData:(NSArray *)eventData;

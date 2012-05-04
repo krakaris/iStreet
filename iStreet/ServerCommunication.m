@@ -34,8 +34,8 @@ enum connectionConstants {
     post = p;
     
     
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] useNetworkActivityIndicator];
+    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setTimeoutInterval:kConnectionTimeout];
     [request setURL:[NSURL URLWithString:absoluteURL]];
@@ -57,7 +57,7 @@ enum connectionConstants {
     }
     else
     {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
         // TELL DELEGATE THE MISSION FAILED.
         return NO;
     }
@@ -84,7 +84,7 @@ enum connectionConstants {
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     NSLog(@"Connection failed (ServerCommunication.m): %@", [error localizedDescription]);
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
     if(self.delegate && [self.delegate respondsToSelector: @selector(connectionFailed::)])
         [self.delegate connectionFailed:description];
 }
@@ -94,16 +94,13 @@ enum connectionConstants {
  */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
+
     // if CAS Login is required
     if ([[[serverResponse URL] absoluteString] rangeOfString:@"fed.princeton.edu/cas/"].location != NSNotFound) 
     {
         NSLog(@"Requesting new cookie through CAS");
         LoginViewController *lvc = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andHTMLString:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding] withDelegate:self];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        //LoginViewController *lvc = [[LoginViewController alloc] init];
-//        UIWebView *webView = [[UIWebView alloc] initWithFrame:lvc.view.frame];
-//        [lvc.view addSubview:webView];
-//        lvc.loginWebView = webView;
 
         [lvc setHtml:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding]];
         [lvc setDelegate:self];
@@ -120,7 +117,6 @@ enum connectionConstants {
     }
     else 
     {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         if(self.delegate && [self.delegate respondsToSelector:@selector(connectionWithDescription:finishedReceivingData:) ])
             [self.delegate connectionWithDescription:description finishedReceivingData:receivedData];
     }
@@ -130,7 +126,6 @@ enum connectionConstants {
 - (void)userLoggedIn:(id)sender;
 {
     NSLog(@"Successful authentication and cookie recieved! Sending the call again.");
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:post forViewController:viewController withDelegate:self.delegate andDescription:description];
 }
 

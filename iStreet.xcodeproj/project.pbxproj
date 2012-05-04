@@ -40,9 +40,6 @@
 		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
 		5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */; };
-		9D0E8E1C1551DB0000718751 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E8E1B1551DB0000718751 /* star.png */; };
-		9D0E8E231551DE3500718751 /* check icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E8E211551DE3500718751 /* check icon.png */; };
-		9D0E8E241551DE3500718751 /* red solo cup.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E8E221551DE3500718751 /* red solo cup.jpg */; };
 		9D197B69153B51B800604080 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B61153B51B800604080 /* EventCell.m */; };
 		9D197B6B153B51B800604080 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B65153B51B800604080 /* IconDownloader.m */; };
 		9D208D7815409335004515E9 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
@@ -141,9 +138,6 @@
 		5BFB44F8153382E800960C81 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5BFB450D153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5BFB450F153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		9D0E8E1B1551DB0000718751 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = ../../../../../Desktop/iFrat/Buttons/star.png; sourceTree = "<group>"; };
-		9D0E8E211551DE3500718751 /* check icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check icon.png"; path = "../../../../../Desktop/iFrat/Buttons/check icon.png"; sourceTree = "<group>"; };
-		9D0E8E221551DE3500718751 /* red solo cup.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "red solo cup.jpg"; path = "../../../../../Desktop/iFrat/Buttons/red solo cup.jpg"; sourceTree = "<group>"; };
 		9D197B60153B51B800604080 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		9D197B61153B51B800604080 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		9D197B64153B51B800604080 /* IconDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconDownloader.h; sourceTree = "<group>"; };
@@ -301,9 +295,6 @@
 				5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */,
 				9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */,
 				9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */,
-				9D0E8E1B1551DB0000718751 /* star.png */,
-				9D0E8E211551DE3500718751 /* check icon.png */,
-				9D0E8E221551DE3500718751 /* red solo cup.jpg */,
 				5B608A5F154A7CCC00BDCA28 /* Server Communication */,
 				5BFB44FF1533842D00960C81 /* Friends */,
 				5BFB45001533843300960C81 /* Clubs */,
@@ -516,9 +507,6 @@
 				9D293368154ECAE400B3F8A9 /* iStreet final icon 57x57.png in Resources */,
 				9D29336C154ECB5700B3F8A9 /* iStreet final icon 114x114.png in Resources */,
 				9D293370154ECC0E00B3F8A9 /* Default.png in Resources */,
-				9D0E8E1C1551DB0000718751 /* star.png in Resources */,
-				9D0E8E231551DE3500718751 /* check icon.png in Resources */,
-				9D0E8E241551DE3500718751 /* red solo cup.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
