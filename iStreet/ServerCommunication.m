@@ -24,8 +24,17 @@ enum connectionConstants {
 
 - (BOOL)sendAsynchronousRequestForDataAtRelativeURL:(NSString *)rel withPOSTBody:(NSString *)p forViewController:(UIViewController *)vc withDelegate:(id <ServerCommunicationDelegate>)del andDescription:(NSString *)d;
 {
-    //static NSString *serverURL = @"http://localhost:5000";
-    static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
+    NSArray *CASCookies =  [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"fed.princeton.edu"]];
+    for (NSHTTPCookie *cookie in CASCookies) 
+    {
+        NSLog(@"DELETING A CAS COOKIE");
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+    }
+    
+    
+    
+    static NSString *serverURL = @"http://localhost:5000";
+    //static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
     NSString *absoluteURL = [serverURL stringByAppendingString:rel];
     [self setViewController:vc];
     [self setDescription:d];
@@ -100,13 +109,7 @@ enum connectionConstants {
     if ([[[serverResponse URL] absoluteString] rangeOfString:@"fed.princeton.edu/cas/"].location != NSNotFound) 
     {
         NSLog(@"Requesting new cookie through CAS");
-        LoginViewController *lvc = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andHTMLString:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding] withDelegate:self];
-
-        [lvc setHtml:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding]];
-        [lvc setDelegate:self];
-
-        lvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        [self.viewController presentModalViewController:lvc animated:YES];
+        [LoginViewController presentSharedLoginViewControllerWithHTMLString:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding] andDelegate:self inViewController:self.viewController];
     }
     else if ([[[serverResponse URL] absoluteString] rangeOfString:@"/login?ticket="].location != NSNotFound)
     {
