@@ -14,10 +14,7 @@
 
 @interface EventsViewController : UIViewController <IconDownloaderDelegate, ServerCommunicationDelegate>
 {
-    UITableView *eventsTable;
-    UIActivityIndicatorView *activityIndicator;
-    
-    NSMutableArray *eventsByNight; 
+    NSMutableArray *_eventsByNight; 
     /* an array of arrays of events of a given date (considered making this a dictionary (date : events array), but the events must be ordered, which a dictionary is not.
      For example:
      eventsByNight[0] --> an array of events on 4/14/2012
@@ -26,7 +23,7 @@
      etc.
      */
     
-    NSMutableDictionary *iconsBeingDownloaded;
+    NSMutableDictionary *_iconsBeingDownloaded;
 }
 
 @property(nonatomic, retain) IBOutlet UITableView *eventsTable;

@@ -24,23 +24,23 @@
 
 @implementation EventsViewController
 
-@synthesize activityIndicator, eventsTable;
+@synthesize activityIndicator = _activityIndicator, eventsTable = _eventsTable;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0];
+    _eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0];
     
     //[UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0];
     self.eventsTable.separatorColor = [UIColor blackColor];
 
-    eventsByNight = [NSMutableArray array];
-    iconsBeingDownloaded = [NSMutableDictionary dictionary];
+    _eventsByNight = [NSMutableArray array];
+    _iconsBeingDownloaded = [NSMutableDictionary dictionary];
         
     self.eventsTable.separatorColor = [UIColor blackColor]; 
     
-    [activityIndicator startAnimating];
+    [_activityIndicator startAnimating];
     
     BOOL dataDidLoad = [(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded];
     
@@ -112,12 +112,16 @@
     }
     
     [self setPropertiesWithNewEventData:eventsArray];
-    [eventsTable reloadData];
+    [self.eventsTable reloadData];
 }
 
 // attempting to change this method to work with the current eventsByDate
 - (void)setPropertiesWithNewEventData:(NSArray *)newData;
 {
+    //if an event is in _eventsByNight but not in newData, that event should be deleted (i.e. it is past that date, or the event was deleted from the server's database
+    
+    NSMutableArray *newEventsByNight = [NSMutableArray array];
+    
     for(int i = [newData count] - 1; i >= 0; i--)
     {
         Event *event = (Event *)[newData objectAtIndex:i];
@@ -125,7 +129,7 @@
         
         //Find the EventsNight in eventsByDate that corresponds to the event
         EventsNight *night = nil;
-        for(EventsNight *existingNight in eventsByNight)
+        for(EventsNight *existingNight in newEventsByNight)
             if([[existingNight date] isEqualToString:dateOfEvent])
                 night = existingNight;
         
@@ -133,22 +137,44 @@
         if(!night)
         {
             night = [[EventsNight alloc] initWithDate:dateOfEvent];
-            [eventsByNight addObject:night];
+            [newEventsByNight addObject:night];
         }
         
-        // only add the event if it already exists
+        
+        // only add the event if it isn't already contained in the events for that night, and delete the event from the _eventsByNight array
         if(![night.array containsObject:event])
+        {
             [night addEvent:event];
+            for(EventsNight *oldNight in _eventsByNight)
+                if([[oldNight date] isEqualToString:dateOfEvent])
+                    [oldNight.array removeObject:event];
+        }
     }
     
-    [eventsByNight sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+    [newEventsByNight sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         EventsNight *ea1 = (EventsNight *)obj1;
         EventsNight *ea2 = (EventsNight *)obj2;
         
         return [ea1.date compare:ea2.date];
     }];
     
-   // eventsByNight = eventsByNight;
+    NSManagedObjectContext *context = [[(AppDelegate *)[[UIApplication sharedApplication] delegate] document] managedObjectContext];
+    
+    // delete all leftover events in _eventsByNight
+    for(EventsNight *oldNight in _eventsByNight)
+        for (Event *outdatedEvent in oldNight.array)
+        {
+            NSLog(@"deleting: '%@', which was on %@", [outdatedEvent title], [outdatedEvent stringForStartDate]);
+            [context deleteObject:outdatedEvent];
+        }
+
+    
+    _eventsByNight = newEventsByNight;
+}
+
+- (NSArray *)constructEventsNightArrayFromEventsArray:(NSArray *)eventsArray
+{
+    return eventsArray;
 }
 
 - (void)viewDidUnload
@@ -160,13 +186,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {   
-    return [eventsByNight count];
+    return [_eventsByNight count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    EventsNight *ea = [eventsByNight objectAtIndex:section];
+    EventsNight *ea = [_eventsByNight objectAtIndex:section];
     return [ea.array count];
 }
 
@@ -201,7 +227,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
     
-    EventsNight *ea = [eventsByNight objectAtIndex:section];
+    EventsNight *ea = [_eventsByNight objectAtIndex:section];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
@@ -221,7 +247,7 @@
 }
 - (Event *)eventAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (Event *)[((EventsNight *)[eventsByNight objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row];
+    return (Event *)[((EventsNight *)[_eventsByNight objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row];
 }
 
 #pragma mark - Table view delegate
@@ -245,13 +271,13 @@
 
 - (void)startIconDownload:(Event *)event forIndexPath:(NSIndexPath *)indexPath
 {
-    IconDownloader *iconDownloader = [iconsBeingDownloaded objectForKey:indexPath];
+    IconDownloader *iconDownloader = [_iconsBeingDownloaded objectForKey:indexPath];
     if (iconDownloader) //if there is already a download in progress for that event, return.
         return;
     
     // start the download
     iconDownloader = [[IconDownloader alloc] init];
-    [iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
+    [_iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://pam.tigerapps.org/media/%@", event.poster]];
     
@@ -263,8 +289,8 @@
 {
     UITableViewCell *cell = [self.eventsTable cellForRowAtIndexPath:indexPath];
     [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kLoadingIndicatorTag] stopAnimating];
-    [eventsTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    [iconsBeingDownloaded removeObjectForKey:indexPath];
+    [self.eventsTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [_iconsBeingDownloaded removeObjectForKey:indexPath];
 }
 
 
