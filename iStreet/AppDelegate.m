@@ -18,9 +18,11 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 - (void)setupCoreData;
 @end
 
+static NSString *appID = @"128188007305619";
+
 @implementation AppDelegate
 
-@synthesize window = _window, netID = _netID, allfbFriends = _allfbFriends, document = _document, appDataLoaded = _appDataLoaded; //, facebook = _facebook;
+@synthesize window = _window, netID = _netID, fbID = _fbID, allfbFriends = _allfbFriends, document = _document, appDataLoaded = _appDataLoaded, facebook = _facebook;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -76,10 +78,110 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
                    if (!success) 
                        NSLog(@"couldn’t create document at %@", [dataURL path]);}];
         
-    }    
+    }
     
+    //Creating Facebook object
+    self.facebook = [[Facebook alloc] initWithAppId:appID andDelegate:self];
+    
+    //Retrieving values to check if valid session
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"] 
+        && [defaults objectForKey:@"FBExpirationDateKey"]) {
+        self.facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+        self.facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    }
+    
+    
+    //Facebook Initialization
+    //Finding the user in the core data database    
+    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSArray *users = [_document.managedObjectContext executeFetchRequest:usersRequest error:nil];
+    
+    //There should be only 1 user entity - and with matching netid
+    NSLog(@"Length of array is %d", [users count]);
+    User *targetUser;
+    for (User *user in users)
+    {
+        NSLog(@"Displaying user info for %@", user.netid);
+        if ([self.netID isEqualToString:user.netid])
+        {
+            targetUser = user;
+            NSLog(@"Found target!");
+        }
+    }
+    
+    NSLog(@"Retrieved fb id FROM CORE DATA is %@", targetUser.fb_id);
+    
+    if (![self.facebook isSessionValid]) //|| targetUser.fb_id == nil)
+    {
+        NSLog(@"Session is not valid, nullifying fbid!");
+        
+        //nullifying fbid
+        self.fbID = nil;
+        targetUser.fb_id = nil;
+        
+        //logout if session valid
+        if ([self.facebook isSessionValid])
+            [self.facebook logout];
+    }
+    else 
+    {
+        NSLog(@"FB Session is valid, retrieving friends!");
+        //NSLog(@"access token is %@", [self.facebook accessToken]);
+        
+        //Setting fbid
+        if (targetUser != nil)
+            self.fbID = targetUser.fb_id;
+        
+        self.facebook.sessionDelegate = self;
+        
+        //Just call this the first time - otherwise, friends are refreshed everytime the friends tab is opened
+        [self.facebook requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
+        
+        /*
+         dispatch_queue_t downloadFriendsQ = dispatch_queue_create("friends downloader", NULL);
+         dispatch_async(downloadFriendsQ, ^{
+         });
+         dispatch_release(downloadFriendsQ);
+         */
+    }
+    
+    //[self checkCoreDataAndSetUpFacebook];
+        
     return YES;
 }
+
+- (void) request:(FBRequest *)request didFailWithError:(NSError *)error
+{
+    NSLog(@"Failed!");
+}
+
+- (void) requestLoading:(FBRequest *)request
+{
+    NSLog(@"it's loading!!!");
+}
+
+- (void) request:(FBRequest *)request didLoad:(id)result
+{
+    NSLog(@"request done, request url is %@", request.url);
+    
+    /*
+    if ([request.url isEqualToString:@"https://graph.facebook.com/me"])
+    {
+        NSLog(@"This is the request for fb id!");
+        self.fbID = [result objectForKey:@"id"];
+        NSLog(@"fb ID is %@", self.fbID);
+    }
+    else
+     */
+    {
+        NSLog(@"This is the request for friends!");
+        NSArray *friendsDataReceived = [result objectForKey:@"data"];
+        self.allfbFriends = friendsDataReceived;
+        NSLog(@"Friends retrieved in the background, count %d", [self.allfbFriends count]);
+    }
+}
+
 
 /*
  Is called the first time that the application runs in order to create the database.
@@ -114,6 +216,8 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
     NSLog(@"successfully created database!");  
     _appDataLoaded = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
+ 
+    //[self checkCoreDataAndSetUpFacebook];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -131,11 +235,71 @@ NSString *const DataLoadedNotificationString = @"Application data finished loadi
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    //[self checkCoreDataAndSetUpFacebook];
 }
+
+/*
+- (void) checkCoreDataAndSetUpFacebook
+{
+    //Facebook Initialization
+    //Finding the user in the core data database    
+    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSArray *users = [_document.managedObjectContext executeFetchRequest:usersRequest error:nil];
+    
+    //There should be only 1 user entity - and with matching netid
+    
+    User *targetUser;
+    for (User *user in users)
+    {
+        NSLog(@"Displaying user info for %@", user.netid);
+        if ([self.netID isEqualToString:user.netid])
+        {
+            targetUser = user;
+            NSLog(@"Found target!");
+        }
+    }
+    
+    NSLog(@"Retrieved fb id FROM CORE DATA is %@", targetUser.fb_id);
+    
+    if (![self.facebook isSessionValid] || targetUser.fb_id == nil)
+    {
+        NSLog(@"Session is not valid, nullifying fbid!");
+        
+        //nullifying fbid
+        self.fbID = nil;
+        targetUser.fb_id = nil;
+        
+        //logout if session valid
+        if ([self.facebook isSessionValid])
+            [self.facebook logout];
+    }
+    else 
+    {
+        NSLog(@"FB Session is valid, retrieving friends!");
+        //NSLog(@"access token is %@", [self.facebook accessToken]);
+        
+        //Setting fbid
+        if (targetUser != nil)
+            self.fbID = targetUser.fb_id;
+        
+        self.facebook.sessionDelegate = self;
+        
+        //Just call this the first time - otherwise, friends are refreshed everytime the friends tab is opened
+        [self.facebook requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
+        
+         dispatch_queue_t downloadFriendsQ = dispatch_queue_create("friends downloader", NULL);
+         dispatch_async(downloadFriendsQ, ^{
+         });
+         dispatch_release(downloadFriendsQ);
+         
+    }
+}
+*/
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.    
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

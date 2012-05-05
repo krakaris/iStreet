@@ -18,8 +18,8 @@ static NSString *appID = @"128188007305619";
 
 @implementation FriendsViewController
 
+@synthesize fb;
 @synthesize fConnectButton;
-@synthesize facebook;
 @synthesize spinner;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -34,33 +34,54 @@ static NSString *appID = @"128188007305619";
     return self;
 }
 
-- (void) viewWillAppear:(BOOL)animated
-{
-    [self.navigationItem setHidesBackButton:YES animated:NO];
-    
-    /*
-    NSString *relativeURL = [NSString stringWithFormat:@"/updateUser"];
-    
-    ServerCommunication *sc = [[ServerCommunication alloc] init];
-    
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"fb_id=1186954339" forViewController:self withDelegate:self andDescription:@"updating name"];
-    */
-    //if ([facebook isSessionValid])
-    {
-
-    }
-}
-
-//Not being called - #weird behavior
+//fb delegate method
 - (void)fbDidLogin 
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
-    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
-    [defaults synchronize];
-    NSLog(@"defaults just synchronized!");
-    [self loggedInLoadFriendsNow];
+    NSLog(@"Call to delegate, did log in!");
+    self.fConnectButton.enabled = NO;
     [self.spinner startAnimating];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[self.fb accessToken] forKey:@"FBAccessTokenKey"];
+    [defaults setObject:[self.fb expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    [(AppDelegate *) [[UIApplication sharedApplication] delegate] setFacebook:self.fb];
+    NSLog(@"defaults just synchronized!");
+    
+    NSLog(@"access token is %@", [self.fb accessToken]);
+    
+    //Requesting friends
+    [self.fb requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
+    NSLog(@"Asking for friends after login!!");
+    
+    //Requesting fb id
+    [self.fb requestWithGraphPath:@"me" andDelegate:self];
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [self.navigationItem setHidesBackButton:YES animated:YES];
+    [self.spinner stopAnimating];
+    self.fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
+    NSArray *allFBfriends = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
+
+    if ([self.fb isSessionValid]) //if friends isn't empty and session is valid
+    {
+        self.fConnectButton.enabled = NO;
+        
+        if ([allFBfriends count] != 0)
+        {
+            [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
+        }
+        else 
+        {
+            NSLog(@"Spinner starts, requesting friends!");
+            [self.spinner startAnimating];
+            //Requesting friends
+            [self.fb requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
+            NSLog(@"Asking for friends after login!!");
+        }
+    }
 }
 
 - (void)viewDidLoad
@@ -71,35 +92,35 @@ static NSString *appID = @"128188007305619";
     //[self.view addSubview:self.spinner];
     //[self.spinner startAnimating];
     
-    //self.facebook = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
+    self.fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
+    NSArray *allFBfriends = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
     
-    if (alreadyLoadedFriends && [facebook isSessionValid])
+    if (([allFBfriends count] != 0) && [self.fb isSessionValid]) //if friends isn't empty and session is valid
     {
-        NSLog(@"Already loaded friends is YES!");
+        NSLog(@"Friends not empty, session valid.");
         
         [self.fConnectButton setHidden:YES];
-        self.fConnectButton.hidden = YES;
         [self.spinner stopAnimating];
         [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     }
     else        
-        //doing initial fb setup
+    //doing initial fb setup
     {
-        NSLog(@"Already loaded friends is NO!");
-        NSLog(@"Initial fb setup");
+        NSLog(@"Initial FB setup");
         
-        alreadyLoadedFriends = YES;
+        //alreadyLoadedFriends = YES;
         
-        //Facebook *fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
-        //facebook;
+        self.fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
 
-        if (!facebook)
+        if (!self.fb)
         {
+            NSLog(@"Improbable, since facebook allocated on app's launch.");
             NSLog(@"Alloc-ing fb instance if none exists.");
-            facebook = [[Facebook alloc] initWithAppId:appID andDelegate:self];
-            self.facebook.sessionDelegate = self;
+            self.fb = [[Facebook alloc] initWithAppId:appID andDelegate:self];
+            [(AppDelegate *) [[UIApplication sharedApplication] delegate] setFacebook:self.fb];
+            //self.fb.sessionDelegate = self;
         }
-        
+
         
         //Setting defaults
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -107,8 +128,11 @@ static NSString *appID = @"128188007305619";
         if ([defaults objectForKey:@"FBAccessTokenKey"] 
             && [defaults objectForKey:@"FBExpirationDateKey"]) 
         {
-            facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
-            facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+            self.fb.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+            self.fb.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+            
+            //Saving in global
+            [(AppDelegate *) [[UIApplication sharedApplication] delegate] setFacebook:self.fb];
         }
         
         
@@ -152,10 +176,7 @@ static NSString *appID = @"128188007305619";
         }
         
         //Setting the global facebook variable to this one
-        //[(AppDelegate *)[[UIApplication sharedApplication] delegate] setFacebook:self.facebook];
-        
-        [facebook requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
-        NSLog(@"Asking for friends!!");
+        [(AppDelegate *) [[UIApplication sharedApplication] delegate] setFacebook:self.fb];
     }
     
     
@@ -185,7 +206,7 @@ static NSString *appID = @"128188007305619";
 
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
-    NSLog(@"received data!");
+    NSLog(@"received data! %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 }
 
 - (void)viewDidUnload
@@ -203,32 +224,71 @@ static NSString *appID = @"128188007305619";
 {
     NSLog(@"Did click!");
 
-    if (![facebook isSessionValid]) 
+    self.fb.sessionDelegate = self;
+    if (![self.fb isSessionValid]) 
     {
-        [facebook authorize:nil];
+        [self.fb authorize:nil];
     }
-    else {
+    else 
+    {
         self.fConnectButton.enabled = NO;
         NSLog(@"Valid Session!");
+        
+        //Requesting friends
+        [self.fb requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
+        NSLog(@"Asking for friends after login!!");
     }
-    
 }
 
 - (void) request:(FBRequest *)request didLoad:(id)result
 {   
-    //logging JSON string received.
-    //NSLog(@"%@", [result objectForKey:@"data"]);
+
+    if ([request.url isEqualToString:@"https://graph.facebook.com/me"]) //request for fbid
+    {
+        NSLog(@"This is the request for fb id");
+        if (result != nil)
+        {
+            //Setting the global variable
+            NSString *fbid = [result valueForKey:@"id"];
+            [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:fbid];
+            NSLog(@"fbid set to %@", fbid);
+            
+            
+            //Storing it in user's core data
+            UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+            
+            NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+            NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
+            
+            //There should be only 1 user entity - and with matching netid
+            NSString *globalnetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
+            
+            for (User *user in users)
+            {
+                if ([globalnetid isEqualToString:user.netid])
+                {
+                    userInCoreData = user;
+                    NSLog(@"Found target for storing fb id!!!");
+                }
+            }
+            //Setting fbid
+            if (userInCoreData != nil)
+            {
+                userInCoreData.fb_id = fbid;
+                NSLog(@"STORED FBID IN CORE DATA DATABASE!");
+                [document.managedObjectContext save:nil];
+            }
+        }
+    }
 
     NSArray *dataWeGot = [result objectForKey:@"data"];
-    
     friendsArray = dataWeGot;
+    NSLog(@"Friends received!");
     
     //Setting global array
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setAllfbFriends:friendsArray];
 
-    //allFriends = friendsArray;
-    
-    alreadyLoadedFriends = YES;
+    //alreadyLoadedFriends = YES;
     
     [self.spinner stopAnimating];
     [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
@@ -292,19 +352,25 @@ static NSString *appID = @"128188007305619";
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    NSArray *allFBfriends = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
+
     FriendsTableViewController *ftvc = (FriendsTableViewController *) segue.destinationViewController;
-    ftvc.friendslist = friendsArray;
+    
+    if (allFBfriends != 0)
+        ftvc.friendslist = (NSMutableArray *) allFBfriends;
+    else 
+        ftvc.friendslist = (NSMutableArray *) friendsArray;
 }
 
      
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return [self.facebook handleOpenURL:url];
+    return [self.fb handleOpenURL:url];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation 
 {
-    return [facebook handleOpenURL:url]; 
+    return [self.fb handleOpenURL:url]; 
 }
 
 
