@@ -25,7 +25,15 @@
 {
     NSString *eventDate = [event stringForStartDate];
     if ([eventDate isEqualToString:[self date]])
-        [self.array addObject:event];
+    {
+        int count = [self.array count];
+        int i;
+        for (i = 0; i < count; i++) 
+            if([[(Event *)[self.array objectAtIndex:i] title] compare:[event title] options:NSCaseInsensitiveSearch] == NSOrderedDescending)
+                break;
+        
+        [self.array insertObject:event atIndex:i];
+    }
     else
         [NSException raise:@"Invalid argument exception" format:@"Mismatched date"];
 }
