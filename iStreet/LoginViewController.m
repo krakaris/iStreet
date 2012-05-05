@@ -31,6 +31,8 @@ static LoginViewController *sharedLoginViewController = nil;
     }
     
     [sharedLoginViewController.delegates addObject:delegate]; 
+    if([sharedLoginViewController.delegates count] > 1)
+        NSLog(@"Multiple delegates YAY: %d", [sharedLoginViewController.delegates count]);
     
     if(needToPresent)
         [parentViewController presentModalViewController:sharedLoginViewController animated:YES];
@@ -68,7 +70,7 @@ static LoginViewController *sharedLoginViewController = nil;
 
 - (void) webViewDidStartLoad:(UIWebView *)webView
 {
-    [(AppDelegate *)[[UIApplication sharedApplication] delegate] useNetworkActivityIndicator];
+    //[(AppDelegate *)[[UIApplication sharedApplication] delegate] useNetworkActivityIndicator];
 }
 
 -(void) webViewDidFinishLoad:(UIWebView *)webView
@@ -89,7 +91,7 @@ static LoginViewController *sharedLoginViewController = nil;
         [self dismissViewControllerAnimated:YES completion:^{sharedLoginViewController = nil;}];
     }    
     
-    [(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
+    //[(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
 }
 
 - (void) viewDidAppear:(BOOL)animated
