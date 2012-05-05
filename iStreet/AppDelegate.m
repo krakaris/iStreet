@@ -62,8 +62,8 @@ static NSString *appID = @"128188007305619";
                     User *thisUser = [clubs objectAtIndex:0];
                     _netID = [thisUser netid];
                 }
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
-    
             }
             if (!success) 
                 NSLog(@"couldn’t open document at %@", [dataURL path]);}]; 

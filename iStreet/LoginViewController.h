@@ -18,10 +18,11 @@
 
 @property (nonatomic, retain) NSString *html;
 @property (nonatomic, retain) IBOutlet UIWebView *loginWebView;
-@property __strong id <LoginViewControllerDelegate> delegate;
+@property __strong NSMutableArray *delegates;
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andHTMLString: (NSString *)h withDelegate:(id <LoginViewControllerDelegate>)d;
++ (void)presentSharedLoginViewControllerWithHTMLString:(NSString *)markup andDelegate:(id <LoginViewControllerDelegate>)delegate inViewController:(UIViewController *)parentViewController;
+
 @end
 
 @protocol LoginViewControllerDelegate <NSObject>

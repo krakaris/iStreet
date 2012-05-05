@@ -71,7 +71,7 @@
   
 - (void)connectionFailed:(NSString *)description
 {
-    /* */
+    /* Reset text field and stuff! */
 }
 
 /*

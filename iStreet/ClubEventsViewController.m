@@ -54,7 +54,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    EventCell *cell = (EventCell *)[super tableView:self.eventsTable cellForRowAtIndexPath:indexPath];
+    EventCell *cell = (EventCell *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
     
     Event *event = [self eventAtIndexPath:indexPath];
     cell.detailTextLabel.text = [event fullEntryDescription];

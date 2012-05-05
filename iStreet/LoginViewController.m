@@ -11,20 +11,41 @@
 #import "AppDelegate.h"
 
 @interface LoginViewController ()
-
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andHTMLString: (NSString *)h;
 @end
 
 @implementation LoginViewController
 
-@synthesize loginWebView, delegate, html;
+static LoginViewController *sharedLoginViewController = nil;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andHTMLString: (NSString *)markup withDelegate:(id <LoginViewControllerDelegate>)theDelegate
+@synthesize loginWebView, delegates, html;
+
++ (void)presentSharedLoginViewControllerWithHTMLString:(NSString *)markup andDelegate:(id <LoginViewControllerDelegate>)delegate inViewController:(UIViewController *)parentViewController;
+{
+    BOOL needToPresent = NO;
+    if (sharedLoginViewController == nil) 
+    {
+        needToPresent = YES;
+        sharedLoginViewController = [[self alloc] initWithNibName:@"LoginViewController" bundle:nil andHTMLString:markup];
+        [sharedLoginViewController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    }
+    
+    [sharedLoginViewController.delegates addObject:delegate]; 
+    if([sharedLoginViewController.delegates count] > 1)
+        NSLog(@"Multiple delegates YAY: %d", [sharedLoginViewController.delegates count]);
+    
+    if(needToPresent)
+        [parentViewController presentModalViewController:sharedLoginViewController animated:YES];
+}
+
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andHTMLString: (NSString *)markup
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
         [self setHtml:markup];
-        [self setDelegate:theDelegate];
+        [self setDelegates:[NSMutableArray array]];
     }
     return self;
 }
@@ -40,7 +61,6 @@
     
     self.loginWebView.scalesPageToFit = YES;
     self.loginWebView.scrollView.scrollEnabled = NO;
-    //We DON'T want them to scroll down
     
     if(html)
     {
@@ -50,25 +70,7 @@
 
 - (void) webViewDidStartLoad:(UIWebView *)webView
 {
-    /*
-    NSString *netid;
-    
-    if ([(AppDelegate *)self.delegate loggedIn] == NO)
-    {
-        netid = [webView stringByEvaluatingJavaScriptFromString:@"document.getElementById('username').value;"];
-        
-        EventsViewController *cvc = (EventsViewController *) self.delegate;
-        cvc.netid = netid;
-        
-        NSLog(@"Net id is this -- %@", netid);
-        [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:netid];
-        NSLog(@"Bazinga!");
-    }
-    else {
-        NSLog(@"YAMAHA!");
-    }
-     */
-    
+    //[(AppDelegate *)[[UIApplication sharedApplication] delegate] useNetworkActivityIndicator];
 }
 
 -(void) webViewDidFinishLoad:(UIWebView *)webView
@@ -79,12 +81,17 @@
     NSString *textContent = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.textContent"];
     if([textContent length] >= prefixLength && [[textContent substringToIndex:prefixLength] isEqualToString:prefix])
     {
-        NSLog(@"logged in, telling delegate!");
+        NSLog(@"logged in, telling delegates!");
         NSString *netid = [textContent substringFromIndex:prefixLength];
         [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:netid];
-        [self.delegate userLoggedIn:self];
-        [self dismissModalViewControllerAnimated:YES];
-    }
+        
+        for(id <LoginViewControllerDelegate> delegate in self.delegates)
+            [delegate userLoggedIn:self];
+        
+        [self dismissViewControllerAnimated:YES completion:^{sharedLoginViewController = nil;}];
+    }    
+    
+    //[(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
 }
 
 - (void) viewDidAppear:(BOOL)animated

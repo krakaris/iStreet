@@ -100,13 +100,7 @@ enum connectionConstants {
     if ([[[serverResponse URL] absoluteString] rangeOfString:@"fed.princeton.edu/cas/"].location != NSNotFound) 
     {
         NSLog(@"Requesting new cookie through CAS");
-        LoginViewController *lvc = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil andHTMLString:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding] withDelegate:self];
-
-        [lvc setHtml:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding]];
-        [lvc setDelegate:self];
-
-        lvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        [self.viewController presentModalViewController:lvc animated:YES];
+        [LoginViewController presentSharedLoginViewControllerWithHTMLString:[[NSString alloc] initWithData:receivedData encoding:NSISOLatin1StringEncoding] andDelegate:self inViewController:self.viewController];
     }
     else if ([[[serverResponse URL] absoluteString] rangeOfString:@"/login?ticket="].location != NSNotFound)
     {

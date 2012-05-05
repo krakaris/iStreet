@@ -21,7 +21,6 @@
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];   
-    //request.predicate = [NSPredicate predicateWithFormat:@"name == %@", @"Cannon"];
     
     NSArray *events = [document.managedObjectContext executeFetchRequest:request error:NULL];
         

@@ -36,9 +36,6 @@
 		5BA1F61315112DA7002CA7F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61215112DA7002CA7F3 /* CoreGraphics.framework */; };
 		5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */; };
 		5BADF93F155388ED00B82CC3 /* AllEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADF93E155388ED00B82CC3 /* AllEventsViewController.m */; };
-		5BADF9461553A86E00B82CC3 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BADF9451553A86E00B82CC3 /* star.png */; };
-		5BADF9491553A8EC00B82CC3 /* star_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BADF9471553A8EC00B82CC3 /* star_gray.png */; };
-		5BADF94A1553A8EC00B82CC3 /* star_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BADF9481553A8EC00B82CC3 /* star_orange.png */; };
 		5BC0D9F3153BF379004D560A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC0D9F2153BF379004D560A /* CoreData.framework */; };
 		5BC710CB1545E70300A7659F /* iStreet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BC710C91545E70300A7659F /* iStreet.xcdatamodeld */; };
 		5BCE63AB15165A1F008E6C1F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE63AA15165A1F008E6C1F /* ChatViewController.m */; };
