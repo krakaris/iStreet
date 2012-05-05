@@ -9,5 +9,7 @@
 #import "EventsViewController.h"
 
 @interface AllEventsViewController : EventsViewController
-
+{
+    BOOL _serverLoadedOnce;
+}
 @end

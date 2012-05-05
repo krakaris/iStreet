@@ -30,8 +30,9 @@
 {
     [super viewDidLoad];
     
-    _eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestServerEventsData)];
     
+    _eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0];
     //[UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0];
     self.eventsTable.separatorColor = [UIColor blackColor];
 
@@ -61,7 +62,6 @@
     [self setPropertiesWithNewEventData:events];
     
     [self.eventsTable reloadData];
-    //[NSThread sleepForTimeInterval:2];
     [self.activityIndicator stopAnimating];
     
     [self requestServerEventsData];

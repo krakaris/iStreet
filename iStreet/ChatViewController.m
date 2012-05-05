@@ -50,6 +50,22 @@
     [self getNewMessages];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (![timer isValid]) 
+    {
+        timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(getNewMessages) userInfo:nil repeats:YES];
+        [self getNewMessages];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [timer invalidate];
+    timer = nil;
+}
+
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -240,7 +256,6 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-    [timer invalidate];
 }
 
 
