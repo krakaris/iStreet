@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "ServerCommunication.h"
 #import "EventsAttendingTableViewController.h"
+#import "Facebook.h"
+#import "User.h"
 
-@interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, ServerCommunicationDelegate, UIAlertViewDelegate>
+@interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, ServerCommunicationDelegate, UIAlertViewDelegate, FBSessionDelegate>
 {
     EventsAttendingTableViewController *eatvc;
     BOOL isFiltered;
@@ -19,6 +21,7 @@
     NSString *fbid_selected;
     NSString *name_selected;
     NSMutableArray *eventsAttending_selected;
+    
 }
 
 

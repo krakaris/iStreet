@@ -200,7 +200,7 @@
                                 </connections>
                             </button>
                             <activityIndicatorView contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="M9H-He-4B7">
-                                <rect key="frame" x="151" y="164" width="37" height="37"/>
+                                <rect key="frame" x="151" y="165" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
@@ -209,7 +209,7 @@
                     <navigationItem key="navigationItem" title="Friends" id="LyX-lb-n4x"/>
                     <connections>
                         <outlet property="fConnectButton" destination="Bgt-ID-d0Q" id="YGh-YS-8OM"/>
-                        <outlet property="spinner" destination="M9H-He-4B7" id="ZYn-jn-Sy7"/>
+                        <outlet property="spinner" destination="M9H-He-4B7" id="OXK-1Q-EC2"/>
                         <segue destination="HDH-qv-0n4" kind="push" identifier="FriendsSegue" id="UfO-zV-shE"/>
                     </connections>
                 </viewController>
@@ -615,7 +615,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="Bv7-0j-XFh" kind="push" identifier="See Friends Attending Event" id="B5b-bU-7Ei"/>
+                                            <action selector="seeFriends:" destination="xZq-Pq-Unb" eventType="touchUpInside" id="wpP-7Z-6hc"/>
                                         </connections>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" text="On Tap" id="71B-y4-eAU">
@@ -651,9 +651,9 @@
                         <outlet property="eventImage" destination="rHP-V8-lBI" id="oLh-Kx-B60"/>
                         <outlet property="eventTime" destination="1I9-zV-etb" id="QVv-H4-kGo"/>
                         <outlet property="eventTitle" destination="1RG-s2-R8n" id="qTx-t3-wrn"/>
-                        <outlet property="seeAllFriendsAttending" destination="bJD-ba-HzR" id="q1N-BH-Qne"/>
                         <outlet property="toggleAttendingIndicator" destination="AS4-EG-668" id="xd0-pW-dPr"/>
                         <outlet property="view" destination="l57-XW-jk1" id="0Tw-X6-fkG"/>
+                        <segue destination="Bv7-0j-XFh" kind="push" identifier="SeeFriendsAttending" id="5wi-3V-DaD"/>
                     </connections>
                 </viewController>
             </objects>
@@ -721,82 +721,6 @@
         <image name="Tower.png" width="78" height="101"/>
         <image name="fconnect.png" width="331" height="100"/>
     </resources>
-    <classes>
-        <class className="AllEventsViewController" superclassName="EventsViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllEventsViewController.h"/>
-        </class>
-        <class className="ChatViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sendClicked:"/>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="messageField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="ClubEventsViewController" superclassName="EventsViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubEventsViewController.h"/>
-        </class>
-        <class className="ClubsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EventDetailsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="attend:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="attendButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="descriptionText" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="eventDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventEntry" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="eventTime" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="seeAllFriendsAttending" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="toggleAttendingIndicator" candidateClass="UIActivityIndicatorView"/>
-            </relationships>
-        </class>
-        <class className="EventsAttendingTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsAttendingTableViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="favButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="EventsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="eventsTable" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="FriendsTableViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="logoutOfFacebook:"/>
-                <relationship kind="outlet" name="friendsTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="logoutButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-            </relationships>
-        </class>
-        <class className="FriendsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="fbconnect:"/>
-                <relationship kind="outlet" name="fConnectButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
-            </relationships>
-        </class>
-        <class className="SeeFriendsAttendingTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SeeFriendsAttendingTableViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -24,6 +24,8 @@
 @synthesize seeAllFriendsAttending;
 @synthesize eventEntry, toggleAttendingIndicator;
 
+#define loginAlertViewAlert 1
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,6 +35,48 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [self.descriptionText flashScrollIndicators];
+}
+
+- (IBAction) seeFriends:(id)sender
+{
+    NSString *fbID = [(AppDelegate *)[[UIApplication sharedApplication] delegate] fbID];
+    
+    if (fbID == nil)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login" message:@"Please login using Facebook first" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
+        alert.tag = loginAlertViewAlert;
+        
+        [alert show];
+        //self.seeAllFriendsAttending.enabled = NO;
+        //self.seeAllFriendsAttending.titleLabel.text = @"Login in Friends";
+    }
+    else 
+    {
+        [self performSegueWithIdentifier:@"SeeFriendsAttending" sender:self];
+    }
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == loginAlertViewAlert)
+    {
+        if (buttonIndex == 0)
+        {
+            NSLog(@"Cancel!");
+        }
+        else 
+        {
+            NSLog(@"Login");
+
+            
+            //[self.navigationController.tabBarController setSelectedIndex:3];
+            
+            /*
+            FriendsViewController *friendsController = (FriendsViewController *) [[self.navigationController.tabBarController.viewControllers objectAtIndex:3] rootViewController];
+            [friendsController fbconnect:nil]; 
+            */
+        }
+    }
 }
 
 - (void)viewDidLoad

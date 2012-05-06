@@ -32,24 +32,71 @@
 
 @synthesize logoutButton;
 
+#define loggedOutAlertView 1
+#define logOutConfirmAlertView 2
+
 - (void) logoutOfFacebook:(id)sender
 {
     NSLog(@"Logging out of facebook alert view!");
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you sure you wish to log out of Facebook?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
-    
+    alert.tag = logOutConfirmAlertView;
     [alert show];    
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0)   //do nothing, canceled
-        NSLog(@"yay!");
-    else                    //log out of facebook
+{   
+    if (alertView.tag == logOutConfirmAlertView)
     {
-        NSLog(@"Nay!");
-        
-        
+        if (buttonIndex == 0)   //do nothing, canceled
+            NSLog(@"Cancel!");
+        else                    //log out of facebook
+        {
+            NSLog(@"Logout!");
+            
+            Facebook *fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
+            fb.sessionDelegate = self;
+            [fb logout];
+            //[fb logout];
+        }
     }
+    else {
+        NSLog(@"Clicked on OK");
+        [self.navigationController removeFromParentViewController];
+    }
+}
+
+- (void) fbDidLogout
+{
+    NSLog(@"Logged Out!");
+    [(AppDelegate *) [[UIApplication sharedApplication] delegate] setAllfbFriends:nil];
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:nil];
+    
+    
+    //Setting fbid to nil in core data
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
+    
+    //There should be only 1 user entity - and with matching netid
+    NSString *globalnetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
+
+    User *targetUser;
+    for (User *user in users)
+    {
+        if ([globalnetid isEqualToString:user.netid])
+        {
+            targetUser = user;
+            NSLog(@"Found target!");
+        }
+    }
+    //Setting fbid
+    if (targetUser != nil)
+        targetUser.fb_id = nil;
+    
+    UIAlertView *loggedOutAlert = [[UIAlertView alloc] initWithTitle:@"Logged Out!" message:@"You have been logged out of Facebook. You can log in again at any time." delegate:self cancelButtonTitle:@"OK"
+                                                   otherButtonTitles:nil];
+    loggedOutAlert.tag = loggedOutAlertView;
+    [loggedOutAlert show];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -114,11 +161,13 @@
     
     NSLog(@"Favorite friends count = %d", [favoriteFriendsList count]);
 
-
+    //Displaying ALL fb friends
+    /*
     for (NSDictionary *user in allFriends)
     {
         NSLog(@"%@ and %@", [user valueForKey:@"name"], [user valueForKey:@"id"]);
     }
+    */
  
     
 }

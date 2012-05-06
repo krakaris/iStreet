@@ -11,8 +11,9 @@
 #import "User.h"
 #import "SeeFriendsAttendingTableViewController.h"
 #import "ServerCommunication.h"
+#import "FriendsViewController.h"
 
-@interface EventDetailsViewController : UIViewController <ServerCommunicationDelegate>
+@interface EventDetailsViewController : UIViewController <ServerCommunicationDelegate, UIAlertViewDelegate>
 {
     User *user;
     NSArray *friendsList;
@@ -31,5 +32,6 @@
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *toggleAttendingIndicator;
 
 - (IBAction)attend:(UIButton *)sender;
+- (IBAction)seeFriends:(id)sender;
 
 @end

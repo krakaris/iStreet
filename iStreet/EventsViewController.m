@@ -49,7 +49,7 @@
     if(!dataDidLoad)
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getCachedData:) name:DataLoadedNotificationString object:nil];
     else
-        [self getCachedData:nil];
+        [self getCachedData:nil];    
 }
 
 - (void)getCachedData:(NSNotification *)notification
