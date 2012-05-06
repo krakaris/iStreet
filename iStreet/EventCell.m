@@ -67,8 +67,7 @@
         self.accessoryView = imageView;
     }
     else 
-        ;
-    //[self.accessoryView setHidden:YES];
+        self.accessoryView = nil;
     
     
     if([event.poster isEqualToString:@""])

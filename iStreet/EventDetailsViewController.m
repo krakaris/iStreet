@@ -70,12 +70,12 @@
     if ([user.attendingEvents containsObject:myEvent]) 
     {
         userIsAttending = YES;
-        [attendButton.titleLabel setText:@"Unattend"];
+        [attendButton setTitle:@"Unattend" forState:UIControlStateNormal];
     } 
     else 
     {
         userIsAttending = NO;
-        [attendButton.titleLabel setText:@"Attend"];
+        [attendButton setTitle:@"Attend" forState:UIControlStateNormal];
     }
     
     //Set image
@@ -230,13 +230,13 @@
     {
         [user addAttendingEventsObject:myEvent];
         userIsAttending = YES;
-        [attendButton.titleLabel setText:@"Unattend"];
+        [attendButton setTitle:@"Unattend" forState:UIControlStateNormal];
     }
     else if ([description isEqualToString:@"unattend"])
     {
         [user removeAttendingEventsObject:myEvent];
         userIsAttending = NO;
-        [attendButton.titleLabel setText:@"Attend"];
+        [attendButton setTitle:@"Attend" forState:UIControlStateNormal];
     }
 }
 
