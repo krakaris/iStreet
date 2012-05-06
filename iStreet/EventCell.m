@@ -54,7 +54,6 @@
     
     NSString *userAttendingNetid = [[event userAttending] netid];
     NSString *myNetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
-    NSLog(@"user attending's netid: %@ \n my netid: %@", userAttendingNetid, myNetid);    
     
     
     if([userAttendingNetid isEqualToString:myNetid])
