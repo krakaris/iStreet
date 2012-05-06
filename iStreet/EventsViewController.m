@@ -35,10 +35,10 @@
     _eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0];
     //[UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0];
     self.eventsTable.separatorColor = [UIColor blackColor];
-
+    
     _eventsByNight = [NSMutableArray array];
     _iconsBeingDownloaded = [NSMutableDictionary dictionary];
-        
+    
     self.eventsTable.separatorColor = [UIColor blackColor]; 
     
     [_activityIndicator startAnimating];
@@ -79,7 +79,10 @@
     [super viewDidAppear:YES];
     NSIndexPath *selectedRow = [self.eventsTable indexPathForSelectedRow];
     if(selectedRow)
+    {
         [self.eventsTable deselectRowAtIndexPath:selectedRow animated:NO];
+        [self.eventsTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -167,7 +170,7 @@
             NSLog(@"deleting: '%@', which was on %@", [outdatedEvent title], [outdatedEvent stringForStartDate]);
             [context deleteObject:outdatedEvent];
         }
-
+    
     
     _eventsByNight = newEventsByNight;
 }
@@ -204,12 +207,12 @@
         cell = [[EventCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CELL_IDENTIFIER];
     
     // Configure the cell...
-        
+    
     Event *event = [self eventAtIndexPath:indexPath];
     
     if([cell packCellWithEventInformation:event 
-                           atIndexPath:indexPath 
-                        whileScrolling:(self.eventsTable.dragging == YES || self.eventsTable.decelerating == YES)])
+                              atIndexPath:indexPath 
+                           whileScrolling:(self.eventsTable.dragging == YES || self.eventsTable.decelerating == YES)])
         [self startIconDownload:event forIndexPath:indexPath];
     
     return cell;
@@ -240,7 +243,7 @@
     label.textColor = [UIColor orangeColor];
     label.backgroundColor = [UIColor darkGrayColor];
     [label setFont:[UIFont fontWithName:@"Trebuchet MS" size:17.0]];
-
+    
     [headerView addSubview:label];
     
     return headerView;
