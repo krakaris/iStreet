@@ -35,6 +35,8 @@
     [super viewDidLoad];
     drunk = NO;
     [drunkButton setTitle:@"Drunk"];
+    lastMessage = nil;
+    secondLastMessage = nil;
     
     gettingNewMessages = NO;
     receivedNewMessages = NO;
@@ -89,7 +91,12 @@
   
 - (void)connectionFailed:(NSString *)description
 {
+    lastMessage = secondLastMessage;
+    secondLastMessage = nil;
     /* Reset text field and stuff! */
+    [messageField setUserInteractionEnabled:YES];
+    [activityIndicator stopAnimating];
+    [messageField setTextColor:[UIColor blackColor]];
 }
 
 /*
@@ -99,6 +106,7 @@
 {      
     if([description isEqualToString:@"add"])
     {
+        [messageField setUserInteractionEnabled:YES];
         messageField.text = @"";
         [messageField setTextColor:[UIColor blackColor]];
         
@@ -151,7 +159,25 @@
     if ([messageField.text length] == 0 || [activityIndicator isAnimating])
         return;
     
+    if([messageField.text length] > 90)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Character Limit Exceeded" message:[NSString stringWithFormat:@"Please limit chat messages to\n90 characters in length.\n(Currently using %d)", [messageField.text length]] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    NSDate *now = [NSDate date];
+    if(lastMessage && [now timeIntervalSinceDate:lastMessage] <= 20)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Rate Limit" message:[NSString stringWithFormat:@"Please wait 20 seconds between sending chat messages.", [messageField.text length]] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    secondLastMessage = lastMessage;
+    lastMessage = now;
     [messageField setTextColor:[UIColor grayColor]];
+    [messageField setUserInteractionEnabled:NO];
     [activityIndicator startAnimating];
     
     ServerCommunication *sc = [[ServerCommunication alloc] init];

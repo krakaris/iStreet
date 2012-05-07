@@ -17,6 +17,8 @@
     UITableView *messagesTable;
     UIActivityIndicatorView *activityIndicator;
     UIScrollView *scrollView;
+    NSDate *secondLastMessage;
+    NSDate *lastMessage;
     
     NSMutableData *receivedData;
     NSMutableArray *messages;
