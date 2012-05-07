@@ -23,6 +23,8 @@
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
+    
     NSDate *date = [NSDate date];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"MMMM d"];

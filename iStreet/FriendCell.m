@@ -19,7 +19,7 @@
         [self.textLabel setBackgroundColor:[UIColor clearColor]]; //necessary
         [self.detailTextLabel setBackgroundColor:[UIColor clearColor]]; //necessary
         
-        [self.contentView setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0]];
+        [self.contentView setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0]];
         
         [self.textLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:16]];
         self.textLabel.textColor = [UIColor blackColor];

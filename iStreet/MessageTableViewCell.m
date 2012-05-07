@@ -71,7 +71,7 @@
     } 
     else 
     {
-        bgImage = [[UIImage imageNamed:@"light_orange.png"] stretchableImageWithLeftCapWidth:24  topCapHeight:15];
+        bgImage = [[UIImage imageNamed:@"orange.png"] stretchableImageWithLeftCapWidth:24  topCapHeight:15];
         
         [self.messageView setFrame:CGRectMake(PADDING, PADDING*2 , fittedSize.width, fittedSize.height)];
         

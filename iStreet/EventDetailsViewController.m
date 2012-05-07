@@ -82,8 +82,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0]];
+    [self.view setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0]];
+    //[self.view setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0]];
     //green - 179, blue - 76
+    
+    //[self.descriptionText setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:184.0/255.0 blue:0.0/255.0 alpha:1.0]];
     [self.descriptionText setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:176.0/255.0 blue:76.0/255.0 alpha:1.0]];
     
     [self setUserWithNetid];
