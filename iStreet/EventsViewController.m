@@ -240,6 +240,12 @@
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
 {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    [headerView setBackgroundColor:[UIColor whiteColor]];
+    
+    UIImageView *sectionHeader = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sectionheader.png"]];
+    [sectionHeader setFrame:CGRectMake(0, 0, headerView.frame.size.width, headerView.frame.size.height)];
+    [headerView addSubview:sectionHeader];
+    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
     
     EventsNight *ea = [_eventsByNight objectAtIndex:section];
@@ -253,7 +259,7 @@
     label.text = dateString;
     label.textAlignment = UITextAlignmentCenter;
     label.textColor = [UIColor orangeColor];
-    label.backgroundColor = [UIColor darkGrayColor];
+    label.backgroundColor = [UIColor clearColor];
     [label setFont:[UIFont fontWithName:@"Trebuchet MS" size:17.0]];
     
     [headerView addSubview:label];
