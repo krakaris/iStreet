@@ -68,6 +68,7 @@
 		9DB903D2151BC6A900A13461 /* Tiger Inn.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C7151BC6A900A13461 /* Tiger Inn.png */; };
 		9DB903D3151BC6A900A13461 /* Terrace.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C8151BC6A900A13461 /* Terrace.png */; };
 		9DB903D4151BC6A900A13461 /* Tower.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB903C9151BC6A900A13461 /* Tower.png */; };
+		9DC19C9A155829EC00A01552 /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DC19C99155829EC00A01552 /* FriendCell.m */; };
 		9DC2F352151E3D9B0028F911 /* Princeton Crest 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */; };
 		9DC2F35C151E52EB0028F911 /* Friend icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F359151E52EB0028F911 /* Friend icon.png */; };
 		9DC2F35D151E52EB0028F911 /* List icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F35A151E52EB0028F911 /* List icon.png */; };
@@ -184,6 +185,8 @@
 		9DB903C7151BC6A900A13461 /* Tiger Inn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tiger Inn.png"; sourceTree = "<group>"; };
 		9DB903C8151BC6A900A13461 /* Terrace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Terrace.png; sourceTree = "<group>"; };
 		9DB903C9151BC6A900A13461 /* Tower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tower.png; sourceTree = "<group>"; };
+		9DC19C98155829EC00A01552 /* FriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendCell.h; sourceTree = "<group>"; };
+		9DC19C99155829EC00A01552 /* FriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendCell.m; sourceTree = "<group>"; };
 		9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 2.png"; sourceTree = "<group>"; };
 		9DC2F359151E52EB0028F911 /* Friend icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Friend icon.png"; sourceTree = "<group>"; };
 		9DC2F35A151E52EB0028F911 /* List icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "List icon.png"; sourceTree = "<group>"; };
@@ -354,6 +357,8 @@
 				419D3796154AD59E00447D2B /* EventsAttendingTableViewController.m */,
 				415C30361553527A005FB5D7 /* SeeFriendsAttendingTableViewController.h */,
 				415C30371553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m */,
+				9DC19C98155829EC00A01552 /* FriendCell.h */,
+				9DC19C99155829EC00A01552 /* FriendCell.m */,
 				41B7438815542BAC0080DA39 /* star_gray.png */,
 				41B7438915542BAC0080DA39 /* star_orange.png */,
 			);
@@ -571,6 +576,7 @@
 				419D3797154AD59E00447D2B /* EventsAttendingTableViewController.m in Sources */,
 				415C30381553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m in Sources */,
 				5BADF93F155388ED00B82CC3 /* AllEventsViewController.m in Sources */,
+				9DC19C9A155829EC00A01552 /* FriendCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
