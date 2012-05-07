@@ -5,7 +5,7 @@
 //  A little bit of the client-server interaction code is borrowed from Jack D Herrington, Senior Software Engineer, Fortify Software, Inc.
 //  http://www.ibm.com/developerworks/library/x-ioschat/index.html
 //
-// A good deal of the interface code is borrowed from here:
+// Some of the interface code is borrowed from here:
 // http://mobile.tutsplus.com/tutorials/iphone/building-a-jabber-client-for-ios-custom-chat-view-and-emoticons/
 //
 // To be clear, because code was borrowed but customized a good deal, most of the code was written by us. In a sense, the above links were excellent guides in producing this code.
@@ -26,13 +26,15 @@
 @implementation ChatViewController
 
 #pragma mark Synthesizing Properties
-@synthesize messageField, messagesTable, sendButton, activityIndicator, scrollView;
+@synthesize messageField, messagesTable, sendButton, activityIndicator, scrollView, drunkButton;
 
 #pragma mark Setting up the View
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    drunk = NO;
+    [drunkButton setTitle:@"Drunk"];
     
     gettingNewMessages = NO;
     receivedNewMessages = NO;
@@ -156,6 +158,20 @@
     [sc sendAsynchronousRequestForDataAtRelativeURL:@"/add" withPOSTBody:[NSString stringWithFormat:@"message=%@", messageField.text] forViewController:self  withDelegate:self andDescription:@"add"];
 }
 
+- (IBAction)toggleDrunk:(id)sender
+{
+    drunk = !drunk;
+    
+    if(drunk)
+        [drunkButton setTitle:@"Sober"];
+    else 
+        [drunkButton setTitle:@"Drunk"];
+    
+    NSIndexPath *bottomRowPath = [[self.messagesTable indexPathsForVisibleRows] lastObject];
+    [self.messagesTable reloadData];
+    [self.messagesTable scrollToRowAtIndexPath:bottomRowPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+}
+
 #pragma mark UITableViewController Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
@@ -183,7 +199,7 @@
     //reversed order: Message *m = [messages objectAtIndex:([messages count] - indexPath.row - 1)];
     Message *m = [messages objectAtIndex:indexPath.row];
     
-    [cell packCellWithMessage:m];
+    [cell packCellWithMessage:m andFont:[self getCurrentFont]];
     
     return cell;
 }
@@ -194,16 +210,22 @@
     Message *m = [messages objectAtIndex:indexPath.row];
     NSString *msg = [NSString stringWithFormat:@"%@: %@", m.user, m.message];
     
-    CGSize maxSize = CGSizeMake(MAX_WIDTH, MAX_HEIGHT);
-    CGSize fittedSize = [msg sizeWithFont:[UIFont boldSystemFontOfSize:13]
-                  constrainedToSize:maxSize
-                      lineBreakMode:UILineBreakModeWordWrap];
+    CGSize maxSize = CGSizeMake(MAX_WIDTH, CGFLOAT_MAX);
+    CGSize fittedSize = [msg sizeWithFont:[self getCurrentFont]
+                  constrainedToSize:maxSize];
     
     fittedSize.height += PADDING * 2 + 10;
     
-    CGFloat height = fittedSize.height;
-    return height;
+    return fittedSize.height;
     
+}
+
+- (UIFont *)getCurrentFont
+{
+    if (drunk)
+        return [UIFont fontWithName:@"TrebuchetMS-Bold" size:15];
+    else 
+        return [UIFont fontWithName:@"TrebuchetMS" size:12];
 }
 
 #pragma mark UITableViewController Delegate
