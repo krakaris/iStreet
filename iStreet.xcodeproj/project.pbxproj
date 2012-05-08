@@ -175,12 +175,10 @@
 		9D29336F154ECC0E00B3F8A9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		9D34B76F1524D55600DB6C13 /* Settings icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings icon.png"; sourceTree = "<group>"; };
 		9D34B7731524D5D000DB6C13 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
-<<<<<<< HEAD
-		9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedUIPickerView.h; sourceTree = "<group>"; };
-		9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedUIPickerView.m; sourceTree = "<group>"; };
+
+
 		9D4420A715596489002856D5 /* star_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_yellow.png; sourceTree = "<group>"; };
-=======
->>>>>>> 0369a522de23f1b779fd2bf6d5ba8a18cac9a13b
+
 		9D464B181537482600468729 /* light_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light_orange.png; sourceTree = "<group>"; };
 		9D464B201537631C00468729 /* Princeton Crest 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 3.png"; sourceTree = "<group>"; };
 		9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubEventsViewController.h; sourceTree = "<group>"; };
@@ -419,12 +417,12 @@
 		5BFB45021533845000960C81 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				9DF42C741559DF38004E1884 /* sectionheader.png */,
-=======
-				5B6A17FD1559AD5A008D0013 /* beercap.png */,
-				9DE86A1C1558611C00266C94 /* sectionheader.png */,
->>>>>>> 0369a522de23f1b779fd2bf6d5ba8a18cac9a13b
+
+
+
+
+
+
 				4158565B154517C1002BCE7D /* EventsViewController.h */,
 				5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */,
 				5BADF93D155388ED00B82CC3 /* AllEventsViewController.h */,
@@ -581,14 +579,14 @@
 				9DE86A351558690B00266C94 /* star.png in Resources */,
 				9DE86A371558698500266C94 /* star_bw.png in Resources */,
 				9DE86A39155869F300266C94 /* Princeton shield bw icon.png in Resources */,
-<<<<<<< HEAD
-				9D4420A815596489002856D5 /* star_yellow.png in Resources */,
-				9D0426B11559977F00561AF7 /* Beer Cap tiger 114x114.png in Resources */,
-				9D0426B4155998A500561AF7 /* Beer Cap tiger 57x57.png in Resources */,
-				9DF42C751559DF38004E1884 /* sectionheader.png in Resources */,
-=======
-				5B6A17FE1559AD5A008D0013 /* beercap.png in Resources */,
->>>>>>> 0369a522de23f1b779fd2bf6d5ba8a18cac9a13b
+
+
+
+
+
+
+
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
