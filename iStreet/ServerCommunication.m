@@ -32,8 +32,8 @@ enum connectionConstants {
 }
 - (BOOL)sendAsynchronousRequestForDataAtRelativeURL:(NSString *)rel withPOSTBody:(NSString *)p forViewController:(UIViewController *)vc withDelegate:(id <ServerCommunicationDelegate>)del andDescription:(NSString *)d;
 {
-    static NSString *serverURL = @"http://localhost:5000";
-    //static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
+    //static NSString *serverURL = @"http://localhost:5000";
+    static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
     NSString *absoluteURL = [serverURL stringByAppendingString:rel];
     [self setViewController:vc];
     [self setDescription:d];

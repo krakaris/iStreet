@@ -30,7 +30,6 @@
 		5B3DEB2D154AA52A0023C651 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3DEB2C154AA52A0023C651 /* LoginViewController.m */; };
 		5B608A5A154A602D00BDCA28 /* ServerCommunication.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B608A59154A602D00BDCA28 /* ServerCommunication.m */; };
 		5B63654615338AB700845082 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 5B63654515338AB700845082 /* README */; };
-		5B6A17FE1559AD5A008D0013 /* beercap.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6A17FD1559AD5A008D0013 /* beercap.png */; };
 		5B6E6FA415451DC600BB3AA2 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
@@ -45,15 +44,13 @@
 		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
 		5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */; };
-		9D0426B11559977F00561AF7 /* Beer Cap tiger 114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0426B01559977F00561AF7 /* Beer Cap tiger 114x114.png */; };
-		9D0426B4155998A500561AF7 /* Beer Cap tiger 57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0426B3155998A500561AF7 /* Beer Cap tiger 57x57.png */; };
+		9D192A221559E5690047C5E7 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D192A211559E5690047C5E7 /* check.png */; };
 		9D197B69153B51B800604080 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B61153B51B800604080 /* EventCell.m */; };
 		9D197B6B153B51B800604080 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B65153B51B800604080 /* IconDownloader.m */; };
 		9D208D7815409335004515E9 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
 		9D293368154ECAE400B3F8A9 /* iStreet final icon 57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D293367154ECAE400B3F8A9 /* iStreet final icon 57x57.png */; };
 		9D29336C154ECB5700B3F8A9 /* iStreet final icon 114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D29336B154ECB5700B3F8A9 /* iStreet final icon 114x114.png */; };
 		9D293370154ECC0E00B3F8A9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D29336F154ECC0E00B3F8A9 /* Default.png */; };
-		9D4420A815596489002856D5 /* star_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4420A715596489002856D5 /* star_yellow.png */; };
 		9D464B1A1537482600468729 /* light_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B181537482600468729 /* light_orange.png */; };
 		9D464B211537631C00468729 /* Princeton Crest 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B201537631C00468729 /* Princeton Crest 3.png */; };
 		9D4ED4A315338DA700680D1D /* ClubEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */; };
@@ -85,7 +82,6 @@
 		9DE86A351558690B00266C94 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A341558690B00266C94 /* star.png */; };
 		9DE86A371558698500266C94 /* star_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A361558698500266C94 /* star_bw.png */; };
 		9DE86A39155869F300266C94 /* Princeton shield bw icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A38155869F300266C94 /* Princeton shield bw icon.png */; };
-		9DF42C751559DF38004E1884 /* sectionheader.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DF42C741559DF38004E1884 /* sectionheader.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,7 +134,6 @@
 		5B608A58154A602D00BDCA28 /* ServerCommunication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCommunication.h; sourceTree = "<group>"; };
 		5B608A59154A602D00BDCA28 /* ServerCommunication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommunication.m; sourceTree = "<group>"; };
 		5B63654515338AB700845082 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		5B6A17FD1559AD5A008D0013 /* beercap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beercap.png; sourceTree = "<group>"; };
 		5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		5BA1F60A15112DA7002CA7F3 /* iStreet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStreet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA1F60E15112DA7002CA7F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -166,6 +161,7 @@
 		5BFB450F153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		9D0426B01559977F00561AF7 /* Beer Cap tiger 114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Beer Cap tiger 114x114.png"; sourceTree = "<group>"; };
 		9D0426B3155998A500561AF7 /* Beer Cap tiger 57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Beer Cap tiger 57x57.png"; sourceTree = "<group>"; };
+		9D192A211559E5690047C5E7 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
 		9D197B60153B51B800604080 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		9D197B61153B51B800604080 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		9D197B64153B51B800604080 /* IconDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconDownloader.h; sourceTree = "<group>"; };
@@ -175,10 +171,7 @@
 		9D29336F154ECC0E00B3F8A9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		9D34B76F1524D55600DB6C13 /* Settings icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings icon.png"; sourceTree = "<group>"; };
 		9D34B7731524D5D000DB6C13 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
-
-
 		9D4420A715596489002856D5 /* star_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_yellow.png; sourceTree = "<group>"; };
-
 		9D464B181537482600468729 /* light_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light_orange.png; sourceTree = "<group>"; };
 		9D464B201537631C00468729 /* Princeton Crest 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 3.png"; sourceTree = "<group>"; };
 		9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubEventsViewController.h; sourceTree = "<group>"; };
@@ -214,7 +207,6 @@
 		9DE86A341558690B00266C94 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		9DE86A361558698500266C94 /* star_bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_bw.png; sourceTree = "<group>"; };
 		9DE86A38155869F300266C94 /* Princeton shield bw icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton shield bw icon.png"; sourceTree = "<group>"; };
-		9DF42C741559DF38004E1884 /* sectionheader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sectionheader.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -347,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				5B3562F31555EF7400D46B7F /* checkicon.png */,
+				9D192A211559E5690047C5E7 /* check.png */,
 				5BADF9481553A8EC00B82CC3 /* star_orange.png */,
 				9D29336F154ECC0E00B3F8A9 /* Default.png */,
 				9D29336B154ECB5700B3F8A9 /* iStreet final icon 114x114.png */,
@@ -417,12 +410,6 @@
 		5BFB45021533845000960C81 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-
-
-
-
-
-
 				4158565B154517C1002BCE7D /* EventsViewController.h */,
 				5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */,
 				5BADF93D155388ED00B82CC3 /* AllEventsViewController.h */,
@@ -579,14 +566,7 @@
 				9DE86A351558690B00266C94 /* star.png in Resources */,
 				9DE86A371558698500266C94 /* star_bw.png in Resources */,
 				9DE86A39155869F300266C94 /* Princeton shield bw icon.png in Resources */,
-
-
-
-
-
-
-
-
+				9D192A221559E5690047C5E7 /* check.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

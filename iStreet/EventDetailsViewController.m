@@ -104,7 +104,7 @@
         self.eventTitle.text = @"On Tap";
         self.navigationItem.title = @"On Tap";
     }
-    
+    self.eventTitle.lineBreakMode = UILineBreakModeWordWrap;
     self.descriptionText.text = myEvent.event_description;
     //self.seeAllFriendsAttending.titleLabel.textColor = [UIColor orangeColor];
     
