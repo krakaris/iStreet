@@ -11,6 +11,9 @@
 #import "AppDelegate.h"
 
 @interface SeeFriendsAttendingTableViewController : UITableViewController <ServerCommunicationDelegate, UIAlertViewDelegate>
+{
+    dispatch_queue_t downloadFriendsAttendingQ;
+}
 
 @property NSString * fbid_loggedInUser;
 @property NSArray * friendsFbidArray;

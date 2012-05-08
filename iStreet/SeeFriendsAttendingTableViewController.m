@@ -50,73 +50,95 @@
     ServerCommunication *sc = [[ServerCommunication alloc] init];
     
     [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self withDelegate:self andDescription:@"fetching users"];
+
+    self.navigationItem.backBarButtonItem.target = self;
+    self.navigationItem.backBarButtonItem.action = @selector(backToDetails:);
+}
+
+- (void) backToDetails
+{
+    NSLog(@"Back to details!");
 }
 
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     //emptying the array
     [listOfAttendingFriends removeAllObjects];
+    [self.tableView reloadData];
     
     if (description == @"fetching users")
     {        
-        NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"Request completed with response string %@", response);
+        downloadFriendsAttendingQ = dispatch_queue_create("friends attending downloader", NULL);
+        dispatch_async(downloadFriendsAttendingQ, ^{
         
-        NSMutableArray *arrayOfAttendingFBFriendIDs = [NSMutableArray arrayWithArray:[response componentsSeparatedByString:@", "]];
-    
-        NSArray *allFriendsFB = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
-        NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriendsFB count]);
-
-        if ([allFriendsFB count] != 0)
-        {
-            for (NSString *thisID in arrayOfAttendingFBFriendIDs)
+        
+            NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"Request completed with response string %@", response);
+            
+            NSMutableArray *arrayOfAttendingFBFriendIDs = [NSMutableArray arrayWithArray:[response componentsSeparatedByString:@", "]];
+            
+            NSMutableArray *temporaryFriendsArray = [[NSMutableArray alloc] init];
+            
+            NSArray *allFriendsFB = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
+            NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriendsFB count]);
+            
+            if ([allFriendsFB count] != 0)
             {
-                //Getting rid of empty strings.
-                if (![thisID isEqualToString:@""])
+                for (NSString *thisID in arrayOfAttendingFBFriendIDs)
                 {
-                    int count = 0;
-                    for (NSDictionary *friend in allFriendsFB)
+                    //Getting rid of empty strings.
+                    if (![thisID isEqualToString:@""])
                     {
-                        if ([[friend valueForKey:@"id"] isEqualToString:thisID])
+                        int count = 0;
+                        for (NSDictionary *friend in allFriendsFB)
                         {
-                            //NSUInteger thisIndex = [allFriendsFB indexOfObject:thisID];
-                            //NSDictionary *thisObject = [allFriendsFB objectAtIndex:thisIndex];
-                            [listOfAttendingFriends addObject:[allFriendsFB objectAtIndex:count]];
-                            NSLog(@"Contains!");
+                            if ([[friend valueForKey:@"id"] isEqualToString:thisID])
+                            {
+                                //NSUInteger thisIndex = [allFriendsFB indexOfObject:thisID];
+                                //NSDictionary *thisObject = [allFriendsFB objectAtIndex:thisIndex];
+                                //[listOfAttendingFriends addObject:[allFriendsFB objectAtIndex:count]];
+                                [temporaryFriendsArray addObject:[allFriendsFB objectAtIndex:count]];
+                                //NSLog(@"Contains!");
+                            }
+                            else 
+                            {
+                                //NSLog(@"Doesn't contain!");
+                            }
+                            count++;
                         }
-                        else 
-                        {
-                            NSLog(@"Doesn't contain!");
-                        }
-                        count++;
+                        
                     }
-                    
+                    NSLog(@"This id is %@", thisID);
                 }
-                NSLog(@"This id is %@", thisID);
+                
+                NSLog(@"Total number of valid id's is %d", [listOfAttendingFriends count]);
+                
+                /*
+                 if ([listOfAttendingFriends count] != 0)
+                 {
+                 NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+                 [listOfAttendingFriends sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+                 }
+                 */
             }
             
-            NSLog(@"Total number of valid id's is %d", [listOfAttendingFriends count]);
+            [self.spinner stopAnimating];
             
-            /*
-             if ([listOfAttendingFriends count] != 0)
-             {
-             NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-             [listOfAttendingFriends sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-             }
-             */
-        }
-        
-        [self.spinner stopAnimating];
-        
-        //Reloading data
-        [self.tableView reloadData];
-        
-        if ([listOfAttendingFriends count] == 0)
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"None Attending" message:@"None of your friends are attending this event." delegate:self cancelButtonTitle:@"Go Back" otherButtonTitles:nil];
-            alert.delegate = self;
-            [alert show];
-        }
+            if ([temporaryFriendsArray count] == 0)
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"None Attending" message:@"None of your friends are attending this event." delegate:self cancelButtonTitle:@"Go Back" otherButtonTitles:nil];
+                alert.delegate = self;
+                [alert show];
+            }
+            
+            //Setting global array to temporary friends array
+            listOfAttendingFriends = [NSArray arrayWithArray:temporaryFriendsArray];
+            NSLog(@"Setting global to temporary array!");
+            
+            //Reloading data
+            [self.tableView reloadData];
+        });
+        dispatch_release(downloadFriendsAttendingQ);
     }
 }
 
@@ -142,6 +164,14 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void) viewDidDisappear:(BOOL)animated
+{
+    NSLog(@"View unloaded, thread canceled!");
+
+    if (downloadFriendsAttendingQ)
+        dispatch_suspend(downloadFriendsAttendingQ);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
