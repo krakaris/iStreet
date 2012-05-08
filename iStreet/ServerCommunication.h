@@ -54,9 +54,9 @@
 
 @protocol ServerCommunicationDelegate <NSObject>
 
-@optional
+@required
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data;
-@optional
+@required
 - (void)connectionFailed:(NSString *)description;
 
 @end

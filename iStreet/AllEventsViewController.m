@@ -39,14 +39,24 @@
     _serverLoadedOnce = YES;
 }
 
+- (void)connectionFailed:(NSString *)description
+{
+    if([[self.navigationItem.rightBarButtonItem tintColor] isEqual:[UIColor redColor]])
+        return; 
+    
+    [[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"There was a problem retrieving the latest event information. If the error persists, make sure you are connected to the internet" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+    
+    [super connectionFailed:description];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if(_serverLoadedOnce)
-    {
-        NSLog(@"repeat request");
-        [self requestServerEventsData];
-    }
+   // if(_serverLoadedOnce)
+    //{
+      //  NSLog(@"repeat request");
+    [self requestServerEventsData];
+    //}
 }
 
 

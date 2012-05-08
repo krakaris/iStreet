@@ -31,6 +31,7 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestServerEventsData)];
+    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor blackColor]];
     
     //self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0]; RISHI
     //_eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0];
@@ -81,8 +82,8 @@
     NSIndexPath *selectedRow = [self.eventsTable indexPathForSelectedRow];
     if(selectedRow)
     {
-        [self.eventsTable deselectRowAtIndexPath:selectedRow animated:NO];
         [self.eventsTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
+        [self.eventsTable deselectRowAtIndexPath:selectedRow animated:NO];
     }
 }
 
@@ -98,11 +99,37 @@
     [NSException raise:@"Must override '- (void)requestServerEventsData' in subclass of EventsViewController" format:@""];
 }
 
+- (void)connectionFailed:(NSString *)description
+{
+    if([[self.navigationItem.rightBarButtonItem tintColor] isEqual:[UIColor redColor]])
+        return; // if the user already knows connection attempts are failing, don't alert again.
+        
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.4 target:self selector:@selector(flashReloadButton:) userInfo:[NSNumber numberWithInt:3] repeats:NO];
+    [self flashReloadButton:timer];
+}
+
+- (void)flashReloadButton:(NSTimer *)timer
+{
+    int current = [(NSNumber *)[timer userInfo] intValue];
+    if(current % 2 == 0)
+        [self.navigationItem.rightBarButtonItem setTintColor:[UIColor blackColor]];
+    else
+        [self.navigationItem.rightBarButtonItem setTintColor:[UIColor redColor]];
+
+    current--;
+    if(current > 0)
+    {
+        [NSTimer scheduledTimerWithTimeInterval:0.4 target:self selector:@selector(flashReloadButton:) userInfo:[NSNumber numberWithInt:current] repeats:NO];
+    }
+}
+
 /*
  Runs when the connection has successfully finished loading all data
  */
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
+    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor blackColor]];
+
     NSArray *eventsDictionaryArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
     if(!eventsDictionaryArray)
         return;

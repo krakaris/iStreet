@@ -12,7 +12,7 @@
 #import "Facebook.h"
 #import "User.h"
 
-@interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, ServerCommunicationDelegate, UIAlertViewDelegate, FBSessionDelegate>
+@interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, FBSessionDelegate>
 {
     EventsAttendingTableViewController *eatvc;
     BOOL isFiltered;

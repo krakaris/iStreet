@@ -61,6 +61,11 @@
     NSLog(@"Back to details!");
 }
 
+- (void)connectionFailed:(NSString *)description
+{
+#warning AKI - implement this method (need to handle a web access fail)
+}
+
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     //emptying the array
