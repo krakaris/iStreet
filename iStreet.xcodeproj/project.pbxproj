@@ -30,6 +30,7 @@
 		5B3DEB2D154AA52A0023C651 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3DEB2C154AA52A0023C651 /* LoginViewController.m */; };
 		5B608A5A154A602D00BDCA28 /* ServerCommunication.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B608A59154A602D00BDCA28 /* ServerCommunication.m */; };
 		5B63654615338AB700845082 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 5B63654515338AB700845082 /* README */; };
+		5B6A17FE1559AD5A008D0013 /* beercap.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6A17FD1559AD5A008D0013 /* beercap.png */; };
 		5B6E6FA415451DC600BB3AA2 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
@@ -134,6 +135,7 @@
 		5B608A58154A602D00BDCA28 /* ServerCommunication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCommunication.h; sourceTree = "<group>"; };
 		5B608A59154A602D00BDCA28 /* ServerCommunication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommunication.m; sourceTree = "<group>"; };
 		5B63654515338AB700845082 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		5B6A17FD1559AD5A008D0013 /* beercap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beercap.png; sourceTree = "<group>"; };
 		5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		5BA1F60A15112DA7002CA7F3 /* iStreet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStreet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA1F60E15112DA7002CA7F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -403,6 +405,7 @@
 		5BFB45021533845000960C81 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				5B6A17FD1559AD5A008D0013 /* beercap.png */,
 				9DE86A1C1558611C00266C94 /* sectionheader.png */,
 				4158565B154517C1002BCE7D /* EventsViewController.h */,
 				5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */,
@@ -561,6 +564,7 @@
 				9DE86A351558690B00266C94 /* star.png in Resources */,
 				9DE86A371558698500266C94 /* star_bw.png in Resources */,
 				9DE86A39155869F300266C94 /* Princeton shield bw icon.png in Resources */,
+				5B6A17FE1559AD5A008D0013 /* beercap.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

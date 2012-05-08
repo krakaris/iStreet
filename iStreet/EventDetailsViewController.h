@@ -27,7 +27,6 @@
 @property (nonatomic, retain) IBOutlet UIImageView *eventImage;
 @property (nonatomic, retain) IBOutlet UIButton *attendButton;
 @property (nonatomic, retain) IBOutlet UITextView *descriptionText;
-@property (nonatomic, retain) IBOutlet UIButton *seeAllFriendsAttending;
 @property (nonatomic, retain) IBOutlet UILabel *eventEntry;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *toggleAttendingIndicator;
 
