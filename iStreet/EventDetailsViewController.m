@@ -41,6 +41,7 @@
 {
     NSString *fbID = [(AppDelegate *)[[UIApplication sharedApplication] delegate] fbID];
     
+    /*
     if (fbID == nil)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login" message:@"Please login using Facebook first" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
@@ -50,7 +51,8 @@
         //self.seeAllFriendsAttending.enabled = NO;
         //self.seeAllFriendsAttending.titleLabel.text = @"Login in Friends";
     }
-    else 
+    else
+     */
     {
         [self performSegueWithIdentifier:@"SeeFriendsAttending" sender:self];
     }

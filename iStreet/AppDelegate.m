@@ -13,6 +13,7 @@
 #import "Event.h"  
 
 NSString *const DataLoadedNotificationString = @"Application data finished loading";
+NSString *const netIDLoadedNotificationString = @"NetID was just set";
 
 @interface AppDelegate ()
 - (void)setupCoreData;
@@ -27,6 +28,8 @@ static NSString *appID = @"128188007305619";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [_window makeKeyAndVisible];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkCoreDataAndSetUpFacebook) name:DataLoadedNotificationString object:nil];
     
     _appDataLoaded = NO;
     _networkActivityIndicatorCount = 0;
@@ -90,63 +93,6 @@ static NSString *appID = @"128188007305619";
         self.facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
         self.facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
     }
-    
-    
-    //Facebook Initialization
-    //Finding the user in the core data database    
-    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSArray *users = [_document.managedObjectContext executeFetchRequest:usersRequest error:nil];
-    
-    //There should be only 1 user entity - and with matching netid
-    NSLog(@"Length of array is %d", [users count]);
-    User *targetUser;
-    for (User *user in users)
-    {
-        NSLog(@"Displaying user info for %@", user.netid);
-        if ([self.netID isEqualToString:user.netid])
-        {
-            targetUser = user;
-            NSLog(@"Found target!");
-        }
-    }
-    
-    NSLog(@"Retrieved fb id FROM CORE DATA is %@", targetUser.fb_id);
-    
-    if (![self.facebook isSessionValid]) //|| targetUser.fb_id == nil)
-    {
-        NSLog(@"Session is not valid, nullifying fbid!");
-        
-        //nullifying fbid
-        self.fbID = nil;
-        targetUser.fb_id = nil;
-        
-        //logout if session valid
-        if ([self.facebook isSessionValid])
-            [self.facebook logout];
-    }
-    else 
-    {
-        NSLog(@"FB Session is valid, retrieving friends!");
-        //NSLog(@"access token is %@", [self.facebook accessToken]);
-        
-        //Setting fbid
-        if (targetUser != nil)
-            self.fbID = targetUser.fb_id;
-        
-        self.facebook.sessionDelegate = self;
-        
-        //Just call this the first time - otherwise, friends are refreshed everytime the friends tab is opened
-        [self.facebook requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
-        
-        /*
-         dispatch_queue_t downloadFriendsQ = dispatch_queue_create("friends downloader", NULL);
-         dispatch_async(downloadFriendsQ, ^{
-         });
-         dispatch_release(downloadFriendsQ);
-         */
-    }
-    
-    //[self checkCoreDataAndSetUpFacebook];
         
     return YES;
 }
@@ -238,9 +184,11 @@ static NSString *appID = @"128188007305619";
     //[self checkCoreDataAndSetUpFacebook];
 }
 
-/*
+
 - (void) checkCoreDataAndSetUpFacebook
 {
+    NSLog(@"checking core data and set up facebook called!");
+    
     //Facebook Initialization
     //Finding the user in the core data database    
     NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
@@ -294,7 +242,7 @@ static NSString *appID = @"128188007305619";
          
     }
 }
-*/
+
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
@@ -312,6 +260,7 @@ static NSString *appID = @"128188007305619";
     // only set the instance variable if netID is a new netid. netID could be the notification sender.
     if([netID isKindOfClass:[NSString class]])
         _netID = netID;
+
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     
@@ -333,7 +282,11 @@ static NSString *appID = @"128188007305619";
         NSLog(@"setting netid!");
         User *thisUser = [clubs objectAtIndex:0];
         [thisUser setNetid:_netID];
+        
+        [self checkCoreDataAndSetUpFacebook];
     }
+    
+    
 }
 
 - (void)useNetworkActivityIndicator

@@ -11,13 +11,16 @@
 #import "AppDelegate.h"
 
 @interface SeeFriendsAttendingTableViewController : UITableViewController <ServerCommunicationDelegate, UIAlertViewDelegate>
+{
+    dispatch_queue_t downloadFriendsAttendingQ;
+}
 
 @property NSString * fbid_loggedInUser;
 @property NSArray * friendsFbidArray;
 @property NSMutableArray *listOfAttendingFriends;
 //@property NSArray *idListOfAttendingFriends;
 @property NSString *eventID;
-@property IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
 
 @end

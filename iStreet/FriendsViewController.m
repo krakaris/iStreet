@@ -275,7 +275,7 @@ static NSString *appID = @"128188007305619";
             if (userInCoreData != nil)
             {
                 userInCoreData.fb_id = fbid;
-                NSLog(@"STORED FBID IN CORE DATA DATABASE!");
+                NSLog(@"STORED FBID IN CORE DATA DATABASE! fbid is %@", fbid);
                 [document.managedObjectContext save:nil];
             }
         }
