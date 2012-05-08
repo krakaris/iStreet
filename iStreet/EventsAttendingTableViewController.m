@@ -26,6 +26,8 @@
 @synthesize isStarSelected;
 @synthesize isAlreadyFavorite;
 
+@synthesize eventDetailsController;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
