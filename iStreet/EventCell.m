@@ -61,6 +61,7 @@
         //[self.accessoryView setHidden:NO];
         //[self setAccessoryType:UITableViewCellAccessoryCheckmark];
         UIImage *image = [UIImage imageNamed:@"checkicon.png"];
+        //UIImage *image = [UIImage imageNamed:@"beercap.png"];
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kCellHeight * 1.0/2, kCellHeight * 1.0/2)];
         [imageView setImage:image];
         self.accessoryView = imageView;

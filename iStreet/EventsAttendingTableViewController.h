@@ -15,26 +15,17 @@
 #import "IconDownloader.h"
 #import "EventDetailsViewController.h"
 #import <CoreData/CoreData.h>
+#import "EventsViewController.h"
 
-@interface EventsAttendingTableViewController : UITableViewController <ServerCommunicationDelegate>
+@interface EventsAttendingTableViewController : EventsViewController
 {
-    
-    NSMutableDictionary *iconsBeingDownloaded;
-    EventDetailsViewController *eventDetailsController;
     UIButton *starButton;
 }
 
 @property (nonatomic, retain) NSString *fbid;
 @property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *firstname;
-@property (nonatomic, retain) NSArray *nameComponents;
-@property (nonatomic, retain) NSArray *eventsAttendingIDs;
-@property (nonatomic, retain) NSMutableArray *eligibleEvents;
-@property (nonatomic, retain) EventDetailsViewController *eventDetailsController;
-@property (nonatomic, retain) Event *currentlySelectedEvent;
 
 @property (nonatomic, retain) IBOutlet UIButton *favButton;
-
 @property (assign) BOOL isStarSelected;
 @property (assign) BOOL isAlreadyFavorite;
 

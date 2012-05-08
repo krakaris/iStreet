@@ -22,10 +22,18 @@ enum connectionConstants {
 
 @synthesize receivedData, viewController, delegate, serverResponse, description;
 
+
+- (id)init;
+{
+    self = [super init];
+    accessFailCount = 0;
+    
+    return self;
+}
 - (BOOL)sendAsynchronousRequestForDataAtRelativeURL:(NSString *)rel withPOSTBody:(NSString *)p forViewController:(UIViewController *)vc withDelegate:(id <ServerCommunicationDelegate>)del andDescription:(NSString *)d;
 {
-    //static NSString *serverURL = @"http://localhost:5000";
-    static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
+    static NSString *serverURL = @"http://localhost:5000";
+    //static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
     NSString *absoluteURL = [serverURL stringByAppendingString:rel];
     [self setViewController:vc];
     [self setDescription:d];
@@ -58,7 +66,9 @@ enum connectionConstants {
     else
     {
         [(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
-        // TELL DELEGATE THE MISSION FAILED.
+        NSLog(@"failed to make connection completely");
+        if(self.delegate && [self.delegate respondsToSelector: @selector(connectionFailed:)])
+            [self.delegate connectionFailed:description];
         return NO;
     }
 }
@@ -85,7 +95,7 @@ enum connectionConstants {
 {
     NSLog(@"Connection failed (ServerCommunication.m): %@", [error localizedDescription]);
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
-    if(self.delegate && [self.delegate respondsToSelector: @selector(connectionFailed::)])
+    if(self.delegate && [self.delegate respondsToSelector: @selector(connectionFailed:)])
         [self.delegate connectionFailed:description];
 }
 
@@ -109,6 +119,13 @@ enum connectionConstants {
         [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:netid];
         [self userLoggedIn:self];
     }
+    else if ([[[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding] isEqualToString:@"Access failed."])
+    {
+        if(accessFailCount++ < 5)
+            [self sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:post forViewController:viewController withDelegate:self.delegate andDescription:description];
+        else 
+            [self.delegate connectionWithDescription:description finishedReceivingData:[@"" dataUsingEncoding:NSUTF8StringEncoding]];
+    }
     else 
     {
         if(self.delegate && [self.delegate respondsToSelector:@selector(connectionWithDescription:finishedReceivingData:) ])
@@ -126,24 +143,37 @@ enum connectionConstants {
 
 #pragma mark NSURLConnectionDelegate methods
 
+/*
 - (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace
 {
     return YES;
 }
 
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+{
+    NSLog(@"for some reason, wrong method called!");
+    [self connection:connection sendRequestForAuthenticationChallenge:challenge];
+}
+
+ */
+
 - (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
     NSString *host = [[challenge protectionSpace] host];
-    //NSLog(@"YOU HAVE BEEN CHALLENGED!: %@", host);
+    NSLog(@"YOU HAVE BEEN CHALLENGED!: %@", host);
     if(!([host isEqualToString:@"localhost"] || [host isEqualToString:@"istreetsvr.herokuapp.com"]))
     {
-        //NSLog(@"skipping without credentials");
+        NSLog(@"skipping without credentials");
         [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
         return;
     }
-    
-    if ([challenge previousFailureCount] > 3) 
+    NSLog(@"using CR credentials");
+    if ([challenge previousFailureCount] > 50) 
+    {   
+        NSLog(@"CANCELLING :(");
         [[challenge sender] cancelAuthenticationChallenge:challenge];
+        return;
+    }
     
     static NSString *PRIVATE_KEY = @"q{4fI&druS9Rz:)!o@0i";
 

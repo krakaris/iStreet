@@ -38,5 +38,7 @@
 
 /* Optional override (recommended to call [super ...] first) */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data;
+- (void)setPropertiesWithNewEventData:(NSArray *)newData;
 
 @end

@@ -16,7 +16,6 @@
 		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
 		415C30381553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C30371553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m */; };
 		4163B6F0153E572E00D7B2DC /* fconnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 4163B6EF153E572E00D7B2DC /* fconnect.png */; };
-		4185BB6E1541297B001E85E3 /* AnimatedUIPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */; };
 		419D3797154AD59E00447D2B /* EventsAttendingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 419D3796154AD59E00447D2B /* EventsAttendingTableViewController.m */; };
 		41B7438A15542BAC0080DA39 /* star_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B7438815542BAC0080DA39 /* star_gray.png */; };
 		41B7438B15542BAC0080DA39 /* star_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B7438915542BAC0080DA39 /* star_orange.png */; };
@@ -31,6 +30,7 @@
 		5B3DEB2D154AA52A0023C651 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3DEB2C154AA52A0023C651 /* LoginViewController.m */; };
 		5B608A5A154A602D00BDCA28 /* ServerCommunication.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B608A59154A602D00BDCA28 /* ServerCommunication.m */; };
 		5B63654615338AB700845082 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 5B63654515338AB700845082 /* README */; };
+		5B6A17FE1559AD5A008D0013 /* beercap.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6A17FD1559AD5A008D0013 /* beercap.png */; };
 		5B6E6FA415451DC600BB3AA2 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */; };
 		5BA1F60F15112DA7002CA7F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F60E15112DA7002CA7F3 /* UIKit.framework */; };
 		5BA1F61115112DA7002CA7F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA1F61015112DA7002CA7F3 /* Foundation.framework */; };
@@ -74,7 +74,7 @@
 		9DC2F35C151E52EB0028F911 /* Friend icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F359151E52EB0028F911 /* Friend icon.png */; };
 		9DC2F365151E5AC60028F911 /* Chat icon 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F364151E5AC60028F911 /* Chat icon 3.png */; };
 		9DC2F36B151E5D630028F911 /* Home icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F36A151E5D630028F911 /* Home icon.png */; };
-		9DE86A0F15585F0400266C94 /* Cap&Gown.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A0E15585F0400266C94 /* Cap&Gown.png */; };
+		9DE86A0F15585F0400266C94 /* Cap and Gown.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A0E15585F0400266C94 /* Cap and Gown.png */; };
 		9DE86A1115585F1700266C94 /* Princeton shield.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A1015585F1700266C94 /* Princeton shield.png */; };
 		9DE86A171558603D00266C94 /* Princeton shield bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A161558603D00266C94 /* Princeton shield bw.png */; };
 		9DE86A1B155860D000266C94 /* grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A1A155860D000266C94 /* grey.png */; };
@@ -138,6 +138,7 @@
 		5B608A58154A602D00BDCA28 /* ServerCommunication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCommunication.h; sourceTree = "<group>"; };
 		5B608A59154A602D00BDCA28 /* ServerCommunication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommunication.m; sourceTree = "<group>"; };
 		5B63654515338AB700845082 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		5B6A17FD1559AD5A008D0013 /* beercap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beercap.png; sourceTree = "<group>"; };
 		5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		5BA1F60A15112DA7002CA7F3 /* iStreet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStreet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA1F60E15112DA7002CA7F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -174,9 +175,12 @@
 		9D29336F154ECC0E00B3F8A9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		9D34B76F1524D55600DB6C13 /* Settings icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings icon.png"; sourceTree = "<group>"; };
 		9D34B7731524D5D000DB6C13 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedUIPickerView.h; sourceTree = "<group>"; };
 		9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedUIPickerView.m; sourceTree = "<group>"; };
 		9D4420A715596489002856D5 /* star_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_yellow.png; sourceTree = "<group>"; };
+=======
+>>>>>>> 0369a522de23f1b779fd2bf6d5ba8a18cac9a13b
 		9D464B181537482600468729 /* light_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light_orange.png; sourceTree = "<group>"; };
 		9D464B201537631C00468729 /* Princeton Crest 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 3.png"; sourceTree = "<group>"; };
 		9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubEventsViewController.h; sourceTree = "<group>"; };
@@ -201,7 +205,7 @@
 		9DC2F359151E52EB0028F911 /* Friend icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Friend icon.png"; sourceTree = "<group>"; };
 		9DC2F364151E5AC60028F911 /* Chat icon 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chat icon 3.png"; sourceTree = "<group>"; };
 		9DC2F36A151E5D630028F911 /* Home icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Home icon.png"; sourceTree = "<group>"; };
-		9DE86A0E15585F0400266C94 /* Cap&Gown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cap&Gown.png"; sourceTree = "<group>"; };
+		9DE86A0E15585F0400266C94 /* Cap and Gown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cap and Gown.png"; sourceTree = "<group>"; };
 		9DE86A1015585F1700266C94 /* Princeton shield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton shield.png"; sourceTree = "<group>"; };
 		9DE86A161558603D00266C94 /* Princeton shield bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton shield bw.png"; sourceTree = "<group>"; };
 		9DE86A1A155860D000266C94 /* grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey.png; sourceTree = "<group>"; };
@@ -329,8 +333,6 @@
 				5BA1F61D15112DA7002CA7F3 /* AppDelegate.h */,
 				5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */,
 				5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */,
-				9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */,
-				9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */,
 				5B608A5F154A7CCC00BDCA28 /* Server Communication */,
 				5BFB44FF1533842D00960C81 /* Friends */,
 				5BFB45001533843300960C81 /* Clubs */,
@@ -417,7 +419,12 @@
 		5BFB45021533845000960C81 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				9DF42C741559DF38004E1884 /* sectionheader.png */,
+=======
+				5B6A17FD1559AD5A008D0013 /* beercap.png */,
+				9DE86A1C1558611C00266C94 /* sectionheader.png */,
+>>>>>>> 0369a522de23f1b779fd2bf6d5ba8a18cac9a13b
 				4158565B154517C1002BCE7D /* EventsViewController.h */,
 				5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */,
 				5BADF93D155388ED00B82CC3 /* AllEventsViewController.h */,
@@ -451,7 +458,7 @@
 				9DE86A1015585F1700266C94 /* Princeton shield.png */,
 				9D464B201537631C00468729 /* Princeton Crest 3.png */,
 				9DC2F351151E3D9B0028F911 /* Princeton Crest 2.png */,
-				9DE86A0E15585F0400266C94 /* Cap&Gown.png */,
+				9DE86A0E15585F0400266C94 /* Cap and Gown.png */,
 				9DB903C0151BC6A900A13461 /* Cannon.png */,
 				9DB903C2151BC6A900A13461 /* Cloister.png */,
 				9DB903C3151BC6A900A13461 /* Colonial.png */,
@@ -563,7 +570,7 @@
 				41B7438A15542BAC0080DA39 /* star_gray.png in Resources */,
 				41B7438B15542BAC0080DA39 /* star_orange.png in Resources */,
 				5B3562F41555EF7400D46B7F /* checkicon.png in Resources */,
-				9DE86A0F15585F0400266C94 /* Cap&Gown.png in Resources */,
+				9DE86A0F15585F0400266C94 /* Cap and Gown.png in Resources */,
 				9DE86A1115585F1700266C94 /* Princeton shield.png in Resources */,
 				9DE86A171558603D00266C94 /* Princeton shield bw.png in Resources */,
 				9DE86A1B155860D000266C94 /* grey.png in Resources */,
@@ -574,10 +581,14 @@
 				9DE86A351558690B00266C94 /* star.png in Resources */,
 				9DE86A371558698500266C94 /* star_bw.png in Resources */,
 				9DE86A39155869F300266C94 /* Princeton shield bw icon.png in Resources */,
+<<<<<<< HEAD
 				9D4420A815596489002856D5 /* star_yellow.png in Resources */,
 				9D0426B11559977F00561AF7 /* Beer Cap tiger 114x114.png in Resources */,
 				9D0426B4155998A500561AF7 /* Beer Cap tiger 57x57.png in Resources */,
 				9DF42C751559DF38004E1884 /* sectionheader.png in Resources */,
+=======
+				5B6A17FE1559AD5A008D0013 /* beercap.png in Resources */,
+>>>>>>> 0369a522de23f1b779fd2bf6d5ba8a18cac9a13b
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,7 +603,6 @@
 				5B3562F11555EC5D00D46B7F /* Event.m in Sources */,
 				5B3562F21555EC5D00D46B7F /* Club.m in Sources */,
 				41263F941541389D006DD5D6 /* Club+Create.m in Sources */,
-				4185BB6E1541297B001E85E3 /* AnimatedUIPickerView.m in Sources */,
 				9D208D7815409335004515E9 /* FriendsViewController.m in Sources */,
 				5B2CD5ED153F2C4E00EE3E9A /* Event+Create.m in Sources */,
 				5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */,
