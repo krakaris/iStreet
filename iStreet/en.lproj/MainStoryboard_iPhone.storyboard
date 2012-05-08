@@ -3,7 +3,7 @@
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller - Events-->
@@ -33,6 +33,13 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="No upcoming events :(" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="20" id="h2I-Kk-Mdy">
+                                <rect key="frame" x="0.0" y="122" width="320" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Pym-Su-YSk">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -55,8 +62,9 @@
                     </tabBarItem>
                     <navigationItem key="navigationItem" title="Events" id="7bB-ck-wWb"/>
                     <connections>
-                        <outlet property="_activityIndicator" destination="2Lq-WE-aZm" id="ztg-dS-jdE"/>
-                        <outlet property="_eventsTable" destination="Pym-Su-YSk" id="bHX-tp-UBm"/>
+                        <outlet property="activityIndicator" destination="2Lq-WE-aZm" id="cUr-1w-8wB"/>
+                        <outlet property="eventsTable" destination="Pym-Su-YSk" id="bgb-JT-gjb"/>
+                        <outlet property="noUpcomingEvents" destination="h2I-Kk-Mdy" id="gUG-M2-tVu"/>
                         <segue destination="xZq-Pq-Unb" kind="push" identifier="ShowEventDetails" id="Hyg-kK-m3l"/>
                     </connections>
                 </viewController>
@@ -98,7 +106,7 @@
                                 <rect key="frame" x="0.0" y="44" width="320" height="367"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="IWS-qo-1dA">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="IWS-qo-1dA">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="330"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -138,7 +146,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Chat" id="2rs-Co-8K7"/>
+                                    <navigationItem title="Chat" id="2rs-Co-8K7">
+                                        <barButtonItem key="rightBarButtonItem" title="Drunk" id="Buc-Ns-2Pa">
+                                            <connections>
+                                                <action selector="toggleDrunk:" destination="vtS-QH-gNE" id="tmL-Ay-3Bx"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
@@ -148,6 +162,7 @@
                     <navigationItem key="navigationItem" id="Kvf-tQ-sef"/>
                     <connections>
                         <outlet property="activityIndicator" destination="x4Q-ql-7lg" id="cAl-TO-LE5"/>
+                        <outlet property="drunkButton" destination="Buc-Ns-2Pa" id="OxU-5w-SWD"/>
                         <outlet property="messageField" destination="AGi-N1-YY9" id="OSf-gY-KkM"/>
                         <outlet property="messagesTable" destination="IWS-qo-1dA" id="8x8-86-x7d"/>
                         <outlet property="scrollView" destination="Q04-tw-DSy" id="FJf-PB-PJr"/>
@@ -299,6 +314,13 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="No upcoming events :(" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="20" id="jcE-MK-7Vw">
+                                <rect key="frame" x="10" y="120" width="320" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="UGK-yS-V2m">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -318,8 +340,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="3BY-Sk-sVv"/>
                     <connections>
-                        <outlet property="_activityIndicator" destination="RA5-Y4-27X" id="iRa-PR-3ZI"/>
-                        <outlet property="_eventsTable" destination="UGK-yS-V2m" id="Hn0-kO-gWD"/>
+                        <outlet property="activityIndicator" destination="RA5-Y4-27X" id="3bp-7i-vjG"/>
+                        <outlet property="eventsTable" destination="UGK-yS-V2m" id="xMi-dL-dNs"/>
+                        <outlet property="noUpcomingEvents" destination="jcE-MK-7Vw" id="E0g-Bj-zQ1"/>
                         <segue destination="xZq-Pq-Unb" kind="push" identifier="ShowEventDetails" id="dJr-9i-Sko"/>
                     </connections>
                 </viewController>
@@ -339,8 +362,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Princeton Crest 3.png" id="4ay-ZQ-iqj">
-                                        <rect key="frame" x="83" y="98" width="159" height="151"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Princeton shield.png" id="4ay-ZQ-iqj">
+                                        <rect key="frame" x="81" y="83" width="163" height="151"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Roh-6i-HHy">
@@ -377,7 +400,7 @@
                                         <rect key="frame" x="249" y="95" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Cap and Gown" image="Cap and Gown.png">
+                                        <state key="normal" title="Cap and Gown" image="Cap&amp;Gown.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -521,7 +544,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Clubs" image="Events icon 4.png" id="rEC-gh-Gpl">
+                    <tabBarItem key="tabBarItem" title="Clubs" image="Princeton shield bw icon.png" id="rEC-gh-Gpl">
                         <inset key="imageInsets" minX="-2" minY="-6" maxX="-2" maxY="3"/>
                     </tabBarItem>
                     <navigationItem key="navigationItem" title="Clubs" id="CSP-kJ-94R"/>
@@ -538,7 +561,7 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LDJ-Rx-e4D" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="wyn-DU-M0b" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Clubs" image="Events icon 4.png" id="9u5-Ll-vBO"/>
+                    <tabBarItem key="tabBarItem" title="Clubs" image="Princeton shield bw icon.png" id="9u5-Ll-vBO"/>
                     <navigationItem key="navigationItem" id="evZ-cY-grP"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" barStyle="blackOpaque" id="Oxa-e0-Qrw">
@@ -591,7 +614,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="MsM-9b-zol">
-                                        <rect key="frame" x="15" y="322" width="137" height="25"/>
+                                        <rect key="frame" x="28" y="320" width="115" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="17"/>
                                         <state key="normal" title="Unattend">
@@ -605,7 +628,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bJD-ba-HzR">
-                                        <rect key="frame" x="172" y="322" width="128" height="27"/>
+                                        <rect key="frame" x="171" y="320" width="115" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="17"/>
                                         <state key="normal" title="See Friends">
@@ -637,7 +660,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </activityIndicatorView>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.70081103410000001" blue="0.2971060412" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.55357550182481752" blue="0.065522354014598536" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -704,30 +727,110 @@
     </scenes>
     <resources>
         <image name="Cannon.png" width="92" height="98"/>
-        <image name="Cap and Gown.png" width="86" height="100"/>
+        <image name="Cap&amp;Gown.png" width="86" height="100"/>
         <image name="Charter.png" width="95" height="115"/>
         <image name="Chat icon 3.png" width="30" height="27"/>
         <image name="Cloister.png" width="71" height="106"/>
         <image name="Colonial.png" width="98" height="91"/>
         <image name="Cottage.png" width="96" height="106"/>
-        <image name="Events icon 4.png" width="40" height="37"/>
         <image name="Friend icon.png" width="30" height="23"/>
         <image name="Ivy.png" width="101" height="100"/>
-        <image name="List icon.png" width="30" height="29"/>
-        <image name="Princeton Crest 3.png" width="155" height="160"/>
+        <image name="List icon.png" width="35" height="33"/>
+        <image name="Princeton shield bw icon.png" width="30" height="27"/>
+        <image name="Princeton shield.png" width="149" height="138"/>
         <image name="Quadrangle.png" width="95" height="85"/>
         <image name="Terrace.png" width="94" height="95"/>
         <image name="Tiger Inn.png" width="93" height="100"/>
         <image name="Tower.png" width="78" height="101"/>
         <image name="fconnect.png" width="331" height="100"/>
     </resources>
+    <classes>
+        <class className="AllEventsViewController" superclassName="EventsViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllEventsViewController.h"/>
+        </class>
+        <class className="ChatViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendClicked:"/>
+                <relationship kind="action" name="toggleDrunk:"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="drunkButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="messageField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ClubEventsViewController" superclassName="EventsViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubEventsViewController.h"/>
+        </class>
+        <class className="ClubsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClubsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="EventDetailsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventDetailsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="attend:" candidateClass="UIButton"/>
+                <relationship kind="action" name="seeFriends:"/>
+                <relationship kind="outlet" name="attendButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="descriptionText" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="eventDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventEntry" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="eventTime" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="seeAllFriendsAttending" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="toggleAttendingIndicator" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+        <class className="EventsAttendingTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsAttendingTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="favButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="EventsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="eventsTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="noUpcomingEvents" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="FriendsTableViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="logoutOfFacebook:"/>
+                <relationship kind="outlet" name="friendsTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="logoutButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="FriendsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="fbconnect:"/>
+                <relationship kind="outlet" name="fConnectButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+        <class className="SeeFriendsAttendingTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SeeFriendsAttendingTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="Hyg-kK-m3l"/>
         <segue reference="6fS-cC-PVz"/>
-        <segue reference="dJr-9i-Sko"/>
     </inferredMetricsTieBreakers>
 </document>

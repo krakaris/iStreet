@@ -7,6 +7,7 @@
 //
 
 #import "SeeFriendsAttendingTableViewController.h"
+#import "FriendCell.h"
 
 @interface SeeFriendsAttendingTableViewController ()
 
@@ -151,7 +152,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    self.tableView.separatorColor = [UIColor blackColor];
+    self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -198,9 +202,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"FriendsAttendingCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    cell = [[UITableViewCell alloc] init]; //WithStyle:UITableViewCellSty reuseIdentifier:<#(NSString *)#>
+    //cell = [[UITableViewCell alloc] init]; //WithStyle:UITableViewCellSty reuseIdentifier:<#(NSString *)#>
+    cell = [[FriendCell alloc] init];
     cell.textLabel.text = [[listOfAttendingFriends objectAtIndex:indexPath.row] valueForKey:@"name"];
     // Configure the cell...
     

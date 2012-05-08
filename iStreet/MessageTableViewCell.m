@@ -18,9 +18,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 20)];
+        infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 3, 300, 20)];
         infoLabel.textAlignment = UITextAlignmentCenter;
-        infoLabel.font = [UIFont systemFontOfSize:11.0];
         infoLabel.textColor = [UIColor lightGrayColor];
         infoLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:infoLabel];
@@ -31,30 +30,27 @@
         [self.contentView addSubview:backgroundImage];
         
         // Message text view will be sized later depending on length of text.
-        messageView = [[UITextView alloc] init];
+        messageView = [[UILabel alloc] init];
         messageView.backgroundColor = [UIColor clearColor];
-        messageView.editable = NO;
-        messageView.scrollEnabled = NO;
-        [messageView sizeToFit];
-        [self.contentView addSubview:messageView];
+        messageView.lineBreakMode = UILineBreakModeWordWrap;
+        messageView.numberOfLines = 0;
         
+        //messageView.editable = NO;
+        //messageView.scrollEnabled = NO;
+        [self.contentView addSubview:messageView];
+
         [self setAccessoryType:UITableViewCellAccessoryNone];
     }
     return self;
 }
 
-- (void)packCellWithMessage:(Message *)m
+- (void)packCellWithMessage:(Message *)m andFont:(UIFont *)font
 {
-    CGSize maxTextSize = CGSizeMake(MAX_WIDTH, MAX_HEIGHT);
+    CGSize maxTextSize = CGSizeMake(MAX_WIDTH, CGFLOAT_MAX);
     NSString *messageText = [NSString stringWithFormat:@"%@: %@", m.user, m.message];
-    CGSize fittedSize = [messageText sizeWithFont:[UIFont boldSystemFontOfSize:13]
-                              constrainedToSize:maxTextSize
-                                  lineBreakMode:UILineBreakModeCharacterWrap];
-    
-    fittedSize.width += PADDING;
-    
-    [self.messageView setText:messageText];
-    
+    CGSize fittedSize = [messageText sizeWithFont:font
+                              constrainedToSize:maxTextSize];
+        
     UIImage *bgImage = nil;
     NSString *myNetID = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
     
@@ -68,24 +64,27 @@
                                                      fittedSize.width,
                                                      fittedSize.height)];
         
-        [self.backgroundImage setFrame:CGRectMake(self.messageView.frame.origin.x - PADDING/2,
+        [self.backgroundImage setFrame:CGRectMake(self.messageView.frame.origin.x - PADDING/2 + 2,
                                               self.messageView.frame.origin.y - PADDING/2,
                                               fittedSize.width + PADDING,
                                               fittedSize.height + PADDING)];
     } 
     else 
     {
-        bgImage = [[UIImage imageNamed:@"light_orange.png"] stretchableImageWithLeftCapWidth:24  topCapHeight:15];
+        bgImage = [[UIImage imageNamed:@"orange.png"] stretchableImageWithLeftCapWidth:24  topCapHeight:15];
         
-        [self.messageView setFrame:CGRectMake(PADDING, PADDING*2, fittedSize.width, fittedSize.height)];
+        [self.messageView setFrame:CGRectMake(PADDING, PADDING*2 , fittedSize.width, fittedSize.height)];
         
-        [self.backgroundImage setFrame:CGRectMake( self.messageView.frame.origin.x - PADDING/2,
-                                                  self.messageView.frame.origin.y - PADDING/2,
+        [self.backgroundImage setFrame:CGRectMake( self.messageView.frame.origin.x - PADDING/2 - 2,
+                                                  self.messageView.frame.origin.y - PADDING/2 + 1,
                                                   fittedSize.width + PADDING,
                                                   fittedSize.height + PADDING)];
     }
     [self.backgroundImage setImage:bgImage];
     
+    [self.messageView setText:messageText];
+    [self.messageView setFont:font];
+
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -95,7 +94,11 @@
     [formatter setDateFormat:@"MMMM d, yyyy h:mm a"];
     NSString *timestamp = [formatter stringFromDate:date];
     
-    [self.infoLabel setText:[NSString stringWithFormat:timestamp]];
+    UIFont *infoLabelFont = [UIFont fontWithName:font.fontName size:font.pointSize - 1];
+    //CGSize infoLabelSize = [timestamp sizeWithFont:infoLabelFont constrainedToSize:maxTextSize];
+    //[self.infoLabel setFrame:CGRectMake(10, 0, 300, infoLabelSize.height)];
+    [self.infoLabel setFont:infoLabelFont];
+    [self.infoLabel setText:timestamp];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

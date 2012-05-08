@@ -2,7 +2,7 @@
 //  Club.m
 //  iStreet
 //
-//  Created by Akarshan Kumar on 4/16/12.
+//  Created by Rishi on 5/5/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -12,10 +12,8 @@
 
 @implementation Club
 
+@dynamic club_id;
 @dynamic name;
-@dynamic id;
-@dynamic imageData;
-@dynamic imageURL;
 @dynamic whichEvents;
 
 @end

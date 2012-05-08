@@ -7,7 +7,8 @@
 //
 
 #import "EventCell.h"
-
+#import "User.h"
+#import "AppDelegate.h"
 @implementation EventCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -51,6 +52,23 @@
     [self.textLabel setText:([event.title isEqualToString:@""] ? @"On Tap" : event.title)];
     [self.detailTextLabel setText:event.name];
     
+    NSString *userAttendingNetid = [[event userAttending] netid];
+    NSString *myNetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
+    
+    
+    if([userAttendingNetid isEqualToString:myNetid])
+    {
+        //[self.accessoryView setHidden:NO];
+        //[self setAccessoryType:UITableViewCellAccessoryCheckmark];
+        UIImage *image = [UIImage imageNamed:@"checkicon.png"];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kCellHeight * 1.0/2, kCellHeight * 1.0/2)];
+        [imageView setImage:image];
+        self.accessoryView = imageView;
+    }
+    else 
+        self.accessoryView = nil;
+    
+    
     if([event.poster isEqualToString:@""])
     {
         NSString *imageName = [NSString stringWithFormat:@"%@.png", event.name];
@@ -68,14 +86,13 @@
     // Otherwise, unless the table is scrolling, start downloading the icon.
     // Meanwhile, set a placeholder image.
     [self setImage:[UIImage imageNamed:@"Placeholder.png"]];     
-
+    
     UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     CGSize imageViewSize = self.imageView.image.size;
     [loadingIndicator setCenter:CGPointMake(imageViewSize.width/2, imageViewSize.height/2)];
     [loadingIndicator setTag:kLoadingIndicatorTag];
     [self.imageView addSubview:loadingIndicator];
     [loadingIndicator startAnimating];
-
     
     return !isScrolling;
 }

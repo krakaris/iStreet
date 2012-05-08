@@ -33,5 +33,21 @@
     [sc sendAsynchronousRequestForDataAtRelativeURL:@"/eventslist" withPOSTBody:nil forViewController:self  withDelegate:self andDescription:nil];
 }
 
+- (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
+{
+    [super connectionWithDescription:description finishedReceivingData:data];
+    _serverLoadedOnce = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if(_serverLoadedOnce)
+    {
+        NSLog(@"repeat request");
+        [self requestServerEventsData];
+    }
+}
+
 
 @end

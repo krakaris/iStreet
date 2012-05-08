@@ -28,6 +28,7 @@
 
 @property(nonatomic, retain) IBOutlet UITableView *eventsTable;
 @property(nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property(nonatomic, retain) IBOutlet UILabel *noUpcomingEvents;
 
 - (Event *)eventAtIndexPath:(NSIndexPath *)indexPath;
 

@@ -21,14 +21,14 @@
 }
 
 @property (nonatomic, retain) Event *myEvent;
-@property (weak, nonatomic) IBOutlet UILabel *eventTitle;
-@property (weak, nonatomic) IBOutlet UILabel *eventDate;
-@property (weak, nonatomic) IBOutlet UILabel *eventTime;
-@property (weak, nonatomic) IBOutlet UIImageView *eventImage;
-@property (weak, nonatomic) IBOutlet UIButton *attendButton;
-@property (weak, nonatomic) IBOutlet UITextView *descriptionText;
-@property (weak, nonatomic) IBOutlet UIButton *seeAllFriendsAttending;
-@property (weak, nonatomic) IBOutlet UILabel *eventEntry;
+@property (nonatomic, retain) IBOutlet UILabel *eventTitle;
+@property (nonatomic, retain) IBOutlet UILabel *eventDate;
+@property (nonatomic, retain) IBOutlet UILabel *eventTime;
+@property (nonatomic, retain) IBOutlet UIImageView *eventImage;
+@property (nonatomic, retain) IBOutlet UIButton *attendButton;
+@property (nonatomic, retain) IBOutlet UITextView *descriptionText;
+@property (nonatomic, retain) IBOutlet UIButton *seeAllFriendsAttending;
+@property (nonatomic, retain) IBOutlet UILabel *eventEntry;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *toggleAttendingIndicator;
 
 - (IBAction)attend:(UIButton *)sender;

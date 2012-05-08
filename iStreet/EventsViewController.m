@@ -24,21 +24,23 @@
 
 @implementation EventsViewController
 
-@synthesize activityIndicator = _activityIndicator, eventsTable = _eventsTable;
+@synthesize activityIndicator = _activityIndicator, eventsTable = _eventsTable, noUpcomingEvents = _noUpcomingEvents;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    _eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestServerEventsData)];
     
-    //[UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0];
+    //self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0]; RISHI
+    //_eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0];
+    self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
+    _eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
+    //[UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0]; OLD
     self.eventsTable.separatorColor = [UIColor blackColor];
-
+    
     _eventsByNight = [NSMutableArray array];
     _iconsBeingDownloaded = [NSMutableDictionary dictionary];
-        
-    self.eventsTable.separatorColor = [UIColor blackColor]; 
     
     [_activityIndicator startAnimating];
     
@@ -61,7 +63,6 @@
     [self setPropertiesWithNewEventData:events];
     
     [self.eventsTable reloadData];
-    //[NSThread sleepForTimeInterval:2];
     [self.activityIndicator stopAnimating];
     
     [self requestServerEventsData];
@@ -79,7 +80,10 @@
     [super viewDidAppear:YES];
     NSIndexPath *selectedRow = [self.eventsTable indexPathForSelectedRow];
     if(selectedRow)
+    {
         [self.eventsTable deselectRowAtIndexPath:selectedRow animated:NO];
+        [self.eventsTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -167,9 +171,20 @@
             NSLog(@"deleting: '%@', which was on %@", [outdatedEvent title], [outdatedEvent stringForStartDate]);
             [context deleteObject:outdatedEvent];
         }
-
+    
     
     _eventsByNight = newEventsByNight;
+    
+    if([_eventsByNight count] == 0)
+    {
+        [self.noUpcomingEvents setHidden:NO];
+        [self.eventsTable setHidden:YES];
+    }
+    else 
+    {
+        [self.noUpcomingEvents setHidden:YES];
+        [self.eventsTable setHidden:NO];
+    }
 }
 
 - (NSArray *)constructEventsNightArrayFromEventsArray:(NSArray *)eventsArray
@@ -204,12 +219,12 @@
         cell = [[EventCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CELL_IDENTIFIER];
     
     // Configure the cell...
-        
+    
     Event *event = [self eventAtIndexPath:indexPath];
     
     if([cell packCellWithEventInformation:event 
-                           atIndexPath:indexPath 
-                        whileScrolling:(self.eventsTable.dragging == YES || self.eventsTable.decelerating == YES)])
+                              atIndexPath:indexPath 
+                           whileScrolling:(self.eventsTable.dragging == YES || self.eventsTable.decelerating == YES)])
         [self startIconDownload:event forIndexPath:indexPath];
     
     return cell;
@@ -225,6 +240,12 @@
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
 {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    [headerView setBackgroundColor:[UIColor whiteColor]];
+    
+    UIImageView *sectionHeader = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sectionheader.png"]];
+    [sectionHeader setFrame:CGRectMake(0, 0, headerView.frame.size.width, headerView.frame.size.height)];
+    [headerView addSubview:sectionHeader];
+    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
     
     EventsNight *ea = [_eventsByNight objectAtIndex:section];
@@ -238,9 +259,9 @@
     label.text = dateString;
     label.textAlignment = UITextAlignmentCenter;
     label.textColor = [UIColor orangeColor];
-    label.backgroundColor = [UIColor darkGrayColor];
+    label.backgroundColor = [UIColor clearColor];
     [label setFont:[UIFont fontWithName:@"Trebuchet MS" size:17.0]];
-
+    
     [headerView addSubview:label];
     
     return headerView;

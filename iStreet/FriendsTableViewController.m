@@ -8,6 +8,7 @@
 
 #import "FriendsTableViewController.h"
 #import "EventsAttendingTableViewController.h"
+#import "FriendCell.h"
 #include <stdlib.h>
 
 @interface FriendsTableViewController ()
@@ -178,6 +179,10 @@
     [self.navigationItem setHidesBackButton:YES];
     self.navigationItem.title = @"Friends";
     
+    self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
+    friendsTableView.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
+    self.friendsTableView.separatorColor = [UIColor blackColor];
+    
     NSLog(@"#friends = %d", [friendslist count]);
     
     searchBar.delegate = self;
@@ -199,7 +204,8 @@
     name_selected = [[NSString alloc] init];
     
     //Adding "favorites" to section index
-    [sectionsIndex addObject:@"Favorites"];
+    //[sectionsIndex addObject:@"Favorites"];
+    [sectionsIndex addObject:@"*"];
     
     
     int length = [friendslist count];
@@ -383,8 +389,11 @@
     if (self.isFiltered)
         //return just one section if something being searched for
         return nil;
-    else
+   /* else if ([[sectionsIndex objectAtIndex:section] isEqualToString:@"*"]) {
+        return @"Favorites";
+    }*/ else {
         return [sectionsIndex objectAtIndex:section];
+    }
 }
 
 - (NSArray *) sectionIndexTitlesForTableView:(UITableView *)tableView
@@ -425,10 +434,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Friends Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
     // Configure the cell...
-    cell = [[UITableViewCell alloc] init];
+    //cell = [[UITableViewCell alloc] init];
+    cell = [[FriendCell alloc] init];
     
     if (self.isFiltered)
     {
@@ -443,15 +454,15 @@
         if ([matchingUsers count] != 0)
         {
             //Make it a special cell instead.
-            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_orange.png"]];
-            starView.frame = CGRectMake(230, 10, 20, 20);
+            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_bw.png"]];
+            starView.frame = CGRectMake(250, 10, 20, 20);
             [cell.contentView addSubview:starView];
         }
     }
     else if (indexPath.section == 0)
     {
-        UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_orange.png"]];
-        starView.frame = CGRectMake(230, 10, 20, 20);
+        UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_bw.png"]];
+        starView.frame = CGRectMake(250, 10, 20, 20);
         cell.textLabel.text = [[favoriteFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
         [cell.contentView addSubview:starView];
     }
@@ -482,14 +493,42 @@
         if ([matchingUsers count] != 0)
         {
             //Make it a special cell instead.
-            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_orange.png"]];
-            starView.frame = CGRectMake(230, 10, 20, 20);
+            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_bw.png"]];
+            starView.frame = CGRectMake(250, 10, 20, 20);
             [cell.contentView addSubview:starView];
         }
     }
 
     return cell;
 }
+//Added by Alexa for section color
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
+{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    [headerView setBackgroundColor:[UIColor whiteColor]];
+    
+    UIImageView *sectionHeader = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sectionheader.png"]];
+    [sectionHeader setFrame:CGRectMake(0, 0, headerView.frame.size.width, headerView.frame.size.height)];
+    [headerView addSubview:sectionHeader];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    
+    NSString *text = [sectionsIndex objectAtIndex:section];
+    if ([text isEqualToString:@"*"]) {
+        label.text = @"Favorites";
+    } else {
+        label.text = text;
+    }
+    label.textAlignment = UITextAlignmentCenter;
+    label.textColor = [UIColor orangeColor];
+    label.backgroundColor = [UIColor clearColor];
+    [label setFont:[UIFont fontWithName:@"Trebuchet MS" size:17.0]];
+    
+    [headerView addSubview:label];
+    
+    return headerView;
+}
+
 
 /*
 // Override to support conditional editing of the table view.

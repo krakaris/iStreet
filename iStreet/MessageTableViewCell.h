@@ -11,7 +11,7 @@
 
 enum messageBubbleValues 
 {
-    PADDING = 15,
+    PADDING = 17,
     MAX_WIDTH = 200,
     MAX_HEIGHT = 500
 };
@@ -19,14 +19,14 @@ enum messageBubbleValues
 @interface MessageTableViewCell : UITableViewCell 
 {    
     UIImageView *backgroundImage;
-    UITextView *messageView;
+    UILabel *messageView;
     UILabel *infoLabel;
 }
 
 @property(nonatomic, retain) UIImageView *backgroundImage;
-@property(nonatomic, retain) UITextView *messageView;
+@property(nonatomic, retain) UILabel *messageView;
 @property(nonatomic, retain) UILabel *infoLabel;
 
-- (void)packCellWithMessage:(Message *)m;
+- (void)packCellWithMessage:(Message *)m andFont:(UIFont *)font;
 
 @end
