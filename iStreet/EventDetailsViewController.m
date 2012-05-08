@@ -292,6 +292,8 @@
 {
     [attendButton setHidden:NO];
     [toggleAttendingIndicator stopAnimating];
+    
+    [[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"There was a problem connecting to the server. If the error persists, make sure you are connected to the internet." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
