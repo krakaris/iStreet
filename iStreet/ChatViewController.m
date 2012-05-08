@@ -15,7 +15,7 @@
 #import "MessageTableViewCell.h"
 #import "Message.h"
 #import "AppDelegate.h"
-
+#import <QuartzCore/QuartzCore.h>
 #import <CoreData/CoreData.h>
 #import "Club.h"
 
@@ -39,7 +39,7 @@
     secondLastMessage = nil;
     
     gettingNewMessages = NO;
-    successfulInitialRequest = NO;
+    //successfulInitialRequest = NO;
     failedLastRequest = NO;
     
     [activityIndicator startAnimating];
@@ -66,7 +66,8 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [timer invalidate];
+    if([timer isValid])
+        [timer invalidate];
     timer = nil;
 }
 
@@ -108,16 +109,15 @@
         gettingNewMessages = NO;
         [activityIndicator stopAnimating];
         
-        if(successfulInitialRequest)
-        {
-            //add to bottom of table
-            failedLastRequest = YES;
-        }
-        else 
-        {
-            //just show an error label over the table
-            failedLastRequest = YES;
-        }
+        if([timer isValid])
+            [timer invalidate];
+        
+        //if(successfulInitialRequest || !successfulInitialRequest)
+        //{
+        failedLastRequest = YES;
+        [self.messagesTable reloadData];
+        [messagesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        //}
     }
 }
 
@@ -128,16 +128,17 @@
 {      
     if([description isEqualToString:@"add"])
     {
-        [messageField setUserInteractionEnabled:YES];
         messageField.text = @"";
-        [messageField setTextColor:[UIColor blackColor]];
-        [activityIndicator stopAnimating];
 
+        //erase the message from the field, but don't let the user type more until the message shows up on the screen
         [self getNewMessages];
     }
     else 
     { // get
-        
+        [messageField setUserInteractionEnabled:YES];
+        [activityIndicator stopAnimating];
+        [messageField setTextColor:[UIColor blackColor]];
+
         NSError *error;
         NSArray *messagesArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
         if(!messagesArray)
@@ -148,7 +149,14 @@
             return; // do nothing if can't recieve messages
         }
         
-        successfulInitialRequest = YES;
+        //successfulInitialRequest = YES;
+        if (failedLastRequest) 
+        { // remove the error cell
+            failedLastRequest = NO;
+            /*[messagesTable reloadData];
+            [messagesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([messages count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];*/
+            [self.messagesTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:([messages count]) inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        }
         failedLastRequest = NO;
 
         if([messagesArray count] == 0)
@@ -233,20 +241,41 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
-    return [messages count];
+    int reloadCell = (failedLastRequest ? 1 : 0);
+    return [messages count] + reloadCell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CELL_IDENTIFIER = @"message cell";
-    MessageTableViewCell *cell = (MessageTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER];
-    
+    if(failedLastRequest && indexPath.row == [messages count])
+    {
+        static NSString *RELOAD_CELL_IDENTIFIER = @"reload cell";
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:RELOAD_CELL_IDENTIFIER];
+        if (cell == nil) 
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RELOAD_CELL_IDENTIFIER];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
+            [cell.textLabel setTextAlignment:UITextAlignmentCenter];
+            [cell.textLabel setFont:[UIFont fontWithName:@"TrebuchetMS" size:16]];
+            [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+            [cell.contentView setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0]];
+            [cell.contentView.layer setCornerRadius:10];
+            [cell.textLabel setTextColor:[UIColor blackColor]];
+            [cell.textLabel setText:@"Failed to retrieve new messages.\nClick here to try again."];
+            [cell.textLabel setNumberOfLines:2];
+            NSLog(@"making error cell");
+        }
+        NSLog(@"returning error cell");
+        return cell;
+    }
+       
+    static NSString *MESSAGE_CELL_IDENTIFIER = @"message cell";
+    MessageTableViewCell *cell = (MessageTableViewCell *)[tableView dequeueReusableCellWithIdentifier:MESSAGE_CELL_IDENTIFIER];
     if (cell == nil) 
     {
-        cell = [[MessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELL_IDENTIFIER];
+        cell = [[MessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MESSAGE_CELL_IDENTIFIER];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
-    
     
     //reversed order: Message *m = [messages objectAtIndex:([messages count] - indexPath.row - 1)];
     Message *m = [messages objectAtIndex:indexPath.row];
@@ -258,9 +287,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 
 {
+    if(failedLastRequest && indexPath.row == [messages count])
+    {
+        return 50;
+    }
     
     Message *m = [messages objectAtIndex:indexPath.row];
     NSString *msg = [NSString stringWithFormat:@"%@: %@", m.user, m.message];
+    
     
     CGSize maxSize = CGSizeMake(MAX_WIDTH, CGFLOAT_MAX);
     CGSize fittedSize = [msg sizeWithFont:[self getCurrentFont]
@@ -285,6 +319,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [messageField resignFirstResponder];
+    
+    if(failedLastRequest && indexPath.row == [messages count])
+    {
+        timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(getNewMessages) userInfo:nil repeats:YES];
+        [self getNewMessages];
+    }
 }
 
 #pragma mark UITextField Delegate

@@ -25,7 +25,7 @@
     NSTimer *timer;
     int lastMessageID;
     BOOL gettingNewMessages; // in the process of getting messages (used to prevent duplicate requests)
-    BOOL successfulInitialRequest; // new messages were received at the last update
+   // BOOL successfulInitialRequest; // new messages were received at the last update
     BOOL failedLastRequest;
     BOOL drunk;
 }
