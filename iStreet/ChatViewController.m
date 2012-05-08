@@ -39,7 +39,8 @@
     secondLastMessage = nil;
     
     gettingNewMessages = NO;
-    receivedNewMessages = NO;
+    successfulInitialRequest = NO;
+    failedLastRequest = NO;
     
     [activityIndicator startAnimating];
     activityIndicator.hidesWhenStopped = YES;
@@ -106,6 +107,17 @@
         // get
         gettingNewMessages = NO;
         [activityIndicator stopAnimating];
+        
+        if(successfulInitialRequest)
+        {
+            //add to bottom of table
+            failedLastRequest = YES;
+        }
+        else 
+        {
+            //just show an error label over the table
+            failedLastRequest = YES;
+        }
     }
 }
 
@@ -136,10 +148,13 @@
             return; // do nothing if can't recieve messages
         }
         
-        int oldLastID = 0;
-        if([messages count] > 0)
+        successfulInitialRequest = YES;
+        failedLastRequest = NO;
+
+        if([messagesArray count] == 0)
         {
-            oldLastID = ((Message *)[messages objectAtIndex:([messages count]-1)]).ID;
+            gettingNewMessages = NO;
+            return;
         }
         
         NSEnumerator *realMessageOrder = [messagesArray reverseObjectEnumerator];
@@ -154,8 +169,7 @@
             lastMessageID = ((Message *)[messages objectAtIndex:([messages count]-1)]).ID;            
         
         [messagesTable reloadData];
-        if(lastMessageID > oldLastID) // if new messages were received, scroll to the new message(s)
-            [messagesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([messages count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [messagesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([messages count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         [activityIndicator stopAnimating];
         gettingNewMessages = NO;
     }
@@ -177,13 +191,13 @@
         return;
     }
     
-    NSDate *now = [NSDate date];
+    NSDate *now = [NSDate date];/*
     if(lastMessage && [now timeIntervalSinceDate:lastMessage] <= 20)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Rate Limit" message:[NSString stringWithFormat:@"Please wait 20 seconds between sending chat messages.", [messageField.text length]] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [alert show];
         return;
-    }
+    }*/
     
     /* Send the message */
     secondLastMessage = lastMessage;
