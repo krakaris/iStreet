@@ -94,6 +94,12 @@
     if (targetUser != nil)
         targetUser.fb_id = nil;
     
+    //Clearing user defaults
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [prefs setObject:nil forKey:@"FBAccessTokenKey"];
+    [prefs setObject:nil forKey:@"FBExpirationDateKey"];
+    [prefs synchronize];
+    
     UIAlertView *loggedOutAlert = [[UIAlertView alloc] initWithTitle:@"Logged Out!" message:@"You have been logged out of Facebook. You can log in again at any time." delegate:self cancelButtonTitle:@"OK"
                                                    otherButtonTitles:nil];
     loggedOutAlert.tag = loggedOutAlertView;
@@ -103,7 +109,6 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     //Obtain the favorite friends
-    
     favoriteFriendsList = [[NSMutableArray alloc] init];
     
     //Checking if already a favorite
@@ -199,6 +204,7 @@
     justFriendNames = [[NSMutableArray alloc] init];
     eventsAttending_selected = [[NSMutableArray alloc] init];
     eatvc = [[EventsAttendingTableViewController alloc] init];
+    _iconsBeingDownloaded = [NSMutableDictionary dictionary];
     
     fbid_selected = [[NSString alloc] init];
     name_selected = [[NSString alloc] init];
@@ -365,9 +371,15 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+// Load images for all onscreen rows when scrolling is finished
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.searchBar resignFirstResponder];
+    
+    if (!decelerate)
+	{
+        [self loadImagesForOnscreenRows];
+    }
 }
 
 #pragma mark - Table view data source
@@ -437,14 +449,19 @@
 
     // Configure the cell...
     //cell = [[UITableViewCell alloc] init];
-    cell = [[FriendCell alloc] init];
+    cell = [[FriendCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    
+    //To store the selected friend
+    NSDictionary *currentFriend;
+    NSString *currentUserName;
     
     if (self.isFiltered)
     {
-        cell.textLabel.text =  [[filteredFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
+        currentFriend = [filteredFriendsList objectAtIndex:indexPath.row];
+        currentUserName = [currentFriend valueForKey:@"name"];
+        cell.textLabel.text = currentUserName;
         
-        NSString *currentUserName = [[filteredFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
-        
+    
         //Checking if favorite (to add star)
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
         NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
@@ -460,9 +477,12 @@
     else if (indexPath.section == 0)
     {
         UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_bw.png"]];
-        starView.frame = CGRectMake(250, 10, 20, 20);
-        cell.textLabel.text = [[favoriteFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
+        starView.frame = CGRectMake(250, 10, 20, 20);        
         [cell.contentView addSubview:starView];
+
+        currentFriend = [favoriteFriendsList objectAtIndex:indexPath.row];
+        currentUserName = [currentFriend valueForKey:@"name"];
+        cell.textLabel.text = currentUserName;
     }
     else
     {
@@ -495,10 +515,74 @@
             starView.frame = CGRectMake(250, 10, 20, 20);
             [cell.contentView addSubview:starView];
         }
+        
+        if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES) && (![[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"pictureData"]))
+        {
+            NSURL *url = [NSURL URLWithString:(NSString *)[[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"picture"]];
+
+            //UIImage *picture = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
+            [self startIconDownload:[self.friendslist objectAtIndex:indexPath.row] forIndexPath:indexPath];
+            cell.imageView.image = [UIImage imageNamed:@"Placeholder.png"];
+        }
+        else 
+        {
+            if (![[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"pictureData"])
+                cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
+            else
+                cell.imageView.image = [UIImage imageWithData:[[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"pictureData"]];
+        }
     }
 
+    //Downloading the proper image
+    
     return cell;
 }
+
+- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadImagesForOnscreenRows];    
+}
+
+// this method is used when the user scrolls into a set of cells that don't have their app icons yet
+
+- (void)loadImagesForOnscreenRows
+{
+    NSArray *visiblePaths = [self.friendsTableView indexPathsForVisibleRows];
+    for (NSIndexPath *indexPath in visiblePaths)
+    {
+        // start downloading the icon if the event doesn't have an icon but has a link to one
+        if (![[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"pictureData"])
+            [self startIconDownload:[self.friendslist objectAtIndex:indexPath.row] forIndexPath:indexPath];
+    }
+}
+             
+- (void)startIconDownload:(NSDictionary *)user forIndexPath:(NSIndexPath *)indexPath
+{
+    IconDownloader *iconDownloader = [_iconsBeingDownloaded objectForKey:indexPath];
+    if (iconDownloader) //if there is already a download in progress for that event, return.
+        return;
+    
+    // start the download
+    iconDownloader = [[IconDownloader alloc] init];
+    [_iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
+    
+    //#DEBUG FIX FOR THUMBNAILS.
+    NSURL *url = [NSURL URLWithString:(NSString *)[[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"picture"]];
+    
+    [iconDownloader startDownloadFromURL:url forImageKey:@"pictureData" ofObject:user forDisplayAtIndexPath:indexPath atDelegate:self];
+}
+          
+- (void) appImageDidLoad:(NSIndexPath *)indexPath
+{
+    [self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [_iconsBeingDownloaded removeObjectForKey:indexPath];
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
+}
+
 //Added by Alexa for section color
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
 {

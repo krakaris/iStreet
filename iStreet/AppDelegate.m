@@ -123,6 +123,7 @@ static NSString *appID = @"128188007305619";
     {
         NSLog(@"This is the request for friends!");
         NSArray *friendsDataReceived = [result objectForKey:@"data"];
+        //NSLog(friendsDataReceived);
         self.allfbFriends = friendsDataReceived;
         NSLog(@"Friends retrieved in the background, count %d", [self.allfbFriends count]);
     }
@@ -208,6 +209,7 @@ static NSString *appID = @"128188007305619";
     }
     
     NSLog(@"Retrieved fb id FROM CORE DATA is %@", targetUser.fb_id);
+    NSLog(@"Access token is %@", self.facebook.accessToken);
     
     if (![self.facebook isSessionValid] || targetUser.fb_id == nil)
     {
@@ -233,7 +235,7 @@ static NSString *appID = @"128188007305619";
         self.facebook.sessionDelegate = self;
         
         //Just call this the first time - otherwise, friends are refreshed everytime the friends tab is opened
-        [self.facebook requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
+        [self.facebook requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture,email,education" andDelegate:self];
         
          dispatch_queue_t downloadFriendsQ = dispatch_queue_create("friends downloader", NULL);
          dispatch_async(downloadFriendsQ, ^{

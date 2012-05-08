@@ -20,6 +20,7 @@
 		419D3797154AD59E00447D2B /* EventsAttendingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 419D3796154AD59E00447D2B /* EventsAttendingTableViewController.m */; };
 		41B7438A15542BAC0080DA39 /* star_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B7438815542BAC0080DA39 /* star_gray.png */; };
 		41B7438B15542BAC0080DA39 /* star_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B7438915542BAC0080DA39 /* star_orange.png */; };
+		41CF8DDB1559E36A00733AA5 /* FBPlaceholder.gif in Resources */ = {isa = PBXBuildFile; fileRef = 41CF8DDA1559E36A00733AA5 /* FBPlaceholder.gif */; };
 		5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */; };
 		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
 		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
@@ -118,6 +119,7 @@
 		419D3796154AD59E00447D2B /* EventsAttendingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsAttendingTableViewController.m; sourceTree = "<group>"; };
 		41B7438815542BAC0080DA39 /* star_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_gray.png; sourceTree = "<group>"; };
 		41B7438915542BAC0080DA39 /* star_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_orange.png; sourceTree = "<group>"; };
+		41CF8DDA1559E36A00733AA5 /* FBPlaceholder.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = FBPlaceholder.gif; sourceTree = "<group>"; };
 		5B227E49153673F200B5DD52 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
 		5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		5B227E4D15367D5200B5DD52 /* aqua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aqua.png; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 		5BA1F61515112DA7002CA7F3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				41CF8DDA1559E36A00733AA5 /* FBPlaceholder.gif */,
 				5B3562F31555EF7400D46B7F /* checkicon.png */,
 				5BADF9481553A8EC00B82CC3 /* star_orange.png */,
 				9D29336F154ECC0E00B3F8A9 /* Default.png */,
@@ -566,6 +569,7 @@
 				9DE86A351558690B00266C94 /* star.png in Resources */,
 				9DE86A371558698500266C94 /* star_bw.png in Resources */,
 				9DE86A39155869F300266C94 /* Princeton shield bw icon.png in Resources */,
+				41CF8DDB1559E36A00733AA5 /* FBPlaceholder.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
