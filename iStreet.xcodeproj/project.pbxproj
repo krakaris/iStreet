@@ -45,12 +45,15 @@
 		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
 		5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */; };
+		9D0426B11559977F00561AF7 /* Beer Cap tiger 114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0426B01559977F00561AF7 /* Beer Cap tiger 114x114.png */; };
+		9D0426B4155998A500561AF7 /* Beer Cap tiger 57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0426B3155998A500561AF7 /* Beer Cap tiger 57x57.png */; };
 		9D197B69153B51B800604080 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B61153B51B800604080 /* EventCell.m */; };
 		9D197B6B153B51B800604080 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B65153B51B800604080 /* IconDownloader.m */; };
 		9D208D7815409335004515E9 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
 		9D293368154ECAE400B3F8A9 /* iStreet final icon 57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D293367154ECAE400B3F8A9 /* iStreet final icon 57x57.png */; };
 		9D29336C154ECB5700B3F8A9 /* iStreet final icon 114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D29336B154ECB5700B3F8A9 /* iStreet final icon 114x114.png */; };
 		9D293370154ECC0E00B3F8A9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D29336F154ECC0E00B3F8A9 /* Default.png */; };
+		9D4420A815596489002856D5 /* star_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4420A715596489002856D5 /* star_yellow.png */; };
 		9D464B1A1537482600468729 /* light_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B181537482600468729 /* light_orange.png */; };
 		9D464B211537631C00468729 /* Princeton Crest 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D464B201537631C00468729 /* Princeton Crest 3.png */; };
 		9D4ED4A315338DA700680D1D /* ClubEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4ED4A215338DA700680D1D /* ClubEventsViewController.m */; };
@@ -75,7 +78,6 @@
 		9DE86A1115585F1700266C94 /* Princeton shield.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A1015585F1700266C94 /* Princeton shield.png */; };
 		9DE86A171558603D00266C94 /* Princeton shield bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A161558603D00266C94 /* Princeton shield bw.png */; };
 		9DE86A1B155860D000266C94 /* grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A1A155860D000266C94 /* grey.png */; };
-		9DE86A1D1558611C00266C94 /* sectionheader.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A1C1558611C00266C94 /* sectionheader.png */; };
 		9DE86A271558649C00266C94 /* List icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A261558649C00266C94 /* List icon.png */; };
 		9DE86A2B1558663A00266C94 /* Princeton shield outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A2A1558663A00266C94 /* Princeton shield outline.png */; };
 		9DE86A2D155866A400266C94 /* Princeton shield icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A2C155866A400266C94 /* Princeton shield icon.png */; };
@@ -83,6 +85,7 @@
 		9DE86A351558690B00266C94 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A341558690B00266C94 /* star.png */; };
 		9DE86A371558698500266C94 /* star_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A361558698500266C94 /* star_bw.png */; };
 		9DE86A39155869F300266C94 /* Princeton shield bw icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86A38155869F300266C94 /* Princeton shield bw icon.png */; };
+		9DF42C751559DF38004E1884 /* sectionheader.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DF42C741559DF38004E1884 /* sectionheader.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -160,6 +163,8 @@
 		5BFB44F8153382E800960C81 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5BFB450D153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5BFB450F153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		9D0426B01559977F00561AF7 /* Beer Cap tiger 114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Beer Cap tiger 114x114.png"; sourceTree = "<group>"; };
+		9D0426B3155998A500561AF7 /* Beer Cap tiger 57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Beer Cap tiger 57x57.png"; sourceTree = "<group>"; };
 		9D197B60153B51B800604080 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		9D197B61153B51B800604080 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		9D197B64153B51B800604080 /* IconDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconDownloader.h; sourceTree = "<group>"; };
@@ -171,6 +176,7 @@
 		9D34B7731524D5D000DB6C13 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
 		9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedUIPickerView.h; sourceTree = "<group>"; };
 		9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedUIPickerView.m; sourceTree = "<group>"; };
+		9D4420A715596489002856D5 /* star_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_yellow.png; sourceTree = "<group>"; };
 		9D464B181537482600468729 /* light_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light_orange.png; sourceTree = "<group>"; };
 		9D464B201537631C00468729 /* Princeton Crest 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 3.png"; sourceTree = "<group>"; };
 		9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubEventsViewController.h; sourceTree = "<group>"; };
@@ -199,7 +205,6 @@
 		9DE86A1015585F1700266C94 /* Princeton shield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton shield.png"; sourceTree = "<group>"; };
 		9DE86A161558603D00266C94 /* Princeton shield bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton shield bw.png"; sourceTree = "<group>"; };
 		9DE86A1A155860D000266C94 /* grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey.png; sourceTree = "<group>"; };
-		9DE86A1C1558611C00266C94 /* sectionheader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sectionheader.png; sourceTree = "<group>"; };
 		9DE86A261558649C00266C94 /* List icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "List icon.png"; sourceTree = "<group>"; };
 		9DE86A2A1558663A00266C94 /* Princeton shield outline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton shield outline.png"; sourceTree = "<group>"; };
 		9DE86A2C155866A400266C94 /* Princeton shield icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton shield icon.png"; sourceTree = "<group>"; };
@@ -207,6 +212,7 @@
 		9DE86A341558690B00266C94 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		9DE86A361558698500266C94 /* star_bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_bw.png; sourceTree = "<group>"; };
 		9DE86A38155869F300266C94 /* Princeton shield bw icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton shield bw icon.png"; sourceTree = "<group>"; };
+		9DF42C741559DF38004E1884 /* sectionheader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sectionheader.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,6 +295,8 @@
 		5BA1F5FF15112DA7002CA7F3 = {
 			isa = PBXGroup;
 			children = (
+				9D0426B3155998A500561AF7 /* Beer Cap tiger 57x57.png */,
+				9D0426B01559977F00561AF7 /* Beer Cap tiger 114x114.png */,
 				5BA1F61415112DA7002CA7F3 /* iStreet */,
 				5BA1F60D15112DA7002CA7F3 /* Frameworks */,
 				5BA1F60B15112DA7002CA7F3 /* Products */,
@@ -375,6 +383,7 @@
 				9DE86A341558690B00266C94 /* star.png */,
 				9DE86A361558698500266C94 /* star_bw.png */,
 				5BADF9471553A8EC00B82CC3 /* star_gray.png */,
+				9D4420A715596489002856D5 /* star_yellow.png */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -408,7 +417,7 @@
 		5BFB45021533845000960C81 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				9DE86A1C1558611C00266C94 /* sectionheader.png */,
+				9DF42C741559DF38004E1884 /* sectionheader.png */,
 				4158565B154517C1002BCE7D /* EventsViewController.h */,
 				5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */,
 				5BADF93D155388ED00B82CC3 /* AllEventsViewController.h */,
@@ -558,7 +567,6 @@
 				9DE86A1115585F1700266C94 /* Princeton shield.png in Resources */,
 				9DE86A171558603D00266C94 /* Princeton shield bw.png in Resources */,
 				9DE86A1B155860D000266C94 /* grey.png in Resources */,
-				9DE86A1D1558611C00266C94 /* sectionheader.png in Resources */,
 				9DE86A271558649C00266C94 /* List icon.png in Resources */,
 				9DE86A2B1558663A00266C94 /* Princeton shield outline.png in Resources */,
 				9DE86A2D155866A400266C94 /* Princeton shield icon.png in Resources */,
@@ -566,6 +574,10 @@
 				9DE86A351558690B00266C94 /* star.png in Resources */,
 				9DE86A371558698500266C94 /* star_bw.png in Resources */,
 				9DE86A39155869F300266C94 /* Princeton shield bw icon.png in Resources */,
+				9D4420A815596489002856D5 /* star_yellow.png in Resources */,
+				9D0426B11559977F00561AF7 /* Beer Cap tiger 114x114.png in Resources */,
+				9D0426B4155998A500561AF7 /* Beer Cap tiger 57x57.png in Resources */,
+				9DF42C751559DF38004E1884 /* sectionheader.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

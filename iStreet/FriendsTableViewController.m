@@ -454,14 +454,14 @@
         if ([matchingUsers count] != 0)
         {
             //Make it a special cell instead.
-            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_bw.png"]];
+            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_yellow.png"]];
             starView.frame = CGRectMake(250, 10, 20, 20);
             [cell.contentView addSubview:starView];
         }
     }
     else if (indexPath.section == 0)
     {
-        UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_bw.png"]];
+        UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_yellow.png"]];
         starView.frame = CGRectMake(250, 10, 20, 20);
         cell.textLabel.text = [[favoriteFriendsList objectAtIndex:indexPath.row] valueForKey:@"name"];
         [cell.contentView addSubview:starView];
@@ -493,7 +493,7 @@
         if ([matchingUsers count] != 0)
         {
             //Make it a special cell instead.
-            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_bw.png"]];
+            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_yellow.png"]];
             starView.frame = CGRectMake(250, 10, 20, 20);
             [cell.contentView addSubview:starView];
         }
