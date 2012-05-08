@@ -36,15 +36,9 @@
     BOOL dataDidLoad = [(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded];
     
     if(!dataDidLoad)
-    {
-        NSLog(@"Setting up notifications.");
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData:) name:@"App Data Loaded" object:nil];
-    }
     else
-    {
-        NSLog(@"No need for notification, data already loaded.");
         [self loadData:nil];
-    }
 }
 - (void)loadData:(NSNotification *)notification
 {

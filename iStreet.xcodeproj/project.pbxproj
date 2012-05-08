@@ -16,7 +16,6 @@
 		41386595152D15EB007A2327 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41386593152D15EB007A2327 /* LoginViewController.xib */; };
 		415C30381553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C30371553527A005FB5D7 /* SeeFriendsAttendingTableViewController.m */; };
 		4163B6F0153E572E00D7B2DC /* fconnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 4163B6EF153E572E00D7B2DC /* fconnect.png */; };
-		4185BB6E1541297B001E85E3 /* AnimatedUIPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */; };
 		419D3797154AD59E00447D2B /* EventsAttendingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 419D3796154AD59E00447D2B /* EventsAttendingTableViewController.m */; };
 		41B7438A15542BAC0080DA39 /* star_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B7438815542BAC0080DA39 /* star_gray.png */; };
 		41B7438B15542BAC0080DA39 /* star_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B7438915542BAC0080DA39 /* star_orange.png */; };
@@ -169,8 +168,6 @@
 		9D29336F154ECC0E00B3F8A9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		9D34B76F1524D55600DB6C13 /* Settings icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings icon.png"; sourceTree = "<group>"; };
 		9D34B7731524D5D000DB6C13 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
-		9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedUIPickerView.h; sourceTree = "<group>"; };
-		9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedUIPickerView.m; sourceTree = "<group>"; };
 		9D464B181537482600468729 /* light_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light_orange.png; sourceTree = "<group>"; };
 		9D464B201537631C00468729 /* Princeton Crest 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 3.png"; sourceTree = "<group>"; };
 		9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubEventsViewController.h; sourceTree = "<group>"; };
@@ -321,8 +318,6 @@
 				5BA1F61D15112DA7002CA7F3 /* AppDelegate.h */,
 				5BA1F61E15112DA7002CA7F3 /* AppDelegate.m */,
 				5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */,
-				9D34B7751524F0BD00DB6C13 /* AnimatedUIPickerView.h */,
-				9D34B7761524F0BD00DB6C13 /* AnimatedUIPickerView.m */,
 				5B608A5F154A7CCC00BDCA28 /* Server Communication */,
 				5BFB44FF1533842D00960C81 /* Friends */,
 				5BFB45001533843300960C81 /* Clubs */,
@@ -580,7 +575,6 @@
 				5B3562F11555EC5D00D46B7F /* Event.m in Sources */,
 				5B3562F21555EC5D00D46B7F /* Club.m in Sources */,
 				41263F941541389D006DD5D6 /* Club+Create.m in Sources */,
-				4185BB6E1541297B001E85E3 /* AnimatedUIPickerView.m in Sources */,
 				9D208D7815409335004515E9 /* FriendsViewController.m in Sources */,
 				5B2CD5ED153F2C4E00EE3E9A /* Event+Create.m in Sources */,
 				5BA1F61F15112DA7002CA7F3 /* AppDelegate.m in Sources */,

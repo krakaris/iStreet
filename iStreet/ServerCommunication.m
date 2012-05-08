@@ -58,7 +58,9 @@ enum connectionConstants {
     else
     {
         [(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
-        // TELL DELEGATE THE MISSION FAILED.
+        NSLog(@"failed to make connection completely");
+        if(self.delegate && [self.delegate respondsToSelector: @selector(connectionFailed:)])
+            [self.delegate connectionFailed:description];
         return NO;
     }
 }
@@ -85,7 +87,7 @@ enum connectionConstants {
 {
     NSLog(@"Connection failed (ServerCommunication.m): %@", [error localizedDescription]);
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
-    if(self.delegate && [self.delegate respondsToSelector: @selector(connectionFailed::)])
+    if(self.delegate && [self.delegate respondsToSelector: @selector(connectionFailed:)])
         [self.delegate connectionFailed:description];
 }
 

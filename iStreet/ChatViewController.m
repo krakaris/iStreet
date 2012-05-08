@@ -91,12 +91,22 @@
   
 - (void)connectionFailed:(NSString *)description
 {
-    lastMessage = secondLastMessage;
-    secondLastMessage = nil;
-    /* Reset text field and stuff! */
-    [messageField setUserInteractionEnabled:YES];
-    [activityIndicator stopAnimating];
-    [messageField setTextColor:[UIColor blackColor]];
+    if([description isEqualToString:@"add"])
+    {
+        lastMessage = secondLastMessage;
+        secondLastMessage = nil;
+        [messageField setUserInteractionEnabled:YES];
+        [activityIndicator stopAnimating];
+        [messageField setTextColor:[UIColor blackColor]];
+        
+        [[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"Whoops! There was a problem sending your message. If the error persists, make sure you are connected to the internet." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+    }
+    else 
+    { 
+        // get
+        gettingNewMessages = NO;
+        [activityIndicator stopAnimating];
+    }
 }
 
 /*
@@ -109,7 +119,8 @@
         [messageField setUserInteractionEnabled:YES];
         messageField.text = @"";
         [messageField setTextColor:[UIColor blackColor]];
-        
+        [activityIndicator stopAnimating];
+
         [self getNewMessages];
     }
     else 
@@ -125,7 +136,6 @@
             return; // do nothing if can't recieve messages
         }
         
-        receivedNewMessages = YES;
         int oldLastID = 0;
         if([messages count] > 0)
         {
@@ -156,9 +166,10 @@
 - (IBAction)sendClicked:(id)sender 
 {   
     // if there is no text, or the message is still sending (i.e. the user double-clicked), don't do anything.
-    if ([messageField.text length] == 0 || [activityIndicator isAnimating])
+    if ([messageField.text length] == 0 || gettingNewMessages)
         return;
     
+    /* Simple spam prevention measures */
     if([messageField.text length] > 90)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Character Limit Exceeded" message:[NSString stringWithFormat:@"Please limit chat messages to\n90 characters in length.\n(Currently using %d)", [messageField.text length]] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
@@ -174,6 +185,7 @@
         return;
     }
     
+    /* Send the message */
     secondLastMessage = lastMessage;
     lastMessage = now;
     [messageField setTextColor:[UIColor grayColor]];
@@ -262,13 +274,6 @@
 }
 
 #pragma mark UITextField Delegate
-
-/**
- TO DO: FIX SCROLLING SO THAT THE TABLE VIEW DOESN'T GO OFF THE TOP OF THE SCREEN. THIS IMPORTANT FOR WHEN THERE
- IS ONLY 1 OR 2 MESSAGES.
-        FIX RANDOM DUPLICATES BUG.
- 
- */
 
 /*
  Shift the tableview, textfield, etc. up to make space for the keyboard.
