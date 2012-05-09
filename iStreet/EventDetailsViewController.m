@@ -8,6 +8,7 @@
 
 #import "EventDetailsViewController.h"
 #import "AppDelegate.h"
+#import "User+Create.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface EventDetailsViewController ()
@@ -84,6 +85,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"User"];
+    NSArray *users = [document.managedObjectContext executeFetchRequest:request error:NULL];
+    
+    NSLog(@"number of users: %d", [users count]);
+    
+    
     [self.view setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0]];
     //[self.view setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0]];
     //green - 179, blue - 76
@@ -116,6 +126,13 @@
     
     //Set "Attending"/"Unattending" Button
     //attendButton.titleLabel.textColor = [UIColor orangeColor];
+    NSSet *attendingEvents = user.attendingEvents;
+    NSLog(@"attending events, looking for %@: ", myEvent.event_id);
+    for(Event *event in attendingEvents)
+    {
+        NSLog(@"%@", event.title);
+    }
+    
     if ([user.attendingEvents containsObject:myEvent]) 
     {
         userIsAttending = YES;
@@ -209,25 +226,9 @@
     } 
     //else leave time field blank
 }
-- (void)setUserWithNetid {
-    //How to access netid from AppDelegate??
-    //NSString *id = @"netid";
-    
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    //request.predicate = [NSPredicate predicateWithFormat:@"netid == %@", id];
-    
-    NSError *error;
-    NSArray *users = [document.managedObjectContext executeFetchRequest:request error:&error];
-    if([users count] > 1)
-        [NSException raise:@"More than one user in core data with a given netid" format:nil];
-    if([users count] == 0)
-        [NSException raise:@"User does not exist!" format:nil];
-    
-    for (User *u in users) {
-        user = u;
-    }
+- (void)setUserWithNetid 
+{
+    user = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
 }
 
 - (void)viewDidUnload
@@ -279,6 +280,9 @@
         [user addAttendingEventsObject:myEvent];
         userIsAttending = YES;
         [attendButton setTitle:@"Unattend" forState:UIControlStateNormal];
+        
+        for(Event *event in user.attendingEvents)
+            NSLog(@"%@", event.event_id);
     }
     else if ([description isEqualToString:@"unattend"])
     {

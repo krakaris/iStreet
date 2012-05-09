@@ -8,6 +8,7 @@
 
 #import "FriendsViewController.h"
 #import "FriendsTableViewController.h"
+#import "User+Create.h"
 
 @interface FriendsViewController ()
 
@@ -257,7 +258,7 @@ static NSString *appID = @"128188007305619";
             
             
             //Storing it in user's core data
-            UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+          /*  UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
             
             NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
             NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
@@ -272,13 +273,16 @@ static NSString *appID = @"128188007305619";
                     userInCoreData = user;
                     NSLog(@"Found target for storing fb id!!!");
                 }
-            }
+            }*/
+            
+            userInCoreData = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
+            
             //Setting fbid
             if (userInCoreData != nil)
             {
                 userInCoreData.fb_id = fbid;
                 NSLog(@"STORED FBID IN CORE DATA DATABASE! fbid is %@", fbid);
-                [document.managedObjectContext save:nil];
+                //[document.managedObjectContext save:nil];
             }
         }
     }

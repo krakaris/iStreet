@@ -11,6 +11,7 @@
 #import "Club+Create.h"
 #import "Club.h"
 #import "User.h"
+#import "User+Create.h"
 #import "Event.h"  
 
 NSString *const DataLoadedNotificationString = @"Application data finished loading";
@@ -57,22 +58,10 @@ static NSString *appID = @"128188007305619";
             {
                 NSLog(@"successfully opened database!");
                 _appDataLoaded = YES;
-                NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
                 
-                NSError *error;
-                NSArray *users = [_document.managedObjectContext executeFetchRequest:request error:&error];
-                if(users)
-                {
-                    User *thisUser = [users objectAtIndex:0];
-                    _netID = [thisUser netid];
-                }
-                
-                request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];
-                NSArray *clubs = [_document.managedObjectContext executeFetchRequest:request error:&error];
-                for (Club *club in clubs) {
-                    NSLog(@"club name (with id %@) = %@", [club club_id], [club name]);
-                }
-                
+                // get the user for this netid
+                _netID = [[NSUserDefaults standardUserDefaults] objectForKey:@"netid"]; //or nil
+
                 [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
             }
             if (!success) 
@@ -177,7 +166,7 @@ static NSString *appID = @"128188007305619";
     
     //OR HERE??
     
-    [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:_document.managedObjectContext];
+    //[NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:_document.managedObjectContext];
     
     NSLog(@"successfully created database!");  
     _appDataLoaded = YES;
@@ -239,13 +228,14 @@ static NSString *appID = @"128188007305619";
     
     //Facebook Initialization
     //Finding the user in the core data database    
-    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSArray *users = [_document.managedObjectContext executeFetchRequest:usersRequest error:nil];
+    //NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    //NSArray *users = [_document.managedObjectContext executeFetchRequest:usersRequest error:nil];
     
     //There should be only 1 user entity - and with matching netid
     
-    User *targetUser;
-    for (User *user in users)
+    User *targetUser = [User userWithNetid:_netID];
+
+    /*for (User *user in users)
     {
         NSLog(@"Displaying user info for %@", user.netid);
         if ([self.netID isEqualToString:user.netid])
@@ -253,7 +243,7 @@ static NSString *appID = @"128188007305619";
             targetUser = user;
             NSLog(@"Found target!");
         }
-    }
+    }*/
     
     NSLog(@"Retrieved fb id FROM CORE DATA is %@", targetUser.fb_id);
     NSLog(@"Access token is %@", self.facebook.accessToken);
@@ -308,7 +298,11 @@ static NSString *appID = @"128188007305619";
 {
     // only set the instance variable if netID is a new netid. netID could be the notification sender.
     if([netID isKindOfClass:[NSString class]])
+    {
         _netID = netID;
+        [[NSUserDefaults standardUserDefaults] setObject:netID forKey:@"netid"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
@@ -329,9 +323,7 @@ static NSString *appID = @"128188007305619";
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         NSLog(@"setting netid!");
-        User *thisUser = [clubs objectAtIndex:0];
-        [thisUser setNetid:_netID];
-        
+        [User userWithNetid:_netID];
         [self checkCoreDataAndSetUpFacebook];
     }
     

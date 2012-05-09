@@ -9,6 +9,7 @@
 #import "EventsAttendingTableViewController.h"
 #import "Event.h"
 #import "Event+Create.h"
+#import "User+Create.h"
 
 @interface EventsAttendingTableViewController ()
 
@@ -91,11 +92,11 @@
 
 - (void) makeFavorite
 {
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    //UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
     NSLog(@"Favorites button touched!");
     
-    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    /*NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
     
     //There should be only 1 user entity - and with matching netid
@@ -114,7 +115,8 @@
         
         //NSLog(@"NETID of user is %@ and fb id is %@", user.netid, user.fb_id);
         //NSLog(@"Global netid is %@", globalnetid);
-    }
+    }*/
+    User *targetUser = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
     
     NSString *commaSepFavFBFriendsList = targetUser.fav_friends_commasep;
     NSMutableArray *arrayOfFavFBFriendIDs = [NSMutableArray arrayWithArray:[commaSepFavFBFriendsList componentsSeparatedByString:@","]];
@@ -218,7 +220,7 @@
     
     
     //Checking if already a favorite
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    /*UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
     NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
@@ -239,7 +241,8 @@
         
         //NSLog(@"NETID of user is %@ and fb id is %@", user.netid, user.fb_id);
         //NSLog(@"Global netid is %@", globalnetid);
-    }
+    }*/
+    User *targetUser = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
     
     NSString *commaSepFavFBFriendsList = targetUser.fav_friends_commasep;
     NSMutableArray *arrayOfFavFBFriendIDs = [NSMutableArray arrayWithArray:[commaSepFavFBFriendsList componentsSeparatedByString:@","]];

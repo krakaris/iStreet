@@ -9,6 +9,8 @@
 #import "EventCell.h"
 #import "User.h"
 #import "AppDelegate.h"
+#import "User+Create.h"
+
 @implementation EventCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -52,11 +54,12 @@
     [self.textLabel setText:([event.title isEqualToString:@""] ? @"On Tap" : event.title)];
     [self.detailTextLabel setText:event.name];
     
-    NSString *userAttendingNetid = [[event userAttending] netid];
-    NSString *myNetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
+    //NSString *userAttendingNetid = [[event userAttending] netid];
+    //NSString *myNetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
+    NSSet *usersAttending = [event usersAttending];
     
     
-    if([userAttendingNetid isEqualToString:myNetid])
+    if([usersAttending containsObject:[User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]]])
     {
         //[self.accessoryView setHidden:NO];
         //[self setAccessoryType:UITableViewCellAccessoryCheckmark];

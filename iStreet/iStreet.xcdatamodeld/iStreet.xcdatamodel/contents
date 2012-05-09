@@ -17,7 +17,7 @@
         <attribute name="time_end" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time_start" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="userAttending" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="attendingEvents" inverseEntity="User" syncable="YES"/>
+        <relationship name="usersAttending" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="attendingEvents" inverseEntity="User" syncable="YES"/>
         <relationship name="whichClub" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Club" inverseName="whichEvents" inverseEntity="Club" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
@@ -25,7 +25,7 @@
         <attribute name="fb_friends" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fb_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="netid" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="attendingEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="userAttending" inverseEntity="Event" syncable="YES"/>
+        <relationship name="attendingEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="usersAttending" inverseEntity="Event" syncable="YES"/>
     </entity>
     <elements>
         <element name="Club" positionX="736" positionY="261" width="128" height="120"/>
