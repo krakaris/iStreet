@@ -129,7 +129,7 @@
     for(int i = [newData count] - 1; i >= 0; i--)
     {
         Event *event = (Event *)[newData objectAtIndex:i];
-        NSString *dateOfEvent = [event.time_start substringToIndex:[event.time_start rangeOfString:@" "].location];
+        NSString *dateOfEvent = [event stringForStartDate];
         
         //Find the EventsNight in eventsByDate that corresponds to the event
         EventsNight *night = nil;

@@ -17,9 +17,12 @@
     NSURLResponse *serverResponse;
     NSString *description;
     
+    
     // for duplicate call
     NSString *relativeURL;
     NSString *post;
+    
+    int accessFailCount;
     
 }
 

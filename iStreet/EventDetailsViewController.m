@@ -8,6 +8,7 @@
 
 #import "EventDetailsViewController.h"
 #import "AppDelegate.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface EventDetailsViewController ()
 
@@ -21,7 +22,6 @@
 @synthesize eventImage;
 @synthesize attendButton;
 @synthesize descriptionText;
-@synthesize seeAllFriendsAttending;
 @synthesize eventEntry, toggleAttendingIndicator;
 
 #define loginAlertViewAlert 1
@@ -90,7 +90,7 @@
     
     //[self.descriptionText setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:184.0/255.0 blue:0.0/255.0 alpha:1.0]];
     [self.descriptionText setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:176.0/255.0 blue:76.0/255.0 alpha:1.0]];
-    
+    [self.descriptionText.layer setCornerRadius:7];
     [self setUserWithNetid];
     friendsList = [user.fb_friends componentsSeparatedByString:@","];
     
@@ -104,7 +104,7 @@
         self.eventTitle.text = @"On Tap";
         self.navigationItem.title = @"On Tap";
     }
-    
+    self.eventTitle.lineBreakMode = UILineBreakModeWordWrap;
     self.descriptionText.text = myEvent.event_description;
     //self.seeAllFriendsAttending.titleLabel.textColor = [UIColor orangeColor];
     
@@ -238,7 +238,6 @@
     [self setEventTime:nil];
     [self setEventImage:nil];
     [self setAttendButton:nil];
-    [self setSeeAllFriendsAttending:nil];
     [self setDescriptionText:nil];
     [self setEventEntry:nil];
     [super viewDidUnload];

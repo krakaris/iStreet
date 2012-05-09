@@ -469,8 +469,8 @@
         if ([matchingUsers count] != 0)
         {
             //Make it a special cell instead.
-            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_bw.png"]];
-            starView.frame = CGRectMake(250, 10, 20, 20);
+            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_outline_thick.png"]];
+            starView.frame = CGRectMake(250, 5, 30, 30);
             [cell.contentView addSubview:starView];
         }
     }
@@ -511,8 +511,8 @@
         if ([matchingUsers count] != 0)
         {
             //Make it a special cell instead.
-            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_bw.png"]];
-            starView.frame = CGRectMake(250, 10, 20, 20);
+            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_outline_thick.png"]];
+            starView.frame = CGRectMake(250, 5, 30, 30);
             [cell.contentView addSubview:starView];
         }
         
@@ -702,6 +702,10 @@
     eatvc.fbid = fbid_selected;
     eatvc.name = name_selected;
     
+    [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];
+
+    
+    /*
     //Build url for server
     NSString *relativeURL = [NSString stringWithFormat:@"/getEventsForUser?fb_id=%@", fbid_selected];
     relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
@@ -709,8 +713,10 @@
     NSLog(@"relativeURL is %@", relativeURL);
     ServerCommunication *sc = [[ServerCommunication alloc] init];
     [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self withDelegate:self andDescription:@"retrieve events"];
+     */
      
 }
+
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -718,7 +724,6 @@
 
     eatvc.name = name_selected;
     eatvc.fbid = fbid_selected;
-    eatvc.eventsAttendingIDs = eventsAttending_selected;
     
     /*
     if (self.isFiltered)
@@ -765,60 +770,7 @@
     
     if (description == @"retrieve events")
     {
-        NSLog(@"Events retrieved.");
-        
-        NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"Response is %@", response);
-        
-        //Checking for error/empty response        
-        NSRange thisRange = [response rangeOfString:@"ERROR" options:NSCaseInsensitiveSearch];
-
-        if ([response length] == 0 || thisRange.location != NSNotFound)
-        {
-            NSLog(@"Not found!!!");
-            
-            //Push view controller anyway - even if the user has no events, others should be able to
-            //favorite him or her
-            [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];
-        }
-        else 
-        {
-            NSLog(@"Inside else!");
-            
-            NSArray *responseArray = [response componentsSeparatedByString:@", "];
-                        
-            for (NSString *event in responseArray)
-            {
-                if ([event isEqualToString:@" "] || [event isEqualToString:@"  "] ||
-                    [event isEqualToString:@""])
-                    NSLog(@"This will be deleted"); //do nothing
-                else 
-                    [eventsAttending_selected addObject:event];
-            }
-                       
-            /*
-            //#DEBUGGING
-            for (NSString *event_id in eventsAttending_selected)
-            {
-                //NSLog(@" %@", event_id);
-            }
-             */
-            
-             /*
-             //Build url for server
-             NSString *relativeURL = [NSString stringWithFormat:@"/eventinfo?event_id=%@", event_id];
-             relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
-             
-             NSLog(@"relativeURL is %@", relativeURL);
-             [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self withDelegate:self andDescription:@"/eventinfo: retrieving specific event"];
-             */
-            
-            //Setting up the next controller
-            eatvc.eventsAttendingIDs = eventsAttending_selected;
-            
-            [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];
-            //[self.navigationController pushViewController:eatvc animated:YES];
-        }
+       
     }
     else {
         NSString *resp = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
