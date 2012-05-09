@@ -51,7 +51,7 @@ static NSString *appID = @"128188007305619";
     NSLog(@"access token is %@", [self.fb accessToken]);
     
     //Requesting friends
-    [self.fb requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
+    [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture,email,education" andDelegate:self];
     NSLog(@"Asking for friends after login!!");
     
     //Requesting fb id
@@ -78,7 +78,7 @@ static NSString *appID = @"128188007305619";
             NSLog(@"Spinner starts, requesting friends!");
             [self.spinner startAnimating];
             //Requesting friends
-            [self.fb requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
+            [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture,email,education" andDelegate:self];
             NSLog(@"Asking for friends after login!!");
         }
     }
@@ -227,15 +227,17 @@ static NSString *appID = @"128188007305619";
     self.fb.sessionDelegate = self;
     if (![self.fb isSessionValid]) 
     {
-        [self.fb authorize:nil];
+        //Setting up permissions
+        NSArray *permissions = [[NSArray alloc] initWithObjects:@"email", @"user_education_history", nil];
+        [self.fb authorize:permissions];
     }
     else 
     {
         self.fConnectButton.enabled = NO;
         NSLog(@"Valid Session!");
-        
+
         //Requesting friends
-        [self.fb requestWithGraphPath:@"me/friends?limit=10000" andDelegate:self];
+        [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture,email,education" andDelegate:self];
         NSLog(@"Asking for friends after login!!");
     }
 }
@@ -283,6 +285,7 @@ static NSString *appID = @"128188007305619";
 
     NSArray *dataWeGot = [result objectForKey:@"data"];
     friendsArray = dataWeGot;
+    
     NSLog(@"Friends received!");
     
     //Setting global array
@@ -290,16 +293,23 @@ static NSString *appID = @"128188007305619";
 
     //alreadyLoadedFriends = YES;
     
+    for (NSDictionary *user in dataWeGot)
+    {
+        
+        NSLog(@"%@ and %@ and picture is %@, email is %@, education is %@", [user valueForKey:@"id"], [user valueForKey:@"name"], [user valueForKey:@"picture"], [user valueForKey:@"email"], [user valueForKey:@"education"]);
+    }
+    
     [self.spinner stopAnimating];
     [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     
     //NSString *className = NSStringFromClass([dataWeGot class]);
     //NSLog(@"%@", className);
     
-    /*for (NSDictionary *user in dataWeGot)
-     {
-     NSLog(@"%@ and %@", [user valueForKey:@"id"], [user valueForKey:@"name"]);
-     }
+    /*
+    for (NSDictionary *friend in friendsArray)
+    {
+        NSLog(@"email, education, picture are %@, %@, %@", [friend objectForKey:@"email"], [friend objectForKey:@"education"], [friend objectForKey:@"picture"]);
+    }
      */
     
     //FriendsTableViewController *ftvc = [[FriendsTableViewController alloc] init];

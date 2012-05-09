@@ -10,6 +10,7 @@
 #import "ServerCommunication.h"
 #import "EventsAttendingTableViewController.h"
 #import "Facebook.h"
+#import "IconDownloader.h"
 #import "User.h"
 
 @interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, FBSessionDelegate>
@@ -21,6 +22,8 @@
     NSString *fbid_selected;
     NSString *name_selected;
     NSMutableArray *eventsAttending_selected;
+    
+    NSMutableDictionary *_iconsBeingDownloaded;
     
 }
 

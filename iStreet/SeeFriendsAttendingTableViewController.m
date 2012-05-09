@@ -179,8 +179,9 @@
 {
     NSLog(@"View unloaded, thread canceled!");
 
-    if (downloadFriendsAttendingQ)
-        dispatch_suspend(downloadFriendsAttendingQ);
+    //#DEBUG
+    //if (downloadFriendsAttendingQ)
+      //  dispatch_suspend(downloadFriendsAttendingQ);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
