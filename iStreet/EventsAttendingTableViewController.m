@@ -202,7 +202,7 @@
     
     UIImage *grayStar = [UIImage imageNamed:@"star_gray.png"];
 
-    UIImage *orangeStar = [UIImage imageNamed:@"star_yellow.png"];
+    UIImage *orangeStar = [UIImage imageNamed:@"star_orange.png"];
 
     starButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [starButton setBackgroundImage:grayStar forState:UIControlStateNormal];

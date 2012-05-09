@@ -45,6 +45,8 @@
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
 		5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */; };
 		9D192A221559E5690047C5E7 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D192A211559E5690047C5E7 /* check.png */; };
+		9D192A251559EA530047C5E7 /* star_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D192A241559EA530047C5E7 /* star_yellow.png */; };
+		9D192A291559EBF80047C5E7 /* star_outline_thick.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D192A281559EBF80047C5E7 /* star_outline_thick.png */; };
 		9D197B69153B51B800604080 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B61153B51B800604080 /* EventCell.m */; };
 		9D197B6B153B51B800604080 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D197B65153B51B800604080 /* IconDownloader.m */; };
 		9D208D7815409335004515E9 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4163B6ED153E563C00D7B2DC /* FriendsViewController.m */; };
@@ -162,6 +164,8 @@
 		9D0426B01559977F00561AF7 /* Beer Cap tiger 114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Beer Cap tiger 114x114.png"; sourceTree = "<group>"; };
 		9D0426B3155998A500561AF7 /* Beer Cap tiger 57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Beer Cap tiger 57x57.png"; sourceTree = "<group>"; };
 		9D192A211559E5690047C5E7 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
+		9D192A241559EA530047C5E7 /* star_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_yellow.png; sourceTree = "<group>"; };
+		9D192A281559EBF80047C5E7 /* star_outline_thick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_outline_thick.png; sourceTree = "<group>"; };
 		9D197B60153B51B800604080 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		9D197B61153B51B800604080 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		9D197B64153B51B800604080 /* IconDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconDownloader.h; sourceTree = "<group>"; };
@@ -171,7 +175,6 @@
 		9D29336F154ECC0E00B3F8A9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		9D34B76F1524D55600DB6C13 /* Settings icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings icon.png"; sourceTree = "<group>"; };
 		9D34B7731524D5D000DB6C13 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
-		9D4420A715596489002856D5 /* star_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_yellow.png; sourceTree = "<group>"; };
 		9D464B181537482600468729 /* light_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light_orange.png; sourceTree = "<group>"; };
 		9D464B201537631C00468729 /* Princeton Crest 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Princeton Crest 3.png"; sourceTree = "<group>"; };
 		9D4ED4A115338DA700680D1D /* ClubEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubEventsViewController.h; sourceTree = "<group>"; };
@@ -376,7 +379,8 @@
 				9DE86A341558690B00266C94 /* star.png */,
 				9DE86A361558698500266C94 /* star_bw.png */,
 				5BADF9471553A8EC00B82CC3 /* star_gray.png */,
-				9D4420A715596489002856D5 /* star_yellow.png */,
+				9D192A241559EA530047C5E7 /* star_yellow.png */,
+				9D192A281559EBF80047C5E7 /* star_outline_thick.png */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -567,6 +571,8 @@
 				9DE86A371558698500266C94 /* star_bw.png in Resources */,
 				9DE86A39155869F300266C94 /* Princeton shield bw icon.png in Resources */,
 				9D192A221559E5690047C5E7 /* check.png in Resources */,
+				9D192A251559EA530047C5E7 /* star_yellow.png in Resources */,
+				9D192A291559EBF80047C5E7 /* star_outline_thick.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
