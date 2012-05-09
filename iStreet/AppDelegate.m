@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "Club+Create.h"
+#import "Club.h"
 #import "User.h"
 #import "Event.h"  
 
@@ -23,7 +24,7 @@ static NSString *appID = @"128188007305619";
 
 @implementation AppDelegate
 
-@synthesize window = _window, netID = _netID, fbID = _fbID, allfbFriends = _allfbFriends, document = _document, appDataLoaded = _appDataLoaded, facebook = _facebook;
+@synthesize window = _window, netID = _netID, fbID = _fbID, allfbFriends = _allfbFriends, document = _document, appDataLoaded = _appDataLoaded, facebook = _facebook, connectionFailureAlert = _connectionFailureAlert;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -64,6 +65,12 @@ static NSString *appID = @"128188007305619";
                 {
                     User *thisUser = [users objectAtIndex:0];
                     _netID = [thisUser netid];
+                }
+                
+                request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];
+                NSArray *clubs = [_document.managedObjectContext executeFetchRequest:request error:&error];
+                for (Club *club in clubs) {
+                    NSLog(@"club name (with id %@) = %@", [club club_id], [club name]);
                 }
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
@@ -141,12 +148,19 @@ static NSString *appID = @"128188007305619";
 - (void)connectionFailed:(NSString *)description
 {
     NSLog(@"clubs list connection failed");
-    [[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"There was a problem connecting to our server. Please ensure that your device has internet access, and select \"Okay\" to try again." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+    if(self.connectionFailureAlert)
+        return;
+    
+    self.connectionFailureAlert = [[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"There was a problem connecting to our server. Please ensure that your device has internet access, and select \"Okay\" to try again." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [self.connectionFailureAlert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    [self setupCoreData];
+    self.connectionFailureAlert = nil;   
+    
+    if(buttonIndex != -1)
+        [self setupCoreData];
 }
 
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
@@ -181,6 +195,9 @@ static NSString *appID = @"128188007305619";
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    if(self.connectionFailureAlert)
+        [self.connectionFailureAlert dismissWithClickedButtonIndex:-1 animated:NO];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];
     NSError *error;
