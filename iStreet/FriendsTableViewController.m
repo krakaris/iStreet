@@ -101,11 +101,21 @@
     [prefs setObject:nil forKey:@"FBExpirationDateKey"];
     [prefs synchronize];
     
+    
+    //Updating user's fbid on server
+    //Build url for server
+    NSString *relativeURL = @"/updateUser";
+    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+    
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"fb_id=" forViewController:self withDelegate:self andDescription:@"updating user with fbid"];
+    
     UIAlertView *loggedOutAlert = [[UIAlertView alloc] initWithTitle:@"Logged Out!" message:@"You have been logged out of Facebook. You can log in again at any time." delegate:self cancelButtonTitle:@"OK"
                                                    otherButtonTitles:nil];
     loggedOutAlert.tag = loggedOutAlertView;
     [loggedOutAlert show];
 }
+
 
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -450,7 +460,8 @@
 
     // Configure the cell...
     //cell = [[UITableViewCell alloc] init];
-    cell = [[FriendCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    if (!cell)
+        cell = [[FriendCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     
     //To store the selected friend
     NSDictionary *currentFriend;
@@ -516,7 +527,7 @@
         NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"name beginswith[c] %@", alpha];
         //NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
         //Getting the names that begin with that first letter
-        //NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
+        
         NSArray *thisSectionFriends = [friendslist filteredArrayUsingPredicate:thisPredicate];
                 
         if ([thisSectionFriends count] > 0)
@@ -524,6 +535,8 @@
             currentFriend = [thisSectionFriends objectAtIndex:indexPath.row];
             currentUserName = [currentFriend valueForKey:@"name"];
             cell.textLabel.text = currentUserName;
+            
+            currentFriend = [friendslist objectAtIndex:[justFriendNames indexOfObject:currentUserName]];
         }
         else 
         {
@@ -569,19 +582,22 @@
     NSDictionary *friendInCompleteArray = [self.friendslist objectAtIndex:indexInCompleteFriendsArray];
     if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES) && (![friendInCompleteArray valueForKey:@"pictureData"]))
     {
-        //NSURL *url = [NSURL URLWithString:(NSString *)[currentFriend valueForKey:@"picture"]];
-        
-        //[self startIconDownload:[self.friendslist objectAtIndex:indexPath.row] forIndexPath:indexPath];
-        [self startIconDownload:[self.friendslist objectAtIndex:indexInCompleteFriendsArray] forIndexPath:indexPath];
-        //[self startIconDownload:[self.friendslist objectAtIndex:indexInCompleteFriendsArray] forIndexPath:[NSIndexPath indexPathWithIndex:indexInCompleteFriendsArray]];
-        cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
+        NSLog(@"Name before icon download is %@", [currentFriend objectForKey:@"name"]);
+        [self startIconDownload:currentFriend forIndexPath:indexPath];
+        //cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
     }
     else 
     {
         if (![friendInCompleteArray valueForKey:@"pictureData"])
+        {
+            NSLog(@"No data, placeholder instead.");
             cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
+        }
         else
+        {
+            NSLog(@"Data detected, actual image, name = %@.", [friendInCompleteArray valueForKey:@"name"]);
             cell.imageView.image = [UIImage imageWithData:[friendInCompleteArray valueForKey:@"pictureData"]];
+        }
     }
      
     return cell;
@@ -600,9 +616,43 @@
     for (NSIndexPath *indexPath in visiblePaths)
     {
         // start downloading the icon if the event doesn't have an icon but has a link to one
-        if (![[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"pictureData"])
-            [self startIconDownload:[self.friendslist objectAtIndex:indexPath.row] forIndexPath:indexPath];
+        NSDictionary *user = [self getUserAtIndexPath:indexPath];
+        if (![user valueForKey:@"pictureData"])
+            [self startIconDownload:user forIndexPath:indexPath];
     }
+}
+
+- (NSDictionary *) getUserAtIndexPath: (NSIndexPath *) indexPath
+{
+    int sections = indexPath.section;
+    
+    int count = 0, sum = 0;
+    while (count < sections)
+    {
+        sum += [self.friendsTableView numberOfRowsInSection:count];
+        count++;
+        NSLog(@"User at index path is %d, %d", count, sum);
+    }
+    
+    sum -= 1;
+    sum += indexPath.row;
+
+    /*
+    int sections = [self.friendsTableView numberOfSections];
+    
+    int count = 0, sum = 0;
+    while (count < sections)
+    {
+        sum += [self.friendsTableView numberOfRowsInSection:count];
+        
+        count++;
+    }
+    
+    sum -= 1;
+    */
+    
+    //Return absolute object
+    return [self.friendslist objectAtIndex:sum];
 }
              
 - (void)startIconDownload:(NSDictionary *)user forIndexPath:(NSIndexPath *)indexPath
@@ -616,14 +666,17 @@
     [_iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
     
     //#DEBUG FIX FOR THUMBNAILS.
-    NSURL *url = [NSURL URLWithString:(NSString *)[[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"picture"]];
+    //NSURL *url = [NSURL URLWithString:(NSString *)[[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"picture"]];
+    NSURL *url = [NSURL URLWithString:[user valueForKey:@"picture"]];
     
     [iconDownloader startDownloadFromURL:url forImageKey:@"pictureData" ofObject:user forDisplayAtIndexPath:indexPath atDelegate:self];
 }
           
 - (void) appImageDidLoad:(NSIndexPath *)indexPath
 {
-    [self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    NSLog(@"loaded icon for friend name is %@", [[[self.friendsTableView cellForRowAtIndexPath:indexPath] textLabel] text]);
+    //[self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
+    [self.friendsTableView reloadRowsAtIndexPaths:[self.friendsTableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
     [_iconsBeingDownloaded removeObjectForKey:indexPath];
 }
 
@@ -712,6 +765,7 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
     
+    NSLog(@"Index path selected is row %d and sec %d", indexPath.row, indexPath.section);
     [self.searchBar resignFirstResponder];
     
     
@@ -819,9 +873,13 @@
     //Empty array needed each time
     [eventsAttending_selected removeAllObjects];
     
-    if (description == @"retrieve events")
+    if (description == @"updating user with fbid")
     {
-       
+        NSLog(@"Updated fbid on logout");
+    }
+    else if (description == @"retrieve events")
+    {
+        NSLog(@"Events retrieved.");
     }
     else {
         NSString *resp = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];

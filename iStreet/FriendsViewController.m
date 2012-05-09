@@ -215,6 +215,11 @@ static NSString *appID = @"128188007305619";
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     NSLog(@"received data! %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+    
+    if (description == @"updating user with fbid")
+    {
+        NSLog(@"Done updating user's fbid on server.");
+    }
 }
 
 - (void)viewDidUnload
@@ -259,35 +264,49 @@ static NSString *appID = @"128188007305619";
         NSLog(@"access token is %@", [self.fb accessToken]);
         if (result != nil)
         {
-            //Setting the global variable
-            NSString *fbid = [result valueForKey:@"id"];
-            [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:fbid];
-            NSLog(@"fbid set to %@", fbid);
-            
-            
-            //Storing it in user's core data
-            UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-            
-            NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-            NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
-            
-            //There should be only 1 user entity - and with matching netid
-            NSString *globalnetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
-            
-            for (User *user in users)
+            if ([result valueForKey:@"id"])
             {
-                if ([globalnetid isEqualToString:user.netid])
+                //Setting the global variable
+                NSString *fbid = [result valueForKey:@"id"];
+                [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:fbid];
+                NSLog(@"fbid set to %@", fbid);
+                
+                
+                //Storing it in user's core data
+                UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+                
+                NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+                NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
+                
+                //There should be only 1 user entity - and with matching netid
+                NSString *globalnetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
+                
+                for (User *user in users)
                 {
-                    userInCoreData = user;
-                    NSLog(@"Found target for storing fb id!!!");
+                    if ([globalnetid isEqualToString:user.netid])
+                    {
+                        userInCoreData = user;
+                        NSLog(@"Found target for storing fb id!!!");
+                    }
                 }
+                //Setting fbid
+                if (userInCoreData != nil)
+                {
+                    userInCoreData.fb_id = fbid;
+                    NSLog(@"STORED FBID IN CORE DATA DATABASE! fbid is %@", fbid);
+                    [document.managedObjectContext save:nil];
+                }
+                
+                //Build url for server
+                NSString *relativeURL = @"/updateUser";
+                relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+                
+                ServerCommunication *sc = [[ServerCommunication alloc] init];
+                [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:[NSString stringWithFormat:@"fb_id=%@", fbid] forViewController:self withDelegate:self andDescription:@"updating user with fbid"];
             }
-            //Setting fbid
-            if (userInCoreData != nil)
+            else 
             {
-                userInCoreData.fb_id = fbid;
-                NSLog(@"STORED FBID IN CORE DATA DATABASE! fbid is %@", fbid);
-                [document.managedObjectContext save:nil];
+                NSLog(@"fbid not retrieved! Let's try again.");
             }
         }
     }

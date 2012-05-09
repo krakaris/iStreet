@@ -46,5 +46,6 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *logoutButton;
 
 - (IBAction) logoutOfFacebook: (id) sender;
+- (NSDictionary *) getUserAtIndexPath: (NSIndexPath *) indexPath;
 
 @end
