@@ -286,7 +286,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *date = [formatter dateFromString:ea.date];
-    [formatter setDateFormat:@"MMMM d, yyyy"];
+    [formatter setDateFormat:@"EEEE, MMMM d"];
     NSString *dateString = [formatter stringFromDate:date];
     
     label.text = dateString;

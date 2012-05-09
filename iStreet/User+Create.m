@@ -23,7 +23,6 @@
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     request.predicate = [NSPredicate predicateWithFormat:@"netid like %@", netid];
-    NSLog(@"netid like '%@'", netid);
     
     NSError *error;
     NSArray *users = [document.managedObjectContext executeFetchRequest:request error:&error];

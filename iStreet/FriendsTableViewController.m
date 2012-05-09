@@ -482,7 +482,7 @@
     }
     else if (indexPath.section == 0)
     {
-        UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_bw.png"]];
+        UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_outline_thick.png"]];
         starView.frame = CGRectMake(250, 10, 20, 20);
         [cell.contentView addSubview:starView];
 

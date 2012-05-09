@@ -309,9 +309,9 @@
 - (UIFont *)getCurrentFont
 {
     if (drunk)
-        return [UIFont fontWithName:@"TrebuchetMS-Bold" size:15];
+        return [UIFont fontWithName:@"TrebuchetMS-Bold" size:16];
     else 
-        return [UIFont fontWithName:@"TrebuchetMS" size:12];
+        return [UIFont fontWithName:@"TrebuchetMS" size:13];
 }
 
 #pragma mark UITableViewController Delegate

@@ -20,6 +20,7 @@
 		41B7438A15542BAC0080DA39 /* star_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B7438815542BAC0080DA39 /* star_gray.png */; };
 		41B7438B15542BAC0080DA39 /* star_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B7438915542BAC0080DA39 /* star_orange.png */; };
 		41CF8DDB1559E36A00733AA5 /* FBPlaceholder.gif in Resources */ = {isa = PBXBuildFile; fileRef = 41CF8DDA1559E36A00733AA5 /* FBPlaceholder.gif */; };
+		5B15502F155ABB79007637A5 /* star_outline_thick.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B15502E155ABB79007637A5 /* star_outline_thick.png */; };
 		5B227E4B153673F200B5DD52 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */; };
 		5B227E4F15367D5200B5DD52 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4D15367D5200B5DD52 /* aqua.png */; };
 		5B227E5015367D5200B5DD52 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B227E4E15367D5200B5DD52 /* orange.png */; };
@@ -121,6 +122,7 @@
 		41B7438815542BAC0080DA39 /* star_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_gray.png; sourceTree = "<group>"; };
 		41B7438915542BAC0080DA39 /* star_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_orange.png; sourceTree = "<group>"; };
 		41CF8DDA1559E36A00733AA5 /* FBPlaceholder.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = FBPlaceholder.gif; sourceTree = "<group>"; };
+		5B15502E155ABB79007637A5 /* star_outline_thick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_outline_thick.png; sourceTree = "<group>"; };
 		5B227E49153673F200B5DD52 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
 		5B227E4A153673F200B5DD52 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		5B227E4D15367D5200B5DD52 /* aqua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aqua.png; sourceTree = "<group>"; };
@@ -170,7 +172,6 @@
 		9D0426B01559977F00561AF7 /* Beer Cap tiger 114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Beer Cap tiger 114x114.png"; sourceTree = "<group>"; };
 		9D0426B3155998A500561AF7 /* Beer Cap tiger 57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Beer Cap tiger 57x57.png"; sourceTree = "<group>"; };
 		9D192A241559EA530047C5E7 /* star_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_yellow.png; sourceTree = "<group>"; };
-		9D192A281559EBF80047C5E7 /* star_outline_thick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_outline_thick.png; sourceTree = "<group>"; };
 		9D197B60153B51B800604080 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		9D197B61153B51B800604080 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		9D197B64153B51B800604080 /* IconDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconDownloader.h; sourceTree = "<group>"; };
@@ -372,6 +373,7 @@
 		5BFB44FF1533842D00960C81 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
+				5B15502E155ABB79007637A5 /* star_outline_thick.png */,
 				4163B6EC153E563C00D7B2DC /* FriendsViewController.h */,
 				4163B6ED153E563C00D7B2DC /* FriendsViewController.m */,
 				4112762315439511008ED4AF /* FriendsTableViewController.h */,
@@ -388,7 +390,6 @@
 				9DE86A361558698500266C94 /* star_bw.png */,
 				5BADF9471553A8EC00B82CC3 /* star_gray.png */,
 				9D192A241559EA530047C5E7 /* star_yellow.png */,
-				9D192A281559EBF80047C5E7 /* star_outline_thick.png */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -582,6 +583,7 @@
 				41CF8DDB1559E36A00733AA5 /* FBPlaceholder.gif in Resources */,
 				5B6A18051559FE05008D0013 /* sectionheader.png in Resources */,
 				5B4B844F155A0851006C113B /* check.png in Resources */,
+				5B15502F155ABB79007637A5 /* star_outline_thick.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
