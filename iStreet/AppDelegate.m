@@ -59,10 +59,10 @@ static NSString *appID = @"128188007305619";
                 NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
                 
                 NSError *error;
-                NSArray *clubs = [_document.managedObjectContext executeFetchRequest:request error:&error];
-                if(clubs)
+                NSArray *users = [_document.managedObjectContext executeFetchRequest:request error:&error];
+                if(users)
                 {
-                    User *thisUser = [clubs objectAtIndex:0];
+                    User *thisUser = [users objectAtIndex:0];
                     _netID = [thisUser netid];
                 }
                 
@@ -79,8 +79,7 @@ static NSString *appID = @"128188007305619";
                        [self setupCoreData];
                    
                    if (!success) 
-                       NSLog(@"couldn’t create document at %@", [dataURL path]);}];
-        
+                       NSLog(@"couldn’t create document at %@", [dataURL path]);}];        
     }
     
     //Creating Facebook object
@@ -142,6 +141,12 @@ static NSString *appID = @"128188007305619";
 - (void)connectionFailed:(NSString *)description
 {
     NSLog(@"clubs list connection failed");
+    [[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"There was a problem connecting to our server. Please ensure that your device has internet access, and select \"Okay\" to try again." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [self setupCoreData];
 }
 
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
@@ -176,12 +181,37 @@ static NSString *appID = @"128188007305619";
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];
+    NSError *error;
+    NSArray *clubs = [_document.managedObjectContext executeFetchRequest:request error:&error];
+    if([clubs count] == 0)
+    {
+        [self.document closeWithCompletionHandler:NULL];
+        NSFileManager *fm = [NSFileManager defaultManager];
+        NSURL *dataURL = [[fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+        dataURL = [dataURL URLByAppendingPathComponent:@"database"];
+        [fm removeItemAtURL:dataURL error:NULL];
+        NSLog(@"deleting the database :(");
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     //[self checkCoreDataAndSetUpFacebook];
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSURL *dataURL = [[fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    dataURL = [dataURL URLByAppendingPathComponent:@"database"];
+
+    if (![fm fileExistsAtPath:[dataURL path]]) 
+    {
+        self.document = [[UIManagedDocument alloc] initWithFileURL:dataURL];
+        [self.document saveToURL:dataURL forSaveOperation:UIDocumentSaveForCreating
+               completionHandler:^(BOOL success) {[self setupCoreData];}];        
+    }
+
 }
 
 

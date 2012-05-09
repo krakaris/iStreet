@@ -12,7 +12,7 @@
 
 extern NSString *const DataLoadedNotificationString;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, ServerCommunicationDelegate, FBRequestDelegate, FBSessionDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, ServerCommunicationDelegate, FBRequestDelegate, FBSessionDelegate, UIAlertViewDelegate>
 {
     int _networkActivityIndicatorCount;
     Facebook *facebook;

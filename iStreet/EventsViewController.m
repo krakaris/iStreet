@@ -49,9 +49,15 @@
     
     // If Core Data has not finished loading, register for a notification for when it does. Otherwise, load the data.
     if(!dataDidLoad)
+    {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getCachedData:) name:DataLoadedNotificationString object:nil];
+        NSLog(@"events view is observing...");
+    }
     else
+    {
         [self getCachedData:nil];    
+        NSLog(@"loading core data...");
+    }
 }
 
 - (void)getCachedData:(NSNotification *)notification

@@ -52,11 +52,11 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-   // if(_serverLoadedOnce)
-    //{
-      //  NSLog(@"repeat request");
-    [self requestServerEventsData];
-    //}
+    if([(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded])
+    {
+        NSLog(@"repeat request");
+        [self requestServerEventsData];
+    }
 }
 
 
