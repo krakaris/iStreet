@@ -41,7 +41,7 @@
     NSLog(@"Logging out of facebook alert view!");
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you sure you wish to log out of Facebook?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
     alert.tag = logOutConfirmAlertView;
-    [alert show];    
+    [alert show]; 
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -62,7 +62,8 @@
     }
     else {
         NSLog(@"Clicked on OK");
-        [self.navigationController removeFromParentViewController];
+        //[self.navigationController removeFromParentViewController];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -454,12 +455,34 @@
     //To store the selected friend
     NSDictionary *currentFriend;
     NSString *currentUserName;
+    int indexInCompleteFriendsArray;
     
     if (self.isFiltered)
     {
         currentFriend = [filteredFriendsList objectAtIndex:indexPath.row];
         currentUserName = [currentFriend valueForKey:@"name"];
         cell.textLabel.text = currentUserName;
+        
+        indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
+        NSLog(@"Index in complete array is %d", indexInCompleteFriendsArray);
+        
+        /*
+        if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES) && (![[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"pictureData"]))
+        {
+            //NSURL *url = [NSURL URLWithString:(NSString *)[currentFriend valueForKey:@"picture"]];
+            
+            //UIImage *picture = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
+            [self startIconDownload:[self.friendslist objectAtIndex:indexPath.row] forIndexPath:indexPath];
+            cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
+        }
+        else 
+        {
+            if (![[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"pictureData"])
+                cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
+            else
+                cell.imageView.image = [UIImage imageWithData:[currentFriend valueForKey:@"pictureData"]];
+        }
+         */
         
         
         //Checking if favorite (to add star)
@@ -483,14 +506,38 @@
         currentFriend = [favoriteFriendsList objectAtIndex:indexPath.row];
         currentUserName = [currentFriend valueForKey:@"name"];
         cell.textLabel.text = currentUserName;
+        
+        indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
+        NSLog(@"Index in complete array is %d", indexInCompleteFriendsArray);
     }
     else
     {
         NSString *alpha = [sectionsIndex objectAtIndex:[indexPath section]];
-        NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
+        NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"name beginswith[c] %@", alpha];
+        //NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
         //Getting the names that begin with that first letter
-        NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
+        //NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
+        NSArray *thisSectionFriends = [friendslist filteredArrayUsingPredicate:thisPredicate];
+                
+        if ([thisSectionFriends count] > 0)
+        {
+            currentFriend = [thisSectionFriends objectAtIndex:indexPath.row];
+            currentUserName = [currentFriend valueForKey:@"name"];
+            cell.textLabel.text = currentUserName;
+        }
+        else 
+        {
+            //NSLog(@"Not true.");
+        }
         
+        NSLog(@"Name of current friend = %@", currentUserName);
+        //NSLog(@"Number of friends in section = %d", [thisSectionFriends count]);
+        //NSLog(@"URL of current friend = %@", [currentFriend objectForKey:@"picture"]);
+        
+        indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
+        NSLog(@"Index in complete array is %d", indexInCompleteFriendsArray);
+
+        /*
         NSString *friendName;
         if ([names count] > 0)
         {
@@ -501,8 +548,10 @@
         else {
             //NSLog(@"If not true!");
         }
+         
         
         NSString *currentUserName = friendName;
+         */
         
         //Checking if favorite (to add star)
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
@@ -515,24 +564,26 @@
             starView.frame = CGRectMake(250, 5, 30, 30);
             [cell.contentView addSubview:starView];
         }
-        
-        if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES) && (![[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"pictureData"]))
-        {
-            NSURL *url = [NSURL URLWithString:(NSString *)[[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"picture"]];
-
-            //UIImage *picture = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
-            [self startIconDownload:[self.friendslist objectAtIndex:indexPath.row] forIndexPath:indexPath];
-            cell.imageView.image = [UIImage imageNamed:@"Placeholder.png"];
-        }
-        else 
-        {
-            if (![[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"pictureData"])
-                cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
-            else
-                cell.imageView.image = [UIImage imageWithData:[[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"pictureData"]];
-        }
     }
-
+    
+    NSDictionary *friendInCompleteArray = [self.friendslist objectAtIndex:indexInCompleteFriendsArray];
+    if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES) && (![friendInCompleteArray valueForKey:@"pictureData"]))
+    {
+        //NSURL *url = [NSURL URLWithString:(NSString *)[currentFriend valueForKey:@"picture"]];
+        
+        //[self startIconDownload:[self.friendslist objectAtIndex:indexPath.row] forIndexPath:indexPath];
+        [self startIconDownload:[self.friendslist objectAtIndex:indexInCompleteFriendsArray] forIndexPath:indexPath];
+        //[self startIconDownload:[self.friendslist objectAtIndex:indexInCompleteFriendsArray] forIndexPath:[NSIndexPath indexPathWithIndex:indexInCompleteFriendsArray]];
+        cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
+    }
+    else 
+    {
+        if (![friendInCompleteArray valueForKey:@"pictureData"])
+            cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
+        else
+            cell.imageView.image = [UIImage imageWithData:[friendInCompleteArray valueForKey:@"pictureData"]];
+    }
+     
     return cell;
 }
 

@@ -60,6 +60,8 @@ static NSString *appID = @"128188007305619";
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    NSLog(@"Facebook's viewWillAppear!!");
+    self.fConnectButton.enabled = YES;
     [self.navigationItem setHidesBackButton:YES animated:YES];
     [self.spinner stopAnimating];
     self.fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
@@ -71,6 +73,7 @@ static NSString *appID = @"128188007305619";
         
         if ([allFBfriends count] != 0)
         {
+            NSLog(@"Performing viewWillAppear Segue!");
             [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
         }
         else 
@@ -86,6 +89,8 @@ static NSString *appID = @"128188007305619";
 
 - (void)viewDidLoad
 {
+    NSLog(@"Facebook's viewDidLoad!!");
+    
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
@@ -99,8 +104,11 @@ static NSString *appID = @"128188007305619";
     {
         NSLog(@"Friends not empty, session valid.");
         
-        [self.fConnectButton setHidden:YES];
+        //[self.fConnectButton setHidden:YES];
+        self.fConnectButton.enabled = YES;
         [self.spinner stopAnimating];
+        
+        NSLog(@"Performing viewDidLoad Segue!");
         [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     }
     else        
@@ -248,6 +256,7 @@ static NSString *appID = @"128188007305619";
     if ([request.url isEqualToString:@"https://graph.facebook.com/me"]) //request for fbid
     {
         NSLog(@"This is the request for fb id");
+        NSLog(@"access token is %@", [self.fb accessToken]);
         if (result != nil)
         {
             //Setting the global variable
@@ -282,25 +291,31 @@ static NSString *appID = @"128188007305619";
             }
         }
     }
-
-    NSArray *dataWeGot = [result objectForKey:@"data"];
-    friendsArray = dataWeGot;
-    
-    NSLog(@"Friends received!");
-    
-    //Setting global array
-    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setAllfbFriends:friendsArray];
-
-    //alreadyLoadedFriends = YES;
-    
-    for (NSDictionary *user in dataWeGot)
+    else 
     {
+        NSLog(@"This is the request for friends");
+
+        NSArray *dataWeGot = [result objectForKey:@"data"];
+        friendsArray = dataWeGot;
         
-        NSLog(@"%@ and %@ and picture is %@, email is %@, education is %@", [user valueForKey:@"id"], [user valueForKey:@"name"], [user valueForKey:@"picture"], [user valueForKey:@"email"], [user valueForKey:@"education"]);
+        NSLog(@"Friends received!");
+        
+        //Setting global array
+        [(AppDelegate *)[[UIApplication sharedApplication] delegate] setAllfbFriends:friendsArray];
+        
+        //alreadyLoadedFriends = YES;
+        
+        for (NSDictionary *user in dataWeGot)
+        {
+            
+            NSLog(@"%@ and %@ and picture is %@, email is %@, education is %@", [user valueForKey:@"id"], [user valueForKey:@"name"], [user valueForKey:@"picture"], [user valueForKey:@"email"], [user valueForKey:@"education"]);
+        }
+        
+        [self.spinner stopAnimating];
+        
+        NSLog(@"Performing didLoad Segue!");
+        [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     }
-    
-    [self.spinner stopAnimating];
-    [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     
     //NSString *className = NSStringFromClass([dataWeGot class]);
     //NSLog(@"%@", className);
