@@ -13,7 +13,7 @@
 #import "IconDownloader.h"
 #import "User.h"
 
-@interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, FBSessionDelegate>
+@interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, ServerCommunicationDelegate, UIAlertViewDelegate, FBSessionDelegate, IconDownloaderDelegate>
 {
     EventsAttendingTableViewController *eatvc;
     BOOL isFiltered;
