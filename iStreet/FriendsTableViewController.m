@@ -9,6 +9,7 @@
 #import "FriendsTableViewController.h"
 #import "EventsAttendingTableViewController.h"
 #import "FriendCell.h"
+#import "User+Create.h"
 #include <stdlib.h>
 
 @interface FriendsTableViewController ()
@@ -75,7 +76,7 @@
     
     
     //Setting fbid to nil in core data
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    /*UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
     
@@ -90,7 +91,10 @@
             targetUser = user;
             NSLog(@"Found target!");
         }
-    }
+    }*/
+    
+    User *targetUser = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
+    
     //Setting fbid
     if (targetUser != nil)
         targetUser.fb_id = nil;
@@ -122,7 +126,7 @@
     //Obtain the favorite friends
     favoriteFriendsList = [[NSMutableArray alloc] init];
     
-    //Checking if already a favorite
+    /*//Checking if already a favorite
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
     NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
@@ -144,7 +148,9 @@
         
         //NSLog(@"NETID of user is %@ and fb id is %@", user.netid, user.fb_id);
         //NSLog(@"Global netid is %@", globalnetid);
-    }
+    }*/
+    
+    User *targetUser = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
     
     NSString *commaSepFavFBFriendsList = targetUser.fav_friends_commasep;
     NSMutableArray *arrayOfFavFBFriendIDs = [NSMutableArray arrayWithArray:[commaSepFavFBFriendsList componentsSeparatedByString:@","]];
@@ -510,7 +516,7 @@
     }
     else if (indexPath.section == 0)
     {
-        UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_bw.png"]];
+        UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_outline_thick.png"]];
         starView.frame = CGRectMake(250, 10, 20, 20);
         [cell.contentView addSubview:starView];
 

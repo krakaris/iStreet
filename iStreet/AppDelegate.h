@@ -12,7 +12,7 @@
 
 extern NSString *const DataLoadedNotificationString;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, ServerCommunicationDelegate, FBRequestDelegate, FBSessionDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, ServerCommunicationDelegate, FBRequestDelegate, FBSessionDelegate, UIAlertViewDelegate>
 {
     int _networkActivityIndicatorCount;
     Facebook *facebook;
@@ -24,7 +24,7 @@ extern NSString *const DataLoadedNotificationString;
 @property (nonatomic, retain) NSArray *allfbFriends;
 @property (nonatomic, retain) UIManagedDocument *document;
 @property (nonatomic, assign) BOOL appDataLoaded;
-
+@property (nonatomic, retain) UIAlertView *connectionFailureAlert;
 @property (nonatomic, retain) Facebook *facebook;
 
 - (void)useNetworkActivityIndicator;

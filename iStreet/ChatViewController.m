@@ -199,13 +199,13 @@
         return;
     }
     
-    NSDate *now = [NSDate date];/*
+    NSDate *now = [NSDate date];
     if(lastMessage && [now timeIntervalSinceDate:lastMessage] <= 20)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Rate Limit" message:[NSString stringWithFormat:@"Please wait 20 seconds between sending chat messages.", [messageField.text length]] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [alert show];
         return;
-    }*/
+    }
     
     /* Send the message */
     secondLastMessage = lastMessage;
@@ -309,9 +309,9 @@
 - (UIFont *)getCurrentFont
 {
     if (drunk)
-        return [UIFont fontWithName:@"TrebuchetMS-Bold" size:15];
+        return [UIFont fontWithName:@"TrebuchetMS-Bold" size:16];
     else 
-        return [UIFont fontWithName:@"TrebuchetMS" size:12];
+        return [UIFont fontWithName:@"TrebuchetMS" size:13];
 }
 
 #pragma mark UITableViewController Delegate

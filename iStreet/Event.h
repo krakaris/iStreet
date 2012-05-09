@@ -2,7 +2,7 @@
 //  Event.h
 //  iStreet
 //
-//  Created by Rishi on 5/5/12.
+//  Created by Rishi on 5/8/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -24,7 +24,15 @@
 @property (nonatomic, retain) NSString * time_end;
 @property (nonatomic, retain) NSString * time_start;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) User *userAttending;
+@property (nonatomic, retain) NSSet *usersAttending;
 @property (nonatomic, retain) Club *whichClub;
+@end
+
+@interface Event (CoreDataGeneratedAccessors)
+
+- (void)addUsersAttendingObject:(User *)value;
+- (void)removeUsersAttendingObject:(User *)value;
+- (void)addUsersAttending:(NSSet *)values;
+- (void)removeUsersAttending:(NSSet *)values;
 
 @end

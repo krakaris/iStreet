@@ -2,7 +2,7 @@
 //  Event.m
 //  iStreet
 //
-//  Created by Rishi on 5/5/12.
+//  Created by Rishi on 5/8/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -24,7 +24,7 @@
 @dynamic time_end;
 @dynamic time_start;
 @dynamic title;
-@dynamic userAttending;
+@dynamic usersAttending;
 @dynamic whichClub;
 
 @end

@@ -9,12 +9,35 @@
 #import "AllEventsViewController.h"
 #import "AppDelegate.h"
 #import "Event.h"
+#import "User+Create.h"
 
 @interface AllEventsViewController ()
 
 @end
 
 @implementation AllEventsViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if([(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded])
+    {
+        NSLog(@"repeat request");
+        [self requestServerEventsData];
+    }
+}
+
+- (void)logout
+{
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:@"/logout" withPOSTBody:nil forViewController:self withDelegate:self andDescription:@"logout"];
+}
 
 - (NSArray *)getCoreDataEvents
 {
@@ -23,7 +46,7 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];   
     
     NSArray *events = [document.managedObjectContext executeFetchRequest:request error:NULL];
-        
+    
     return events;
 }
 
@@ -35,18 +58,47 @@
 
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
-    [super connectionWithDescription:description finishedReceivingData:data];
-    _serverLoadedOnce = YES;
+    if(![description isEqualToString:@"logout"])
+    {
+        [super connectionWithDescription:description finishedReceivingData:data];
+        _serverLoadedOnce = YES;
+    }
+    else 
+    {
+        // need aki's code to log out
+        if([(AppDelegate *)[[UIApplication sharedApplication] delegate] fbID])
+        {
+            Facebook *fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
+            fb.sessionDelegate = self;
+            [fb logout];
+        }
+        else 
+            [self login];
+    }
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)connectionFailed:(NSString *)description
 {
-    [super viewDidAppear:animated];
-    if(_serverLoadedOnce)
-    {
-        NSLog(@"repeat request");
-        [self requestServerEventsData];
-    }
+#warning - logout failure?
+    if([[self.navigationItem.rightBarButtonItem tintColor] isEqual:[UIColor redColor]])
+        return; 
+    
+    [[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"There was a problem retrieving the latest event information. If the error persists, make sure you are connected to the internet" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+    
+    [super connectionFailed:description];
+}
+
+- (void)fbDidLogout
+{
+
+}
+
+- (void)login
+{
+    
+     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:nil];
+     ServerCommunication *sc = [[ServerCommunication alloc] init];
+     [sc sendAsynchronousRequestForDataAtRelativeURL:@"/login" withPOSTBody:nil forViewController:self withDelegate:nil andDescription:@"login"];
 }
 
 

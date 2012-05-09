@@ -8,6 +8,7 @@
 
 #import "FriendsViewController.h"
 #import "FriendsTableViewController.h"
+#import "User+Create.h"
 
 @interface FriendsViewController ()
 

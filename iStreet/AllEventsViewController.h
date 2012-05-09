@@ -7,8 +7,9 @@
 //
 
 #import "EventsViewController.h"
+#import "Facebook.h"
 
-@interface AllEventsViewController : EventsViewController
+@interface AllEventsViewController : EventsViewController <FBSessionDelegate>
 {
     BOOL _serverLoadedOnce;
 }

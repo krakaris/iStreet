@@ -9,7 +9,9 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "Club+Create.h"
+#import "Club.h"
 #import "User.h"
+#import "User+Create.h"
 #import "Event.h"  
 
 NSString *const DataLoadedNotificationString = @"Application data finished loading";
@@ -23,7 +25,7 @@ static NSString *appID = @"128188007305619";
 
 @implementation AppDelegate
 
-@synthesize window = _window, netID = _netID, fbID = _fbID, allfbFriends = _allfbFriends, document = _document, appDataLoaded = _appDataLoaded, facebook = _facebook;
+@synthesize window = _window, netID = _netID, fbID = _fbID, allfbFriends = _allfbFriends, document = _document, appDataLoaded = _appDataLoaded, facebook = _facebook, connectionFailureAlert = _connectionFailureAlert;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -56,16 +58,10 @@ static NSString *appID = @"128188007305619";
             {
                 NSLog(@"successfully opened database!");
                 _appDataLoaded = YES;
-                NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
                 
-                NSError *error;
-                NSArray *clubs = [_document.managedObjectContext executeFetchRequest:request error:&error];
-                if(clubs)
-                {
-                    User *thisUser = [clubs objectAtIndex:0];
-                    _netID = [thisUser netid];
-                }
-                
+                // get the user for this netid
+                _netID = [[NSUserDefaults standardUserDefaults] objectForKey:@"netid"]; //or nil
+
                 [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
             }
             if (!success) 
@@ -79,8 +75,7 @@ static NSString *appID = @"128188007305619";
                        [self setupCoreData];
                    
                    if (!success) 
-                       NSLog(@"couldn’t create document at %@", [dataURL path]);}];
-        
+                       NSLog(@"couldn’t create document at %@", [dataURL path]);}];        
     }
     
     //Creating Facebook object
@@ -143,6 +138,19 @@ static NSString *appID = @"128188007305619";
 - (void)connectionFailed:(NSString *)description
 {
     NSLog(@"clubs list connection failed");
+    if(self.connectionFailureAlert)
+        return;
+    
+    self.connectionFailureAlert = [[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"There was a problem connecting to our server. Please ensure that your device has internet access, and select \"Okay\" to try again." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [self.connectionFailureAlert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    self.connectionFailureAlert = nil;   
+    
+    if(buttonIndex != -1)
+        [self setupCoreData];
 }
 
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
@@ -158,7 +166,7 @@ static NSString *appID = @"128188007305619";
     
     //OR HERE??
     
-    [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:_document.managedObjectContext];
+    //[NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:_document.managedObjectContext];
     
     NSLog(@"successfully created database!");  
     _appDataLoaded = YES;
@@ -177,12 +185,40 @@ static NSString *appID = @"128188007305619";
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    if(self.connectionFailureAlert)
+        [self.connectionFailureAlert dismissWithClickedButtonIndex:-1 animated:NO];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Club"];
+    NSError *error;
+    NSArray *clubs = [_document.managedObjectContext executeFetchRequest:request error:&error];
+    if([clubs count] == 0)
+    {
+        [self.document closeWithCompletionHandler:NULL];
+        NSFileManager *fm = [NSFileManager defaultManager];
+        NSURL *dataURL = [[fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+        dataURL = [dataURL URLByAppendingPathComponent:@"database"];
+        [fm removeItemAtURL:dataURL error:NULL];
+        NSLog(@"deleting the database :(");
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     //[self checkCoreDataAndSetUpFacebook];
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSURL *dataURL = [[fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    dataURL = [dataURL URLByAppendingPathComponent:@"database"];
+
+    if (![fm fileExistsAtPath:[dataURL path]]) 
+    {
+        self.document = [[UIManagedDocument alloc] initWithFileURL:dataURL];
+        [self.document saveToURL:dataURL forSaveOperation:UIDocumentSaveForCreating
+               completionHandler:^(BOOL success) {[self setupCoreData];}];        
+    }
+
 }
 
 
@@ -192,13 +228,14 @@ static NSString *appID = @"128188007305619";
     
     //Facebook Initialization
     //Finding the user in the core data database    
-    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSArray *users = [_document.managedObjectContext executeFetchRequest:usersRequest error:nil];
+    //NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    //NSArray *users = [_document.managedObjectContext executeFetchRequest:usersRequest error:nil];
     
     //There should be only 1 user entity - and with matching netid
     
-    User *targetUser;
-    for (User *user in users)
+    User *targetUser = [User userWithNetid:_netID];
+
+    /*for (User *user in users)
     {
         NSLog(@"Displaying user info for %@", user.netid);
         if ([self.netID isEqualToString:user.netid])
@@ -206,7 +243,7 @@ static NSString *appID = @"128188007305619";
             targetUser = user;
             NSLog(@"Found target!");
         }
-    }
+    }*/
     
     NSLog(@"Retrieved fb id FROM CORE DATA is %@", targetUser.fb_id);
     NSLog(@"Access token is %@", self.facebook.accessToken);
@@ -261,7 +298,11 @@ static NSString *appID = @"128188007305619";
 {
     // only set the instance variable if netID is a new netid. netID could be the notification sender.
     if([netID isKindOfClass:[NSString class]])
+    {
         _netID = netID;
+        [[NSUserDefaults standardUserDefaults] setObject:netID forKey:@"netid"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
@@ -282,9 +323,7 @@ static NSString *appID = @"128188007305619";
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         NSLog(@"setting netid!");
-        User *thisUser = [clubs objectAtIndex:0];
-        [thisUser setNetid:_netID];
-        
+        [User userWithNetid:_netID];
         [self checkCoreDataAndSetUpFacebook];
     }
     
