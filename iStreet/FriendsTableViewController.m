@@ -461,7 +461,7 @@
         currentUserName = [currentFriend valueForKey:@"name"];
         cell.textLabel.text = currentUserName;
         
-    
+        
         //Checking if favorite (to add star)
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
         NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
@@ -477,7 +477,7 @@
     else if (indexPath.section == 0)
     {
         UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_bw.png"]];
-        starView.frame = CGRectMake(250, 10, 20, 20);        
+        starView.frame = CGRectMake(250, 10, 20, 20);
         [cell.contentView addSubview:starView];
 
         currentFriend = [favoriteFriendsList objectAtIndex:indexPath.row];
@@ -533,8 +533,6 @@
         }
     }
 
-    //Downloading the proper image
-    
     return cell;
 }
 
