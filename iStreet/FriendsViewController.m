@@ -21,6 +21,7 @@ static NSString *appID = @"128188007305619";
 
 @synthesize fb;
 @synthesize fConnectButton;
+@synthesize loadingFriendsLabel;
 @synthesize spinner;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -35,12 +36,28 @@ static NSString *appID = @"128188007305619";
     return self;
 }
 
+- (void) animateLoadingFriendsLabel
+{
+    self.loadingFriendsLabel.hidden = NO;
+    
+    // Add transition (must be called after myLabel has been displayed)
+    CATransition *animation = [CATransition animation];
+    animation.duration = 3.0;
+    animation.type = kCATransitionMoveIn;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [self.loadingFriendsLabel.layer addAnimation:animation forKey:@"changeTextTransition"];
+    
+    // Change the text
+    self.loadingFriendsLabel.text = @"Loading Friends..";
+}
+
 //fb delegate method
 - (void)fbDidLogin 
 {
     NSLog(@"Call to delegate, did log in!");
     self.fConnectButton.enabled = NO;
     [self.spinner startAnimating];
+    [self animateLoadingFriendsLabel];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[self.fb accessToken] forKey:@"FBAccessTokenKey"];
@@ -63,6 +80,7 @@ static NSString *appID = @"128188007305619";
 {
     NSLog(@"Facebook's viewWillAppear!!");
     self.fConnectButton.enabled = YES;
+    self.loadingFriendsLabel.hidden = YES;
     [self.navigationItem setHidesBackButton:YES animated:YES];
     [self.spinner stopAnimating];
     self.fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
@@ -79,6 +97,7 @@ static NSString *appID = @"128188007305619";
         }
         else 
         {
+            [self animateLoadingFriendsLabel];
             NSLog(@"Spinner starts, requesting friends!");
             [self.spinner startAnimating];
             //Requesting friends
@@ -258,7 +277,6 @@ static NSString *appID = @"128188007305619";
 
 - (void) request:(FBRequest *)request didLoad:(id)result
 {   
-
     if ([request.url isEqualToString:@"https://graph.facebook.com/me"]) //request for fbid
     {
         NSLog(@"This is the request for fb id");
@@ -318,6 +336,10 @@ static NSString *appID = @"128188007305619";
                     NSLog(@"STORED FBID IN CORE DATA DATABASE! fbid is %@", fbid);
                     //[document.managedObjectContext save:nil];
                 }
+            }
+            else 
+            {
+                NSLog(@"No key received, handle this case.");
             }
         }
     }

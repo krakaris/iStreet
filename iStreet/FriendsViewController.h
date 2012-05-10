@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "Facebook.h"
 #import "JSON.h"
 #import "ServerCommunication.h"
@@ -23,6 +24,7 @@
 
 
 @property (nonatomic, retain) IBOutlet UIButton *fConnectButton;
+@property (nonatomic, retain) IBOutlet UILabel *loadingFriendsLabel;
 @property (nonatomic, retain) Facebook *fb;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
 
