@@ -476,7 +476,7 @@
         {
             //Make it a special cell instead.
             UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_outline_thick.png"]];
-            starView.frame = CGRectMake(250, 5, 30, 30);
+            starView.frame = CGRectMake(250, 10, 20, 20);
             [cell.contentView addSubview:starView];
         }
     }
@@ -518,7 +518,7 @@
         {
             //Make it a special cell instead.
             UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_outline_thick.png"]];
-            starView.frame = CGRectMake(250, 5, 30, 30);
+            starView.frame = CGRectMake(250, 10, 20, 20);
             [cell.contentView addSubview:starView];
         }
         
