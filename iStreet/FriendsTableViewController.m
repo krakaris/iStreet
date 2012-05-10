@@ -566,8 +566,8 @@
     
     sum += indexPath.row;
     
-    //if (sum > 0)
-    sum -= 1;
+    if (sum > 0)
+        sum -= 1;
 
     /*
     int sections = [self.friendsTableView numberOfSections];
