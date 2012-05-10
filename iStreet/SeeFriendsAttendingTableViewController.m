@@ -74,10 +74,11 @@
     
     if (description == @"fetching users")
     {        
+        /*
         downloadFriendsAttendingQ = dispatch_queue_create("friends attending downloader", NULL);
         dispatch_async(downloadFriendsAttendingQ, ^{
         
-        
+        */
             NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             NSLog(@"Request completed with response string %@", response);
             
@@ -143,8 +144,10 @@
             
             //Reloading data
             [self.tableView reloadData];
-        });
+       
+        /* });
         dispatch_release(downloadFriendsAttendingQ);
+         */
     }
 }
 
