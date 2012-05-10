@@ -76,6 +76,26 @@ static NSString *appID = @"128188007305619";
     [self.fb requestWithGraphPath:@"me" andDelegate:self];
 }
 
+/*
+- (BOOL) tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
+{
+    NSLog(@"Should select?");
+    id nextVC = [(UINavigationController *)viewController topViewController];
+    id currentVC = [(UINavigationController *)tabBarController.selectedViewController topViewController];
+
+    if (nextVC != currentVC)
+    {
+        NSLog(@"They are equal!");
+        return YES;
+    }
+    else 
+    {
+        NSLog(@"They aren't equal!");
+        return NO;
+    }
+}
+*/
+
 - (void) viewWillAppear:(BOOL)animated
 {
     NSLog(@"Facebook's viewWillAppear!!");
@@ -95,7 +115,7 @@ static NSString *appID = @"128188007305619";
             NSLog(@"Performing viewWillAppear Segue!");
             [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
         }
-        else 
+        else
         {
             [self animateLoadingFriendsLabel];
             NSLog(@"Spinner starts, requesting friends!");
@@ -451,9 +471,7 @@ static NSString *appID = @"128188007305619";
 }
 
 
-- (void) loggedInLoadFriendsNow
-{
-    NSLog(@"Guess I'm logged in now!");
-}
+//FBRequest Delegate Methods
+
 
 @end

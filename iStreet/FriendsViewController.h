@@ -13,7 +13,7 @@
 #import "ServerCommunication.h"
 #import "User.h"
 
-@interface FriendsViewController : UIViewController <FBSessionDelegate, FBRequestDelegate, UIAlertViewDelegate>
+@interface FriendsViewController : UIViewController <FBSessionDelegate, FBRequestDelegate, UIAlertViewDelegate, UITabBarControllerDelegate>
 {
     Facebook *localFacebook;
     NSArray *friendsArray;
@@ -29,6 +29,5 @@
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
 
 - (IBAction)fbconnect:(id)sender;
-- (void) loggedInLoadFriendsNow;
 
 @end

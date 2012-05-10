@@ -36,6 +36,7 @@
 
 #define loggedOutAlertView 1
 #define logOutConfirmAlertView 2
+#define logOutFailedAlertView 3
 
 - (void) logoutOfFacebook:(id)sender
 {
@@ -55,16 +56,36 @@
         {
             NSLog(@"Logout!");
             
-            Facebook *fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
-            fb.sessionDelegate = self;
-            [fb logout];
-            //[fb logout];
+            /*
+            Logging out is a two-step process -
+             1. First, we need to make a server call to iStreet to dissociate the fbid from the netid,
+             2. Then, we need to call the logout method of the facebook object
+             
+             The second step doesn't depend on an internet connection but the first one does,
+             so we'll call them in this sequence such that if the first step fails, we never
+             reach the second step.
+            */
+            
+            //Updating user's fbid on server
+            //Build url for server
+            NSString *relativeURL = @"/updateUser";
+            relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+            
+            ServerCommunication *sc = [[ServerCommunication alloc] init];
+            [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"fb_id=" forViewController:self withDelegate:self andDescription:@"updating user with fbid on logout"];
+            
         }
     }
-    else {
+    else if (alertView.tag == logOutConfirmAlertView)
+    {
         NSLog(@"Clicked on OK");
         //[self.navigationController removeFromParentViewController];
         [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if (alertView.tag == logOutFailedAlertView)
+    {
+        //do nothing, show message
+        NSLog(@"Logout failed.");
     }
 }
 
@@ -73,26 +94,8 @@
     NSLog(@"Logged Out!");
     [(AppDelegate *) [[UIApplication sharedApplication] delegate] setAllfbFriends:nil];
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:nil];
-    
-    
-    //Setting fbid to nil in core data
-    /*UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
-    
-    //There should be only 1 user entity - and with matching netid
-    NSString *globalnetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
 
-    User *targetUser;
-    for (User *user in users)
-    {
-        if ([globalnetid isEqualToString:user.netid])
-        {
-            targetUser = user;
-            NSLog(@"Found target!");
-        }
-    }*/
-    
+    //Setting fbid to nil in core data    
     User *targetUser = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
     
     //Setting fbid
@@ -105,15 +108,6 @@
     [prefs setObject:nil forKey:@"FBExpirationDateKey"];
     [prefs synchronize];
     
-    
-    //Updating user's fbid on server
-    //Build url for server
-    NSString *relativeURL = @"/updateUser";
-    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
-    
-    ServerCommunication *sc = [[ServerCommunication alloc] init];
-    //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"fb_id=" forViewController:self withDelegate:self andDescription:@"updating user with fbid"];
-    
     UIAlertView *loggedOutAlert = [[UIAlertView alloc] initWithTitle:@"Logged Out!" message:@"You have been logged out of Facebook. You can log in again at any time." delegate:self cancelButtonTitle:@"OK"
                                                    otherButtonTitles:nil];
     loggedOutAlert.tag = loggedOutAlertView;
@@ -125,6 +119,7 @@
 {
     //Obtain the favorite friends
     favoriteFriendsList = [[NSMutableArray alloc] init];
+    self.friendsTableView.bounces = NO;
     
     /*//Checking if already a favorite
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
@@ -262,77 +257,6 @@
     
     [self.friendsTableView reloadData];
     
-    
-    /*
-    //Randomizing Friends Attending different events
-    
-    NSArray *allEvents = [NSArray arrayWithObjects:@"71", @"111", @"88", @"89", @"93", @"96", @"69",
-                          @"81", @"95", @"106", @"107", @"79", @"85", @"86", @"87", @"97", @"103",
-                          @"105", @"112", @"110", @"78", @"90", @"99", @"102", @"84", @"94", @"98", @"108",
-                          @"115", @"116", @"114", @"92", @"100", nil];
-    
-    NSArray *allFriendsFB = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
-    
-    int count = 0;
-    while (count < 10)
-    {
-        NSDictionary *user = [allFriendsFB objectAtIndex:count];
-        int i = arc4random() % [allEvents count];
-        
-        NSString *userName = [user valueForKey:@"name"];
-        NSString *facebookID = [user valueForKey:@"id"];
-        
-        NSLog(@"Friend with name %@ and id %@ and index %d and random event %@", userName, facebookID, i, [allEvents objectAtIndex:i]);
-        
-        //Build url for server
-        NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=%@", facebookID];
-        relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
-        
-        NSLog(@"relativeURL is %@", relativeURL);
-        ServerCommunication *sc = [[ServerCommunication alloc] init];
-        NSString *postBody = [NSString stringWithFormat:@"name=%@", userName];
-
-        [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:postBody forViewController:self withDelegate:self andDescription:userName];
-        
-        for (int j = 0; j < 5; j++)
-        {
-            i = arc4random() % [allEvents count];
-            NSString *eventPostBody = [NSString stringWithFormat:@"event_id=%@", [allEvents objectAtIndex:i]];
-            [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:eventPostBody forViewController:self withDelegate:self andDescription:userName];
-        }
-        count ++;
-    }
-    */
-    
-    /*
-    //Build url for server
-    NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=%@", @"521832474"];
-    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
-    
-    NSLog(@"relativeURL is %@", relativeURL);
-    ServerCommunication *sc = [[ServerCommunication alloc] init];
-    //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Stacey Wenjun Zhang"forViewController:self withDelegate:self andDescription:@"stacey"];
-    
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=102" forViewController:self withDelegate:self andDescription:@"adding event 99"];
-     */
-    /*
-    NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=571438200"];
-    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
-    
-    ServerCommunication *sc = [[ServerCommunication alloc] init];
-    
-     
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Rishi Narang" forViewController:self withDelegate:self andDescription:@"updating name"];
-    
-    //sc = [[ServerCommunication alloc] init];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=99" forViewController:self withDelegate:self andDescription:@"adding event 99"];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=88" forViewController:self withDelegate:self andDescription:@"adding event 88"];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=100" forViewController:self withDelegate:self andDescription:@"adding event 100"];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=101" forViewController:self withDelegate:self andDescription:@"adding event 101"];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=71" forViewController:self withDelegate:self andDescription:@"adding event 71"];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=111" forViewController:self withDelegate:self andDescription:@"adding event 111"];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=97" forViewController:self withDelegate:self andDescription:@"adding event 97"];
-     */
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -637,11 +561,13 @@
     {
         sum += [self.friendsTableView numberOfRowsInSection:count];
         count++;
-        NSLog(@"User at index path is %d, %d", count, sum);
+        NSLog(@"User at index path %d, %d", count, sum);
     }
     
-    sum -= 1;
     sum += indexPath.row;
+    
+    //if (sum > 0)
+    sum -= 1;
 
     /*
     int sections = [self.friendsTableView numberOfSections];
@@ -657,6 +583,7 @@
     sum -= 1;
     */
     
+    NSLog(@"index for useratIndexPath is %d", sum);
     //Return absolute object
     return [self.friendslist objectAtIndex:sum];
 }
@@ -874,14 +801,27 @@
 
 }
 
+- (void) connectionFailed:(NSString *)description
+{
+    if (description == @"updating user with fbid on logout")
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logout Failed" message:@"Logout failed, possibly due to lack of an internet connection. Please check your connection and try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        alert.tag = logOutFailedAlertView;
+        [alert show];
+    }
+}
+
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     //Empty array needed each time
     [eventsAttending_selected removeAllObjects];
     
-    if (description == @"updating user with fbid")
+    if (description == @"updating user with fbid on logout")
     {
         NSLog(@"Updated fbid on logout");
+        Facebook *fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
+        fb.sessionDelegate = self;
+        [fb logout];
     }
     else if (description == @"retrieve events")
     {

@@ -77,6 +77,28 @@
     }
 }
 
+- (void) fbDidLogout
+{
+    NSLog(@"Logged Out!");
+    [(AppDelegate *) [[UIApplication sharedApplication] delegate] setAllfbFriends:nil];
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:nil];
+    
+    //Setting fbid to nil in core data    
+    User *targetUser = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
+    
+    //Setting fbid
+    if (targetUser != nil)
+        targetUser.fb_id = nil;
+    
+    //Clearing user defaults
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [prefs setObject:nil forKey:@"FBAccessTokenKey"];
+    [prefs setObject:nil forKey:@"FBExpirationDateKey"];
+    [prefs synchronize];
+    
+    //Show alert to confirm logout -- if needed!
+}
+
 - (void)connectionFailed:(NSString *)description
 {
 #warning - logout failure?
@@ -86,11 +108,6 @@
     [[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"There was a problem retrieving the latest event information. If the error persists, make sure you are connected to the internet" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
     
     [super connectionFailed:description];
-}
-
-- (void)fbDidLogout
-{
-
 }
 
 - (void)login
