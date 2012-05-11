@@ -577,6 +577,9 @@
           
 - (void)iconDidLoad:(NSIndexPath *)indexPath
 {
+    if(self.isFiltered)
+        return;
+    
     //NSLog(@"loaded icon for friend name is %@", [[self getUserAtIndexPath:indexPath] valueForKey:@"name"]);
     [self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
     [_iconsBeingDownloaded removeObjectForKey:indexPath];
@@ -748,8 +751,7 @@
         
         //Getting the names that begin with that first letter
         NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
-       
-        if ([names count] > 0)
+               if ([names count] > 0)
         {
             NSString *friendName = [names objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] row]];
             name_selected = friendName;
