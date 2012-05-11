@@ -10,7 +10,7 @@
 #import "FriendCell.h"
 
 @interface SeeFriendsAttendingTableViewController ()
-
++ (NSArray *)intersectAllFriendsArray:(NSArray *)allFriends withAttendees:(NSArray *)fbids;
 @end
 
 @implementation SeeFriendsAttendingTableViewController
@@ -82,7 +82,7 @@
         NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"Request completed with response string %@", response);
         
-        NSMutableArray *arrayOfAttendingFBFriendIDs = [NSMutableArray arrayWithArray:[response componentsSeparatedByString:@", "]];
+        NSMutableArray *arrayOfAttendingFBIDs = [NSMutableArray arrayWithArray:[response componentsSeparatedByString:@", "]];
         
         NSMutableArray *temporaryFriendsArray = [[NSMutableArray alloc] init];
         NSMutableSet *allFriendsFBIDs = [[NSMutableSet alloc] init];
@@ -92,12 +92,15 @@
         NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriendsFB count]);
         
         
+        /*
         for (NSDictionary *friend in allFriendsFB)
             [allFriendsFBIDs addObject:(NSString *) [friend valueForKey:@"id"]];
         
         [allFriendsFBIDs intersectSet:[NSMutableSet setWithArray:arrayOfAttendingFBFriendIDs]];
         NSLog(@"Using new method, %d", [allFriendsFBIDs count]);
+         */
         
+        NSArray *friendsAttending = [SeeFriendsAttendingTableViewController intersectAllFriendsArray:allFriendsFB withAttendees:arrayOfAttendingFBIDs];        
         /*
          NSMutableSet *set = [NSMutableSet setWithArray:temporaryFriendsIDsArray];
          [set intersectSet:[NSMutableSet setWithArray:allFriendsFBIDs]];
@@ -158,7 +161,10 @@
         [self.spinner stopAnimating];
         
         //if ([temporaryFriendsArray count] == 0)
-        if ([allFriendsFBIDs count] == 0)
+        
+        
+        //if ([allFriendsFBIDs count] == 0)
+        if ([friendsAttending count] == 0)
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"None Attending" message:@"None of your friends are attending this event." delegate:self cancelButtonTitle:@"Go Back" otherButtonTitles:nil];
             alert.delegate = self;
@@ -166,9 +172,11 @@
         }
         
         //Setting global array to temporary friends array
-        listOfAttendingFriends = [NSArray arrayWithArray:temporaryFriendsArray];
+        //listOfAttendingFriends = [NSArray arrayWithArray:temporaryFriendsArray];
         //listOfAttendingFriends = [NSArray arrayWithArray:[allFriendsFBIDs allObjects]];
+        listOfAttendingFriends = [NSArray arrayWithArray:friendsAttending];
         NSLog(@"Setting global to temporary array!");
+        NSLog(@"Number of results is %d", [listOfAttendingFriends count]);
         
         //Reloading data
         [self.tableView reloadData];
@@ -257,7 +265,7 @@
         return [fb_id1 compare:fb_id2];
     }];
     
-    [allFriends sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+    [fbids sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         NSString *fb_id1 = (NSString *)obj1;
         NSString *fb_id2 = (NSString *)obj2;
         return [fb_id1 compare:fb_id2];
@@ -266,7 +274,7 @@
     int allFriendsIndex = 0;
     int fbidsIndex = 0;
     
-    while(fbidsIndex < [fbids count])
+    while(fbidsIndex < [fbids count] && allFriendsIndex < [allFriends count])
     {
         NSComparisonResult comparisonResult = [[fbids objectAtIndex:fbidsIndex] compare:[[friendsAttending objectAtIndex:allFriendsIndex] valueForKey:@"id"]];
         if(comparisonResult == NSOrderedAscending)

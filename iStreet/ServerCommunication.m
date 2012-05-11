@@ -11,7 +11,7 @@
 #import <CommonCrypto/CommonDigest.h>
 
 enum connectionConstants {
-    kConnectionTimeout = 8,  
+    kConnectionTimeout = 10,  
 };
 
 @interface ServerCommunication()
