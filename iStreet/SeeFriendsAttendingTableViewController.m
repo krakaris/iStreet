@@ -259,24 +259,25 @@
 + (NSArray *)intersectAllFriendsArray:(NSArray *)allFriends withAttendees:(NSArray *)fbids
 {
     NSMutableArray *friendsAttending = [NSMutableArray arrayWithArray:allFriends];
-    [friendsAttending sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        NSString *fb_id1 = [obj1 valueForKey:@"id"];
-        NSString *fb_id2 = [obj2 valueForKey:@"id"];
+    [friendsAttending sortUsingComparator:^NSComparisonResult(id obj1, id obj2) 
+    {
+        NSNumber *fb_id1 = [obj1 valueForKey:@"id"];
+        NSNumber *fb_id2 = [obj2 valueForKey:@"id"];
         return [fb_id1 compare:fb_id2];
     }];
     
-    [fbids sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        NSString *fb_id1 = (NSString *)obj1;
-        NSString *fb_id2 = (NSString *)obj2;
+    NSArray *sortedFbids = [fbids sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSNumber *fb_id1 = (NSNumber *)obj1;
+        NSNumber *fb_id2 = (NSNumber *)obj2;
         return [fb_id1 compare:fb_id2];
     }];
     
     int allFriendsIndex = 0;
     int fbidsIndex = 0;
     
-    while(fbidsIndex < [fbids count] && allFriendsIndex < [allFriends count])
+    while(fbidsIndex < [sortedFbids count] && allFriendsIndex < [friendsAttending count])
     {
-        NSComparisonResult comparisonResult = [[fbids objectAtIndex:fbidsIndex] compare:[[friendsAttending objectAtIndex:allFriendsIndex] valueForKey:@"id"]];
+        NSComparisonResult comparisonResult = [[sortedFbids objectAtIndex:fbidsIndex] compare:[[friendsAttending objectAtIndex:allFriendsIndex] valueForKey:@"id"]];
         if(comparisonResult == NSOrderedAscending)
         {
             fbidsIndex++;
@@ -292,7 +293,7 @@
         }
     }
     
-    while(allFriendsIndex < [allFriends count])
+    while(allFriendsIndex < [friendsAttending count])
         [friendsAttending removeObjectAtIndex:allFriendsIndex];
     
     return friendsAttending;
