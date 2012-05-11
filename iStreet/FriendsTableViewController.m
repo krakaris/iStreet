@@ -76,7 +76,7 @@
             
         }
     }
-    else if (alertView.tag == logOutConfirmAlertView)
+    else if (alertView.tag == loggedOutAlertView)
     {
         NSLog(@"Clicked on OK");
         //[self.navigationController removeFromParentViewController];
@@ -117,9 +117,19 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    NSLog(@"View Will Appear of Friends!");
+    
+    //Pop Controller if user not logged in
+    NSString *fbid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] fbID];
+    
+    if (fbid == nil)
+    {
+        [self.navigationController popViewControllerAnimated:NO];
+    }
+
+    
     //Obtain the favorite friends
     favoriteFriendsList = [[NSMutableArray alloc] init];
-    self.friendsTableView.bounces = NO;
     
     /*//Checking if already a favorite
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
@@ -192,6 +202,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"View Did Load of Friends!");
     [super viewDidLoad];
     [self.navigationItem setHidesBackButton:YES];
     self.navigationItem.title = @"Friends";
@@ -392,6 +403,7 @@
     //cell = [[UITableViewCell alloc] init];
     if (!cell)
         cell = [[FriendCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    //cell.clearsContextBeforeDrawing = YES;
     
     //To store the selected friend
     NSDictionary *currentFriend;
@@ -429,7 +441,8 @@
         //Checking if favorite (to add star)
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
         NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
-            
+        //NSArray *matchingUsers = [friendslist filteredArrayUsingPredicate:predicate];
+        
         if ([matchingUsers count] != 0)
         {
             //Make it a special cell instead.
@@ -473,12 +486,12 @@
             //NSLog(@"Not true.");
         }
         
-        NSLog(@"Name of current friend = %@", currentUserName);
+        //NSLog(@"Name of current friend = %@", currentUserName);
         //NSLog(@"Number of friends in section = %d", [thisSectionFriends count]);
         //NSLog(@"URL of current friend = %@", [currentFriend objectForKey:@"picture"]);
         
         indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
-        NSLog(@"Index in complete array is %d", indexInCompleteFriendsArray);
+        //NSLog(@"Index in complete array is %d", indexInCompleteFriendsArray);
 
         /*
         NSString *friendName;
@@ -512,7 +525,7 @@
     NSDictionary *friendInCompleteArray = [self.friendslist objectAtIndex:indexInCompleteFriendsArray];
     if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES) && (![friendInCompleteArray valueForKey:@"pictureData"]))
     {
-        NSLog(@"Name before icon download is %@", [currentFriend objectForKey:@"name"]);
+        //NSLog(@"Name before icon download is %@", [currentFriend objectForKey:@"name"]);
         [self startIconDownload:currentFriend forIndexPath:indexPath];
         //cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
     }
@@ -520,12 +533,12 @@
     {
         if (![friendInCompleteArray valueForKey:@"pictureData"])
         {
-            NSLog(@"No data, placeholder instead.");
+            //NSLog(@"No data, placeholder instead.");
             cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
         }
         else
         {
-            NSLog(@"Data detected, actual image, name = %@.", [friendInCompleteArray valueForKey:@"name"]);
+            //NSLog(@"Data detected, actual image, name = %@.", [friendInCompleteArray valueForKey:@"name"]);
             cell.imageView.image = [UIImage imageWithData:[friendInCompleteArray valueForKey:@"pictureData"]];
         }
     }
@@ -833,5 +846,27 @@
     }
 }
 
+//Facebook delegate methods
+//FBSessionDelegate
+
+- (void) fbDidLogin
+{
+    NSLog(@"FB did log in.");
+}
+
+- (void) fbSessionInvalidated
+{
+    NSLog(@"FB Session Invalidated.");
+}
+
+- (void) fbDidNotLogin:(BOOL)cancelled
+{
+    NSLog(@"FB did not login.");
+}
+
+- (void) fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt
+{
+    NSLog(@"FB did extend token.");
+}
 
 @end
