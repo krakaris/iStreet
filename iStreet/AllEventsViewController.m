@@ -128,6 +128,10 @@
     [prefs setObject:nil forKey:@"FBExpirationDateKey"];
     [prefs synchronize];
     
+    //Show alert to confirm logout -- if needed!
+    
+    //Pop Friends screen to root view controller - taken care of in FriendsTableViewController
+    
     [self login];
 }
 
