@@ -97,6 +97,10 @@
     [prefs synchronize];
     
     //Show alert to confirm logout -- if needed!
+    
+    //Pop Friends screen to root view controller - taken care of in FriendsTableViewController
+    
+    [self login];
 }
 
 - (void)connectionFailed:(NSString *)description
