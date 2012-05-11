@@ -487,12 +487,19 @@
     NSData *pictureData = [friendInCompleteArray valueForKey:@"pictureData"];
     if (!pictureData)
     {
+        NSLog(@"no picture data for %@", [[cell textLabel] text]);
         cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
         if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES))
+        {
             [self startIconDownload:currentFriend forIndexPath:indexPath];
+            NSLog(@"loading picture data for %@", [[cell textLabel] text]);
+        }
     }
     else 
+    {
+        NSLog(@"picture data for %@", [[cell textLabel] text]);
         cell.imageView.image = [UIImage imageWithData:pictureData];
+    }
 
         
 
@@ -533,9 +540,12 @@
     
     sum += indexPath.row;
     
+#warning aki - these next two lines should never have been here!
+    /*
     if (sum > 0)
         sum -= 1;
 
+    */
     /*
     int sections = [self.friendsTableView numberOfSections];
     
@@ -574,9 +584,8 @@
           
 - (void)iconDidLoad:(NSIndexPath *)indexPath
 {
-    NSLog(@"loaded icon for friend name is %@", [[[self.friendsTableView cellForRowAtIndexPath:indexPath] textLabel] text]);
-    [self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
-    //[self.friendsTableView reloadRowsAtIndexPaths:[self.friendsTableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
+    //NSLog(@"loaded icon for friend name is %@", [[self getUserAtIndexPath:indexPath] valueForKey:@"name"]);
+    [self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
     [_iconsBeingDownloaded removeObjectForKey:indexPath];
 }
 
