@@ -434,7 +434,27 @@ static NSString *appID = @"128188007305619";
 }
 
 
-//FBRequest Delegate Methods
+//Facebook delegate methods
+//FBSessionDelegate
 
+- (void) fbDidLogout
+{
+    NSLog(@"FB did log out.");
+}
+
+- (void) fbSessionInvalidated
+{
+    NSLog(@"FB Session Invalidated.");
+}
+
+- (void) fbDidNotLogin:(BOOL)cancelled
+{
+    NSLog(@"FB did not login.");
+}
+
+- (void) fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt
+{
+    NSLog(@"FB did extend token.");
+}
 
 @end

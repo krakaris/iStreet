@@ -122,5 +122,27 @@
      [sc sendAsynchronousRequestForDataAtRelativeURL:@"/login" withPOSTBody:nil forViewController:self withDelegate:nil andDescription:@"login"];
 }
 
+//Facebook delegate methods
+//FBSessionDelegate
+
+- (void) fbDidLogin
+{
+    NSLog(@"FB did log in.");
+}
+
+- (void) fbSessionInvalidated
+{
+    NSLog(@"FB Session Invalidated.");
+}
+
+- (void) fbDidNotLogin:(BOOL)cancelled
+{
+    NSLog(@"FB did not login.");
+}
+
+- (void) fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt
+{
+    NSLog(@"FB did extend token.");
+}
 
 @end

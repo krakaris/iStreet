@@ -403,6 +403,7 @@
     //cell = [[UITableViewCell alloc] init];
     if (!cell)
         cell = [[FriendCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    //cell.clearsContextBeforeDrawing = YES;
     
     //To store the selected friend
     NSDictionary *currentFriend;
@@ -440,7 +441,8 @@
         //Checking if favorite (to add star)
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
         NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
-            
+        //NSArray *matchingUsers = [friendslist filteredArrayUsingPredicate:predicate];
+        
         if ([matchingUsers count] != 0)
         {
             //Make it a special cell instead.
@@ -844,5 +846,27 @@
     }
 }
 
+//Facebook delegate methods
+//FBSessionDelegate
+
+- (void) fbDidLogin
+{
+    NSLog(@"FB did log in.");
+}
+
+- (void) fbSessionInvalidated
+{
+    NSLog(@"FB Session Invalidated.");
+}
+
+- (void) fbDidNotLogin:(BOOL)cancelled
+{
+    NSLog(@"FB did not login.");
+}
+
+- (void) fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt
+{
+    NSLog(@"FB did extend token.");
+}
 
 @end
