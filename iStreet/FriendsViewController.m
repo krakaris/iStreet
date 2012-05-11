@@ -75,6 +75,7 @@ static NSString *appID = @"128188007305619";
     
     //Requesting fb id
     [self.fb requestWithGraphPath:@"me" andDelegate:self];
+    NSLog(@"sent the request");
 }
 
 /*
@@ -296,8 +297,13 @@ static NSString *appID = @"128188007305619";
     }
 }
 
+- (void)request:(FBRequest *)request didFailWithError:(NSError *)error
+{
+    NSLog(@"there was an error in the request!!!: %@", [error localizedDescription]);
+}
 - (void) request:(FBRequest *)request didLoad:(id)result
 {   
+    NSLog(@"request loaded!");
     if ([request.url isEqualToString:@"https://graph.facebook.com/me"]) //request for fbid
     {
         NSLog(@"This is the request for fb id");
@@ -338,7 +344,8 @@ static NSString *appID = @"128188007305619";
     {
         NSLog(@"This is the request for friends");
 
-        NSArray *dataWeGot = [result objectForKey:@"data"];
+        NSLog(@"response: %@", result);
+        NSArray *dataWeGot = [result valueForKey:@"data"];
         friendsArray = dataWeGot;
         
         NSLog(@"Friends received!");
