@@ -220,6 +220,48 @@
     return cell;
 }
 
++ (NSArray *)intersectAllFriendsArray:(NSArray *)allFriends withAttendees:(NSArray *)fbids
+{
+    NSMutableArray *friendsAttending = [NSMutableArray arrayWithArray:allFriends];
+    [friendsAttending sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSString *fb_id1 = [obj1 valueForKey:@"id"];
+        NSString *fb_id2 = [obj2 valueForKey:@"id"];
+        return [fb_id1 compare:fb_id2];
+    }];
+    
+    [allFriends sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSString *fb_id1 = (NSString *)obj1;
+        NSString *fb_id2 = (NSString *)obj2;
+        return [fb_id1 compare:fb_id2];
+    }];
+    
+    int allFriendsIndex = 0;
+    int fbidsIndex = 0;
+    
+    while(fbidsIndex < [fbids count])
+    {
+        NSComparisonResult comparisonResult = [[fbids objectAtIndex:fbidsIndex] compare:[[friendsAttending objectAtIndex:allFriendsIndex] valueForKey:@"id"]];
+        if(comparisonResult == NSOrderedAscending)
+        {
+            fbidsIndex++;
+        }
+        else if(comparisonResult == NSOrderedDescending)
+        {
+            [friendsAttending removeObjectAtIndex:allFriendsIndex]; 
+        }
+        else 
+        {
+            fbidsIndex++;
+            allFriendsIndex++;
+        }
+    }
+    
+    while(allFriendsIndex < [allFriends count])
+        [friendsAttending removeObjectAtIndex:allFriendsIndex];
+    
+    return friendsAttending;
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

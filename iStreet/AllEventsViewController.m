@@ -26,6 +26,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self.eventsTable reloadRowsAtIndexPaths:[self.eventsTable indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
     if([(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded])
     {
         NSLog(@"repeat request");

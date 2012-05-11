@@ -303,6 +303,7 @@ static NSString *appID = @"128188007305619";
 - (void) request:(FBRequest *)request didLoad:(id)result
 {   
     NSLog(@"request loaded!");
+    NSLog(@"result: %@", result);
     if ([request.url isEqualToString:@"https://graph.facebook.com/me"]) //request for fbid
     {
         NSLog(@"This is the request for fb id");
@@ -336,7 +337,7 @@ static NSString *appID = @"128188007305619";
     {
         NSLog(@"This is the request for friends");
 
-        NSLog(@"response: %@", result);
+        NSLog(@"result: %@", result);
         NSArray *dataWeGot = [result valueForKey:@"data"];
         friendsArray = dataWeGot;
         
