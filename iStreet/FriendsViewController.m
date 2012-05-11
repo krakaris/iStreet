@@ -310,43 +310,6 @@ static NSString *appID = @"128188007305619";
                 [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:fbid];
                 NSLog(@"fbid set to %@", fbid);
                 
-                
-                //Storing it in user's core data
-                /*  UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-                 
-                 NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-                 NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
-                 
-                 //There should be only 1 user entity - and with matching netid
-                 NSString *globalnetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
-                 
-                 for (User *user in users)
-                 {
-                 //Setting the global variable
-                 NSString *fbid = [result valueForKey:@"id"];
-                 [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:fbid];
-                 NSLog(@"fbid set to %@", fbid);
-                 
-                 
-                 //Storing it in user's core data
-                 UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-                 
-                 NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-                 NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
-                 
-                 //There should be only 1 user entity - and with matching netid
-                 NSString *globalnetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
-                 
-                 for (User *user in users)
-                 {
-                 if ([globalnetid isEqualToString:user.netid])
-                 {
-                 userInCoreData = user;
-                 NSLog(@"Found target for storing fb id!!!");
-                 }
-                 }
-                 }*/
-                
                 userInCoreData = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
                 
                 //Setting fbid
