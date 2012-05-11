@@ -13,7 +13,7 @@
 #import "ServerCommunication.h"
 #import "User.h"
 
-@interface FriendsViewController : UIViewController <FBSessionDelegate, FBRequestDelegate, UIAlertViewDelegate, UITabBarControllerDelegate>
+@interface FriendsViewController : UIViewController <FBSessionDelegate, FBRequestDelegate, UIAlertViewDelegate, UITabBarControllerDelegate, ServerCommunicationDelegate>
 {
     Facebook *localFacebook;
     NSArray *friendsArray;
