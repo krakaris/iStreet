@@ -20,7 +20,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logoutAlert)];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -33,8 +33,40 @@
     }
 }
 
+- (void)logoutAlert
+{
+    UIAlertView *logoutAlert = [[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you sure you want to log out of the app? This will log you out of Facebook too." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    [logoutAlert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1)
+    {
+        [self logout];
+    }
+    else 
+        NSLog(@"cancelled");
+}
+
 - (void)logout
 {
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://fed.princeton.edu/cas/logout"]];
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] useNetworkActivityIndicator];
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    if(!conn)
+        [self connection:nil didFailWithError:nil];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
+    [[[UIAlertView alloc] initWithTitle:@"Unable to logout" message:@"There was a problem logging out. If the error persists, make sure you are connected to the internet." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
     ServerCommunication *sc = [[ServerCommunication alloc] init];
     [sc sendAsynchronousRequestForDataAtRelativeURL:@"/logout" withPOSTBody:nil forViewController:self withDelegate:self andDescription:@"logout"];
 }
@@ -96,12 +128,17 @@
     [prefs setObject:nil forKey:@"FBExpirationDateKey"];
     [prefs synchronize];
     
-    //Show alert to confirm logout -- if needed!
+    [self login];
 }
 
 - (void)connectionFailed:(NSString *)description
 {
-#warning - logout failure?
+    if([description isEqual:@"logout"])
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Unable to logout" message:@"There was a problem logging out. If the error persists, make sure you are connected to the internet." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+        return;
+    }
+    
     if([[self.navigationItem.rightBarButtonItem tintColor] isEqual:[UIColor redColor]])
         return; 
     
