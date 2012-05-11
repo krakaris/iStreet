@@ -483,23 +483,16 @@
     
     NSDictionary *friendInCompleteArray = [self.friendslist objectAtIndex:indexInCompleteFriendsArray];
     
-    
+#warning aki - look here
     NSData *pictureData = [friendInCompleteArray valueForKey:@"pictureData"];
     if (!pictureData)
     {
-        NSLog(@"no picture data for %@", [[cell textLabel] text]);
         cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
         if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES))
-        {
             [self startIconDownload:currentFriend forIndexPath:indexPath];
-            NSLog(@"loading picture data for %@", [[cell textLabel] text]);
-        }
     }
     else 
-    {
-        NSLog(@"picture data for %@", [[cell textLabel] text]);
         cell.imageView.image = [UIImage imageWithData:pictureData];
-    }
 
         
 
