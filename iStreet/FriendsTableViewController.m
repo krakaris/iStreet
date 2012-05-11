@@ -410,6 +410,8 @@
     NSString *currentUserName;
     int indexInCompleteFriendsArray;
     
+    BOOL isAFavorite = NO;
+    
     if (self.isFiltered)
     {
         currentFriend = [filteredFriendsList objectAtIndex:indexPath.row];
@@ -443,19 +445,25 @@
         NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
         //NSArray *matchingUsers = [friendslist filteredArrayUsingPredicate:predicate];
         
-        if ([matchingUsers count] != 0)
+        if ([matchingUsers count] != 0) //is a favorite
         {
+            isAFavorite = YES; //mark as favorite
+            /*
             //Make it a special cell instead.
             UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_outline_thick.png"]];
             starView.frame = CGRectMake(250, 10, 20, 20);
             [cell.contentView addSubview:starView];
+             */
         }
     }
     else if (indexPath.section == 0)
     {
+        /*
         UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_outline_thick.png"]];
         starView.frame = CGRectMake(250, 10, 20, 20);
         [cell.contentView addSubview:starView];
+         */
+        isAFavorite = YES; //mark as favorite
 
         currentFriend = [favoriteFriendsList objectAtIndex:indexPath.row];
         currentUserName = [currentFriend valueForKey:@"name"];
@@ -515,12 +523,26 @@
         
         if ([matchingUsers count] != 0)
         {
+            isAFavorite = YES;
+            /*
             //Make it a special cell instead.
             UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_outline_thick.png"]];
             starView.frame = CGRectMake(250, 10, 20, 20);
             [cell.contentView addSubview:starView];
+             */
         }
     }
+    
+#warning fix magic numbers
+    if (isAFavorite)
+    {
+        UIImage *image = [UIImage imageNamed:@"star_outline_thick.png"];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+        [imageView setImage:image];
+        cell.accessoryView = imageView;
+    }
+    else 
+        cell.accessoryView = nil;
     
     NSDictionary *friendInCompleteArray = [self.friendslist objectAtIndex:indexInCompleteFriendsArray];
     if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES) && (![friendInCompleteArray valueForKey:@"pictureData"]))

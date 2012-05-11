@@ -75,78 +75,106 @@
     if (description == @"fetching users")
     {        
         /*
-        downloadFriendsAttendingQ = dispatch_queue_create("friends attending downloader", NULL);
-        dispatch_async(downloadFriendsAttendingQ, ^{
+         downloadFriendsAttendingQ = dispatch_queue_create("friends attending downloader", NULL);
+         dispatch_async(downloadFriendsAttendingQ, ^{
+         
+         */
+        NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"Request completed with response string %@", response);
         
-        */
-            NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSLog(@"Request completed with response string %@", response);
-            
-            NSMutableArray *arrayOfAttendingFBFriendIDs = [NSMutableArray arrayWithArray:[response componentsSeparatedByString:@", "]];
-            
-            NSMutableArray *temporaryFriendsArray = [[NSMutableArray alloc] init];
-            
-            NSArray *allFriendsFB = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
-            NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriendsFB count]);
-            
-            if ([allFriendsFB count] != 0)
-            {
-                for (NSString *thisID in arrayOfAttendingFBFriendIDs)
-                {
-                    //Getting rid of empty strings.
-                    if (![thisID isEqualToString:@""])
-                    {
-                        int count = 0;
-                        for (NSDictionary *friend in allFriendsFB)
-                        {
-                            if ([[friend valueForKey:@"id"] isEqualToString:thisID])
-                            {
-                                //NSUInteger thisIndex = [allFriendsFB indexOfObject:thisID];
-                                //NSDictionary *thisObject = [allFriendsFB objectAtIndex:thisIndex];
-                                //[listOfAttendingFriends addObject:[allFriendsFB objectAtIndex:count]];
-                                [temporaryFriendsArray addObject:[allFriendsFB objectAtIndex:count]];
-                                //NSLog(@"Contains!");
-                            }
-                            else 
-                            {
-                                //NSLog(@"Doesn't contain!");
-                            }
-                            count++;
-                        }
-                        
-                    }
-                    NSLog(@"This id is %@", thisID);
-                }
-                
-                NSLog(@"Total number of valid id's is %d", [listOfAttendingFriends count]);
-                
-                /*
-                 if ([listOfAttendingFriends count] != 0)
-                 {
-                 NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-                 [listOfAttendingFriends sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-                 }
-                 */
-            }
-            
-            [self.spinner stopAnimating];
-            
-            if ([temporaryFriendsArray count] == 0)
-            {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"None Attending" message:@"None of your friends are attending this event." delegate:self cancelButtonTitle:@"Go Back" otherButtonTitles:nil];
-                alert.delegate = self;
-                [alert show];
-            }
-            
-            //Setting global array to temporary friends array
-            listOfAttendingFriends = [NSArray arrayWithArray:temporaryFriendsArray];
-            NSLog(@"Setting global to temporary array!");
-            
-            //Reloading data
-            [self.tableView reloadData];
-       
+        NSMutableArray *arrayOfAttendingFBFriendIDs = [NSMutableArray arrayWithArray:[response componentsSeparatedByString:@", "]];
+        
+        NSMutableArray *temporaryFriendsArray = [[NSMutableArray alloc] init];
+        NSMutableSet *allFriendsFBIDs = [[NSMutableSet alloc] init];
+        NSMutableArray *temporaryFriendsIDsArray = [[NSMutableArray alloc] init];
+        
+        NSArray *allFriendsFB = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
+        NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriendsFB count]);
+        
+        
+        for (NSDictionary *friend in allFriendsFB)
+            [allFriendsFBIDs addObject:(NSString *) [friend valueForKey:@"id"]];
+        
+        [allFriendsFBIDs intersectSet:[NSMutableSet setWithArray:arrayOfAttendingFBFriendIDs]];
+        NSLog(@"Using new method, %d", [allFriendsFBIDs count]);
+        
+        /*
+         NSMutableSet *set = [NSMutableSet setWithArray:temporaryFriendsIDsArray];
+         [set intersectSet:[NSMutableSet setWithArray:allFriendsFBIDs]];
+         NSLog(@"Using new method, %d", [set count]);
+         */
+        
+        /*
+         if ([allFriendsFB count] != 0)
+         {
+         for (NSString *thisID in arrayOfAttendingFBFriendIDs)
+         {
+         //Getting rid of empty strings.
+         if (![thisID isEqualToString:@""])
+         {
+         int count = 0;
+         for (NSDictionary *friend in allFriendsFB)
+         {
+         
+         [allFriendsFBIDs addObject:[friend valueForKey:@"id"]];
+         if ([[friend valueForKey:@"id"] isEqualToString:thisID])
+         {
+         //NSUInteger thisIndex = [allFriendsFB indexOfObject:thisID];
+         //NSDictionary *thisObject = [allFriendsFB objectAtIndex:thisIndex];
+         //[listOfAttendingFriends addObject:[allFriendsFB objectAtIndex:count]];
+         [temporaryFriendsArray addObject:[allFriendsFB objectAtIndex:count]];
+         [temporaryFriendsIDsArray addObject:[friend valueForKey:@"id"]];
+         //NSLog(@"Contains!");
+         }
+         else 
+         {
+         //NSLog(@"Doesn't contain!");
+         }
+         count++;
+         }
+         
+         }
+         NSLog(@"This id is %@", thisID);
+         }
+         
+         NSLog(@"Total number of valid id's is %d", [temporaryFriendsArray count]);
+         */
+        
+        /*
+         NSMutableSet *set = [NSMutableSet setWithArray:temporaryFriendsIDsArray];
+         [set intersectSet:[NSMutableSet setWithArray:allFriendsFBIDs]];
+         NSLog(@"Using new method, %d", [set count]);
+         */
+        
+        /*
+         if ([listOfAttendingFriends count] != 0)
+         {
+         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+         [listOfAttendingFriends sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+         }
+         */
+        
+        
+        [self.spinner stopAnimating];
+        
+        //if ([temporaryFriendsArray count] == 0)
+        if ([allFriendsFBIDs count] == 0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"None Attending" message:@"None of your friends are attending this event." delegate:self cancelButtonTitle:@"Go Back" otherButtonTitles:nil];
+            alert.delegate = self;
+            [alert show];
+        }
+        
+        //Setting global array to temporary friends array
+        listOfAttendingFriends = [NSArray arrayWithArray:temporaryFriendsArray];
+        //listOfAttendingFriends = [NSArray arrayWithArray:[allFriendsFBIDs allObjects]];
+        NSLog(@"Setting global to temporary array!");
+        
+        //Reloading data
+        [self.tableView reloadData];
+        
         /* });
-        dispatch_release(downloadFriendsAttendingQ);
+         dispatch_release(downloadFriendsAttendingQ);
          */
     }
 }

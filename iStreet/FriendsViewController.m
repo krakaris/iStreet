@@ -59,6 +59,7 @@ static NSString *appID = @"128188007305619";
     [self.spinner startAnimating];
     [self animateLoadingFriendsLabel];
     
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[self.fb accessToken] forKey:@"FBAccessTokenKey"];
     [defaults setObject:[self.fb expirationDate] forKey:@"FBExpirationDateKey"];
@@ -312,6 +313,13 @@ static NSString *appID = @"128188007305619";
         {
             if ([result valueForKey:@"id"])
             {
+                NSString *relativeURL = @"/updateUser";
+                relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+                
+                ServerCommunication *sc = [[ServerCommunication alloc] init];
+                [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL
+                                                   withPOSTBody:[NSString stringWithFormat:@"fb_id=%@", [result valueForKey:@"id"]] forViewController:self withDelegate:self andDescription:@"updating user with fbid"];
+                
                 //Setting the global variable
                 NSString *fbid = [result valueForKey:@"id"];
                 [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:fbid];
