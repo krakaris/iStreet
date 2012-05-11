@@ -84,9 +84,9 @@
         
         NSMutableArray *arrayOfAttendingFBIDs = [NSMutableArray arrayWithArray:[response componentsSeparatedByString:@", "]];
         
-        NSMutableArray *temporaryFriendsArray = [[NSMutableArray alloc] init];
+        /*NSMutableArray *temporaryFriendsArray = [[NSMutableArray alloc] init];
         NSMutableSet *allFriendsFBIDs = [[NSMutableSet alloc] init];
-        NSMutableArray *temporaryFriendsIDsArray = [[NSMutableArray alloc] init];
+        NSMutableArray *temporaryFriendsIDsArray = [[NSMutableArray alloc] init];*/
         
         NSArray *allFriendsFB = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
         NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriendsFB count]);
@@ -278,14 +278,11 @@
     while(fbidsIndex < [sortedFbids count] && allFriendsIndex < [friendsAttending count])
     {
         NSComparisonResult comparisonResult = [[sortedFbids objectAtIndex:fbidsIndex] compare:[[friendsAttending objectAtIndex:allFriendsIndex] valueForKey:@"id"]];
+        
         if(comparisonResult == NSOrderedAscending)
-        {
             fbidsIndex++;
-        }
         else if(comparisonResult == NSOrderedDescending)
-        {
             [friendsAttending removeObjectAtIndex:allFriendsIndex]; 
-        }
         else 
         {
             fbidsIndex++;
@@ -295,7 +292,11 @@
     
     while(allFriendsIndex < [friendsAttending count])
         [friendsAttending removeObjectAtIndex:allFriendsIndex];
-    
+    [friendsAttending sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSString *n1 = [obj1 valueForKey:@"name"];
+        NSString *n2 = [obj2 valueForKey:@"name"];
+        return [n1 compare:n2];
+    }];
     return friendsAttending;
 }
 

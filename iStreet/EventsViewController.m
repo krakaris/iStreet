@@ -339,7 +339,7 @@
 }
 
 // called by our ImageDownloader when an icon is ready to be displayed (i.e. has been associated with its Event)
-- (void)appImageDidLoad:(NSIndexPath *)indexPath
+- (void)iconDidLoad:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.eventsTable cellForRowAtIndexPath:indexPath];
     [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kLoadingIndicatorTag] stopAnimating];

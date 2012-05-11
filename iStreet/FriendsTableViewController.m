@@ -396,14 +396,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Friends Cell";
-    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
-    // Configure the cell...
-    //cell = [[UITableViewCell alloc] init];
     if (!cell)
         cell = [[FriendCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    //cell.clearsContextBeforeDrawing = YES;
     
     //To store the selected friend
     NSDictionary *currentFriend;
@@ -420,49 +416,19 @@
         
         indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
         NSLog(@"Index in complete array is %d", indexInCompleteFriendsArray);
-        
-        /*
-        if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES) && (![[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"pictureData"]))
-        {
-            //NSURL *url = [NSURL URLWithString:(NSString *)[currentFriend valueForKey:@"picture"]];
-            
-            //UIImage *picture = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
-            [self startIconDownload:[self.friendslist objectAtIndex:indexPath.row] forIndexPath:indexPath];
-            cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
-        }
-        else 
-        {
-            if (![[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"pictureData"])
-                cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
-            else
-                cell.imageView.image = [UIImage imageWithData:[currentFriend valueForKey:@"pictureData"]];
-        }
-         */
-        
+
         
         //Checking if favorite (to add star)
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
         NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
-        //NSArray *matchingUsers = [friendslist filteredArrayUsingPredicate:predicate];
         
         if ([matchingUsers count] != 0) //is a favorite
         {
             isAFavorite = YES; //mark as favorite
-            /*
-            //Make it a special cell instead.
-            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_outline_thick.png"]];
-            starView.frame = CGRectMake(250, 10, 20, 20);
-            [cell.contentView addSubview:starView];
-             */
         }
     }
     else if (indexPath.section == 0)
     {
-        /*
-        UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_outline_thick.png"]];
-        starView.frame = CGRectMake(250, 10, 20, 20);
-        [cell.contentView addSubview:starView];
-         */
         isAFavorite = YES; //mark as favorite
 
         currentFriend = [favoriteFriendsList objectAtIndex:indexPath.row];
@@ -476,7 +442,6 @@
     {
         NSString *alpha = [sectionsIndex objectAtIndex:[indexPath section]];
         NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"name beginswith[c] %@", alpha];
-        //NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
         //Getting the names that begin with that first letter
         
         NSArray *thisSectionFriends = [friendslist filteredArrayUsingPredicate:thisPredicate];
@@ -491,32 +456,10 @@
         }
         else 
         {
-            //NSLog(@"Not true.");
         }
-        
-        //NSLog(@"Name of current friend = %@", currentUserName);
-        //NSLog(@"Number of friends in section = %d", [thisSectionFriends count]);
-        //NSLog(@"URL of current friend = %@", [currentFriend objectForKey:@"picture"]);
         
         indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
-        //NSLog(@"Index in complete array is %d", indexInCompleteFriendsArray);
-
-        /*
-        NSString *friendName;
-        if ([names count] > 0)
-        {
-            friendName = [names objectAtIndex:indexPath.row];
-            cell.textLabel.text = friendName;
-            //NSLog(@"Inside if with name %@", friendName);
-        }
-        else {
-            //NSLog(@"If not true!");
-        }
-         
-        
-        NSString *currentUserName = friendName;
-         */
-        
+                
         //Checking if favorite (to add star)
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
         NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
@@ -524,12 +467,6 @@
         if ([matchingUsers count] != 0)
         {
             isAFavorite = YES;
-            /*
-            //Make it a special cell instead.
-            UIImageView *starView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_outline_thick.png"]];
-            starView.frame = CGRectMake(250, 10, 20, 20);
-            [cell.contentView addSubview:starView];
-             */
         }
     }
     
@@ -545,25 +482,20 @@
         cell.accessoryView = nil;
     
     NSDictionary *friendInCompleteArray = [self.friendslist objectAtIndex:indexInCompleteFriendsArray];
-    if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES) && (![friendInCompleteArray valueForKey:@"pictureData"]))
+    
+    
+    NSData *pictureData = [friendInCompleteArray valueForKey:@"pictureData"];
+    if (!pictureData)
     {
-        //NSLog(@"Name before icon download is %@", [currentFriend objectForKey:@"name"]);
-        [self startIconDownload:currentFriend forIndexPath:indexPath];
-        //cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
+        cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
+        if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES))
+            [self startIconDownload:currentFriend forIndexPath:indexPath];
     }
     else 
-    {
-        if (![friendInCompleteArray valueForKey:@"pictureData"])
-        {
-            //NSLog(@"No data, placeholder instead.");
-            cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
-        }
-        else
-        {
-            //NSLog(@"Data detected, actual image, name = %@.", [friendInCompleteArray valueForKey:@"name"]);
-            cell.imageView.image = [UIImage imageWithData:[friendInCompleteArray valueForKey:@"pictureData"]];
-        }
-    }
+        cell.imageView.image = [UIImage imageWithData:pictureData];
+
+        
+
      
     return cell;
 }
@@ -596,7 +528,7 @@
     {
         sum += [self.friendsTableView numberOfRowsInSection:count];
         count++;
-        NSLog(@"User at index path %d, %d", count, sum);
+        //NSLog(@"User at index path %d, %d", count, sum);
     }
     
     sum += indexPath.row;
@@ -618,7 +550,7 @@
     sum -= 1;
     */
     
-    NSLog(@"index for useratIndexPath is %d", sum);
+    //NSLog(@"index for useratIndexPath is %d", sum);
     //Return absolute object
     return [self.friendslist objectAtIndex:sum];
 }
@@ -640,11 +572,11 @@
     [iconDownloader startDownloadFromURL:url forImageKey:@"pictureData" ofObject:user forDisplayAtIndexPath:indexPath atDelegate:self];
 }
           
-- (void) appImageDidLoad:(NSIndexPath *)indexPath
+- (void)iconDidLoad:(NSIndexPath *)indexPath
 {
     NSLog(@"loaded icon for friend name is %@", [[[self.friendsTableView cellForRowAtIndexPath:indexPath] textLabel] text]);
-    //[self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
-    [self.friendsTableView reloadRowsAtIndexPaths:[self.friendsTableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
+    [self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
+    //[self.friendsTableView reloadRowsAtIndexPaths:[self.friendsTableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
     [_iconsBeingDownloaded removeObjectForKey:indexPath];
 }
 
