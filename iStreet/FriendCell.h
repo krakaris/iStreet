@@ -13,7 +13,7 @@ enum friendCellConstants {
     fCellImageHeight = 36
 };
 
-#define foregroundColor [UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0]
+//#define foregroundColor [UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0]
 
 @interface FriendCell : UITableViewCell
 

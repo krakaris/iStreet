@@ -8,6 +8,7 @@
 
 #import "SeeFriendsAttendingTableViewController.h"
 #import "FriendCell.h"
+#import "EventsAttendingTableViewController.h"
 
 @interface SeeFriendsAttendingTableViewController ()
 + (NSArray *)intersectAllFriendsArray:(NSArray *)allFriends withAttendees:(NSArray *)fbids;
@@ -328,13 +329,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    NSDictionary *user = [listOfAttendingFriends objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:user];
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSDictionary *user = (NSDictionary *)sender;
+    EventsAttendingTableViewController *eatvc = (EventsAttendingTableViewController *) segue.destinationViewController;
+    [eatvc setName:[user valueForKey:@"name"]];
+    [eatvc setFbid:[user valueForKey:@"id"]];
 }
 
 @end
