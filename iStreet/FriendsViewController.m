@@ -279,8 +279,8 @@ static NSString *appID = @"128188007305619";
     if (![self.fb isSessionValid]) 
     {
         //Setting up permissions
-        NSArray *permissions = [[NSArray alloc] initWithObjects:@"email", @"user_education_history", nil];
-        [self.fb authorize:permissions];
+        //NSArray *permissions = [[NSArray alloc] initWithObjects:@"email, user_education_history", nil];
+        [self.fb authorize:nil];
     }
     else 
     {
@@ -296,6 +296,7 @@ static NSString *appID = @"128188007305619";
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error
 {
     NSLog(@"there was an error in the request!!!: %@", [error localizedDescription]);
+    NSLog(@"Err details: %@", [error description]);
 }
 - (void) request:(FBRequest *)request didLoad:(id)result
 {   
