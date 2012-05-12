@@ -35,6 +35,7 @@ static NSString *appID = @"128188007305619";
     
     _appDataLoaded = NO;
     _networkActivityIndicatorCount = 0;
+    [(UITabBarController *)[_window rootViewController] setDelegate:self];
 
     // Override point for customization after application launch.
     //UIView *loginWebView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -92,6 +93,10 @@ static NSString *appID = @"128188007305619";
     return YES;
 }
 
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController 
+{    
+    return !([tabBarController.selectedViewController isEqual:viewController] && tabBarController.selectedIndex == 3);
+}
 
 - (void) request:(FBRequest *)request didFailWithError:(NSError *)error
 {

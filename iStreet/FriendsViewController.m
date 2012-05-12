@@ -297,12 +297,30 @@ static NSString *appID = @"128188007305619";
     }
 }
 
+- (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response 
+{
+    NSLog(@"request:didReceiveResponse:");
+}
+
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error
 {
-    NSLog(@"there was an error in the request!!!: %@", [error localizedDescription]);
+    NSLog(@"request:didFailWithError: %@, %d, %@", error.domain, error.code, [error localizedDescription]);
 }
 - (void) request:(FBRequest *)request didLoad:(id)result
 {   
+    if([result isKindOfClass:[NSDictionary class]])
+    {
+        NSLog(@"got back dictionary!");
+    }
+    else 
+    {
+        NSLog(@"uh oh...");
+        //if request was for fbid, resend request
+        //if request was for friends, resend friend request
+    }
+    
+       
+    // NS LOG THE REQUEST TYPE
     NSLog(@"request loaded!");
     NSLog(@"result: %@", result);
     if ([request.url isEqualToString:@"https://graph.facebook.com/me"]) //request for fbid
