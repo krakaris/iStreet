@@ -54,7 +54,16 @@
     }
     else
     {
-        [self performSegueWithIdentifier:@"SeeFriendsAttending" sender:self];
+        NSArray *allFriends = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
+        
+        if ([allFriends count] == 0) //If logged in but friends still loading in the background
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading" message:@"Friends still loading, please try again in a bit." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            [self performSegueWithIdentifier:@"SeeFriendsAttending" sender:self];
+        }
     }
 }
 
