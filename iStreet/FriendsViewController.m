@@ -321,6 +321,9 @@ static NSString *appID = @"128188007305619";
     NSLog(@"request loaded!");
     NSLog(@"result: %@", result);
     
+    NSArray *dataReceived = (NSArray *) result;
+    NSLog(@"NUMBER OF PRINCETON FRIENDS IS %d", [dataReceived count]);
+    
     /*
     if([result isKindOfClass:[NSDictionary class]])
     {
@@ -375,9 +378,21 @@ static NSString *appID = @"128188007305619";
                         //[document.managedObjectContext save:nil];
                     }
                     
+                    
+                    
+                    NSLog(@"FQL FQL FQL FQL FQL FQL!!!");
+                    NSMutableDictionary * params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                    @"SELECT name,uid,pic_square FROM user WHERE uid IN (SELECT uid1 FROM friend WHERE uid2=me()) AND 'Princeton' IN affiliations", @"query",
+                                                    nil];
+                    [self.fb    requestWithMethodName: @"fql.query"
+                                            andParams: params
+                                        andHttpMethod: @"POST"
+                                          andDelegate: self];
+                    /*
                     //Requesting friends from Facebook
                     [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture" andDelegate:self];
                     NSLog(@"Asking for friends after login!!");
+                     */
                 }
                 else 
                 {
