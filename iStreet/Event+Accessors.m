@@ -6,11 +6,11 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "Event+Create.h"
+#import "Event+Accessors.h"
 #import "Club.h"
 #import "AppDelegate.h"
 
-@implementation Event (Create)
+@implementation Event (Accessors)
 
 + (Event *)eventWithData:(NSDictionary *)eventData
 {

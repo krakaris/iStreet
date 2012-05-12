@@ -8,7 +8,7 @@
 
 #import "Event.h"
 
-@interface Event (Create)
+@interface Event (Accessors)
 
 + (Event *)eventWithData:(NSDictionary *)eventData;
 

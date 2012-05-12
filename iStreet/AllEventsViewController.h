@@ -11,6 +11,6 @@
 
 @interface AllEventsViewController : EventsViewController <FBSessionDelegate, UIAlertViewDelegate>
 {
-    BOOL _serverLoadedOnce;
+    BOOL _userLoggedOut;
 }
 @end

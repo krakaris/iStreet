@@ -8,6 +8,7 @@
 
 #import "SeeFriendsAttendingTableViewController.h"
 #import "FriendCell.h"
+#import "EventsAttendingTableViewController.h"
 
 @interface SeeFriendsAttendingTableViewController ()
 + (NSArray *)intersectAllFriendsArray:(NSArray *)allFriends withAttendees:(NSArray *)fbids;
@@ -90,72 +91,8 @@
         
         NSArray *allFriendsFB = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
         NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriendsFB count]);
-        
-        
-        /*
-        for (NSDictionary *friend in allFriendsFB)
-            [allFriendsFBIDs addObject:(NSString *) [friend valueForKey:@"id"]];
-        
-        [allFriendsFBIDs intersectSet:[NSMutableSet setWithArray:arrayOfAttendingFBFriendIDs]];
-        NSLog(@"Using new method, %d", [allFriendsFBIDs count]);
-         */
-        
-        NSArray *friendsAttending = [SeeFriendsAttendingTableViewController intersectAllFriendsArray:allFriendsFB withAttendees:arrayOfAttendingFBIDs];        
-        /*
-         NSMutableSet *set = [NSMutableSet setWithArray:temporaryFriendsIDsArray];
-         [set intersectSet:[NSMutableSet setWithArray:allFriendsFBIDs]];
-         NSLog(@"Using new method, %d", [set count]);
-         */
-        
-        /*
-         if ([allFriendsFB count] != 0)
-         {
-         for (NSString *thisID in arrayOfAttendingFBFriendIDs)
-         {
-         //Getting rid of empty strings.
-         if (![thisID isEqualToString:@""])
-         {
-         int count = 0;
-         for (NSDictionary *friend in allFriendsFB)
-         {
-         
-         [allFriendsFBIDs addObject:[friend valueForKey:@"id"]];
-         if ([[friend valueForKey:@"id"] isEqualToString:thisID])
-         {
-         //NSUInteger thisIndex = [allFriendsFB indexOfObject:thisID];
-         //NSDictionary *thisObject = [allFriendsFB objectAtIndex:thisIndex];
-         //[listOfAttendingFriends addObject:[allFriendsFB objectAtIndex:count]];
-         [temporaryFriendsArray addObject:[allFriendsFB objectAtIndex:count]];
-         [temporaryFriendsIDsArray addObject:[friend valueForKey:@"id"]];
-         //NSLog(@"Contains!");
-         }
-         else 
-         {
-         //NSLog(@"Doesn't contain!");
-         }
-         count++;
-         }
-         
-         }
-         NSLog(@"This id is %@", thisID);
-         }
-         
-         NSLog(@"Total number of valid id's is %d", [temporaryFriendsArray count]);
-         */
-        
-        /*
-         NSMutableSet *set = [NSMutableSet setWithArray:temporaryFriendsIDsArray];
-         [set intersectSet:[NSMutableSet setWithArray:allFriendsFBIDs]];
-         NSLog(@"Using new method, %d", [set count]);
-         */
-        
-        /*
-         if ([listOfAttendingFriends count] != 0)
-         {
-         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-         [listOfAttendingFriends sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-         }
-         */
+                
+        NSArray *friendsAttending = [SeeFriendsAttendingTableViewController intersectAllFriendsArray:allFriendsFB withAttendees:arrayOfAttendingFBIDs];
         
         
         [self.spinner stopAnimating];
@@ -180,10 +117,6 @@
         
         //Reloading data
         [self.tableView reloadData];
-        
-        /* });
-         dispatch_release(downloadFriendsAttendingQ);
-         */
     }
 }
 
@@ -200,11 +133,51 @@
     self.tableView.separatorColor = [UIColor blackColor];
     self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    _iconsBeingDownloaded = [[NSMutableDictionary alloc] init];
+}
+
+- (void)startIconDownload:(NSDictionary *)user forIndexPath:(NSIndexPath *)indexPath
+{
+    IconDownloader *iconDownloader = [_iconsBeingDownloaded objectForKey:indexPath];
+    if (iconDownloader) //if there is already a download in progress for that event, return.
+        return;
+    
+    // start the download
+    iconDownloader = [[IconDownloader alloc] init];
+    [_iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
+    NSURL *url = [NSURL URLWithString:[user valueForKey:@"picture"]];
+    
+    [iconDownloader startDownloadFromURL:url forImageKey:@"pictureData" ofObject:user forDisplayAtIndexPath:indexPath atDelegate:self];
+}
+
+- (void)iconDidLoad:(NSIndexPath *)indexPath
+{
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [_iconsBeingDownloaded removeObjectForKey:indexPath];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadImagesForOnscreenRows];    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{    
+    if (!decelerate)
+        [self loadImagesForOnscreenRows];
+}
+
+// this method is used when the user scrolls into a set of cells that don't have their app icons yet
+- (void)loadImagesForOnscreenRows
+{
+    NSArray *visiblePaths = [self.tableView indexPathsForVisibleRows];
+    for (NSIndexPath *indexPath in visiblePaths)
+    {
+        // start downloading the icon if the event doesn't have an icon but has a link to one
+        NSDictionary *user = [listOfAttendingFriends objectAtIndex:indexPath.row];
+        if (![user valueForKey:@"pictureData"])
+            [self startIconDownload:user forIndexPath:indexPath];
+    }
 }
 
 - (void)viewDidUnload
@@ -248,12 +221,25 @@
     //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    //cell = [[UITableViewCell alloc] init]; //WithStyle:UITableViewCellSty reuseIdentifier:<#(NSString *)#>
     cell = [[FriendCell alloc] init];
-    cell.textLabel.text = [[listOfAttendingFriends objectAtIndex:indexPath.row] valueForKey:@"name"];
-    // Configure the cell...
+    NSDictionary *user = [listOfAttendingFriends objectAtIndex:indexPath.row];
+    cell.textLabel.text = [user valueForKey:@"name"];
+    NSData *pictureData = [user valueForKey:@"pictureData"];
+    if (!pictureData)
+    {
+        cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
+        if (!(self.tableView.dragging == YES || self.tableView.decelerating == YES))
+            [self startIconDownload:user forIndexPath:indexPath];
+    }
+    else 
+        cell.imageView.image = [UIImage imageWithData:pictureData];
     
     return cell;
+}
+
+- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return fCellHeight;
 }
 
 + (NSArray *)intersectAllFriendsArray:(NSArray *)allFriends withAttendees:(NSArray *)fbids
@@ -343,13 +329,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    NSDictionary *user = [listOfAttendingFriends objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:user];
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSDictionary *user = (NSDictionary *)sender;
+    EventsAttendingTableViewController *eatvc = (EventsAttendingTableViewController *) segue.destinationViewController;
+    [eatvc setName:[user valueForKey:@"name"]];
+    [eatvc setFbid:[user valueForKey:@"id"]];
 }
 
 @end

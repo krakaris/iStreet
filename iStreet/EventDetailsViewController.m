@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "User+Create.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Event+Accessors.h"
 
 @interface EventDetailsViewController ()
 
@@ -45,12 +46,10 @@
     
     if (fbID == nil)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login" message:@"Please login using Facebook first, through the Friends tab." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil]; //@"Login", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login" message:@"Please login using Facebook first, through the Friends tab." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil]; 
         alert.tag = loginAlertViewAlert;
         
         [alert show];
-        //self.seeAllFriendsAttending.enabled = NO;
-        //self.seeAllFriendsAttending.titleLabel.text = @"Login in Friends";
     }
     else
     {
@@ -90,15 +89,13 @@
     }
 }
 
+#pragma mark - Set up UI details
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0]];
-    //[self.view setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0]];
-    //green - 179, blue - 76
-    
-    //[self.descriptionText setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:184.0/255.0 blue:0.0/255.0 alpha:1.0]];
     [self.descriptionText setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:176.0/255.0 blue:76.0/255.0 alpha:1.0]];
     [self.descriptionText.layer setCornerRadius:7];
     [self setUserWithNetid];
@@ -116,16 +113,14 @@
     }
     self.eventTitle.lineBreakMode = UILineBreakModeWordWrap;
     self.descriptionText.text = myEvent.event_description;
-    //self.seeAllFriendsAttending.titleLabel.textColor = [UIColor orangeColor];
     
     // Fix date and time strings
     [self formatDates];
     
     //Set entry and entry description
-    eventEntry.text = [self setEntry:myEvent];
+    eventEntry.text = [myEvent fullEntryDescription];
     
-    //Set "Attending"/"Unattending" Button
-    //attendButton.titleLabel.textColor = [UIColor orangeColor];    
+    //Set "Attending" Button
     if ([user.attendingEvents containsObject:myEvent]) 
     {
         userIsAttending = YES;
@@ -146,44 +141,6 @@
         eventImage.image = [UIImage imageNamed:imageName]; 
     }
     
-}
--(NSString *)setEntry:(Event *)event {
-    NSString *entry = event.entry;
-    NSString *entry_descrip;
-    if (event.entry_description) {
-        entry_descrip = event.entry_description;
-    } else {
-        entry_descrip = @"";
-    }
-    NSString *pass = [NSString stringWithFormat:@"Pa"];
-    NSString *puid = [NSString stringWithFormat:@"Pu"];
-    NSString *member = [NSString stringWithFormat:@"Mp"];
-    NSString *list = [NSString stringWithFormat:@"Gu"];
-    NSString *custom = [NSString stringWithFormat:@"Cu"];
-    
-    NSString *entry_final;
-    if ([entry isEqualToString:puid]) {
-        entry_final = @"PUID";
-    } else if ([entry isEqualToString:pass]) {
-        entry_final = @"Pass";
-        // Look at description to get color
-        if (![entry_descrip isEqualToString:@""]) {
-            entry_final = [entry_final stringByAppendingString:@": "];
-            entry_final = [entry_final stringByAppendingString:entry_descrip];
-        }
-    } else if ([entry isEqualToString:member]) {
-        entry_final = @"Members plus";
-        // Search entry_description for a number: entry is members + this number
-        if (![entry_descrip isEqualToString:@""]) {
-            entry_final = [entry_final stringByAppendingString:@" "];
-            entry_final = [entry_final stringByAppendingString:entry_descrip];
-        }
-    } else if ([entry isEqualToString:list]) {
-        entry_final = @"Guest List";
-    } else if ([entry isEqualToString:custom]) {
-        entry_final = entry_descrip;
-    }
-    return entry_final;
 }
 
 - (void)formatDates {
@@ -243,6 +200,8 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Attend button
+
 - (IBAction)attend:(UIButton *)sender 
 {
     ServerCommunication *sc = [[ServerCommunication alloc] init];
@@ -292,7 +251,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
+    //NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
 
     SeeFriendsAttendingTableViewController *seeFriendsController = (SeeFriendsAttendingTableViewController *)[segue destinationViewController];
     seeFriendsController.eventID = myEvent.event_id;

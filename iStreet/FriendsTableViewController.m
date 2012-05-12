@@ -487,12 +487,12 @@
     NSData *pictureData = [friendInCompleteArray valueForKey:@"pictureData"];
     if (!pictureData)
     {
-        cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
+        [cell setImage:[UIImage imageNamed:@"FBPlaceholder.gif"]];
         if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES))
             [self startIconDownload:currentFriend forIndexPath:indexPath];
     }
     else 
-        cell.imageView.image = [UIImage imageWithData:pictureData];
+        [cell setImage:[UIImage imageWithData:pictureData]];
 
         
 
@@ -587,7 +587,7 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return fCellHeight;
 }
 
 //Added by Alexa for section color

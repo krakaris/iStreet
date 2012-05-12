@@ -35,15 +35,18 @@ static NSString *appID = @"128188007305619";
     
     _appDataLoaded = NO;
     _networkActivityIndicatorCount = 0;
+    [(UITabBarController *)[_window rootViewController] setDelegate:self];
 
     // Override point for customization after application launch.
     //UIView *loginWebView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     //[self.view presentModalViewController:loginWebView animated:YES completion:^{}];
     //[self.window.subviews.lastObject presentModalViewController:loginWebView animated:YES];
     
+#ifdef DEBUG
     NSLog(@"going to sleep for NSFileManager startup (only for simulator)...");
-    [NSThread sleepForTimeInterval:3];
+    [NSThread sleepForTimeInterval:3]; 
     NSLog(@"wakie wakie eggs and bakie");
+#endif
     
     
     NSFileManager *fm = [NSFileManager defaultManager];
@@ -92,6 +95,10 @@ static NSString *appID = @"128188007305619";
     return YES;
 }
 
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController 
+{    
+    return !([tabBarController.selectedViewController isEqual:viewController] && tabBarController.selectedIndex == 3);
+}
 
 - (void) request:(FBRequest *)request didFailWithError:(NSError *)error
 {
