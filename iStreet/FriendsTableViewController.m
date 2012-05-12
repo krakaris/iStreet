@@ -587,7 +587,7 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return fCellHeight;
 }
 
 //Added by Alexa for section color

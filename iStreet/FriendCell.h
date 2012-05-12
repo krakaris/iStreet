@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 enum friendCellConstants {
-    fCellHeight =42,
+    fCellHeight =50,
     fCellImageHeight = 36
 };
 
