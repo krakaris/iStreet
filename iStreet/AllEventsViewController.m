@@ -20,13 +20,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _userLoggedOut = NO;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logoutAlert)];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.eventsTable reloadRowsAtIndexPaths:[self.eventsTable indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
+    if(_userLoggedOut)
+    {
+        _userLoggedOut = NO;
+        [self.eventsTable reloadData]; // since this is a potentially new user, reload the table (taking into account that checkmarks may show in different cells because of different events being attended
+    }
     if([(AppDelegate *)[[UIApplication sharedApplication] delegate] appDataLoaded])
     {
         NSLog(@"repeat request");
@@ -85,6 +90,7 @@
 
 - (void)requestServerEventsData
 {    
+    [self.noUpcomingEvents setHidden:YES];
     ServerCommunication *sc = [[ServerCommunication alloc] init];
     [sc sendAsynchronousRequestForDataAtRelativeURL:@"/eventslist" withPOSTBody:nil forViewController:self  withDelegate:self andDescription:nil];
 }
@@ -94,7 +100,6 @@
     if(![description isEqualToString:@"logout"])
     {
         [super connectionWithDescription:description finishedReceivingData:data];
-        _serverLoadedOnce = YES;
     }
     else 
     {
@@ -149,15 +154,18 @@
     
     [[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"There was a problem retrieving the latest event information. If the error persists, make sure you are connected to the internet" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
     
+    if([self.eventsTable numberOfSections] == 0)
+        [self.noUpcomingEvents setHidden:NO];
+    
     [super connectionFailed:description];
 }
 
 - (void)login
 {
-    
-     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:nil];
-     ServerCommunication *sc = [[ServerCommunication alloc] init];
-     [sc sendAsynchronousRequestForDataAtRelativeURL:@"/login" withPOSTBody:nil forViewController:self withDelegate:nil andDescription:@"login"];
+    _userLoggedOut = YES;
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setNetID:nil];
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:@"/login" withPOSTBody:nil forViewController:self withDelegate:nil andDescription:@"login"];
 }
 
 //Facebook delegate methods
