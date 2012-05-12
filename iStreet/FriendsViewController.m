@@ -69,13 +69,9 @@ static NSString *appID = @"128188007305619";
     
     NSLog(@"access token is %@", [self.fb accessToken]);
     
-    //Requesting friends
-    [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture,email,education" andDelegate:self];
-    NSLog(@"Asking for friends after login!!");
-    
-    //Requesting fb id
+    //Requesting fb id (then friends, once fbid is received)
     [self.fb requestWithGraphPath:@"me" andDelegate:self];
-    NSLog(@"sent the request");
+    NSLog(@"sent the request for fbid");
 }
 
 /*
@@ -123,7 +119,7 @@ static NSString *appID = @"128188007305619";
             NSLog(@"Spinner starts, requesting friends!");
             [self.spinner startAnimating];
             //Requesting friends
-            [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture,email,education" andDelegate:self];
+            [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture" andDelegate:self];
             NSLog(@"Asking for friends after login!!");
         }
     }
@@ -292,7 +288,7 @@ static NSString *appID = @"128188007305619";
         NSLog(@"Valid Session!");
 
         //Requesting friends
-        [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture,email,education" andDelegate:self];
+        [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture" andDelegate:self];
         NSLog(@"Asking for friends after login!!");
     }
 }
@@ -305,67 +301,109 @@ static NSString *appID = @"128188007305619";
 {   
     NSLog(@"request loaded!");
     NSLog(@"result: %@", result);
-    if ([request.url isEqualToString:@"https://graph.facebook.com/me"]) //request for fbid
+    
+    /*
+    if([result isKindOfClass:[NSDictionary class]])
     {
-        NSLog(@"This is the request for fb id");
-        NSLog(@"access token is %@", [self.fb accessToken]);
-        if (result != nil)
-        {
-            if ([result valueForKey:@"id"])
-            {
-                NSString *relativeURL = @"/updateUser";
-                relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
-                
-                ServerCommunication *sc = [[ServerCommunication alloc] init];
-                [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL
-                                                   withPOSTBody:[NSString stringWithFormat:@"fb_id=%@", [result valueForKey:@"id"]] forViewController:self withDelegate:self andDescription:@"updating user with fbid"];
-                
-                //Setting the global variable
-                NSString *fbid = [result valueForKey:@"id"];
-                [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:fbid];
-                NSLog(@"fbid set to %@", fbid);
-                
-                userInCoreData = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
-                
-                //Setting fbid
-                if (userInCoreData != nil)
-                {
-                    userInCoreData.fb_id = fbid;
-                    NSLog(@"STORED FBID IN CORE DATA DATABASE! fbid is %@", fbid);
-                    //[document.managedObjectContext save:nil];
-                }
-            }
-            else 
-            {
-                NSLog(@"No key received, handle this case.");
-            }
-        }
+        NSLog(@"got back dictionary!");
     }
     else 
     {
-        NSLog(@"This is the request for friends");
-
-        NSLog(@"result: %@", result);
-        NSArray *dataWeGot = [result valueForKey:@"data"];
-        friendsArray = dataWeGot;
-        
-        NSLog(@"Friends received!");
-        
-        //Setting global array
-        [(AppDelegate *)[[UIApplication sharedApplication] delegate] setAllfbFriends:friendsArray];
-        
-        //alreadyLoadedFriends = YES;
-        
-        for (NSDictionary *user in dataWeGot)
+        NSLog(@"uh oh...");
+        //if request was for fbid, resend request
+        //if request was for friends, resend friend request
+    }
+    */
+    
+    if ([request.url isEqualToString:@"https://graph.facebook.com/me"]) //request for fbid
+    {
+        if (![result isKindOfClass:[NSDictionary class]])
         {
+            NSLog(@"Not a dictionary, request for fb_id again.");
             
-            NSLog(@"%@ and %@ and picture is %@, email is %@, education is %@", [user valueForKey:@"id"], [user valueForKey:@"name"], [user valueForKey:@"picture"], [user valueForKey:@"email"], [user valueForKey:@"education"]);
+            //Requesting fb id again
+            [self.fb requestWithGraphPath:@"me" andDelegate:self];
+            NSLog(@"sent the request for fbid again, response was not a dictionary");
         }
-        
-        [self.spinner stopAnimating];
-        
-        NSLog(@"Performing didLoad Segue!");
-        [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
+        else
+        {
+            NSLog(@"Returned result is a dictionary!");
+            NSLog(@"This is the request for fb id");
+            NSLog(@"access token is %@", [self.fb accessToken]);
+            if (result != nil)
+            {
+                if ([result valueForKey:@"id"])
+                {
+                    NSString *relativeURL = @"/updateUser";
+                    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
+                    
+                    ServerCommunication *sc = [[ServerCommunication alloc] init];
+                    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL
+                                                       withPOSTBody:[NSString stringWithFormat:@"fb_id=%@", [result valueForKey:@"id"]] forViewController:self withDelegate:self andDescription:@"updating user with fbid"];
+                    
+                    //Setting the global variable
+                    NSString *fbid = [result valueForKey:@"id"];
+                    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:fbid];
+                    NSLog(@"fbid set to %@", fbid);
+                    
+                    userInCoreData = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
+                    
+                    //Setting fbid
+                    if (userInCoreData != nil)
+                    {
+                        userInCoreData.fb_id = fbid;
+                        NSLog(@"STORED FBID IN CORE DATA DATABASE! fbid is %@", fbid);
+                        //[document.managedObjectContext save:nil];
+                    }
+                    
+                    //Requesting friends from Facebook
+                    [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture" andDelegate:self];
+                    NSLog(@"Asking for friends after login!!");
+                }
+                else 
+                {
+                    NSLog(@"No key received.");
+                }
+            }
+        }
+    }
+    else //this is the request for friends
+    {
+        if(![result isKindOfClass:[NSDictionary class]])
+        {
+            NSLog(@"Not a dictionary, request for friends again!");
+            
+            //Requesting friends from Facebook
+            [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture" andDelegate:self];
+            NSLog(@"Asking for friends from Facebook again, due to dictionary error!!");
+        }
+        else 
+        {
+            NSLog(@"Returned response is a proper dictionary!");
+            NSLog(@"This is the request for friends");
+            
+            NSLog(@"result: %@", result);
+            NSArray *dataWeGot = [result valueForKey:@"data"];
+            friendsArray = dataWeGot;
+            
+            NSLog(@"Friends received!");
+            
+            //Setting global array
+            [(AppDelegate *)[[UIApplication sharedApplication] delegate] setAllfbFriends:friendsArray];
+            
+            //alreadyLoadedFriends = YES;
+            
+            for (NSDictionary *user in dataWeGot)
+            {
+                
+                NSLog(@"%@ and %@ and picture is %@, email is %@, education is %@", [user valueForKey:@"id"], [user valueForKey:@"name"], [user valueForKey:@"picture"], [user valueForKey:@"email"], [user valueForKey:@"education"]);
+            }
+            
+            [self.spinner stopAnimating];
+            
+            NSLog(@"Performing didLoad Segue!");
+            [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
+        }
     }
     
     //NSString *className = NSStringFromClass([dataWeGot class]);
