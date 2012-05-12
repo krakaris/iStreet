@@ -395,7 +395,6 @@ static NSString *appID = @"128188007305619";
             
             for (NSDictionary *user in dataWeGot)
             {
-                
                 NSLog(@"%@ and %@ and picture is %@, email is %@, education is %@", [user valueForKey:@"id"], [user valueForKey:@"name"], [user valueForKey:@"picture"], [user valueForKey:@"email"], [user valueForKey:@"education"]);
             }
             
