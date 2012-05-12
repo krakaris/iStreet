@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "User+Create.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Event+Accessors.h"
 
 @interface EventDetailsViewController ()
 
@@ -117,7 +118,7 @@
     [self formatDates];
     
     //Set entry and entry description
-    eventEntry.text = [self setEntry:myEvent];
+    eventEntry.text = [myEvent fullEntryDescription];
     
     //Set "Attending" Button
     if ([user.attendingEvents containsObject:myEvent]) 
@@ -140,46 +141,6 @@
         eventImage.image = [UIImage imageNamed:imageName]; 
     }
     
-}
-
-#pragma mark - Determine entry for the event (PUID, pass, list, custom)
--(NSString *)setEntry:(Event *)event {
-    NSString *entry = event.entry;
-    NSString *entry_descrip;
-    if (event.entry_description) {
-        entry_descrip = event.entry_description;
-    } else {
-        entry_descrip = @"";
-    }
-    NSString *pass = [NSString stringWithFormat:@"Pa"];
-    NSString *puid = [NSString stringWithFormat:@"Pu"];
-    NSString *member = [NSString stringWithFormat:@"Mp"];
-    NSString *list = [NSString stringWithFormat:@"Gu"];
-    NSString *custom = [NSString stringWithFormat:@"Cu"];
-    
-    NSString *entry_final;
-    if ([entry isEqualToString:puid]) {
-        entry_final = @"PUID";
-    } else if ([entry isEqualToString:pass]) {
-        entry_final = @"Pass";
-        // Look at description to get color
-        if (![entry_descrip isEqualToString:@""]) {
-            entry_final = [entry_final stringByAppendingString:@": "];
-            entry_final = [entry_final stringByAppendingString:entry_descrip];
-        }
-    } else if ([entry isEqualToString:member]) {
-        entry_final = @"Members plus";
-        // Search entry_description for a number: entry is members + this number
-        if (![entry_descrip isEqualToString:@""]) {
-            entry_final = [entry_final stringByAppendingString:@" "];
-            entry_final = [entry_final stringByAppendingString:entry_descrip];
-        }
-    } else if ([entry isEqualToString:list]) {
-        entry_final = @"Guest List";
-    } else if ([entry isEqualToString:custom]) {
-        entry_final = entry_descrip;
-    }
-    return entry_final;
 }
 
 - (void)formatDates {
