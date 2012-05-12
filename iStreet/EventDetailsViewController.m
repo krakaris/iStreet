@@ -41,7 +41,7 @@
 
 - (IBAction) seeFriends:(id)sender
 {
-    NSString *fbID = [(AppDelegate *)[[UIApplication sharedApplication] delegate] fbID];
+    NSNumber *fbID = [(AppDelegate *)[[UIApplication sharedApplication] delegate] fbID];
     
     
     if (fbID == nil)

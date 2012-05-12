@@ -361,7 +361,7 @@ static NSString *appID = @"128188007305619";
                                                        withPOSTBody:[NSString stringWithFormat:@"fb_id=%@", [result valueForKey:@"id"]] forViewController:self withDelegate:self andDescription:@"updating user with fbid"];
                     
                     //Setting the global variable
-                    NSString *fbid = [result valueForKey:@"id"];
+                    NSNumber *fbid = [result valueForKey:@"id"];
                     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:fbid];
                     NSLog(@"fbid set to %@", fbid);
                     

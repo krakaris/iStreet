@@ -120,7 +120,7 @@
     NSLog(@"View Will Appear of Friends!");
     
     //Pop Controller if user not logged in
-    NSString *fbid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] fbID];
+    NSNumber *fbid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] fbID];
     
     if (fbid == nil)
     {
@@ -229,7 +229,7 @@
     eatvc = [[EventsAttendingTableViewController alloc] init];
     _iconsBeingDownloaded = [NSMutableDictionary dictionary];
     
-    fbid_selected = [[NSString alloc] init];
+    //fbid_selected = [[NSNumber alloc] initWithInt:0];
     name_selected = [[NSString alloc] init];
     
     //Adding "favorites" to section index

@@ -19,7 +19,7 @@
     BOOL isFiltered;
     CGRect originalSearchBarFrame;
     
-    NSString *fbid_selected;
+    NSNumber *fbid_selected;
     NSString *name_selected;
     NSMutableArray *eventsAttending_selected;
     
@@ -30,7 +30,7 @@
 
 @property (assign) BOOL isFiltered;
 
-@property (strong, nonatomic) NSString *fbid_selected;
+@property (strong, nonatomic) NSNumber *fbid_selected;
 @property (strong, nonatomic) NSString *name_selected;
 @property (strong, nonatomic) NSMutableArray *eventsAttending_selected;
 
