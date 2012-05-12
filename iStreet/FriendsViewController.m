@@ -300,7 +300,8 @@ static NSString *appID = @"128188007305619";
 
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error
 {
-    NSLog(@"request:didFailWithError: %@, %d, %@", error.domain, error.code, [error localizedDescription]);
+    NSLog(@"there was an error in the request!!!: %@", [error localizedDescription]);
+    NSLog(@"Err details: %@", [error description]);
 }
 - (void) request:(FBRequest *)request didLoad:(id)result
 {   
