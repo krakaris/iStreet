@@ -41,6 +41,7 @@
     return events;
 }
 
+#pragma mark - retrieve Events from server
 
 - (void)requestServerEventsData
 {    
