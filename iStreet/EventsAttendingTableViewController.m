@@ -8,7 +8,7 @@
 
 #import "EventsAttendingTableViewController.h"
 #import "Event.h"
-#import "Event+Create.h"
+#import "Event+Accessors.h"
 #import "User+Create.h"
 
 @interface EventsAttendingTableViewController ()

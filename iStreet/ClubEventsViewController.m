@@ -8,7 +8,7 @@
 
 #import "ClubEventsViewController.h"
 #import "Event.h"
-#import "Event+Create.h"
+#import "Event+Accessors.h"
 #import "EventCell.h"
 #import "EventDetailsViewController.h"
 #import "AppDelegate.h"
