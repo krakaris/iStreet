@@ -41,6 +41,8 @@
     else
         [self loadData:nil];
 }
+
+//load Clubs from Core data
 - (void)loadData:(NSNotification *)notification
 {
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
@@ -55,6 +57,8 @@
     [self setClubListWithNewData:clubsArray];
     
 }
+
+//Update clubs list accordingly
 - (void)setClubListWithNewData:(NSArray *)clubData;
 {
     clubsList = [NSMutableArray array];
@@ -75,6 +79,7 @@
     return YES;
 }
 
+//Prepare to segue to appropriate Club screen
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSLog(@"preparing for segue");
