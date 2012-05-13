@@ -309,13 +309,19 @@
     
     // Load images for all onscreen rows when scrolling is finished
     if (!decelerate)
+    {
+        [self.friendsTableView beginUpdates];
         [self loadImagesForOnscreenRows];
+        [self.friendsTableView endUpdates];
+    }
 }
 
 //Called when the view stops decelerating
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [self loadImagesForOnscreenRows];    
+    [self.friendsTableView beginUpdates];
+    [self loadImagesForOnscreenRows];
+    [self.friendsTableView endUpdates];
 }
 
 #pragma mark - Table view data source
@@ -392,69 +398,92 @@
     int indexInCompleteFriendsArray;
     
     BOOL isAFavorite = NO;
+
+    //We will use this predicate later to check if given user is a favorite
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
+
     
-    if (self.isFiltered)
+    if (self.isFiltered)    //If table is currently filtered
     {
-        currentFriend = [filteredFriendsList objectAtIndex:indexPath.row];
-        currentUserName = [currentFriend valueForKey:@"name"];
-        cell.textLabel.text = currentUserName;
+        cell.imageView.image = nil;
+        currentFriend = [self getUserAtIndexPath:indexPath]; //[filteredFriendsList objectAtIndex:indexPath.row];
         
-        indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
-        NSLog(@"Index in complete array is %d", indexInCompleteFriendsArray);
-
-        
-        //Checking if favorite (to add star)
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
-        NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
-        
-        if ([matchingUsers count] != 0) //is a favorite
+        if (currentFriend != nil)
         {
-            isAFavorite = YES; //mark as favorite
-        }
-    }
-    else if (indexPath.section == 0)
-    {
-        isAFavorite = YES; //mark as favorite
-
-        currentFriend = [favoriteFriendsList objectAtIndex:indexPath.row];
-        currentUserName = [currentFriend valueForKey:@"name"];
-        cell.textLabel.text = currentUserName;
-        
-        indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
-        NSLog(@"Index in complete array is %d", indexInCompleteFriendsArray);
-    }
-    else
-    {
-        NSString *alpha = [sectionsIndex objectAtIndex:[indexPath section]];
-        NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"name beginswith[c] %@", alpha];
-        //Getting the names that begin with that first letter
-        
-        NSArray *thisSectionFriends = [friendslist filteredArrayUsingPredicate:thisPredicate];
-                
-        if ([thisSectionFriends count] > 0)
-        {
-            currentFriend = [thisSectionFriends objectAtIndex:indexPath.row];
             currentUserName = [currentFriend valueForKey:@"name"];
             cell.textLabel.text = currentUserName;
             
-            currentFriend = [friendslist objectAtIndex:[justFriendNames indexOfObject:currentUserName]];
-        }
-        else 
-        {
-        }
-        
-        indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
-                
-        //Checking if favorite (to add star)
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
-        NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
-        
-        if ([matchingUsers count] != 0)
-        {
-            isAFavorite = YES;
+            indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
+            
+            //Checking if favorite (to add star)
+            NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
+            if ([matchingUsers count] != 0) //if favorite
+                isAFavorite = YES;          //mark as favorite
         }
     }
+    else
+    {
+        if (indexPath.section == 0)    //if in favorites' section
+        {
+            isAFavorite = YES; //mark as favorite
+            
+            currentFriend = [favoriteFriendsList objectAtIndex:indexPath.row];
+            currentUserName = [currentFriend valueForKey:@"name"];
+            cell.textLabel.text = currentUserName;
+            
+            indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
+        }
+        else
+        {
+            //Getting the names that begin with that first letter
+            NSString *alpha = [sectionsIndex objectAtIndex:[indexPath section]];
+            NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"name beginswith[c] %@", alpha];
+            
+            NSArray *thisSectionFriends = [friendslist filteredArrayUsingPredicate:thisPredicate];
+            
+            if ([thisSectionFriends count] > 0)
+            {
+                currentFriend = [thisSectionFriends objectAtIndex:indexPath.row];
+                currentUserName = [currentFriend valueForKey:@"name"];
+                cell.textLabel.text = currentUserName;
+                
+                int indexOfFriendInNamesArray = [justFriendNames indexOfObject:currentUserName];
+                NSLog(@"Index in names array is %d", indexOfFriendInNamesArray);
+                currentFriend = [friendslist objectAtIndex:indexOfFriendInNamesArray]; //[justFriendNames indexOfObject:currentUserName]];
+            }
+            else 
+            {
+                NSLog(@"Not found.");
+            }
+            
+            indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
+            
+            //Checking if favorite (to add star)
+            NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
+            if ([matchingUsers count] != 0) // if favorite
+                isAFavorite = YES;          // mark as favorite
+        }
+        
+        NSLog(@"index in complete array is %d", indexInCompleteFriendsArray);
+        NSDictionary *friendInCompleteArray = [self.friendslist objectAtIndex:indexInCompleteFriendsArray];
+        
+        //Loading picture data    
+        NSData *pictureData = [friendInCompleteArray valueForKey:@"pictureData"];
+        
+        if (!pictureData)   //if no picture daya exists for that friend, put placeholder and start icon download
+        {
+            [cell setImage:[UIImage imageNamed:@"FBPlaceholder.gif"]];
+            if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES))
+                [self startIconDownload:currentFriend forIndexPath:indexPath];
+            //[self startIconDownload:friendInCompleteArray forIndexPath:indexPath];
+        }
+        else 
+            [cell setImage:[UIImage imageWithData:pictureData]];
+    }
     
+    //NSLog(@"Index of friend in complete array is %d", indexInCompleteFriendsArray);
+
+    //Add star if current user is a favorite
     if (isAFavorite)
     {
         UIImage *image = [UIImage imageNamed:@"star_outline_thick.png"];
@@ -465,22 +494,24 @@
     else 
         cell.accessoryView = nil;
     
+    /*
+    NSLog(@"index in complete array is %d", indexInCompleteFriendsArray);
     NSDictionary *friendInCompleteArray = [self.friendslist objectAtIndex:indexInCompleteFriendsArray];
     
-    //look here
+    //Loading picture data    
     NSData *pictureData = [friendInCompleteArray valueForKey:@"pictureData"];
-    if (!pictureData)
+    
+    if (!pictureData)   //if no picture daya exists for that friend, put placeholder and start icon download
     {
         [cell setImage:[UIImage imageNamed:@"FBPlaceholder.gif"]];
         if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES))
             [self startIconDownload:currentFriend forIndexPath:indexPath];
+            //[self startIconDownload:friendInCompleteArray forIndexPath:indexPath];
     }
     else 
         [cell setImage:[UIImage imageWithData:pictureData]];
-
-        
-
-     
+     */
+    
     return cell;
 }
 
@@ -493,53 +524,60 @@
     {
         // start downloading the icon if the event doesn't have an icon but has a link to one
         NSDictionary *user = [self getUserAtIndexPath:indexPath];
-        if (![user valueForKey:@"pictureData"])
-            [self startIconDownload:user forIndexPath:indexPath];
+        if (user != nil)
+        {
+            NSLog(@"User at this path is %@", [user valueForKey:@"name"]);
+            if (![user valueForKey:@"pictureData"])
+                [self startIconDownload:user forIndexPath:indexPath];
+        }
     }
 }
 
+//Method to obtain the user at an index path
 - (NSDictionary *) getUserAtIndexPath: (NSIndexPath *) indexPath
 {
-    int sections = indexPath.section;
-    
-    int count = 0, sum = 0;
-    while (count < sections)
+    if (self.isFiltered)
     {
-        sum += [self.friendsTableView numberOfRowsInSection:count];
-        count++;
-        //NSLog(@"User at index path %d, %d", count, sum);
+        NSLog(@"Filtered!");
+        NSDictionary *friend = [self.filteredFriendsList objectAtIndex:indexPath.row];
+        return friend;
     }
-    
-    sum += indexPath.row;
-    
-    //these next two lines should never have been here!
-    /*
-    if (sum > 0)
-        sum -= 1;
-
-    */
-    /*
-    int sections = [self.friendsTableView numberOfSections];
-    
-    int count = 0, sum = 0;
-    while (count < sections)
+    else 
     {
-        sum += [self.friendsTableView numberOfRowsInSection:count];
+        int sections = indexPath.section;
         
-        count++;
+        int count = 0, sum = 0;
+        while (count < sections)
+        {
+            sum += [self.friendsTableView numberOfRowsInSection:count];
+            count++;
+        }
+        
+        sum += indexPath.row;
+        
+        NSLog(@"Inside user at index path with sum value %d!!", sum);
+
+        //Check bounds and Return absolute object
+        if (sum >= [self.friendslist count])
+        {
+            NSLog(@"Index path is out of bounds!");
+            return nil;
+        }
+        else 
+        {
+            NSDictionary *friend = [self.friendslist objectAtIndex:sum];
+            //NSLog(@"absolute index is %d and user's name is %@", sum, [friend valueForKey:@"name"]);
+            
+            return friend;
+        }
     }
-    
-    sum -= 1;
-    */
-    
-    //NSLog(@"index for useratIndexPath is %d", sum);
-    //Return absolute object
-    return [self.friendslist objectAtIndex:sum];
 }
 
 //Called to start downloading current icon
 - (void)startIconDownload:(NSDictionary *)user forIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"Starting Icon Download for %@", [user valueForKey:@"name"]);
+    
     IconDownloader *iconDownloader = [_iconsBeingDownloaded objectForKey:indexPath];
     if (iconDownloader) //if there is already a download in progress for that event, return.
         return;
@@ -549,7 +587,6 @@
     [_iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
     
     //#DEBUG FIX FOR THUMBNAILS.
-    //NSURL *url = [NSURL URLWithString:(NSString *)[[self.friendslist objectAtIndex:indexPath.row] valueForKey:@"picture"]];
     NSURL *url = [NSURL URLWithString:[user valueForKey:@"picture"]];
     
     [iconDownloader startDownloadFromURL:url forImageKey:@"pictureData" ofObject:user forDisplayAtIndexPath:indexPath atDelegate:self];
@@ -561,9 +598,27 @@
     if(self.isFiltered)
         return;
     
-    //NSLog(@"loaded icon for friend name is %@", [[self getUserAtIndexPath:indexPath] valueForKey:@"name"]);
-    [self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    [_iconsBeingDownloaded removeObjectForKey:indexPath];
+    NSDictionary *user = [self getUserAtIndexPath:indexPath];
+    if (user != nil)
+    {
+        NSLog(@"Icon did load for %@", [user valueForKey:@"name"]);
+        
+        NSData *dataFromUser = [user valueForKey:@"pictureData"];
+        UIImage *pic = [UIImage imageWithData:dataFromUser];
+        
+        if (dataFromUser == [NSData dataWithContentsOfFile:@"FBPlaceholder.gif"])
+        {
+            NSLog(@"IT'S THE PLACEHOLDER!!!!!");
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:pic];
+            [self.view addSubview:imageView];
+        }
+        
+        
+        //[self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationMiddle];
+        [self.friendsTableView reloadRowsAtIndexPaths:[self.friendsTableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationFade];
+        
+        [_iconsBeingDownloaded removeObjectForKey:indexPath];
+    }
 }
 
 //Data Source delegate method for table view - return height for this row
