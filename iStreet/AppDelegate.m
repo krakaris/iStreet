@@ -103,6 +103,8 @@ static NSString *appID = @"128188007305619";
 - (void) request:(FBRequest *)request didFailWithError:(NSError *)error
 {
     NSLog(@"Failed!");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading Friends Failed." message:@"Failed to load friends in background, possibly due to lack of an internet connection. Please try again later through the Friends tab." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void) requestLoading:(FBRequest *)request
@@ -114,22 +116,10 @@ static NSString *appID = @"128188007305619";
 {
     NSLog(@"request done, request url is %@", request.url);
     
-    /*
-    if ([request.url isEqualToString:@"https://graph.facebook.com/me"])
-    {
-        NSLog(@"This is the request for fb id!");
-        self.fbID = [result objectForKey:@"id"];
-        NSLog(@"fb ID is %@", self.fbID);
-    }
-    else
-     */
-    {
-        NSLog(@"This is the request for friends!");
-        NSArray *friendsDataReceived = [result objectForKey:@"data"];
-        //NSLog(friendsDataReceived);
-        self.allfbFriends = friendsDataReceived;
-        NSLog(@"Friends retrieved in the background, count %d", [self.allfbFriends count]);
-    }
+    NSLog(@"This is the request for friends!");
+    NSArray *friendsDataReceived = [result objectForKey:@"data"];
+    self.allfbFriends = friendsDataReceived;
+    NSLog(@"Friends retrieved in the background, count %d", [self.allfbFriends count]);
 }
 
 
@@ -280,13 +270,7 @@ static NSString *appID = @"128188007305619";
         self.facebook.sessionDelegate = self;
         
         //Just call this the first time - otherwise, friends are refreshed everytime the friends tab is opened
-        [self.facebook requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture,email,education" andDelegate:self];
-        
-         dispatch_queue_t downloadFriendsQ = dispatch_queue_create("friends downloader", NULL);
-         dispatch_async(downloadFriendsQ, ^{
-         });
-         dispatch_release(downloadFriendsQ);
-         
+        [self.facebook requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture" andDelegate:self];
     }
 }
 
