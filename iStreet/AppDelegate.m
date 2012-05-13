@@ -103,7 +103,7 @@ static NSString *appID = @"128188007305619";
 - (void) request:(FBRequest *)request didFailWithError:(NSError *)error
 {
     NSLog(@"Failed!");
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading Friends Failed." message:@"Failed to load friends in background, possibly due to lack of an internet connection. Please try again later through the Friends tab." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading Friends Failed." message:@"Failed to load friends, possibly due to lack of an internet connection. Please try again later through the Friends tab." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }
 
