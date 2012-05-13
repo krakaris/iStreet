@@ -7,7 +7,7 @@
 //
 
 #import "EventsNight.h"
-#import "Event+Create.h"
+#import "Event+Accessors.h"
 
 @implementation EventsNight
 

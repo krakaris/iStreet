@@ -23,7 +23,7 @@
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="fav_friends_commasep" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fb_friends" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fb_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fb_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="netid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="attendingEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="usersAttending" inverseEntity="Event" syncable="YES"/>
     </entity>

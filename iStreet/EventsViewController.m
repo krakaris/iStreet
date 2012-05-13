@@ -11,7 +11,7 @@
 #import "EventsNight.h"
 #import "EventCell.h"
 #import "Event.h"
-#import "Event+Create.h"
+#import "Event+Accessors.h"
 #import "AppDelegate.h"
 #import "EventDetailsViewController.h"
 #import "ServerCommunication.h"

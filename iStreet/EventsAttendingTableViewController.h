@@ -22,7 +22,7 @@
     UIButton *starButton;
 }
 
-@property (nonatomic, retain) NSString *fbid;
+@property (nonatomic, retain) NSNumber *fbid;
 @property (nonatomic, retain) NSString *name;
 
 @property (nonatomic, retain) IBOutlet UIButton *favButton;

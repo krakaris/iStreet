@@ -16,6 +16,8 @@
 
 @implementation SeeFriendsAttendingTableViewController
 
+#define NUMBER_OF_SECTIONS 1
+
 @synthesize fbid_loggedInUser;
 @synthesize friendsFbidArray;
 @synthesize listOfAttendingFriends;
@@ -31,6 +33,7 @@
     return self;
 }
 
+//Gets called the every time this view is loaded.
 - (void) viewWillAppear:(BOOL)animated
 {
     //Setting spinner up
@@ -39,7 +42,7 @@
     [self.tableView addSubview:self.spinner];
     [self.spinner startAnimating];
     
-    NSLog(@"Event id is %@", self.eventID);
+    //NSLog(@"Event id is %@", self.eventID);
     self.navigationItem.hidesBackButton = NO;
     
     listOfAttendingFriends = [[NSMutableArray alloc] init];
@@ -57,16 +60,19 @@
     self.navigationItem.backBarButtonItem.action = @selector(backToDetails:);
 }
 
+//back to details screen
 - (void) backToDetails
 {
     NSLog(@"Back to details!");
 }
 
+//Delegate method of ServerCommunication - gets called if request fails
 - (void)connectionFailed:(NSString *)description
 {
-#warning AKI - implement this method (need to handle a web access fail)
+    //implement this method (need to handle a web access fail)
 }
 
+//Delegate method of ServerCommunication - gets called if request is successful
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     //emptying the array
@@ -75,67 +81,58 @@
     
     if (description == @"fetching users")
     {        
-        /*
-         downloadFriendsAttendingQ = dispatch_queue_create("friends attending downloader", NULL);
-         dispatch_async(downloadFriendsAttendingQ, ^{
-         
-         */
         NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"Request completed with response string %@", response);
         
         NSMutableArray *arrayOfAttendingFBIDs = [NSMutableArray arrayWithArray:[response componentsSeparatedByString:@", "]];
         
-        /*NSMutableArray *temporaryFriendsArray = [[NSMutableArray alloc] init];
-        NSMutableSet *allFriendsFBIDs = [[NSMutableSet alloc] init];
-        NSMutableArray *temporaryFriendsIDsArray = [[NSMutableArray alloc] init];*/
-        
+        //Obtaining global friends array
         NSArray *allFriendsFB = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
-        NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriendsFB count]);
+        //NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriendsFB count]);
                 
         NSArray *friendsAttending = [SeeFriendsAttendingTableViewController intersectAllFriendsArray:allFriendsFB withAttendees:arrayOfAttendingFBIDs];
         
-        
         [self.spinner stopAnimating];
         
-        //if ([temporaryFriendsArray count] == 0)
-        
-        
-        //if ([allFriendsFBIDs count] == 0)
-        if ([friendsAttending count] == 0)
+
+        if ([friendsAttending count] == 0)  //if no friends are attending, pop up alert
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"None Attending" message:@"None of your friends are attending this event." delegate:self cancelButtonTitle:@"Go Back" otherButtonTitles:nil];
             alert.delegate = self;
             [alert show];
         }
         
-        //Setting global array to temporary friends array
-        //listOfAttendingFriends = [NSArray arrayWithArray:temporaryFriendsArray];
-        //listOfAttendingFriends = [NSArray arrayWithArray:[allFriendsFBIDs allObjects]];
+        //Setting global array to friends Attending Array
         listOfAttendingFriends = [NSArray arrayWithArray:friendsAttending];
-        NSLog(@"Setting global to temporary array!");
-        NSLog(@"Number of results is %d", [listOfAttendingFriends count]);
+        
+        //NSLog(@"Setting global to temporary array!");
+        //NSLog(@"Number of results is %d", [listOfAttendingFriends count]);
         
         //Reloading data
         [self.tableView reloadData];
     }
 }
 
+//Gets called when button on alert view is pressed
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSLog(@"Cancel Pressed!");
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+//Gets called the first time this view is loaded.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    //basic setup of table view, background
     self.tableView.separatorColor = [UIColor blackColor];
     self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
     
     _iconsBeingDownloaded = [[NSMutableDictionary alloc] init];
 }
 
+//Called to start downloading current icon
 - (void)startIconDownload:(NSDictionary *)user forIndexPath:(NSIndexPath *)indexPath
 {
     IconDownloader *iconDownloader = [_iconsBeingDownloaded objectForKey:indexPath];
@@ -150,17 +147,20 @@
     [iconDownloader startDownloadFromURL:url forImageKey:@"pictureData" ofObject:user forDisplayAtIndexPath:indexPath atDelegate:self];
 }
 
+//Called after icon gets loaded, refresh the cell at that index path in the table view
 - (void)iconDidLoad:(NSIndexPath *)indexPath
 {
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
     [_iconsBeingDownloaded removeObjectForKey:indexPath];
 }
 
+//Called when the view stops decelerating
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self loadImagesForOnscreenRows];    
 }
 
+//Called when the view stops dragging
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {    
     if (!decelerate)
@@ -180,6 +180,7 @@
     }
 }
 
+//Called when view gets unloaded
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -187,15 +188,13 @@
     // e.g. self.myOutlet = nil;
 }
 
+//Called when view gets removed from screen
 - (void) viewDidDisappear:(BOOL)animated
 {
-    NSLog(@"View unloaded, thread canceled!");
-
-    //#DEBUG
-    //if (downloadFriendsAttendingQ)
-      //  dispatch_suspend(downloadFriendsAttendingQ);
+    NSLog(@"View unloaded");
 }
 
+//Restricting orientation to Portrait
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -203,18 +202,21 @@
 
 #pragma mark - Table view data source
 
+//Data Source delegate method for table view - returns the number of sections in the table
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return NUMBER_OF_SECTIONS;
 }
 
+//Data Source delegate method for table view - returns the number of rows in this section
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
     return [listOfAttendingFriends count];
 }
 
+//Data Source delegate method for table view - returns the cell at that index path
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"FriendsAttendingCell";
@@ -225,7 +227,8 @@
     NSDictionary *user = [listOfAttendingFriends objectAtIndex:indexPath.row];
     cell.textLabel.text = [user valueForKey:@"name"];
     NSData *pictureData = [user valueForKey:@"pictureData"];
-    if (!pictureData)
+    
+    if (!pictureData) //if pictureData doesn't exist, load using startIconDownload:ForIndexPath: method
     {
         cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
         if (!(self.tableView.dragging == YES || self.tableView.decelerating == YES))
@@ -237,11 +240,13 @@
     return cell;
 }
 
+//Data Source delegate method for table view - return height for this row
 - (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return fCellHeight;
 }
 
+//Custom method to find intersection of one's friends and all attendees of an event
 + (NSArray *)intersectAllFriendsArray:(NSArray *)allFriends withAttendees:(NSArray *)fbids
 {
     NSMutableArray *friendsAttending = [NSMutableArray arrayWithArray:allFriends];
@@ -286,53 +291,17 @@
     return friendsAttending;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
+//Delegate method for table view - called to determine what happens when a row is selected
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *user = [listOfAttendingFriends objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:user];
 }
 
+//Called before the next view controller is pushed - any setup is done here
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSDictionary *user = (NSDictionary *)sender;

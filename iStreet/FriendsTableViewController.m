@@ -18,6 +18,9 @@
 
 @implementation FriendsTableViewController
 
+#define NUMBER_OF_SECTIONS_IF_FILTERED 1
+#define HALF_OF_CELL_HEIGHT 25
+
 @synthesize isFiltered;
 
 @synthesize fbid_selected;
@@ -66,7 +69,7 @@
              reach the second step.
             */
             
-            //Updating user's fbid on server
+            //Calling server method to update user's credentials on server
             //Build url for server
             NSString *relativeURL = @"/updateUser";
             relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
@@ -120,7 +123,7 @@
     NSLog(@"View Will Appear of Friends!");
     
     //Pop Controller if user not logged in
-    NSString *fbid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] fbID];
+    NSNumber *fbid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] fbID];
     
     if (fbid == nil)
     {
@@ -229,7 +232,7 @@
     eatvc = [[EventsAttendingTableViewController alloc] init];
     _iconsBeingDownloaded = [NSMutableDictionary dictionary];
     
-    fbid_selected = [[NSString alloc] init];
+    //fbid_selected = [[NSNumber alloc] initWithInt:0];
     name_selected = [[NSString alloc] init];
     
     //Adding "favorites" to section index
@@ -336,17 +339,18 @@
 
 #pragma mark - Table view data source
 
+//Data Source delegate method for table view - returns the number of sections in the table
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    //return 1;
     if (self.isFiltered)
-        return 1;
+        return NUMBER_OF_SECTIONS_IF_FILTERED;
     else {
         return [sectionsIndex count];
     }
 }
 
+//Data Source delegate method for table view - returns the title for each section header
 - (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (self.isFiltered)
@@ -359,11 +363,13 @@
     }
 }
 
+//Data Source delegate method for table view - returns the index titles (for the vertical bar on the right)
 - (NSArray *) sectionIndexTitlesForTableView:(UITableView *)tableView
 {
     return sectionsIndex;
 }
 
+//Data Source delegate method for table view - returns the number of rows in this section
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
@@ -393,6 +399,7 @@
     return rowCount;
 }
 
+//Data Source delegate method for table view - returns the cell at that index path
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Friends Cell";
@@ -470,11 +477,10 @@
         }
     }
     
-#warning fix magic numbers
     if (isAFavorite)
     {
         UIImage *image = [UIImage imageNamed:@"star_outline_thick.png"];
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, HALF_OF_CELL_HEIGHT, HALF_OF_CELL_HEIGHT)];
         [imageView setImage:image];
         cell.accessoryView = imageView;
     }
@@ -483,16 +489,16 @@
     
     NSDictionary *friendInCompleteArray = [self.friendslist objectAtIndex:indexInCompleteFriendsArray];
     
-#warning aki - look here
+    //look here
     NSData *pictureData = [friendInCompleteArray valueForKey:@"pictureData"];
     if (!pictureData)
     {
-        cell.imageView.image = [UIImage imageNamed:@"FBPlaceholder.gif"];
+        [cell setImage:[UIImage imageNamed:@"FBPlaceholder.gif"]];
         if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES))
             [self startIconDownload:currentFriend forIndexPath:indexPath];
     }
     else 
-        cell.imageView.image = [UIImage imageWithData:pictureData];
+        [cell setImage:[UIImage imageWithData:pictureData]];
 
         
 
@@ -500,6 +506,7 @@
     return cell;
 }
 
+//Called when the view stops decelerating
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self loadImagesForOnscreenRows];    
@@ -533,7 +540,7 @@
     
     sum += indexPath.row;
     
-#warning aki - these next two lines should never have been here!
+    //these next two lines should never have been here!
     /*
     if (sum > 0)
         sum -= 1;
@@ -557,7 +564,8 @@
     //Return absolute object
     return [self.friendslist objectAtIndex:sum];
 }
-             
+
+//Called to start downloading current icon
 - (void)startIconDownload:(NSDictionary *)user forIndexPath:(NSIndexPath *)indexPath
 {
     IconDownloader *iconDownloader = [_iconsBeingDownloaded objectForKey:indexPath];
@@ -574,7 +582,8 @@
     
     [iconDownloader startDownloadFromURL:url forImageKey:@"pictureData" ofObject:user forDisplayAtIndexPath:indexPath atDelegate:self];
 }
-          
+
+//Called after icon is loaded
 - (void)iconDidLoad:(NSIndexPath *)indexPath
 {
     if(self.isFiltered)
@@ -585,12 +594,13 @@
     [_iconsBeingDownloaded removeObjectForKey:indexPath];
 }
 
+//Data Source delegate method for table view - return height for this row
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return fCellHeight;
 }
 
-//Added by Alexa for section color
+//Method that returns the view for a header in a section - Added by Alexa for section color
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
 {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
@@ -658,8 +668,10 @@
 }
 */
 
+
 #pragma mark - Table view delegate
 
+//Delegate method for table view - called to determine what happens when a row is selected
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
@@ -727,7 +739,7 @@
      
 }
 
-
+//Called before the next view controller is pushed - any setup is done here
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     eatvc = (EventsAttendingTableViewController *) segue.destinationViewController;
@@ -772,6 +784,7 @@
 
 }
 
+//Delegate method of ServerCommunication - gets called if request fails
 - (void) connectionFailed:(NSString *)description
 {
     if (description == @"updating user with fbid on logout")
@@ -782,6 +795,7 @@
     }
 }
 
+//Delegate method of ServerCommunication - gets called if request is successful
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     //Empty array needed each time

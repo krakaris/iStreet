@@ -20,7 +20,7 @@ extern NSString *const DataLoadedNotificationString;
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, retain) NSString *netID;
-@property (nonatomic, retain) NSString *fbID;
+@property (nonatomic, retain) NSNumber *fbID;
 @property (nonatomic, retain) NSArray *allfbFriends;
 @property (nonatomic, retain) UIManagedDocument *document;
 @property (nonatomic, assign) BOOL appDataLoaded;
