@@ -24,7 +24,6 @@
     NSMutableArray *eventsAttending_selected;
     
     NSMutableDictionary *_iconsBeingDownloaded;
-    
 }
 
 

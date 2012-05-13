@@ -74,7 +74,7 @@ static NSString *appID = @"128188007305619";
 }
 
 
-//Function gets called when ViewController is loaded. Initial setup is done here.
+//Function gets called every time ViewController is loaded.
 - (void) viewWillAppear:(BOOL)animated
 {
     //NSLog(@"Facebook's viewWillAppear!!");
