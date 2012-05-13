@@ -3,7 +3,7 @@
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller - Events-->
@@ -22,7 +22,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-373" y="-393"/>
+            <point key="canvasLocation" x="467" y="-397"/>
         </scene>
         <!--All Events View Controller - Events-->
         <scene sceneID="13">
@@ -69,7 +69,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="107" y="-393"/>
+            <point key="canvasLocation" x="1007" y="-397"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="15">
@@ -91,7 +91,7 @@
                     </connections>
                 </tabBarController>
             </objects>
-            <point key="canvasLocation" x="-373" y="215"/>
+            <point key="canvasLocation" x="-721" y="209"/>
         </scene>
         <!--Chat View Controller - Chat-->
         <scene sceneID="ztZ-qD-EsN">
@@ -170,7 +170,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="107" y="237"/>
+            <point key="canvasLocation" x="433" y="1513"/>
         </scene>
         <!--Navigation Controller - Friends-->
         <scene sceneID="462-Ww-c9D">
@@ -188,7 +188,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-683" y="883"/>
+            <point key="canvasLocation" x="433" y="887"/>
         </scene>
         <!--Friends View Controller - Friends-->
         <scene sceneID="aHT-gt-e0L">
@@ -237,7 +237,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-280" y="883"/>
+            <point key="canvasLocation" x="972" y="895"/>
         </scene>
         <!--Friends Table View Controller-->
         <scene sceneID="q2s-BE-Qk5">
@@ -276,7 +276,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="124" y="850"/>
+            <point key="canvasLocation" x="1440" y="895"/>
         </scene>
         <!--Events Attending Table View Controller-->
         <scene sceneID="UOw-px-fqs">
@@ -320,7 +320,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="613" y="848"/>
+            <point key="canvasLocation" x="2373" y="1016"/>
         </scene>
         <!--Club Events View Controller-->
         <scene sceneID="lgD-GY-Cri">
@@ -364,7 +364,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="3528" y="850"/>
+            <point key="canvasLocation" x="1508" y="268"/>
         </scene>
         <!--Clubs View Controller - Clubs-->
         <scene sceneID="kGI-zX-x0v">
@@ -571,7 +571,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="3037" y="848"/>
+            <point key="canvasLocation" x="972" y="268"/>
         </scene>
         <!--Navigation Controller - Clubs-->
         <scene sceneID="5DI-Nv-rtZ">
@@ -590,7 +590,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="2579" y="848"/>
+            <point key="canvasLocation" x="459" y="232"/>
         </scene>
         <!--Event Details View Controller-->
         <scene sceneID="Hog-8J-hRa">
@@ -697,7 +697,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1338" y="209"/>
+            <point key="canvasLocation" x="2090" y="289"/>
         </scene>
         <!--See Friends Attending Table View Controller-->
         <scene sceneID="1Bs-mT-vqk">
@@ -740,7 +740,7 @@
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="1761" y="209"/>
+            <point key="canvasLocation" x="2657" y="297"/>
         </scene>
     </scenes>
     <resources>
@@ -846,7 +846,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="6fS-cC-PVz"/>
-        <segue reference="Hyg-kK-m3l"/>
+        <segue reference="dJr-9i-Sko"/>
         <segue reference="xz8-3J-H8S"/>
     </inferredMetricsTieBreakers>
 </document>

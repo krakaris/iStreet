@@ -11,6 +11,7 @@
 #import "FriendCell.h"
 #import "User+Create.h"
 #include <stdlib.h>
+#include "AppDelegate.h"
 
 @interface FriendsTableViewController ()
 

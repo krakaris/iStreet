@@ -258,7 +258,7 @@
             [cell.textLabel setTextAlignment:UITextAlignmentCenter];
             [cell.textLabel setFont:[UIFont fontWithName:@"TrebuchetMS" size:16]];
             [cell.textLabel setBackgroundColor:[UIColor clearColor]];
-            [cell.contentView setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0]];
+            [cell.contentView setBackgroundColor:orangeTableColor];
             [cell.contentView.layer setCornerRadius:10];
             [cell.textLabel setTextColor:[UIColor blackColor]];
             [cell.textLabel setText:@"Failed to retrieve new messages.\nClick here to try again."];

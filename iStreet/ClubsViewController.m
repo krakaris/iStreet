@@ -23,7 +23,7 @@
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
+    self.view.backgroundColor = orangeTableColor;
     
     // Format Data label at bottom
     NSDate *date = [NSDate date];
@@ -41,6 +41,8 @@
     else
         [self loadData:nil];
 }
+
+//load Clubs from Core data
 - (void)loadData:(NSNotification *)notification
 {
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
@@ -55,6 +57,8 @@
     [self setClubListWithNewData:clubsArray];
     
 }
+
+//Update clubs list accordingly
 - (void)setClubListWithNewData:(NSArray *)clubData;
 {
     clubsList = [NSMutableArray array];
@@ -75,6 +79,7 @@
     return YES;
 }
 
+//Prepare to segue to appropriate Club screen
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSLog(@"preparing for segue");
