@@ -91,7 +91,8 @@
 //Delegate method of ServerCommunication - gets called if request fails
 - (void) connectionFailed:(NSString *)description
 {
-    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed." message:@"Failed To Load Events, possibly due to lack of an internet connection. Please try again in a bit." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 //Called to handle selection of favorites
