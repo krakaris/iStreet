@@ -343,7 +343,6 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    
     if (self.isFiltered)
         return NUMBER_OF_SECTIONS_IF_FILTERED;
     else {
