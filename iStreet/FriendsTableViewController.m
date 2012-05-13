@@ -21,6 +21,10 @@
 #define NUMBER_OF_SECTIONS_IF_FILTERED 1
 #define HALF_OF_CELL_HEIGHT 25
 
+#define loggedOutAlertView 1
+#define logOutConfirmAlertView 2
+#define logOutFailedAlertView 3
+
 @synthesize isFiltered;
 
 @synthesize fbid_selected;
@@ -37,18 +41,16 @@
 
 @synthesize logoutButton;
 
-#define loggedOutAlertView 1
-#define logOutConfirmAlertView 2
-#define logOutFailedAlertView 3
-
-- (void) logoutOfFacebook:(id)sender
+//Called when user clicks on logout button
+- (IBAction) logoutOfFacebook:(id)sender
 {
-    NSLog(@"Logging out of facebook alert view!");
+    //(@"Logging out of facebook alert view!");
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you sure you wish to log out of Facebook?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
     alert.tag = logOutConfirmAlertView;
     [alert show]; 
 }
 
+//Handling the different alert views for the screen
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {   
     if (alertView.tag == logOutConfirmAlertView)
@@ -81,20 +83,22 @@
     }
     else if (alertView.tag == loggedOutAlertView)
     {
-        NSLog(@"Clicked on OK");
-        //[self.navigationController removeFromParentViewController];
+        //NSLog(@"Clicked on OK");
         [self.navigationController popViewControllerAnimated:YES];
     }
     else if (alertView.tag == logOutFailedAlertView)
     {
-        //do nothing, show message
+        //do nothing, just show alert message - handled properly
         NSLog(@"Logout failed.");
     }
 }
 
+//FBSession Delegate method - gets called when logout is successful
 - (void) fbDidLogout
 {
-    NSLog(@"Logged Out!");
+    //NSLog(@"Logged Out!");
+    
+    //Setting appropriate global variables to nil
     [(AppDelegate *) [[UIApplication sharedApplication] delegate] setAllfbFriends:nil];
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setFbID:nil];
 
@@ -117,10 +121,10 @@
     [loggedOutAlert show];
 }
 
-
+//Gets called every time view appears.
 - (void) viewWillAppear:(BOOL)animated
 {
-    NSLog(@"View Will Appear of Friends!");
+    //NSLog(@"View Will Appear of Friends!");
     
     //Pop Controller if user not logged in
     NSNumber *fbid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] fbID];
@@ -134,44 +138,20 @@
     //Obtain the favorite friends
     favoriteFriendsList = [[NSMutableArray alloc] init];
     
-    /*//Checking if already a favorite
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
     
-    NSFetchRequest *usersRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSArray *users = [document.managedObjectContext executeFetchRequest:usersRequest error:nil];
-    
-    //There should be only 1 user entity - and with matching netid
-    //Check using global netid
-    NSString *globalnetid = [(AppDelegate *)[[UIApplication sharedApplication] delegate] netID];
-    
-    User *targetUser;
-    
-    for (User *user in users)
-    {
-        if ([globalnetid isEqualToString:user.netid])
-        {
-            targetUser = user;
-            NSLog(@"Found target!");
-        }
-        
-        //NSLog(@"NETID of user is %@ and fb id is %@", user.netid, user.fb_id);
-        //NSLog(@"Global netid is %@", globalnetid);
-    }*/
-    
+    //Checking if already a favorite
     User *targetUser = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
     
     NSString *commaSepFavFBFriendsList = targetUser.fav_friends_commasep;
     NSMutableArray *arrayOfFavFBFriendIDs = [NSMutableArray arrayWithArray:[commaSepFavFBFriendsList componentsSeparatedByString:@","]];
     
+    /* Logging all favorites
     for (NSString *thisFave in arrayOfFavFBFriendIDs)
         NSLog(@"%@", thisFave);
+     */
     
     NSArray *allFriends = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
-    NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriends count]);
-    
-    //NSArray *objs = [dataManager anArray];
-    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@", [NSNumber numberWithInt:i]];
-    //NSArray *matchingObjs = [objs filteredArrayUsingPredicate:predicate];
+    //NSLog(@"COUNT OF ALL FRIENDS IN GLOBAL = %d", [allFriends count]);
 
     for (NSString *thisFave in arrayOfFavFBFriendIDs)
     {
@@ -180,17 +160,18 @@
         
         if ([matchingUsers count] == 1)
         {
-            NSLog(@"FOUND A FAVORITE! id = %@", thisFave);
+            //NSLog(@"FOUND A FAVORITE! id = %@", thisFave);
             [favoriteFriendsList addObject:[matchingUsers lastObject]];
         }
     }
     
+    //Sorting the favorites list
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     [favoriteFriendsList sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     [self.friendsTableView reloadData];
     
-    NSLog(@"Favorite friends count = %d", [favoriteFriendsList count]);
+    //NSLog(@"Favorite friends count = %d", [favoriteFriendsList count]);
 
     //Displaying ALL fb friends
     /*
@@ -199,10 +180,9 @@
         NSLog(@"%@ and %@", [user valueForKey:@"name"], [user valueForKey:@"id"]);
     }
     */
- 
-    
 }
 
+//Called every time the view is loaded
 - (void)viewDidLoad
 {
     NSLog(@"View Did Load of Friends!");
@@ -210,6 +190,7 @@
     [self.navigationItem setHidesBackButton:YES];
     self.navigationItem.title = @"Friends";
     
+    //Setting colors
     self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
     friendsTableView.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
     self.friendsTableView.separatorColor = [UIColor blackColor];
@@ -225,7 +206,7 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     [friendslist sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
-    
+    //Alloc-ing all needed arrays and controllers
     sectionsIndex = [[NSMutableArray alloc] init];
     justFriendNames = [[NSMutableArray alloc] init];
     eventsAttending_selected = [[NSMutableArray alloc] init];
@@ -235,10 +216,8 @@
     //fbid_selected = [[NSNumber alloc] initWithInt:0];
     name_selected = [[NSString alloc] init];
     
-    //Adding "favorites" to section index
-    //[sectionsIndex addObject:@"Favorites"];
+    //Adding "*" for favorites to section index
     [sectionsIndex addObject:@"*"];
-    
     
     int length = [friendslist count];
     
@@ -255,39 +234,33 @@
         
     }
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    
-    /*
+    /* Logging all friends in friends list
     for (NSDictionary *user in friendslist)
-    {
         NSLog(@"%@ and %@", [user valueForKey:@"id"], [user valueForKey:@"name"]);
-    }
      */
     
     [self.friendsTableView reloadData];
-    
 }
 
+//UISearchBarDelegate Method - called when user is done editing the search bar
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     [self.searchBar resignFirstResponder];
 }
 
+//UISearchBarDelegate Method - called when user cancels in the search bar
 - (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     [self.friendsTableView reloadData];
 }
 
+//UISearchBarDelegate Method - called when user touches search button in the search bar
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [self.searchBar resignFirstResponder];
 }
 
+//UISearchBarDelegate Method - called when the text in the search bar changes - userful for filtering
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     
@@ -314,6 +287,7 @@
     [self.friendsTableView reloadData];
 }
 
+//Called when view is unloaded
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -321,20 +295,27 @@
     // e.g. self.myOutlet = nil;
 }
 
+
+//Restricts orientation to portrait
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-// Load images for all onscreen rows when scrolling is finished
+//Called when the view stops dragging
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.searchBar resignFirstResponder];
     
+    // Load images for all onscreen rows when scrolling is finished
     if (!decelerate)
-	{
         [self loadImagesForOnscreenRows];
-    }
+}
+
+//Called when the view stops decelerating
+- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadImagesForOnscreenRows];    
 }
 
 #pragma mark - Table view data source
@@ -356,11 +337,8 @@
     if (self.isFiltered)
         //return just one section if something being searched for
         return nil;
-   /* else if ([[sectionsIndex objectAtIndex:section] isEqualToString:@"*"]) {
-        return @"Favorites";
-    }*/ else {
+    else
         return [sectionsIndex objectAtIndex:section];
-    }
 }
 
 //Data Source delegate method for table view - returns the index titles (for the vertical bar on the right)
@@ -506,14 +484,8 @@
     return cell;
 }
 
-//Called when the view stops decelerating
-- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    [self loadImagesForOnscreenRows];    
-}
 
 // this method is used when the user scrolls into a set of cells that don't have their app icons yet
-
 - (void)loadImagesForOnscreenRows
 {
     NSArray *visiblePaths = [self.friendsTableView indexPathsForVisibleRows];
@@ -629,46 +601,6 @@
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-
 #pragma mark - Table view delegate
 
 //Delegate method for table view - called to determine what happens when a row is selected
@@ -724,19 +656,7 @@
     eatvc.fbid = fbid_selected;
     eatvc.name = name_selected;
     
-    [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];
-
-    
-    /*
-    //Build url for server
-    NSString *relativeURL = [NSString stringWithFormat:@"/getEventsForUser?fb_id=%@", fbid_selected];
-    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
-    
-    NSLog(@"relativeURL is %@", relativeURL);
-    ServerCommunication *sc = [[ServerCommunication alloc] init];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self withDelegate:self andDescription:@"retrieve events"];
-     */
-     
+    [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];     
 }
 
 //Called before the next view controller is pushed - any setup is done here
@@ -746,42 +666,6 @@
 
     eatvc.name = name_selected;
     eatvc.fbid = fbid_selected;
-    
-    /*
-    if (self.isFiltered)
-    {
-        NSInteger currentRow = [[self.friendsTableView indexPathForSelectedRow] row];
-        fbid_selected = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"id"];
-        name_selected = [[filteredFriendsList objectAtIndex:currentRow] valueForKey:@"name"];
-        
-        NSLog(@"%@ and %@", fbid_selected, name_selected);
-    }
-    else 
-    {
-        NSString *alpha = [sectionsIndex objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] section]]; 
-        NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
-        
-        //Getting the names that begin with that first letter
-        NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
-               if ([names count] > 0)
-        {
-            NSString *friendName = [names objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] row]];
-            name_selected = friendName;
-            for  (NSDictionary *user in friendslist)
-            {
-                if (friendName == [user objectForKey:@"name"])
-                    fbid_selected = [user objectForKey:@"id"];
-            }
-        }
-        
-        NSLog(@"%@ and %@", fbid_selected, name_selected);
-    }
-    
-    eatvc.fbid = fbid_selected;
-    eatvc.name = name_selected;
-    NSLog(@"Passed to eatvc - %@ and %@", fbid_selected, name_selected);
-    */
-
 }
 
 //Delegate method of ServerCommunication - gets called if request fails
@@ -818,7 +702,10 @@
     }
 }
 
-//Facebook delegate methods
+
+//Facebook delegate methods - These just need to be defined with a minimal body since they are not relevant to this
+//ViewController - not defining them results in warnings
+
 //FBSessionDelegate
 
 - (void) fbDidLogin
