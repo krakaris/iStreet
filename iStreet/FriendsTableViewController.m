@@ -604,7 +604,6 @@
         //NSLog(@"Icon did load for %@", [user valueForKey:@"name"]);
         
         NSData *dataFromUser = [user valueForKey:@"pictureData"];
-        UIImage *pic = [UIImage imageWithData:dataFromUser];
         
         if (dataFromUser == [NSData dataWithContentsOfFile:@"FBPlaceholder.gif"])
         {
@@ -750,7 +749,7 @@
     }
     else {
         NSString *resp = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        //NSLog(@"Received response for %@ is %@", description, resp);
+        NSLog(@"Received response for %@ is %@", description, resp);
     }
 }
 
