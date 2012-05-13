@@ -223,7 +223,8 @@ static NSString *appID = @"128188007305619";
 //Delegate method of ServerCommunication - gets called if request fails
 - (void) connectionFailed:(NSString *)description
 {
-    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed." message:@"Failed to communicate with server. Please close the app and re-launch." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 //Called when view gets unloaded
@@ -268,9 +269,6 @@ static NSString *appID = @"128188007305619";
 {
     NSLog(@"there was an error in the request!!!: %@", [error localizedDescription]);
     NSLog(@"Err details: %@", [error description]);
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed." message:@"Failed to communicate with server. Please close the app and re-launch." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
 }
 
 //FBRequest Delegate method - called when complete response is received
