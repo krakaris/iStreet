@@ -69,7 +69,7 @@
 //Delegate method of ServerCommunication - gets called if request fails
 - (void)connectionFailed:(NSString *)description
 {
-#warning AKI - implement this method (need to handle a web access fail)
+    //implement this method (need to handle a web access fail)
 }
 
 //Delegate method of ServerCommunication - gets called if request is successful

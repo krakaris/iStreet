@@ -19,6 +19,7 @@
 @implementation FriendsTableViewController
 
 #define NUMBER_OF_SECTIONS_IF_FILTERED 1
+#define HALF_OF_CELL_HEIGHT 25
 
 @synthesize isFiltered;
 
@@ -477,11 +478,10 @@
         }
     }
     
-#warning fix magic numbers
     if (isAFavorite)
     {
         UIImage *image = [UIImage imageNamed:@"star_outline_thick.png"];
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, HALF_OF_CELL_HEIGHT, HALF_OF_CELL_HEIGHT)];
         [imageView setImage:image];
         cell.accessoryView = imageView;
     }
@@ -490,7 +490,7 @@
     
     NSDictionary *friendInCompleteArray = [self.friendslist objectAtIndex:indexInCompleteFriendsArray];
     
-#warning aki - look here
+    //look here
     NSData *pictureData = [friendInCompleteArray valueForKey:@"pictureData"];
     if (!pictureData)
     {
@@ -541,7 +541,7 @@
     
     sum += indexPath.row;
     
-#warning aki - these next two lines should never have been here!
+    //these next two lines should never have been here!
     /*
     if (sum > 0)
         sum -= 1;
