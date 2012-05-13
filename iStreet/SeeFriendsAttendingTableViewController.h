@@ -20,7 +20,6 @@
 @property NSString * fbid_loggedInUser;
 @property NSArray * friendsFbidArray;
 @property NSMutableArray *listOfAttendingFriends;
-//@property NSArray *idListOfAttendingFriends;
 @property NSString *eventID;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 

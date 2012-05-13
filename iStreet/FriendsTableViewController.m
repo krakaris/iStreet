@@ -18,6 +18,8 @@
 
 @implementation FriendsTableViewController
 
+#define NUMBER_OF_SECTIONS_IF_FILTERED 1
+
 @synthesize isFiltered;
 
 @synthesize fbid_selected;
@@ -336,17 +338,19 @@
 
 #pragma mark - Table view data source
 
+//Data Source delegate method for table view - returns the number of sections in the table
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    //return 1;
+    
     if (self.isFiltered)
-        return 1;
+        return NUMBER_OF_SECTIONS_IF_FILTERED;
     else {
         return [sectionsIndex count];
     }
 }
 
+//Data Source delegate method for table view - returns the title for each section header
 - (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (self.isFiltered)
@@ -359,11 +363,13 @@
     }
 }
 
+//Data Source delegate method for table view - returns the index titles (for the vertical bar on the right)
 - (NSArray *) sectionIndexTitlesForTableView:(UITableView *)tableView
 {
     return sectionsIndex;
 }
 
+//Data Source delegate method for table view - returns the number of rows in this section
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
@@ -393,6 +399,7 @@
     return rowCount;
 }
 
+//Data Source delegate method for table view - returns the cell at that index path
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Friends Cell";
@@ -500,6 +507,7 @@
     return cell;
 }
 
+//Called when the view stops decelerating
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self loadImagesForOnscreenRows];    
@@ -557,7 +565,8 @@
     //Return absolute object
     return [self.friendslist objectAtIndex:sum];
 }
-             
+
+//Called to start downloading current icon
 - (void)startIconDownload:(NSDictionary *)user forIndexPath:(NSIndexPath *)indexPath
 {
     IconDownloader *iconDownloader = [_iconsBeingDownloaded objectForKey:indexPath];
@@ -574,7 +583,8 @@
     
     [iconDownloader startDownloadFromURL:url forImageKey:@"pictureData" ofObject:user forDisplayAtIndexPath:indexPath atDelegate:self];
 }
-          
+
+//Called after icon is loaded
 - (void)iconDidLoad:(NSIndexPath *)indexPath
 {
     if(self.isFiltered)
@@ -585,12 +595,13 @@
     [_iconsBeingDownloaded removeObjectForKey:indexPath];
 }
 
+//Data Source delegate method for table view - return height for this row
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return fCellHeight;
 }
 
-//Added by Alexa for section color
+//Method that returns the view for a header in a section - Added by Alexa for section color
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
 {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
@@ -658,8 +669,10 @@
 }
 */
 
+
 #pragma mark - Table view delegate
 
+//Delegate method for table view - called to determine what happens when a row is selected
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
