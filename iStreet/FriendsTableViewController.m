@@ -448,7 +448,7 @@
                 cell.textLabel.text = currentUserName;
                 
                 int indexOfFriendInNamesArray = [justFriendNames indexOfObject:currentUserName];
-                NSLog(@"Index in names array is %d", indexOfFriendInNamesArray);
+                //NSLog(@"Index in names array is %d", indexOfFriendInNamesArray);
                 currentFriend = [friendslist objectAtIndex:indexOfFriendInNamesArray]; //[justFriendNames indexOfObject:currentUserName]];
             }
             else 
@@ -464,7 +464,7 @@
                 isAFavorite = YES;          // mark as favorite
         }
         
-        NSLog(@"index in complete array is %d", indexInCompleteFriendsArray);
+        //NSLog(@"index in complete array is %d", indexInCompleteFriendsArray);
         NSDictionary *friendInCompleteArray = [self.friendslist objectAtIndex:indexInCompleteFriendsArray];
         
         //Loading picture data    
@@ -526,7 +526,7 @@
         NSDictionary *user = [self getUserAtIndexPath:indexPath];
         if (user != nil)
         {
-            NSLog(@"User at this path is %@", [user valueForKey:@"name"]);
+            //NSLog(@"User at this path is %@", [user valueForKey:@"name"]);
             if (![user valueForKey:@"pictureData"])
                 [self startIconDownload:user forIndexPath:indexPath];
         }
@@ -538,7 +538,7 @@
 {
     if (self.isFiltered)
     {
-        NSLog(@"Filtered!");
+        //NSLog(@"Filtered!");
         NSDictionary *friend = [self.filteredFriendsList objectAtIndex:indexPath.row];
         return friend;
     }
@@ -555,7 +555,7 @@
         
         sum += indexPath.row;
         
-        NSLog(@"Inside user at index path with sum value %d!!", sum);
+        //NSLog(@"Inside user at index path with sum value %d!!", sum);
 
         //Check bounds and Return absolute object
         if (sum >= [self.friendslist count])
@@ -576,7 +576,7 @@
 //Called to start downloading current icon
 - (void)startIconDownload:(NSDictionary *)user forIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Starting Icon Download for %@", [user valueForKey:@"name"]);
+    //NSLog(@"Starting Icon Download for %@", [user valueForKey:@"name"]);
     
     IconDownloader *iconDownloader = [_iconsBeingDownloaded objectForKey:indexPath];
     if (iconDownloader) //if there is already a download in progress for that event, return.
@@ -601,18 +601,15 @@
     NSDictionary *user = [self getUserAtIndexPath:indexPath];
     if (user != nil)
     {
-        NSLog(@"Icon did load for %@", [user valueForKey:@"name"]);
+        //NSLog(@"Icon did load for %@", [user valueForKey:@"name"]);
         
         NSData *dataFromUser = [user valueForKey:@"pictureData"];
         UIImage *pic = [UIImage imageWithData:dataFromUser];
         
         if (dataFromUser == [NSData dataWithContentsOfFile:@"FBPlaceholder.gif"])
         {
-            NSLog(@"IT'S THE PLACEHOLDER!!!!!");
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:pic];
-            [self.view addSubview:imageView];
+            NSLog(@"It's the placeholder!!!!!");
         }
-        
         
         //[self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationMiddle];
         [self.friendsTableView reloadRowsAtIndexPaths:[self.friendsTableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationFade];
@@ -669,7 +666,7 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
     
-    NSLog(@"Index path selected is row %d and sec %d", indexPath.row, indexPath.section);
+    //NSLog(@"Index path selected is row %d and sec %d", indexPath.row, indexPath.section);
     [self.searchBar resignFirstResponder];
     
     
@@ -753,7 +750,7 @@
     }
     else {
         NSString *resp = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"Received response for %@ is %@", description, resp);
+        //NSLog(@"Received response for %@ is %@", description, resp);
     }
 }
 
