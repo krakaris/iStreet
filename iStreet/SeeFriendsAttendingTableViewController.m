@@ -62,11 +62,13 @@
     NSLog(@"Back to details!");
 }
 
+//Delegate method of ServerCommunication - gets called if request fails
 - (void)connectionFailed:(NSString *)description
 {
 #warning AKI - implement this method (need to handle a web access fail)
 }
 
+//Delegate method of ServerCommunication - gets called if request is successful
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     //emptying the array
@@ -333,6 +335,7 @@
     [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:user];
 }
 
+//Called before the next view controller is pushed - any setup is done here
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSDictionary *user = (NSDictionary *)sender;

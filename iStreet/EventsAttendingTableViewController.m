@@ -46,6 +46,7 @@
      [sc sendAsynchronousRequestForDataAtRelativeURL:@"/eventslist" withPOSTBody:nil forViewController:self  withDelegate:self andDescription:nil];*/
 }
 
+//Delegate method of ServerCommunication - gets called if request is successful
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     NSLog(@"Events retrieved.");
@@ -88,6 +89,12 @@
         [self setPropertiesWithNewEventData:eventsArray];
         [self.eventsTable reloadData];
     }
+}
+
+//Delegate method of ServerCommunication - gets called if request fails
+- (void) connectionFailed:(NSString *)description
+{
+    
 }
 
 - (void) makeFavorite

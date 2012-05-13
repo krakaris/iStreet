@@ -14,7 +14,6 @@
 
 @end
 
-
 static NSString *appID = @"128188007305619";
 
 @implementation FriendsViewController
@@ -36,6 +35,7 @@ static NSString *appID = @"128188007305619";
     return self;
 }
 
+//Animate the "Loading Friends.." Label
 - (void) animateLoadingFriendsLabel
 {
     self.loadingFriendsLabel.hidden = NO;
@@ -51,7 +51,8 @@ static NSString *appID = @"128188007305619";
     self.loadingFriendsLabel.text = @"Loading Friends..";
 }
 
-//fb delegate method
+
+//fb delegate method - gets called when log in is successful
 - (void)fbDidLogin 
 {
     NSLog(@"Call to delegate, did log in!");
@@ -67,40 +68,22 @@ static NSString *appID = @"128188007305619";
     [(AppDelegate *) [[UIApplication sharedApplication] delegate] setFacebook:self.fb];
     NSLog(@"defaults just synchronized!");
     
-    NSLog(@"access token is %@", [self.fb accessToken]);
-    
     //Requesting fb id (then friends, once fbid is received)
     [self.fb requestWithGraphPath:@"me" andDelegate:self];
     NSLog(@"sent the request for fbid");
 }
 
-/*
-- (BOOL) tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
-{
-    NSLog(@"Should select?");
-    id nextVC = [(UINavigationController *)viewController topViewController];
-    id currentVC = [(UINavigationController *)tabBarController.selectedViewController topViewController];
 
-    if (nextVC != currentVC)
-    {
-        NSLog(@"They are equal!");
-        return YES;
-    }
-    else 
-    {
-        NSLog(@"They aren't equal!");
-        return NO;
-    }
-}
-*/
-
+//Function gets called when ViewController is loaded. Initial setup is done here.
 - (void) viewWillAppear:(BOOL)animated
 {
-    NSLog(@"Facebook's viewWillAppear!!");
+    //NSLog(@"Facebook's viewWillAppear!!");
     self.fConnectButton.enabled = YES;
     self.loadingFriendsLabel.hidden = YES;
     [self.navigationItem setHidesBackButton:YES animated:YES];
     [self.spinner stopAnimating];
+    
+    //Obtaining global Facebook variable and friends array
     self.fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
     NSArray *allFBfriends = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
 
@@ -110,14 +93,17 @@ static NSString *appID = @"128188007305619";
         
         if ([allFBfriends count] != 0)
         {
-            NSLog(@"Performing viewWillAppear Segue!");
+            //If friends array isn't empty, load next view controller
+            //NSLog(@"Performing viewWillAppear Segue!");
             [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
         }
         else
         {
+            //NSLog(@"Spinner starts, requesting friends!");
+
             [self animateLoadingFriendsLabel];
-            NSLog(@"Spinner starts, requesting friends!");
             [self.spinner startAnimating];
+            
             //Requesting friends
             [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture" andDelegate:self];
             NSLog(@"Asking for friends after login!!");
@@ -125,50 +111,44 @@ static NSString *appID = @"128188007305619";
     }
 }
 
+//Gets called the first time this view is loaded.
 - (void)viewDidLoad
 {
-    NSLog(@"Facebook's viewDidLoad!!");
-    
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    //[self.view addSubview:self.spinner];
-    //[self.spinner startAnimating];
-    
+    //Obtaining global variables - Facebook and array of friends
     self.fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
     NSArray *allFBfriends = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
     
     if (([allFBfriends count] != 0) && [self.fb isSessionValid]) //if friends isn't empty and session is valid
     {
-        NSLog(@"Friends not empty, session valid.");
+        //NSLog(@"Friends not empty, session valid.");
         
-        //[self.fConnectButton setHidden:YES];
         self.fConnectButton.enabled = YES;
         [self.spinner stopAnimating];
         
-        NSLog(@"Performing viewDidLoad Segue!");
+        //NSLog(@"Performing viewDidLoad Segue!");
+        //friends are loaded and session is valid - push next ViewController containing table of friends
         [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
     }
     else        
     //doing initial fb setup
     {
         NSLog(@"Initial FB setup");
-        
-        //alreadyLoadedFriends = YES;
-        
+                
         self.fb = [(AppDelegate *)[[UIApplication sharedApplication] delegate] facebook];
 
-        if (!self.fb)
+        if (!self.fb) //if the facebook object doesn't exist, allocate it.
         {
             NSLog(@"Improbable, since facebook allocated on app's launch.");
             NSLog(@"Alloc-ing fb instance if none exists.");
             self.fb = [[Facebook alloc] initWithAppId:appID andDelegate:self];
-            [(AppDelegate *) [[UIApplication sharedApplication] delegate] setFacebook:self.fb];
-            //self.fb.sessionDelegate = self;
+            [(AppDelegate *) [[UIApplication sharedApplication] delegate] setFacebook:self.fb]; //setting global variable
         }
-
         
-        //Setting defaults
+        
+        //Setting defaults in Facebook object from local defaults
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
         if ([defaults objectForKey:@"FBAccessTokenKey"] 
@@ -181,6 +161,9 @@ static NSString *appID = @"128188007305619";
             [(AppDelegate *) [[UIApplication sharedApplication] delegate] setFacebook:self.fb];
         }
         
+        
+        //Following block of code is to check for robustness, from
+        //https://github.com/facebook/facebook-ios-sdk/blob/master/sample/Hackbook/Hackbook/HackbookAppDelegate.m
         
         // Now check that the URL scheme fb[app_id]://authorize is in the .plist and can
         // be opened, doing a simple check without local app id factored in here
@@ -224,35 +207,12 @@ static NSString *appID = @"128188007305619";
         //Setting the global facebook variable to this one
         [(AppDelegate *) [[UIApplication sharedApplication] delegate] setFacebook:self.fb];
     }
-    
-    
-    /*
-    //#DEBUGGING
-    //Build url for server
-    
-    NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=571438200"];
-    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
-    
-    ServerCommunication *sc = [[ServerCommunication alloc] init];
-    
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Rishi Narang" forViewController:self withDelegate:self andDescription:@"updating name"];
-
-    //sc = [[ServerCommunication alloc] init];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=99" forViewController:self withDelegate:self andDescription:@"adding event 99"];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=88" forViewController:self withDelegate:self andDescription:@"adding event 88"];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=100" forViewController:self withDelegate:self andDescription:@"adding event 100"];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=101" forViewController:self withDelegate:self andDescription:@"adding event 101"];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=71" forViewController:self withDelegate:self andDescription:@"adding event 71"];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=111" forViewController:self withDelegate:self andDescription:@"adding event 111"];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=97" forViewController:self withDelegate:self andDescription:@"adding event 97"];
-
-    NSLog(@"user updated!");
-     */
 }
 
+//Delegate method of ServerCommunication - gets called if request is successful
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
-    NSLog(@"received data! %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+    //NSLog(@"received data! %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     
     if (description == @"updating user with fbid")
     {
@@ -260,86 +220,65 @@ static NSString *appID = @"128188007305619";
     }
 }
 
+//Delegate method of ServerCommunication - gets called if request fails
+- (void) connectionFailed:(NSString *)description
+{
+    
+}
+
+//Called when view gets unloaded
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
 
+//Restrict orientation to portrait mode
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+//Gets called when user clicks on FConnect button
 - (IBAction)fbconnect:(id)sender
 {
-    NSLog(@"Did click!");
+    //NSLog(@"Did click!");
 
     self.fb.sessionDelegate = self;
+    
     if (![self.fb isSessionValid]) 
     {
-        //Setting up permissions
-        //NSArray *permissions = [[NSArray alloc] initWithObjects:@"email, user_education_history", nil];
+        //if session isn't valid, bring up login box
         [self.fb authorize:nil];
     }
     else 
     {
+        //NSLog(@"Valid Session, asking for friends!");
+
+        //disable button
         self.fConnectButton.enabled = NO;
-        NSLog(@"Valid Session!");
 
         //Requesting friends
         [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture" andDelegate:self];
-        NSLog(@"Asking for friends after login!!");
     }
 }
 
-- (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response 
-{
-    NSLog(@"request:didReceiveResponse:");
-}
-
+//FBRequest Delegate method - called when request fails
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error
 {
     NSLog(@"there was an error in the request!!!: %@", [error localizedDescription]);
     NSLog(@"Err details: %@", [error description]);
 }
+
+//FBRequest Delegate method - called when complete response is received
 - (void) request:(FBRequest *)request didLoad:(id)result
-{   
-    if([result isKindOfClass:[NSDictionary class]])
-    {
-        NSLog(@"got back dictionary!");
-    }
-    else 
-    {
-        NSLog(@"uh oh...");
-        //if request was for fbid, resend request
-        //if request was for friends, resend friend request
-    }
-    
-       
-    // NS LOG THE REQUEST TYPE
-    NSLog(@"request loaded!");
-    NSLog(@"result: %@", result);
-    
-    NSArray *dataReceived = (NSArray *) result;
-    NSLog(@"NUMBER OF PRINCETON FRIENDS IS %d", [dataReceived count]);
-    
-    /*
-    if([result isKindOfClass:[NSDictionary class]])
-    {
-        NSLog(@"got back dictionary!");
-    }
-    else 
-    {
-        NSLog(@"uh oh...");
-        //if request was for fbid, resend request
-        //if request was for friends, resend friend request
-    }
-    */
+{       
+
+    NSLog(@"request loaded, result: %@", result);
     
     if ([request.url isEqualToString:@"https://graph.facebook.com/me"]) //request for fbid
     {
-        if (![result isKindOfClass:[NSDictionary class]])
+        if (![result isKindOfClass:[NSDictionary class]])   //if result is not a dictionary
         {
             NSLog(@"Not a dictionary, request for fb_id again.");
             
@@ -347,15 +286,15 @@ static NSString *appID = @"128188007305619";
             [self.fb requestWithGraphPath:@"me" andDelegate:self];
             NSLog(@"sent the request for fbid again, response was not a dictionary");
         }
-        else
+        else    //result returned is a dictionary
         {
-            NSLog(@"Returned result is a dictionary!");
-            NSLog(@"This is the request for fb id");
-            NSLog(@"access token is %@", [self.fb accessToken]);
+            NSLog(@"Returned result is a dictionary, This is the request for fb id");
+            
             if (result != nil)
             {
                 if ([result valueForKey:@"id"])
                 {
+                    //Calling server method to update user's credentials on server
                     NSString *relativeURL = @"/updateUser";
                     relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
                     
@@ -370,16 +309,16 @@ static NSString *appID = @"128188007305619";
                     
                     userInCoreData = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
                     
-                    //Setting fbid
+                    //Setting fbid in Core Data
                     if (userInCoreData != nil)
                     {
                         userInCoreData.fb_id = fbid;
-                        NSLog(@"STORED FBID IN CORE DATA DATABASE! fbid is %@", fbid);
+                        //NSLog(@"STORED FBID IN CORE DATA DATABASE! fbid is %@", fbid);
                         //[document.managedObjectContext save:nil];
                     }
                     
-                    
-                    
+                    /* Experiment to extract Princeton-only friends */
+                    /*
                     NSLog(@"FQL FQL FQL FQL FQL FQL!!!");
                     NSMutableDictionary * params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                     @"SELECT name,uid,pic_square FROM user WHERE uid IN (SELECT uid1 FROM friend WHERE uid2=me()) AND 'Princeton' IN affiliations", @"query",
@@ -388,11 +327,10 @@ static NSString *appID = @"128188007305619";
                                             andParams: params
                                         andHttpMethod: @"POST"
                                           andDelegate: self];
-                    /*
-                    //Requesting friends from Facebook
+                    */
+                    
+                    //Now, requesting friends from Facebook
                     [self.fb requestWithGraphPath:@"me/friends?limit=10000&fields=name,id,picture" andDelegate:self];
-                    NSLog(@"Asking for friends after login!!");
-                     */
                 }
                 else 
                 {
@@ -413,24 +351,22 @@ static NSString *appID = @"128188007305619";
         }
         else 
         {
-            NSLog(@"Returned response is a proper dictionary!");
-            NSLog(@"This is the request for friends");
+            NSLog(@"Returned response is a proper dictionary, this is the request for friends");
+            //NSLog(@"result: %@", result);
             
-            NSLog(@"result: %@", result);
             NSArray *dataWeGot = [result valueForKey:@"data"];
             friendsArray = dataWeGot;
-            
-            NSLog(@"Friends received!");
-            
+                       
             //Setting global array
             [(AppDelegate *)[[UIApplication sharedApplication] delegate] setAllfbFriends:friendsArray];
-            
-            //alreadyLoadedFriends = YES;
-            
+                
+            // Logging results
+            /*
             for (NSDictionary *user in dataWeGot)
             {
                 NSLog(@"%@ and %@ and picture is %@, email is %@, education is %@", [user valueForKey:@"id"], [user valueForKey:@"name"], [user valueForKey:@"picture"], [user valueForKey:@"email"], [user valueForKey:@"education"]);
             }
+            */
             
             [self.spinner stopAnimating];
             
@@ -438,82 +374,28 @@ static NSString *appID = @"128188007305619";
             [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
         }
     }
-    
-    //NSString *className = NSStringFromClass([dataWeGot class]);
-    //NSLog(@"%@", className);
-    
-    /*
-    for (NSDictionary *friend in friendsArray)
-    {
-        NSLog(@"email, education, picture are %@, %@, %@", [friend objectForKey:@"email"], [friend objectForKey:@"education"], [friend objectForKey:@"picture"]);
-    }
-     */
-    
-    //FriendsTableViewController *ftvc = [[FriendsTableViewController alloc] init];
-    //[self presentModalViewController:ftvc animated:YES];
-     
-    //NSData *onlyDataString = [result objectForKey:@"data"];
-    //NSDictionary *friends = [NSJSONSerialization JSONObjectWithData:onlyDataString options:NSJSONReadingMutableContainers error:nil];
-    //NSDictionary *results = [responseString JSONValue];
-    
-     //NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableContainers error:nil];
-     
-     //SBJSON *parser = [[SBJSON alloc] init];
-     //NSDictionary *allData = (NSDictionary *) [parser objectWithString:result error:nil];
-     //NSArray *relevantData = [allData objectForKey:@"data"];
-     
-     
-     //NSData *responseData = result;
-     //NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-    
-    //SBJsonParser *parser = [SBJsonParser alloc];
-    
-    //NSData *response = [result objectForKey:@"data"];
-    //NSString *json_string = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-    //NSMutableArray *friends = [json_string JSONValue]; //[parser objectWithString:json_string];
-    
-    
-    //Getting only the friends portion
-    //NSString *friendsData = [result objectForKey:@"data"];
-    
-    //SBJsonParser *parser = [[SBJSON alloc] init];
-
-    //NSMutableArray *myFriends = [parser objectWithString:[result objectForKey:@"data"]];
-    //NSDictionary *friendsList = [parser objectWithString:result error:nil];
-    
-    //NSArray *
-    
-    //NSArray *friendsList = [parser objectWithString:friendsData error:nil];
-    //NSDictionary *jsonContents = [parser objectWithString:result error:nil];
-    //NSString friendsData = [jsonContents objectForKey:@"data"];
-    
-    /*for (NSDictionary *friend in friendsList)
-    {
-        //NSString *id = [friend objectForKey:@"id"];
-        NSLog(@"%@ and %@", [friend objectForKey:@"id"], [friend objectForKey:@"name"]);
-    }*/
-    
-    //[self performSegueWithIdentifier:@"Friendslist" sender:self];
-    
 }
 
+//Called before the next view controller is pushed - any setup is done here
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSArray *allFBfriends = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
 
     FriendsTableViewController *ftvc = (FriendsTableViewController *) segue.destinationViewController;
     
+    //Setting array in destination view controller
     if (allFBfriends != 0)
         ftvc.friendslist = (NSMutableArray *) allFBfriends;
     else 
         ftvc.friendslist = (NSMutableArray *) friendsArray;
 }
 
-     
+//Method that Facebook calls in this delegate
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     return [self.fb handleOpenURL:url];
 }
 
+//Method that Facebook calls in this delegate
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation 
 {
@@ -521,7 +403,8 @@ static NSString *appID = @"128188007305619";
 }
 
 
-//Facebook delegate methods
+//Facebook delegate methods -- These just need to be defined with a minimal body since they are not relevant to this
+//ViewController - not defining them results in warnings
 //FBSessionDelegate
 
 - (void) fbDidLogout

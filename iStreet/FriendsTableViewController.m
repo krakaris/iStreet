@@ -66,7 +66,7 @@
              reach the second step.
             */
             
-            //Updating user's fbid on server
+            //Calling server method to update user's credentials on server
             //Build url for server
             NSString *relativeURL = @"/updateUser";
             relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
@@ -727,7 +727,7 @@
      
 }
 
-
+//Called before the next view controller is pushed - any setup is done here
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     eatvc = (EventsAttendingTableViewController *) segue.destinationViewController;
@@ -772,6 +772,7 @@
 
 }
 
+//Delegate method of ServerCommunication - gets called if request fails
 - (void) connectionFailed:(NSString *)description
 {
     if (description == @"updating user with fbid on logout")
@@ -782,6 +783,7 @@
     }
 }
 
+//Delegate method of ServerCommunication - gets called if request is successful
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     //Empty array needed each time
