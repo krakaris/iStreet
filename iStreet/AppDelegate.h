@@ -11,6 +11,7 @@
 #import "Facebook.h"
 
 extern NSString *const DataLoadedNotificationString;
+extern UIColor *orangeTableColor;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, ServerCommunicationDelegate, FBRequestDelegate, FBSessionDelegate, UIAlertViewDelegate, UITabBarControllerDelegate>
 {

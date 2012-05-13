@@ -33,11 +33,8 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestServerEventsData)];
     [self.navigationItem.rightBarButtonItem setTintColor:[UIColor blackColor]];
     
-    //self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0]; RISHI
-    //_eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:50.0/255.0 alpha:1.0];
-    self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
-    _eventsTable.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
-    //[UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0]; OLD
+    self.view.backgroundColor = orangeTableColor;
+    _eventsTable.backgroundColor = orangeTableColor;
     self.eventsTable.separatorColor = [UIColor blackColor];
     
     _eventsByNight = [NSMutableArray array];

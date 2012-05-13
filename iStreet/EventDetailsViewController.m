@@ -12,6 +12,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Event+Accessors.h"
 
+UIColor *lightOrangeColor = nil;
+//[UIColor colorWithRed:255.0/255.0 green:176.0/255.0 blue:76.0/255.0 alpha:1.0];
+
 @interface EventDetailsViewController ()
 
 @end
@@ -27,6 +30,11 @@
 @synthesize eventEntry, toggleAttendingIndicator;
 
 #define loginAlertViewAlert 1
+
++ (void)initialize {
+    if(!lightOrangeColor)
+        lightOrangeColor = [[UIColor alloc] initWithRed:255.0/255.0 green:176.0/255.0 blue:76.0/255.0 alpha:1.0];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -95,8 +103,10 @@
 {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0]];
-    [self.descriptionText setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:176.0/255.0 blue:76.0/255.0 alpha:1.0]];
+    // Set appropriate colors and view
+    [self.view setBackgroundColor:orangeTableColor];
+    //[self.descriptionText setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:176.0/255.0 blue:76.0/255.0 alpha:1.0]];
+    [self.descriptionText setBackgroundColor:lightOrangeColor];
     [self.descriptionText.layer setCornerRadius:7];
     [self setUserWithNetid];
     friendsList = [user.fb_friends componentsSeparatedByString:@","];

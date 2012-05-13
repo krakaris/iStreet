@@ -16,6 +16,7 @@
 
 NSString *const DataLoadedNotificationString = @"Application data finished loading";
 NSString *const netIDLoadedNotificationString = @"NetID was just set";
+UIColor *orangeTableColor = nil;
 
 @interface AppDelegate ()
 - (void)setupCoreData;
@@ -27,6 +28,13 @@ static NSString *appID = @"128188007305619";
 
 @synthesize window = _window, netID = _netID, fbID = _fbID, allfbFriends = _allfbFriends, document = _document, appDataLoaded = _appDataLoaded, facebook = _facebook, connectionFailureAlert = _connectionFailureAlert;
 
+
++ (void)initialize {
+    if(!orangeTableColor)
+        orangeTableColor = [[UIColor alloc] initWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [_window makeKeyAndVisible];
@@ -37,6 +45,9 @@ static NSString *appID = @"128188007305619";
     _networkActivityIndicatorCount = 0;
     [(UITabBarController *)[_window rootViewController] setDelegate:self];
 
+    //Set global color variables:
+    UIColor *orangeTableColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
+    
     // Override point for customization after application launch.
     //UIView *loginWebView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     //[self.view presentModalViewController:loginWebView animated:YES completion:^{}];

@@ -11,6 +11,7 @@
 #import "FriendCell.h"
 #import "User+Create.h"
 #include <stdlib.h>
+#include "AppDelegate.h"
 
 @interface FriendsTableViewController ()
 
@@ -210,8 +211,8 @@
     [self.navigationItem setHidesBackButton:YES];
     self.navigationItem.title = @"Friends";
     
-    self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
-    friendsTableView.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
+    self.view.backgroundColor = orangeTableColor;
+    friendsTableView.backgroundColor = orangeTableColor;
     self.friendsTableView.separatorColor = [UIColor blackColor];
     
     NSLog(@"#friends = %d", [friendslist count]);

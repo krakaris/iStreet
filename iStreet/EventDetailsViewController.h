@@ -13,6 +13,8 @@
 #import "ServerCommunication.h"
 #import "FriendsViewController.h"
 
+extern UIColor *lightOrangeColor;
+
 @interface EventDetailsViewController : UIViewController <ServerCommunicationDelegate, UIAlertViewDelegate>
 {
     User *user;
