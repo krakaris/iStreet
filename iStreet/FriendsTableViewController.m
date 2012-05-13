@@ -191,9 +191,8 @@
     [self.navigationItem setHidesBackButton:YES];
     self.navigationItem.title = @"Friends";
     
-    //Setting colors
-    self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
-    friendsTableView.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:141.0/255.0 blue:17.0/255.0 alpha:1.0];
+    self.view.backgroundColor = orangeTableColor;
+    friendsTableView.backgroundColor = orangeTableColor;
     self.friendsTableView.separatorColor = [UIColor blackColor];
     
     NSLog(@"#friends = %d", [friendslist count]);
