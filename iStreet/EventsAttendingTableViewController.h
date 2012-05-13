@@ -17,7 +17,7 @@
 #import <CoreData/CoreData.h>
 #import "EventsViewController.h"
 
-@interface EventsAttendingTableViewController : EventsViewController
+@interface EventsAttendingTableViewController : EventsViewController <UIAlertViewDelegate>
 {
     UIButton *starButton;
 }

@@ -95,6 +95,11 @@
     [alert show];
 }
 
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self.navigationController  popViewControllerAnimated:YES];    
+}
+
 //Called to handle selection of favorites
 - (void) makeFavorite
 {   
