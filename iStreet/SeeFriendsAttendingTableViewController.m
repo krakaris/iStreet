@@ -69,7 +69,8 @@
 //Delegate method of ServerCommunication - gets called if request fails
 - (void)connectionFailed:(NSString *)description
 {
-    //implement this method (need to handle a web access fail)
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed." message:@"Failed to load Friends, possibly due to lack of an internet connection. Please try again in a bit." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 //Delegate method of ServerCommunication - gets called if request is successful
