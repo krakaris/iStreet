@@ -28,7 +28,6 @@
 		5B4B844F155A0851006C113B /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B4B844E155A0851006C113B /* check.png */; };
 		5B4B8452155A0D90006C113B /* User+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4B8451155A0D90006C113B /* User+Create.m */; };
 		5B4B8458155A18BF006C113B /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4B8457155A18BF006C113B /* Event.m */; };
-		5B4D61A7155B87560021E6E2 /* star_outline_thick.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B4D61A6155B87560021E6E2 /* star_outline_thick.png */; };
 		5B608A5A154A602D00BDCA28 /* ServerCommunication.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B608A59154A602D00BDCA28 /* ServerCommunication.m */; };
 		5B6A18051559FE05008D0013 /* sectionheader.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6A18041559FE05008D0013 /* sectionheader.png */; };
 		5B6E6FA415451DC600BB3AA2 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E6FA315451DC600BB3AA2 /* EventsViewController.m */; };
@@ -47,6 +46,7 @@
 		5BF5A5361560ABA500D83C33 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF5A5351560ABA500D83C33 /* Default.png */; };
 		5BF5A5391560ABB400D83C33 /* iStreet final icon 57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF5A5371560ABB400D83C33 /* iStreet final icon 57x57.png */; };
 		5BF5A53A1560ABB400D83C33 /* iStreet final icon 114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF5A5381560ABB400D83C33 /* iStreet final icon 114x114.png */; };
+		5BFAE9C61560B55500DC591D /* star_outline_thick.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BFAE9C51560B55500DC591D /* star_outline_thick.png */; };
 		5BFB44FC153382E800960C81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB44F8153382E800960C81 /* main.m */; };
 		5BFB4510153386F500960C81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450C153386F500960C81 /* InfoPlist.strings */; };
 		5BFB4511153386F500960C81 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFB450E153386F500960C81 /* MainStoryboard_iPhone.storyboard */; };
@@ -125,7 +125,6 @@
 		5B4B8451155A0D90006C113B /* User+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Create.m"; sourceTree = "<group>"; };
 		5B4B8456155A18BF006C113B /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		5B4B8457155A18BF006C113B /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
-		5B4D61A6155B87560021E6E2 /* star_outline_thick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_outline_thick.png; sourceTree = "<group>"; };
 		5B5B40B71544837D006426CF /* Club+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Club+Create.h"; sourceTree = "<group>"; };
 		5B608A58154A602D00BDCA28 /* ServerCommunication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCommunication.h; sourceTree = "<group>"; };
 		5B608A59154A602D00BDCA28 /* ServerCommunication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommunication.m; sourceTree = "<group>"; };
@@ -156,6 +155,7 @@
 		5BF5A5381560ABB400D83C33 /* iStreet final icon 114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iStreet final icon 114x114.png"; sourceTree = "<group>"; };
 		5BF9EE40153CBA3F00E53F6E /* Event+Accessors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Event+Accessors.h"; sourceTree = "<group>"; };
 		5BF9EE41153CBA3F00E53F6E /* Event+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Event+Accessors.m"; sourceTree = "<group>"; };
+		5BFAE9C51560B55500DC591D /* star_outline_thick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_outline_thick.png; sourceTree = "<group>"; };
 		5BFB44F8153382E800960C81 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5BFB450D153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5BFB450F153386F500960C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -357,9 +357,9 @@
 				9DC19C99155829EC00A01552 /* FriendCell.m */,
 				41263F991543378A006DD5D6 /* facebook-ios-sdk */,
 				4163B6EF153E572E00D7B2DC /* fconnect.png */,
+				5BFAE9C51560B55500DC591D /* star_outline_thick.png */,
 				5BF5A5321560A7FC00D83C33 /* star_gray.png */,
 				41B7438915542BAC0080DA39 /* star_orange.png */,
-				5B4D61A6155B87560021E6E2 /* star_outline_thick.png */,
 				41CF8DDA1559E36A00733AA5 /* FBPlaceholder.gif */,
 			);
 			name = Friends;
@@ -537,11 +537,11 @@
 				41CF8DDB1559E36A00733AA5 /* FBPlaceholder.gif in Resources */,
 				5B6A18051559FE05008D0013 /* sectionheader.png in Resources */,
 				5B4B844F155A0851006C113B /* check.png in Resources */,
-				5B4D61A7155B87560021E6E2 /* star_outline_thick.png in Resources */,
 				5BF5A5331560A7FD00D83C33 /* star_gray.png in Resources */,
 				5BF5A5361560ABA500D83C33 /* Default.png in Resources */,
 				5BF5A5391560ABB400D83C33 /* iStreet final icon 57x57.png in Resources */,
 				5BF5A53A1560ABB400D83C33 /* iStreet final icon 114x114.png in Resources */,
+				5BFAE9C61560B55500DC591D /* star_outline_thick.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
