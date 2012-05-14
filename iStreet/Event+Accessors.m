@@ -12,6 +12,7 @@
 
 @implementation Event (Accessors)
 
+// Return the event entity with the given data (events are unique based on the event_id key)
 + (Event *)eventWithData:(NSDictionary *)eventData
 {
     NSString *eventIDString = [eventData objectForKey:@"event_id"];
@@ -59,7 +60,7 @@
     return event;
 }
 
-/* Get the event's start date stripped of the time */ 
+// Get the event's start date stripped of the time
 - (NSString *)stringForStartDate
 {
     //time_start is stored as yyyy-MM-dd HH:mm:ss (from server)
@@ -69,7 +70,7 @@
     return [self.time_start substringToIndex:[self.time_start rangeOfString:@" "].location];
 }
 
-// Determine entry description
+// Get the full entry description for the event
 - (NSString *)fullEntryDescription
 {
     static NSString *pass = @"Pa";

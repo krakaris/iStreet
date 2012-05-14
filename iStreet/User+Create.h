@@ -10,6 +10,7 @@
 
 @interface User (Create)
 
+// Return the user entity with the given netid
 + (User *)userWithNetid:(NSString *)netid;
 
 @end

@@ -11,6 +11,7 @@
 
 @implementation User (Create)
 
+// Return the user entity with the given netid
 + (User *)userWithNetid:(NSString *)netid
 {    
     if(netid == nil)

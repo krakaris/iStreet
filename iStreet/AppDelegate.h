@@ -16,7 +16,6 @@ extern UIColor *orangeTableColor;
 @interface AppDelegate : UIResponder <UIApplicationDelegate, ServerCommunicationDelegate, FBRequestDelegate, FBSessionDelegate, UIAlertViewDelegate, UITabBarControllerDelegate>
 {
     int _networkActivityIndicatorCount;
-    Facebook *facebook;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -28,8 +27,14 @@ extern UIColor *orangeTableColor;
 @property (nonatomic, retain) UIAlertView *connectionFailureAlert;
 @property (nonatomic, retain) Facebook *facebook;
 
+
+// Show the network activity indicator
 - (void)useNetworkActivityIndicator;
+
+// Stop using the network activity indicator, but keep showing it if it is being used elsewhere
 - (void)stopUsingNetworkActivityIndicator;
+
+// Check core data to see if the user is logged in, and setup Facebook by retrieving friends if so.
 - (void)checkCoreDataAndSetUpFacebook;
 
 @end

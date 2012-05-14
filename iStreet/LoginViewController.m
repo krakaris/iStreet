@@ -20,6 +20,7 @@ static LoginViewController *sharedLoginViewController = nil;
 
 @synthesize loginWebView, delegates, html;
 
+// Present a loginviewcontroller - called from ServerCommunication. If multiple requests call this method, multiple login view controllers are NOT presented; instead, the caller is added as a delegate, and once the user has successfully logged in, all delegates are informed.
 + (void)presentSharedLoginViewControllerWithHTMLString:(NSString *)markup andDelegate:(id <LoginViewControllerDelegate>)delegate inViewController:(UIViewController *)parentViewController;
 {
     BOOL needToPresent = NO;
@@ -38,7 +39,7 @@ static LoginViewController *sharedLoginViewController = nil;
         [parentViewController presentModalViewController:sharedLoginViewController animated:YES];
 }
 
-
+// Init the LoginViewController with pre-loaded HTML for the CAS login page
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andHTMLString: (NSString *)markup
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -50,29 +51,26 @@ static LoginViewController *sharedLoginViewController = nil;
     return self;
 }
 
+// Called when the view has loaded, sets parameters for the webview
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"view loaded!");
-    // Do any additional setup after loading the view from its nib.
-    
-    //Declaring itself as the delegate
+   
     self.loginWebView.delegate = self;
-    
     self.loginWebView.scalesPageToFit = YES;
     self.loginWebView.scrollView.scrollEnabled = NO;
     
     if(html)
-    {
         [self.loginWebView loadHTMLString:html baseURL:[NSURL URLWithString:@"https://fed.princeton.edu/cas/login"]];
-    }
 }
+
 
 - (void) webViewDidStartLoad:(UIWebView *)webView
 {
     //[(AppDelegate *)[[UIApplication sharedApplication] delegate] useNetworkActivityIndicator];
 }
 
+// Called when the webview finishes loading, dismisses and tells delegate if the user has successfully logged in
 -(void) webViewDidFinishLoad:(UIWebView *)webView
 {
     static NSString *prefix = @"SUCCESS: ";
@@ -94,18 +92,7 @@ static LoginViewController *sharedLoginViewController = nil;
     //[(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
 }
 
-- (void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:YES];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
+// Only support portrait orientation
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

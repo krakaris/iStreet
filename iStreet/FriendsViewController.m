@@ -26,17 +26,16 @@ static NSString *appID = @"128188007305619";
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        
+    if (self)
+    {
+        alreadyLoadedFriends = NO;
     }
     
-    alreadyLoadedFriends = NO;
     return self;
 }
 
 //Animate the "Loading Friends.." Label
-- (void) animateLoadingFriendsLabel
+- (void)animateLoadingFriendsLabel
 {
     self.loadingFriendsLabel.hidden = NO;
     
@@ -66,7 +65,6 @@ static NSString *appID = @"128188007305619";
     [defaults setObject:[self.fb expirationDate] forKey:@"FBExpirationDateKey"];
     [defaults synchronize];
     [(AppDelegate *) [[UIApplication sharedApplication] delegate] setFacebook:self.fb];
-    NSLog(@"defaults just synchronized!");
     
     //Requesting fb id (then friends, once fbid is received)
     [self.fb requestWithGraphPath:@"me" andDelegate:self];
@@ -77,7 +75,6 @@ static NSString *appID = @"128188007305619";
 //Function gets called every time ViewController is loaded.
 - (void) viewWillAppear:(BOOL)animated
 {
-    //NSLog(@"Facebook's viewWillAppear!!");
     self.fConnectButton.enabled = YES;
     self.loadingFriendsLabel.hidden = YES;
     [self.navigationItem setHidesBackButton:YES animated:YES];
@@ -94,13 +91,10 @@ static NSString *appID = @"128188007305619";
         if ([allFBfriends count] != 0)
         {
             //If friends array isn't empty, load next view controller
-            //NSLog(@"Performing viewWillAppear Segue!");
             [self performSegueWithIdentifier:@"FriendsSegue" sender:self];
         }
         else
         {
-            //NSLog(@"Spinner starts, requesting friends!");
-
             [self animateLoadingFriendsLabel];
             [self.spinner startAnimating];
             
@@ -141,8 +135,6 @@ static NSString *appID = @"128188007305619";
 
         if (!self.fb) //if the facebook object doesn't exist, allocate it.
         {
-            NSLog(@"Improbable, since facebook allocated on app's launch.");
-            NSLog(@"Alloc-ing fb instance if none exists.");
             self.fb = [[Facebook alloc] initWithAppId:appID andDelegate:self];
             [(AppDelegate *) [[UIApplication sharedApplication] delegate] setFacebook:self.fb]; //setting global variable
         }
@@ -211,9 +203,7 @@ static NSString *appID = @"128188007305619";
 
 //Delegate method of ServerCommunication - gets called if request is successful
 - (void) connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
-{
-    //NSLog(@"received data! %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-    
+{    
     if (description == @"updating user with fbid")
     {
         NSLog(@"Done updating user's fbid on server.");
@@ -243,8 +233,6 @@ static NSString *appID = @"128188007305619";
 //Gets called when user clicks on FConnect button
 - (IBAction)fbconnect:(id)sender
 {
-    //NSLog(@"Did click!");
-
     self.fb.sessionDelegate = self;
     
     if (![self.fb isSessionValid]) 
@@ -254,8 +242,6 @@ static NSString *appID = @"128188007305619";
     }
     else 
     {
-        //NSLog(@"Valid Session, asking for friends!");
-
         //disable button
         self.fConnectButton.enabled = NO;
 
@@ -267,8 +253,7 @@ static NSString *appID = @"128188007305619";
 //FBRequest Delegate method - called when request fails
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error
 {
-    NSLog(@"there was an error in the request!!!: %@", [error localizedDescription]);
-    NSLog(@"Err details: %@", [error description]);
+    NSLog(@"there was an error in the request!: %@", [error localizedDescription]);
 }
 
 //FBRequest Delegate method - called when complete response is received

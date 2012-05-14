@@ -10,10 +10,12 @@
 
 @interface Event (Accessors)
 
+// Return the event entity with the given data (events are unique based on the event_id key)
 + (Event *)eventWithData:(NSDictionary *)eventData;
 
-/* Get the event's start date stripped of the time */ 
+// Get the event's start date stripped of the time
 - (NSString *)stringForStartDate;
+// Get the full entry description for the event
 - (NSString *)fullEntryDescription;
 
 @end

@@ -13,6 +13,7 @@
 
 @implementation Club (Create)
 
+// Return the club entity with the given data (clubs are unique based on the club_id key)
 + (Club *)clubWithData:(NSDictionary *)clubData
 {
     int clubID = [(NSString *)[clubData objectForKey:@"club_id"] intValue];

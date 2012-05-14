@@ -479,8 +479,6 @@
             [cell setImage:[UIImage imageWithData:pictureData]];
     }
     
-    //NSLog(@"Index of friend in complete array is %d", indexInCompleteFriendsArray);
-
     //Add star if current user is a favorite
     if (isAFavorite)
     {
@@ -491,24 +489,6 @@
     }
     else 
         cell.accessoryView = nil;
-    
-    /*
-    NSLog(@"index in complete array is %d", indexInCompleteFriendsArray);
-    NSDictionary *friendInCompleteArray = [self.friendslist objectAtIndex:indexInCompleteFriendsArray];
-    
-    //Loading picture data    
-    NSData *pictureData = [friendInCompleteArray valueForKey:@"pictureData"];
-    
-    if (!pictureData)   //if no picture daya exists for that friend, put placeholder and start icon download
-    {
-        [cell setImage:[UIImage imageNamed:@"FBPlaceholder.gif"]];
-        if (!(self.friendsTableView.dragging == YES || self.friendsTableView.decelerating == YES))
-            [self startIconDownload:currentFriend forIndexPath:indexPath];
-            //[self startIconDownload:friendInCompleteArray forIndexPath:indexPath];
-    }
-    else 
-        [cell setImage:[UIImage imageWithData:pictureData]];
-     */
     
     return cell;
 }
@@ -571,44 +551,21 @@
             NSLog(@"Not in favorites");
             return [self.friendslist objectAtIndex:sum];
         }
-
-
-        /*
-        //NSLog(@"Inside user at index path with sum value %d!!", sum);
-
-        //Check bounds and Return absolute object
-        if (sum >= [self.friendslist count])
-        {
-            NSLog(@"Index path is out of bounds!");
-            return nil;
-        }
-        else 
-        {
-            NSDictionary *friend = [self.friendslist objectAtIndex:sum];
-            //NSLog(@"absolute index is %d and user's name is %@", sum, [friend valueForKey:@"name"]);
-            
-            return friend;
-        }
-         */
     }
 }
 
 //Called to start downloading current icon
 - (void)startIconDownload:(NSDictionary *)user forIndexPath:(NSIndexPath *)indexPath
 {
-    //NSLog(@"Starting Icon Download for %@", [user valueForKey:@"name"]);
     
     IconDownloader *iconDownloader = [_iconsBeingDownloaded objectForKey:indexPath];
     if (iconDownloader) //if there is already a download in progress for that event, return.
         return;
     
-    // start the download
     iconDownloader = [[IconDownloader alloc] init];
     [_iconsBeingDownloaded setObject:iconDownloader forKey:indexPath];
     
-    //#DEBUG FIX FOR THUMBNAILS.
     NSURL *url = [NSURL URLWithString:[user valueForKey:@"picture"]];
-    
     [iconDownloader startDownloadFromURL:url forImageKey:@"pictureData" ofObject:user forDisplayAtIndexPath:indexPath atDelegate:self];
 }
 
@@ -622,18 +579,7 @@
     
     if (user != nil)
     {
-        //NSLog(@"Icon did load for %@", [user valueForKey:@"name"]);
-        
-        NSData *dataFromUser = [user valueForKey:@"pictureData"];
-        
-        if (dataFromUser == [NSData dataWithContentsOfFile:@"FBPlaceholder.gif"])
-        {
-            NSLog(@"It's the placeholder!!!!!");
-        }
-        
-        [self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
-        //[self.friendsTableView reloadRowsAtIndexPaths:[self.friendsTableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationFade];
-        
+        [self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
         [_iconsBeingDownloaded removeObjectForKey:indexPath];
     }
 }
@@ -678,15 +624,6 @@
 //Delegate method for table view - called to determine what happens when a row is selected
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-    
-    //NSLog(@"Index path selected is row %d and sec %d", indexPath.row, indexPath.section);
     [self.searchBar resignFirstResponder];
     
     
@@ -721,8 +658,6 @@
             }
         }
     }
-    
-    NSLog(@"%@ and %@", fbid_selected, name_selected);  
     
     //Setting next controller's attributes
     eatvc.fbid = fbid_selected;
