@@ -232,7 +232,7 @@
 			path = "facebook-ios-sdk";
 			sourceTree = "<group>";
 		};
-		4163B690153BD08D00D7B2DC /* Data Model */ = {
+		4163B690153BD08D00D7B2DC /* Data Model (Core Data) */ = {
 			isa = PBXGroup;
 			children = (
 				5B4B8456155A18BF006C113B /* Event.h */,
@@ -248,7 +248,7 @@
 				5B5B40B71544837D006426CF /* Club+Create.h */,
 				41263F931541389D006DD5D6 /* Club+Create.m */,
 			);
-			name = "Data Model";
+			name = "Data Model (Core Data)";
 			sourceTree = "<group>";
 		};
 		5B227E5115367D5900B5DD52 /* Message Images */ = {
@@ -305,10 +305,8 @@
 			isa = PBXGroup;
 			children = (
 				5BF5A5341560AA0700D83C33 /* Main Application */,
-				5B608A5F154A7CCC00BDCA28 /* Server Communication */,
 				5BFB44FF1533842D00960C81 /* Friends */,
 				5BFB45001533843300960C81 /* Clubs */,
-				4163B690153BD08D00D7B2DC /* Data Model */,
 				5BFB45011533843900960C81 /* Chat */,
 				5BFB45021533845000960C81 /* Events */,
 				5BA1F61515112DA7002CA7F3 /* Supporting Files */,
@@ -337,6 +335,8 @@
 				5BF5A5351560ABA500D83C33 /* Default.png */,
 				5BF5A5371560ABB400D83C33 /* iStreet final icon 57x57.png */,
 				5BF5A5381560ABB400D83C33 /* iStreet final icon 114x114.png */,
+				5B608A5F154A7CCC00BDCA28 /* Server Communication */,
+				4163B690153BD08D00D7B2DC /* Data Model (Core Data) */,
 				9DB903DB151BC93700A13461 /* Tab Bar Images */,
 			);
 			name = "Main Application";
