@@ -30,8 +30,10 @@ enum connectionConstants {
     
     return self;
 }
+
 - (BOOL)sendAsynchronousRequestForDataAtRelativeURL:(NSString *)rel withPOSTBody:(NSString *)p forViewController:(UIViewController *)vc withDelegate:(id <ServerCommunicationDelegate>)del andDescription:(NSString *)d;
 {
+    //For debugging:
     //static NSString *serverURL = @"http://localhost:5000";
     static NSString *serverURL = @"http://istreetsvr.herokuapp.com";
     NSString *absoluteURL = [serverURL stringByAppendingString:rel];
@@ -40,7 +42,6 @@ enum connectionConstants {
     [self setDelegate:del];
     relativeURL = rel;
     post = p;
-    
     
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] useNetworkActivityIndicator];
     
@@ -142,20 +143,6 @@ enum connectionConstants {
 
 
 #pragma mark NSURLConnectionDelegate methods
-
-/*
-- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace
-{
-    return YES;
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
-{
-    NSLog(@"for some reason, wrong method called!");
-    [self connection:connection sendRequestForAuthenticationChallenge:challenge];
-}
-
- */
 
 - (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {

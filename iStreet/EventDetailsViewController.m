@@ -31,6 +31,7 @@ UIColor *lightOrangeColor = nil;
 
 #define loginAlertViewAlert 1
 
+//Initialize color of description view
 + (void)initialize {
     if(!lightOrangeColor)
         lightOrangeColor = [[UIColor alloc] initWithRed:255.0/255.0 green:176.0/255.0 blue:76.0/255.0 alpha:1.0];
@@ -47,11 +48,12 @@ UIColor *lightOrangeColor = nil;
     [self.descriptionText flashScrollIndicators];
 }
 
+//Navigate to a TableView screen showing all Facebook friends of the user that are attending the event. 
 - (IBAction) seeFriends:(id)sender
 {
     NSNumber *fbID = [(AppDelegate *)[[UIApplication sharedApplication] delegate] fbID];
     
-    
+    //Confirm that user is logged into Facebook first. Send alert if not
     if (fbID == nil)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login" message:@"Please login using Facebook first, through the Friends tab." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil]; 
@@ -59,6 +61,7 @@ UIColor *lightOrangeColor = nil;
         
         [alert show];
     }
+    //Otherwise show all friends. Segue to See Friends Attending VC
     else
     {
         NSArray *allFriends = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
@@ -74,6 +77,7 @@ UIColor *lightOrangeColor = nil;
     }
 }
 
+// Prompt user to either login to Facebook to see all friends attending the event, or cancel.
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == loginAlertViewAlert)
@@ -85,27 +89,19 @@ UIColor *lightOrangeColor = nil;
         else 
         {
             NSLog(@"Login");
-
-            
-            //[self.navigationController.tabBarController setSelectedIndex:3];
-            
-            /*
-            FriendsViewController *friendsController = (FriendsViewController *) [[self.navigationController.tabBarController.viewControllers objectAtIndex:3] rootViewController];
-            [friendsController fbconnect:nil]; 
-            */
         }
     }
 }
 
 #pragma mark - Set up UI details
 
+//Set up UI; style and layout.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     // Set appropriate colors and view
     [self.view setBackgroundColor:orangeTableColor];
-    //[self.descriptionText setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:176.0/255.0 blue:76.0/255.0 alpha:1.0]];
     [self.descriptionText setBackgroundColor:lightOrangeColor];
     [self.descriptionText.layer setCornerRadius:7];
     [self setUserWithNetid];
@@ -153,6 +149,7 @@ UIColor *lightOrangeColor = nil;
     
 }
 
+//Format the dates and times appropriately
 - (void)formatDates {
     if (myEvent.time_start && myEvent.time_end) {
         NSString *eventDay = [myEvent.time_start substringToIndex:[myEvent.time_start rangeOfString:@" "].location];
@@ -191,6 +188,7 @@ UIColor *lightOrangeColor = nil;
     user = [User userWithNetid:[(AppDelegate *)[[UIApplication sharedApplication] delegate] netID]];
 }
 
+// Release any retained subviews of the main view.
 - (void)viewDidUnload
 {
     [self setEventImage:nil];
@@ -202,7 +200,6 @@ UIColor *lightOrangeColor = nil;
     [self setDescriptionText:nil];
     [self setEventEntry:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -212,17 +209,23 @@ UIColor *lightOrangeColor = nil;
 
 #pragma mark - Attend button
 
+//Add (or remove) the Event to the user's list of events, based on whether the event already exists in the user's list or not
+//Remove event (unattend) if it already exists; add it if the event does not (Attend)
 - (IBAction)attend:(UIButton *)sender 
 {
     ServerCommunication *sc = [[ServerCommunication alloc] init];
     NSString *post = [NSString stringWithFormat:@"event_id=%@", self.myEvent.event_id];
     
+    //Hide the button until data requests have finished completing (sending attend event info back to server and Core Data)
     [attendButton setHidden:YES];
     [toggleAttendingIndicator startAnimating];
+    
+    //If the user had already planned on attending and pressed "Unattend" button, remove this event from his/her list
     if (userIsAttending) 
     {    
         [sc sendAsynchronousRequestForDataAtRelativeURL:@"/unattendEvent" withPOSTBody:post forViewController:self withDelegate:self andDescription:@"unattend"];
     }
+    //Otherwise, add this event to his/her list of events
     else 
     {
         [sc sendAsynchronousRequestForDataAtRelativeURL:@"/attendEvent" withPOSTBody:post forViewController:self withDelegate:self andDescription:@"attend"];
@@ -230,6 +233,7 @@ UIColor *lightOrangeColor = nil;
     
 }
 
+//Complete connection to either add or remove event 
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     [attendButton setHidden:NO];
@@ -237,12 +241,14 @@ UIColor *lightOrangeColor = nil;
     if(![[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] isEqualToString:@"SUCCESS"])
         return;
     
+    //Add event to user's events
     if([description isEqualToString:@"attend"])
     {
         [user addAttendingEventsObject:myEvent];
         userIsAttending = YES;
         [attendButton setTitle:@"Unattend" forState:UIControlStateNormal];
     }
+    //remove event from user's list
     else if ([description isEqualToString:@"unattend"])
     {
         [user removeAttendingEventsObject:myEvent];
@@ -259,28 +265,11 @@ UIColor *lightOrangeColor = nil;
     [[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"There was a problem connecting to the server. If the error persists, make sure you are connected to the internet." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
 }
 
+//Navigate to TableView showing all friends attending teh event. Set the event to current event. 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    //NSLog(@"\n\nSegue ID: %@\n\n", segue.identifier);
-
     SeeFriendsAttendingTableViewController *seeFriendsController = (SeeFriendsAttendingTableViewController *)[segue destinationViewController];
-    seeFriendsController.eventID = myEvent.event_id;
-    
-    /*
-    //Getting list of events from server
-    //Build url for server
-    NSString *relativeURL = [NSString stringWithFormat:@"/attendEvent?fb_id=%@", @"521832474"];
-    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];    
-     
-    NSLog(@"relativeURL is %@", relativeURL);
-    ServerCommunication *sc = [[ServerCommunication alloc] init];
-    //[sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"name=Stacey Wenjun Zhang"forViewController:self withDelegate:self andDescription:@"stacey"];
-     
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:@"event_id=102" forViewController:self withDelegate:self andDescription:@"adding event 99"];
-     */
-    /*
-     Segue to Aki's Friends TableView
-     }*/
+    seeFriendsController.eventID = myEvent.event_id;    
 }
 
 

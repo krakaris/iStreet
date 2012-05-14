@@ -19,13 +19,14 @@
 @interface EventsViewController ()
 - (void)requestServerEventsData;
 - (void)loadImagesForOnscreenRows;
-/* Probably incomplete */
+
 @end
 
 @implementation EventsViewController
 
 @synthesize activityIndicator = _activityIndicator, eventsTable = _eventsTable, noUpcomingEvents = _noUpcomingEvents;
 
+//Load and set the UI
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -57,6 +58,7 @@
     }
 }
 
+//Get data from Core Data
 - (void)getCachedData:(NSNotification *)notification
 {    
     if(notification)
@@ -78,7 +80,7 @@
     return nil;
 }
 
-
+//Animation code
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
@@ -111,6 +113,7 @@
     [self flashReloadButton:timer];
 }
 
+//Set upper right button that refreshes the page. If no internet connection, button turns red.
 - (void)flashReloadButton:(NSTimer *)timer
 {
     int current = [(NSNumber *)[timer userInfo] intValue];
@@ -149,7 +152,7 @@
     [self.eventsTable reloadData];
 }
 
-// attempting to change this method to work with the current eventsByDate
+//Update (add and delete) events as necessary
 - (void)setPropertiesWithNewEventData:(NSArray *)newData;
 {
     //if an event is in _eventsByNight but not in newData, that event should be deleted (i.e. it is past that date, or the event was deleted from the server's database
@@ -229,11 +232,13 @@
 
 #pragma mark - Table view data source
 
+//Each day will have its own section
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {   
     return [_eventsByNight count];
 }
 
+//Each section will be populated by the events occuring on that particular date
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
@@ -241,6 +246,7 @@
     return [ea.array count];
 }
 
+//Build each cell in the TableView (Mostly UI)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CELL_IDENTIFIER = @"event cell";
@@ -266,12 +272,14 @@
     return kCellHeight;
 }
 
-//Added by Alexa for section color
+//Sets the section header format (Mostly UI purposes)
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
 {
+    //Create a new view - size as section header
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
     [headerView setBackgroundColor:[UIColor whiteColor]];
     
+    //Place image of section header (from PhotoShop) onto this view
     UIImageView *sectionHeader = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sectionheader.png"]];
     [sectionHeader setFrame:CGRectMake(0, 0, headerView.frame.size.width, headerView.frame.size.height)];
     [headerView addSubview:sectionHeader];
@@ -280,12 +288,14 @@
     
     EventsNight *ea = [_eventsByNight objectAtIndex:section];
     
+    //Format the date
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *date = [formatter dateFromString:ea.date];
     [formatter setDateFormat:@"EEEE, MMMM d"];
     NSString *dateString = [formatter stringFromDate:date];
     
+    //Set the labels - text and color
     label.text = dateString;
     label.textAlignment = UITextAlignmentCenter;
     label.textColor = [UIColor orangeColor];
@@ -303,6 +313,7 @@
 
 #pragma mark - Table view delegate
 
+//Navigate to Event Details screen for the given Event at selected cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
@@ -316,10 +327,10 @@
         [segue.destinationViewController setMyEvent:sender];
 }
 
-
 #pragma mark -
 #pragma mark Icon Downloading
 
+//Begin downloading the icons for Event cells
 - (void)startIconDownload:(Event *)event forIndexPath:(NSIndexPath *)indexPath
 {
     IconDownloader *iconDownloader = [_iconsBeingDownloaded objectForKey:indexPath];
@@ -344,7 +355,6 @@
     [_iconsBeingDownloaded removeObjectForKey:indexPath];
 }
 
-
 #pragma mark -
 #pragma mark Deferred image loading (UIScrollViewDelegate)
 
@@ -357,6 +367,7 @@
     }
 }
 
+//When scrolling has finished, load images for onscreen rows
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self loadImagesForOnscreenRows];

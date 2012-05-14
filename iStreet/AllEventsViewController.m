@@ -17,6 +17,7 @@
 
 @implementation AllEventsViewController
 
+//Set up main UI for "Events" screen. Set up "logout" button on upper left
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -24,6 +25,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logoutAlert)];
 }
 
+//Send server a request for data
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -39,12 +41,14 @@
     }
 }
 
+//If user tries to logout, send an alert, requiring confirmation
 - (void)logoutAlert
 {
     UIAlertView *logoutAlert = [[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you sure you want to log out of the app? This will log you out of Facebook too." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
     [logoutAlert show];
 }
 
+//If user mistakenly pressed logout button, cancel logout action
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex == 1)
@@ -55,6 +59,7 @@
         NSLog(@"cancelled");
 }
 
+//logout user with given netid. CAS logout takes care of this. 
 - (void)logout
 {
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://fed.princeton.edu/cas/logout"]];
@@ -64,6 +69,7 @@
         [self connection:nil didFailWithError:nil];
 }
 
+//Send message if there was an error logging out
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] stopUsingNetworkActivityIndicator];
@@ -77,6 +83,7 @@
     [sc sendAsynchronousRequestForDataAtRelativeURL:@"/logout" withPOSTBody:nil forViewController:self withDelegate:self andDescription:@"logout"];
 }
 
+//Retrieve a list of all the events from Core Data
 - (NSArray *)getCoreDataEvents
 {
     UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
@@ -88,6 +95,7 @@
     return events;
 }
 
+//Retrieve events from server. 
 - (void)requestServerEventsData
 {    
     [self.noUpcomingEvents setHidden:YES];
@@ -95,6 +103,7 @@
     [sc sendAsynchronousRequestForDataAtRelativeURL:@"/eventslist" withPOSTBody:nil forViewController:self  withDelegate:self andDescription:nil];
 }
 
+//Perform logout or login appropriately. Log out of both CAS and Facebook if logout is desired action. 
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     if(![description isEqualToString:@"logout"])
@@ -141,6 +150,9 @@
     [self login];
 }
 
+//Send alert message if attempt to logout failed. 
+//Send message if no internet connection - unable to retrieve event info. 
+//Send alert message if no upcoming events
 - (void)connectionFailed:(NSString *)description
 {
     if([description isEqual:@"logout"])
@@ -160,6 +172,7 @@
     [super connectionFailed:description];
 }
 
+//Redirect user to CAS login
 - (void)login
 {
     _userLoggedOut = YES;
@@ -170,25 +183,25 @@
 
 //Facebook delegate methods
 //FBSessionDelegate
-
+//NSLog statements were for debugging purposes
 - (void) fbDidLogin
 {
-    NSLog(@"FB did log in.");
+    //NSLog(@"FB did log in.");
 }
 
 - (void) fbSessionInvalidated
 {
-    NSLog(@"FB Session Invalidated.");
+    //NSLog(@"FB Session Invalidated.");
 }
 
 - (void) fbDidNotLogin:(BOOL)cancelled
 {
-    NSLog(@"FB did not login.");
+    //NSLog(@"FB did not login.");
 }
 
 - (void) fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt
 {
-    NSLog(@"FB did extend token.");
+    //NSLog(@"FB did extend token.");
 }
 
 @end

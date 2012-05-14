@@ -16,6 +16,7 @@ enum cellConstants {
 
 @interface EventCell : UITableViewCell
 
+//set image/icon of the cell
 - (void)setImage:(UIImage *)image;
 
 /*

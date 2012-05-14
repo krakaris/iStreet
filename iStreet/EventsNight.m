@@ -13,6 +13,7 @@
 
 @synthesize date, array;
 
+//Initialize array of events occuring on specific date. 
 - (id)initWithDate:(NSString *)eventsDate
 {
     self = [super init];
@@ -21,6 +22,7 @@
     return self;
 }
 
+//Add event to the array of Events, provided they have matching dates. 
 - (void)addEvent:(Event *)event
 {
     NSString *eventDate = [event stringForStartDate];

@@ -13,6 +13,7 @@
 
 @implementation EventCell
 
+//Initialize the cell - UI layout and style of the cell
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -23,6 +24,7 @@
         
         [self.contentView setBackgroundColor:[UIColor clearColor]];
         
+        //Set fonts and colors
         [self.textLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:16]];
         self.textLabel.textColor = [UIColor blackColor];
         self.detailTextLabel.textColor = [UIColor whiteColor];
@@ -31,6 +33,7 @@
     return self;
 }
 
+//Set image in left corner of cell
 - (void)setImage:(UIImage *)image
 {
     CGSize itemSize = CGSizeMake(kCellHeight, kCellHeight);
@@ -41,6 +44,7 @@
     UIGraphicsEndImageContext();
 }
 
+//Populate cell with correct event information
 - (BOOL)packCellWithEventInformation:(Event *)event atIndexPath:(NSIndexPath *)indexPath whileScrolling:(BOOL)isScrolling
 {
     //If there is an activity indicator, remove it.
@@ -87,6 +91,7 @@
     // Meanwhile, set a placeholder image.
     [self setImage:[UIImage imageNamed:@"Placeholder.png"]];     
     
+    //Set Activity indicator to animate in icon view/square while icon is loading
     UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     CGSize imageViewSize = self.imageView.image.size;
     [loadingIndicator setCenter:CGPointMake(imageViewSize.width/2, imageViewSize.height/2)];

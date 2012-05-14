@@ -32,7 +32,9 @@ extern UIColor *lightOrangeColor;
 @property (nonatomic, retain) IBOutlet UILabel *eventEntry;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *toggleAttendingIndicator;
 
+//Add Event to the user's list of events. Place Check mark next to this event in the table view
 - (IBAction)attend:(UIButton *)sender;
+//See all Facebook friends that are also attending this event. Must be logged into Facebook. 
 - (IBAction)seeFriends:(id)sender;
 
 @end
