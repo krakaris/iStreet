@@ -398,10 +398,6 @@
     int indexInCompleteFriendsArray;
     
     BOOL isAFavorite = NO;
-
-    //We will use this predicate later to check if given user is a favorite
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
-
     
     if (self.isFiltered)    //If table is currently filtered
     {
@@ -416,6 +412,7 @@
             indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
             
             //Checking if favorite (to add star)
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
             NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
             if ([matchingUsers count] != 0) //if favorite
                 isAFavorite = YES;          //mark as favorite
@@ -459,6 +456,7 @@
             indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
             
             //Checking if favorite (to add star)
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
             NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
             if ([matchingUsers count] != 0) // if favorite
                 isAFavorite = YES;          // mark as favorite
