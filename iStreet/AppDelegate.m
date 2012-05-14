@@ -50,7 +50,7 @@ static NSString *appID = @"128188007305619";
     [(UITabBarController *)[_window rootViewController] setDelegate:self];
     
     
-//This code runs only if in DEBUG mode, since the simulator's NSFileManager takes time to startup.
+    // This code runs only if in DEBUG mode, since the simulator's NSFileManager takes time to startup.
 #ifdef DEBUG
     NSLog(@"going to sleep for NSFileManager startup (only for simulator)...");
     [NSThread sleepForTimeInterval:3]; 
@@ -63,6 +63,9 @@ static NSString *appID = @"128188007305619";
     dataURL = [dataURL URLByAppendingPathComponent:@"database"];
     self.document = [[UIManagedDocument alloc] initWithFileURL:dataURL];
     
+    // get the user for this netid
+    _netID = [[NSUserDefaults standardUserDefaults] objectForKey:@"netid"]; //or nil
+    
     if ([fm fileExistsAtPath:[dataURL path]]) 
     {
         [self.document openWithCompletionHandler:^(BOOL success) {
@@ -70,24 +73,13 @@ static NSString *appID = @"128188007305619";
             {
                 NSLog(@"successfully opened database!");
                 _appDataLoaded = YES;
-                
-                // get the user for this netid
-                _netID = [[NSUserDefaults standardUserDefaults] objectForKey:@"netid"]; //or nil
-
                 [[NSNotificationCenter defaultCenter] postNotificationName:DataLoadedNotificationString object:self];
-            }
-            if (!success) 
-                NSLog(@"couldn’t open document at %@", [dataURL path]);}]; 
+            }}]; 
     } 
     else 
     {
         [self.document saveToURL:dataURL forSaveOperation:UIDocumentSaveForCreating
-               completionHandler:^(BOOL success) {
-                   if (success) 
-                       [self setupCoreData];
-                   
-                   if (!success) 
-                       NSLog(@"couldn’t create document at %@", [dataURL path]);}];        
+               completionHandler:^(BOOL success) {if (success) [self setupCoreData];}];        
     }
     
     //Creating Facebook object

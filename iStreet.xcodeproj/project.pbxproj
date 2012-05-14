@@ -235,6 +235,7 @@
 		4163B690153BD08D00D7B2DC /* Data Model (Core Data) */ = {
 			isa = PBXGroup;
 			children = (
+				5BC710C91545E70300A7659F /* iStreet.xcdatamodeld */,
 				5B4B8456155A18BF006C113B /* Event.h */,
 				5B4B8457155A18BF006C113B /* Event.m */,
 				5BBCBB6D155F1BFE005EEC4D /* User.h */,
@@ -318,7 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				5BFB44F8153382E800960C81 /* main.m */,
-				5BC710C91545E70300A7659F /* iStreet.xcdatamodeld */,
 				5BA1F61615112DA7002CA7F3 /* iStreet-Info.plist */,
 				5BA1F61C15112DA7002CA7F3 /* iStreet-Prefix.pch */,
 				5BFB450C153386F500960C81 /* InfoPlist.strings */,

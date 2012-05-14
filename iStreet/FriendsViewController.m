@@ -117,7 +117,7 @@ static NSString *appID = @"128188007305619";
     
     if (([allFBfriends count] != 0) && [self.fb isSessionValid]) //if friends isn't empty and session is valid
     {
-        //NSLog(@"Friends not empty, session valid.");
+        NSLog(@"Friends not empty, session valid.");
         
         self.fConnectButton.enabled = YES;
         [self.spinner stopAnimating];
