@@ -365,6 +365,7 @@ static NSString *appID = @"128188007305619";
 //Called before the next view controller is pushed - any setup is done here
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    NSLog(@"seguing");
     NSArray *allFBfriends = [(AppDelegate *)[[UIApplication sharedApplication] delegate] allfbFriends];
 
     FriendsTableViewController *ftvc = (FriendsTableViewController *) segue.destinationViewController;
