@@ -8,10 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ClubsViewController : UIViewController {
-
-    NSMutableData *receivedData; 
-    NSMutableArray *clubsList;
+@interface ClubsViewController : UIViewController 
+{
     __weak IBOutlet UILabel *dateLabel;
 }
 

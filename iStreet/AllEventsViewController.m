@@ -183,7 +183,6 @@
 
 //Facebook delegate methods
 //FBSessionDelegate
-//NSLog statements were for debugging purposes
 - (void) fbDidLogin
 {
     //NSLog(@"FB did log in.");

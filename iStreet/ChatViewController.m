@@ -30,6 +30,7 @@
 
 #pragma mark Setting up the View
 
+// View loaded
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -55,6 +56,7 @@
     [self getNewMessages];
 }
 
+// View appeared – start timer for getting new messages
 - (void)viewDidAppear:(BOOL)animated
 {
     if (![timer isValid]) 
@@ -63,7 +65,7 @@
         [self getNewMessages];
     }
 }
-
+// View disappeared - stop the timer
 - (void)viewDidDisappear:(BOOL)animated
 {
     if([timer isValid])
@@ -71,7 +73,7 @@
     timer = nil;
 }
 
-
+// Restrict orientation to portrait
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -79,6 +81,7 @@
 
 #pragma mark Receiving Messages
 
+// Get new messages if that is not already being done
 - (void)getNewMessages
 {
     if(gettingNewMessages)
@@ -90,7 +93,8 @@
     if(![sc sendAsynchronousRequestForDataAtRelativeURL:[NSString stringWithFormat:@"/get?past=%d", lastMessageID] withPOSTBody:nil forViewController:self withDelegate:self andDescription:@"get"])
         gettingNewMessages = NO;
 }
-  
+
+// Handle connection failure with an alert or extra table cell
 - (void)connectionFailed:(NSString *)description
 {
     if([description isEqualToString:@"add"])
@@ -112,18 +116,13 @@
         if([timer isValid])
             [timer invalidate];
         
-        //if(successfulInitialRequest || !successfulInitialRequest)
-        //{
         failedLastRequest = YES;
         [self.messagesTable reloadData];
         [messagesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        //}
     }
 }
 
-/*
- Runs when the connection has successfully finished loading all data
- */
+// Runs when the connection has successfully finished loading all data
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {      
     if([description isEqualToString:@"add"])
@@ -185,6 +184,7 @@
 
 #pragma mark Sending Messages
 
+// The user hit send
 - (IBAction)sendClicked:(id)sender 
 {   
     // if there is no text, or the message is still sending (i.e. the user double-clicked), don't do anything.
@@ -218,6 +218,7 @@
     [sc sendAsynchronousRequestForDataAtRelativeURL:@"/add" withPOSTBody:[NSString stringWithFormat:@"message=%@", messageField.text] forViewController:self  withDelegate:self andDescription:@"add"];
 }
 
+// The user hit the drunk/sober button
 - (IBAction)toggleDrunk:(id)sender
 {
     drunk = !drunk;
@@ -234,17 +235,20 @@
 
 #pragma mark UITableViewController Data Source
 
+// Return number of sections
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
 {
     return 1;
 }
 
+// Return number of cells
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
     int reloadCell = (failedLastRequest ? 1 : 0);
     return [messages count] + reloadCell;
 }
 
+// Return the cell at indexpath
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(failedLastRequest && indexPath.row == [messages count])
@@ -285,6 +289,7 @@
     return cell;
 }
 
+// Return the height for the cell at that index path based on the message size (or 50 if it's an error message)
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 
 {
     if(failedLastRequest && indexPath.row == [messages count])
@@ -306,6 +311,7 @@
     
 }
 
+// Get the current font depending on if the user is drunk or sober
 - (UIFont *)getCurrentFont
 {
     if (drunk)
@@ -316,6 +322,7 @@
 
 #pragma mark UITableViewController Delegate
 
+// Hide the keyboard if the user touches the table, and attempt to make a connection again if the error message was selected
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [messageField resignFirstResponder];
@@ -329,9 +336,7 @@
 
 #pragma mark UITextField Delegate
 
-/*
- Shift the tableview, textfield, etc. up to make space for the keyboard.
- */
+// Shift the tableview, textfield, etc. up to make space for the keyboard.
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     static int TAB_BAR_HEIGHT = 49;
@@ -340,18 +345,14 @@
     [scrollView setContentOffset:scrollPoint animated:YES];
 }
 
-/* 
- If the user hits "Send", send the message
-*/
+// If the user hits "Send" from the keyboard, send the message
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self sendClicked:nil];
     return YES;
 }
 
-/*
- Shift the tableview, textfield, etc. back down to hide the keyboard.
- */
+// Shift the tableview, textfield, etc. back down to hide the keyboard.
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     [scrollView setContentOffset:CGPointZero animated:YES];   
@@ -359,6 +360,7 @@
 
 #pragma mark Memory Management
 
+// Called when the view is unloaded
 - (void)viewDidUnload
 {
     [super viewDidUnload];

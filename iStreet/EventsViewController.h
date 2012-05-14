@@ -32,7 +32,7 @@
 
 - (Event *)eventAtIndexPath:(NSIndexPath *)indexPath;
 
-/* Must override */
+/* Subclasses of EventsViewController must override these two methods */
 - (NSArray *)getCoreDataEvents;
 - (void)requestServerEventsData;
 

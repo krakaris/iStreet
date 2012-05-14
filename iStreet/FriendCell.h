@@ -7,14 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AppDelegate.h"
 
 enum friendCellConstants {
     fCellHeight = 50,
     fCellImageHeight = 50
 };
-
-//#define foregroundColor [UIColor colorWithRed:255.0/255.0 green:179.0/255.0 blue:76.0/255.0 alpha:1.0]
 
 @interface FriendCell : UITableViewCell
 

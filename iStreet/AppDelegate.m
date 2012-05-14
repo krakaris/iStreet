@@ -343,27 +343,27 @@ static NSString *appID = @"128188007305619";
 
 - (void) fbDidLogin
 {
-    NSLog(@"FB did log in.");
+    //NSLog(@"FB did log in.");
 }
 
 - (void) fbDidLogout
 {
-    NSLog(@"FB did log out.");
+    //NSLog(@"FB did log out.");
 }
 
 - (void) fbSessionInvalidated
 {
-    NSLog(@"FB Session Invalidated.");
+    //NSLog(@"FB Session Invalidated.");
 }
 
 - (void) fbDidNotLogin:(BOOL)cancelled
 {
-    NSLog(@"FB did not login.");
+    //NSLog(@"FB did not login.");
 }
 
 - (void) fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt
 {
-    NSLog(@"FB did extend token.");
+    //NSLog(@"FB did extend token.");
 }
 
 @end

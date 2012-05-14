@@ -33,7 +33,7 @@
     return self;
 }
 
-//Set image in left corner of cell
+//set image/icon of the cell
 - (void)setImage:(UIImage *)image
 {
     CGSize itemSize = CGSizeMake(kCellHeight, kCellHeight);
@@ -45,6 +45,7 @@
 }
 
 //Populate cell with correct event information
+// Returns true if the cell needs its icon to be downloaded, or false otherwise.
 - (BOOL)packCellWithEventInformation:(Event *)event atIndexPath:(NSIndexPath *)indexPath whileScrolling:(BOOL)isScrolling
 {
     //If there is an activity indicator, remove it.

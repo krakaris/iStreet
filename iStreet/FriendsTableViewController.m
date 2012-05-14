@@ -639,24 +639,24 @@
         fbid_selected = [[favoriteFriendsList objectAtIndex:currentPath.row] valueForKey:@"id"];
         name_selected = [[favoriteFriendsList objectAtIndex:currentPath.row] valueForKey:@"name"];
     }
+    
+    NSString *alpha = [sectionsIndex objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] section]]; 
+    NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
+    
+    //Getting the names that begin with that first letter
+    NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
+    
+    if ([names count] > 0)
     {
-        NSString *alpha = [sectionsIndex objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] section]]; 
-        NSPredicate *thisPredicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alpha];
-        
-        //Getting the names that begin with that first letter
-        NSArray *names = [justFriendNames filteredArrayUsingPredicate:thisPredicate];
-        
-        if ([names count] > 0)
+        NSString *friendName = [names objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] row]];
+        name_selected = friendName;
+        for  (NSDictionary *user in friendslist)
         {
-            NSString *friendName = [names objectAtIndex:[[self.friendsTableView indexPathForSelectedRow] row]];
-            name_selected = friendName;
-            for  (NSDictionary *user in friendslist)
-            {
-                if (friendName == [user objectForKey:@"name"])
-                    fbid_selected = [user objectForKey:@"id"];
-            }
+            if (friendName == [user objectForKey:@"name"])
+                fbid_selected = [user objectForKey:@"id"];
         }
     }
+
         
     [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];     
 }

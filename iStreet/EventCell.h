@@ -19,8 +19,6 @@ enum cellConstants {
 //set image/icon of the cell
 - (void)setImage:(UIImage *)image;
 
-/*
- Returns true if the cell needs its icon to be downloaded, or false otherwise.
- */
+// Returns true if the cell needs its icon to be downloaded, or false otherwise.
 - (BOOL)packCellWithEventInformation:(Event *)event atIndexPath:(NSIndexPath *)indexPath whileScrolling:(BOOL)isScrolling;
 @end

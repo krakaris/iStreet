@@ -12,6 +12,7 @@
 
 @synthesize user, message, timestamp, ID;
 
+// Init the message object with the values in dict
 - (id)initWithDictionary:(NSDictionary *)dict
 {
     [self setUser:[dict objectForKey:@"user_id"]];

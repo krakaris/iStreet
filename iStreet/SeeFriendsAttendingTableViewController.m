@@ -247,7 +247,9 @@
     return fCellHeight;
 }
 
-//Custom method to find intersection of one's friends and all attendees of an event
+// Custom method to find intersection of one's friends and all attendees of an event
+// This method is unique because allFriends is an array of dictionaries, while fbids is an array of strings.
+// The sets are intersected based on the fbids and the "id" key of the allFriends dictionaries.
 + (NSArray *)intersectAllFriendsArray:(NSArray *)allFriends withAttendees:(NSArray *)fbids
 {
     NSMutableArray *friendsAttending = [NSMutableArray arrayWithArray:allFriends];

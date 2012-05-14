@@ -20,40 +20,17 @@
 
 @implementation ClubEventsViewController
 
-@synthesize club;
+@synthesize clubName;
 
+// Set up the view
 - (void)viewDidLoad
 {
-    self.title = self.club.name;
     [super viewDidLoad];
+    self.title = self.clubName;
     self.view.backgroundColor = orangeTableColor;
 }
 
-- (NSArray *)getCoreDataEvents
-{
-    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];    
-    request.predicate = [NSPredicate predicateWithFormat:@"name == %@", self.club.name];
-
-    NSArray *events = [document.managedObjectContext executeFetchRequest:request error:NULL];
-    
-    return events;
-}
-
-#pragma mark - retrieve Events from server
-
-- (void)requestServerEventsData
-{    
-    //Build url for server
-    NSString *relativeURL = [NSString stringWithFormat:@"/clubevents?name=%@", self.club.name];
-    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];
-
-    ServerCommunication *sc = [[ServerCommunication alloc] init];
-    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self  withDelegate:self andDescription:nil];
-}
-
-
+// Customize cells for club events (show entry description, since the default cell shows the club)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     EventCell *cell = (EventCell *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
@@ -63,5 +40,32 @@
     
     return cell;
 }
+
+#pragma mark Required methods to subclass EventsViewController
+
+// Return core data events for this club
+- (NSArray *)getCoreDataEvents
+{
+    UIManagedDocument *document = [(AppDelegate *)[[UIApplication sharedApplication] delegate] document];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Event"];    
+    request.predicate = [NSPredicate predicateWithFormat:@"name == %@", self.clubName];
+
+    NSArray *events = [document.managedObjectContext executeFetchRequest:request error:NULL];
+    
+    return events;
+}
+
+// Send the request for events for this club
+- (void)requestServerEventsData
+{    
+    //Build url for server
+    NSString *relativeURL = [NSString stringWithFormat:@"/clubevents?name=%@", self.clubName];
+    relativeURL = [relativeURL stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];
+
+    ServerCommunication *sc = [[ServerCommunication alloc] init];
+    [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self  withDelegate:self andDescription:nil];
+}
+
 
 @end

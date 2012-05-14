@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "ServerCommunication.h"
-//#import "SBJsonParser.h"
 
 @interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ServerCommunicationDelegate>
 {
@@ -25,7 +24,6 @@
     NSTimer *timer;
     int lastMessageID;
     BOOL gettingNewMessages; // in the process of getting messages (used to prevent duplicate requests)
-   // BOOL successfulInitialRequest; // new messages were received at the last update
     BOOL failedLastRequest;
     BOOL drunk;
 }
@@ -37,8 +35,10 @@
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *drunkButton;
 
+// The user hit send
 - (IBAction)sendClicked:(id)sender;
+
+// The user selected the drunk/sober button
 - (IBAction)toggleDrunk:(id)sender;
-- (void)getNewMessages;
 
 @end

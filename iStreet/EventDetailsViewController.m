@@ -37,12 +37,7 @@ UIColor *lightOrangeColor = nil;
         lightOrangeColor = [[UIColor alloc] initWithRed:255.0/255.0 green:176.0/255.0 blue:76.0/255.0 alpha:1.0];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    return self;
-}
-
+// When the view appears, flash the scroll indicators in the description text view so that users can see it is scrollable
 - (void) viewWillAppear:(BOOL)animated
 {
     [self.descriptionText flashScrollIndicators];
@@ -202,6 +197,7 @@ UIColor *lightOrangeColor = nil;
     [super viewDidUnload];
 }
 
+//Restrict orientation to portrait
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -257,6 +253,7 @@ UIColor *lightOrangeColor = nil;
     }
 }
 
+// If the connection failed, alert the user.
 - (void)connectionFailed:(NSString *)description
 {
     [attendButton setHidden:NO];

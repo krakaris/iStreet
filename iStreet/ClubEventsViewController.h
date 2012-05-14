@@ -15,6 +15,6 @@
 
 @interface ClubEventsViewController : EventsViewController
 
-@property(nonatomic, retain) Club *club;
+@property(nonatomic, retain) NSString *clubName;
 
 @end

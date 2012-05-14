@@ -13,6 +13,7 @@
 
 @synthesize messageView, infoLabel, backgroundImage;
 
+// Init the cell with default qualities like color
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -44,6 +45,7 @@
     return self;
 }
 
+// Customize the cell with the message and font
 - (void)packCellWithMessage:(Message *)m andFont:(UIFont *)font
 {
     CGSize maxTextSize = CGSizeMake(MAX_WIDTH, CGFLOAT_MAX);
@@ -99,13 +101,6 @@
     //[self.infoLabel setFrame:CGRectMake(10, 0, 300, infoLabelSize.height)];
     [self.infoLabel setFont:infoLabelFont];
     [self.infoLabel setText:timestamp];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
 }
 
 @end

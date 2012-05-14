@@ -17,8 +17,7 @@
 #import "ServerCommunication.h"
 
 @interface EventsViewController ()
-- (void)requestServerEventsData;
-- (void)loadImagesForOnscreenRows;
+
 
 @end
 
@@ -47,18 +46,12 @@
     
     // If Core Data has not finished loading, register for a notification for when it does. Otherwise, load the data.
     if(!dataDidLoad)
-    {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getCachedData:) name:DataLoadedNotificationString object:nil];
-        NSLog(@"events view is observing...");
-    }
     else
-    {
-        [self getCachedData:nil];    
-        NSLog(@"loading core data...");
-    }
+        [self getCachedData:nil];
 }
 
-//Get data from Core Data
+//Get whatever data is cached in core data and then request information from the server
 - (void)getCachedData:(NSNotification *)notification
 {    
     if(notification)
@@ -74,13 +67,14 @@
     [self requestServerEventsData];
 }
 
+// Get the related events from core data – subclasses must override this method
 - (NSArray *)getCoreDataEvents
 {
     [NSException raise:@"Must override '- (NSArray *)getCoreDataEvents' in subclass of EventsViewController" format:@""];
     return nil;
 }
 
-//Animation code
+// Refresh the selected cell in case the user has just "attended" or "unattended" that event in EventDetailsVC
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
@@ -92,18 +86,19 @@
     }
 }
 
+// Restrict orientation to portrait
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return interfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 #pragma mark Retrieving Events Data from Server
-
+// Get the related events from the server – subclasses must override this method
 - (void)requestServerEventsData
 {    
     [NSException raise:@"Must override '- (void)requestServerEventsData' in subclass of EventsViewController" format:@""];
 }
-
+// If the connection has failed, notify the user
 - (void)connectionFailed:(NSString *)description
 {
     if([[self.navigationItem.rightBarButtonItem tintColor] isEqual:[UIColor redColor]])
@@ -129,9 +124,7 @@
     }
 }
 
-/*
- Runs when the connection has successfully finished loading all data
- */
+// Runs when the connection has successfully finished loading all data
 - (void)connectionWithDescription:(NSString *)description finishedReceivingData:(NSData *)data
 {
     [self.navigationItem.rightBarButtonItem setTintColor:[UIColor blackColor]];
@@ -152,11 +145,10 @@
     [self.eventsTable reloadData];
 }
 
-//Update (add and delete) events as necessary
+// Update (add and delete) events as necessary
+// Important: this method deletes old events that are in core data but that are not retrieved from the server
 - (void)setPropertiesWithNewEventData:(NSArray *)newData;
-{
-    //if an event is in _eventsByNight but not in newData, that event should be deleted (i.e. it is past that date, or the event was deleted from the server's database
-    
+{    
     NSMutableArray *newEventsByNight = [NSMutableArray array];
     
     for(int i = [newData count] - 1; i >= 0; i--)
@@ -197,7 +189,7 @@
     
     NSManagedObjectContext *context = [[(AppDelegate *)[[UIApplication sharedApplication] delegate] document] managedObjectContext];
     
-    // delete all leftover events in _eventsByNight
+    // delete all leftover events in _eventsByNight, as these are in core data but no longer being returned by the server
     for(EventsNight *oldNight in _eventsByNight)
         for (Event *outdatedEvent in oldNight.array)
         {
@@ -218,11 +210,6 @@
         [self.noUpcomingEvents setHidden:YES];
         [self.eventsTable setHidden:NO];
     }
-}
-
-- (NSArray *)constructEventsNightArrayFromEventsArray:(NSArray *)eventsArray
-{
-    return eventsArray;
 }
 
 - (void)viewDidUnload
@@ -266,7 +253,7 @@
     return cell;
 }
 
-
+// Return the cell height for events
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return kCellHeight;
@@ -306,6 +293,8 @@
     
     return headerView;
 }
+
+// Get the event at a given index path
 - (Event *)eventAtIndexPath:(NSIndexPath *)indexPath
 {
     return (Event *)[((EventsNight *)[_eventsByNight objectAtIndex:indexPath.section]).array objectAtIndex:indexPath.row];

@@ -7,17 +7,17 @@
 //
 
 #import "FriendCell.h"
+#import "AppDelegate.h"
 
 @implementation FriendCell
 
+// Init the cell
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // ALEXA - insert custom background code, label fonts, etc. here.
-        //example:
-        [self.textLabel setBackgroundColor:[UIColor clearColor]]; //necessary
-        [self.detailTextLabel setBackgroundColor:[UIColor clearColor]]; //necessary
+        [self.textLabel setBackgroundColor:[UIColor clearColor]];
+        [self.detailTextLabel setBackgroundColor:[UIColor clearColor]];
         
         [self.contentView setBackgroundColor:orangeTableColor];
         
@@ -27,6 +27,7 @@
     return self;
 }
 
+// Set the cell's image
 - (void)setImage:(UIImage *)image
 {
     CGSize itemSize = CGSizeMake(fCellImageHeight, fCellImageHeight);
