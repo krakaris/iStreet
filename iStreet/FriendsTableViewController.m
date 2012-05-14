@@ -398,10 +398,6 @@
     int indexInCompleteFriendsArray;
     
     BOOL isAFavorite = NO;
-
-    //We will use this predicate later to check if given user is a favorite
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
-
     
     if (self.isFiltered)    //If table is currently filtered
     {
@@ -416,6 +412,7 @@
             indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
             
             //Checking if favorite (to add star)
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
             NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
             if ([matchingUsers count] != 0) //if favorite
                 isAFavorite = YES;          //mark as favorite
@@ -459,6 +456,7 @@
             indexInCompleteFriendsArray = [self.justFriendNames indexOfObject:currentUserName];
             
             //Checking if favorite (to add star)
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", currentUserName];
             NSArray *matchingUsers = [favoriteFriendsList filteredArrayUsingPredicate:predicate];
             if ([matchingUsers count] != 0) // if favorite
                 isAFavorite = YES;          // mark as favorite
@@ -555,6 +553,27 @@
         
         sum += indexPath.row;
         
+        if ([self.friendsTableView numberOfRowsInSection:0] != 0 && indexPath.section == 0)
+        {
+            NSLog(@"Some favorites exist!");
+            //User at this index in favorites
+            NSDictionary *user = [self.favoriteFriendsList objectAtIndex:indexPath.row];
+            NSDictionary *friend = [self.friendslist objectAtIndex:[self.friendslist indexOfObjectIdenticalTo:user]];
+            return friend;
+        }
+        else if ([self.friendsTableView numberOfRowsInSection:0] != 0)  //favorites exist, but currently in some other section.
+        {
+            NSDictionary *friend = [self.friendslist objectAtIndex:sum-[self.favoriteFriendsList count]];
+            return friend;
+        }
+        else
+        {
+            NSLog(@"Not in favorites");
+            return [self.friendslist objectAtIndex:sum];
+        }
+
+
+        /*
         //NSLog(@"Inside user at index path with sum value %d!!", sum);
 
         //Check bounds and Return absolute object
@@ -570,6 +589,7 @@
             
             return friend;
         }
+         */
     }
 }
 
@@ -599,6 +619,7 @@
         return;
     
     NSDictionary *user = [self getUserAtIndexPath:indexPath];
+    
     if (user != nil)
     {
         //NSLog(@"Icon did load for %@", [user valueForKey:@"name"]);
@@ -610,8 +631,8 @@
             NSLog(@"It's the placeholder!!!!!");
         }
         
-        //[self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationMiddle];
-        [self.friendsTableView reloadRowsAtIndexPaths:[self.friendsTableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationFade];
+        [self.friendsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
+        //[self.friendsTableView reloadRowsAtIndexPaths:[self.friendsTableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationFade];
         
         [_iconsBeingDownloaded removeObjectForKey:indexPath];
     }
