@@ -15,7 +15,6 @@
 
 @interface FriendsTableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, ServerCommunicationDelegate, UIAlertViewDelegate, FBSessionDelegate, IconDownloaderDelegate>
 {
-    EventsAttendingTableViewController *eatvc;
     BOOL isFiltered;
     CGRect originalSearchBarFrame;
     

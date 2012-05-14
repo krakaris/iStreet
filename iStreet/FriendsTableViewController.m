@@ -210,7 +210,6 @@
     sectionsIndex = [[NSMutableArray alloc] init];
     justFriendNames = [[NSMutableArray alloc] init];
     eventsAttending_selected = [[NSMutableArray alloc] init];
-    eatvc = [[EventsAttendingTableViewController alloc] init];
     _iconsBeingDownloaded = [NSMutableDictionary dictionary];
     
     //fbid_selected = [[NSNumber alloc] initWithInt:0];
@@ -658,18 +657,14 @@
             }
         }
     }
-    
-    //Setting next controller's attributes
-    eatvc.fbid = fbid_selected;
-    eatvc.name = name_selected;
-    
+        
     [self performSegueWithIdentifier:@"EventsAttendingSegue" sender:self];     
 }
 
 //Called before the next view controller is pushed - any setup is done here
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    eatvc = (EventsAttendingTableViewController *) segue.destinationViewController;
+    EventsAttendingTableViewController *eatvc = (EventsAttendingTableViewController *) segue.destinationViewController;
 
     eatvc.name = name_selected;
     eatvc.fbid = fbid_selected;
