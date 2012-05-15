@@ -32,9 +32,17 @@
     return self;
 }
 
-//Gets called the every time this view is loaded.
-- (void) viewWillAppear:(BOOL)animated
+//Gets called the first time this view is loaded.
+- (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
+    //basic setup of table view, background
+    self.tableView.separatorColor = [UIColor blackColor];
+    self.view.backgroundColor = orangeTableColor;
+    
+    _iconsBeingDownloaded = [[NSMutableDictionary alloc] init];
+    
     //Setting spinner up
     self.spinner = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width/2.0 - 10.0, self.tableView.frame.size.height/2.0 - 5.0, 20, 20)];
     self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
@@ -54,7 +62,7 @@
     ServerCommunication *sc = [[ServerCommunication alloc] init];
     
     [sc sendAsynchronousRequestForDataAtRelativeURL:relativeURL withPOSTBody:nil forViewController:self withDelegate:self andDescription:@"fetching users"];
-
+    
     self.navigationItem.backBarButtonItem.target = self;
     self.navigationItem.backBarButtonItem.action = @selector(backToDetails:);
 }
@@ -118,18 +126,6 @@
 {
     NSLog(@"Cancel Pressed!");
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-//Gets called the first time this view is loaded.
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    //basic setup of table view, background
-    self.tableView.separatorColor = [UIColor blackColor];
-    self.view.backgroundColor = orangeTableColor;
-    
-    _iconsBeingDownloaded = [[NSMutableDictionary alloc] init];
 }
 
 //Called to start downloading current icon
