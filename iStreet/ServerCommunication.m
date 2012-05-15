@@ -11,6 +11,7 @@
 
 enum connectionConstants {
     kConnectionTimeout = 10,  
+    kMaxAuthenticationAttempts = 5
 };
 
 @interface ServerCommunication()
@@ -121,7 +122,7 @@ enum connectionConstants {
     }
     else if ([[[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding] isEqualToString:@"Access failed."])
     {
-        if(accessFailCount++ < 5)
+        if(accessFailCount++ < kMaxAuthenticationAttempts)
             [self sendAsynchronousRequestForDataAtRelativeURL:_relativeURL withPOSTBody:_post forViewController:viewController withDelegate:self.delegate andDescription:description];
         else 
             [self.delegate connectionWithDescription:description finishedReceivingData:[@"" dataUsingEncoding:NSUTF8StringEncoding]];
@@ -152,7 +153,7 @@ enum connectionConstants {
         return;
     }
     
-    if ([challenge previousFailureCount] > 50) 
+    if ([challenge previousFailureCount] > kMaxAuthenticationAttempts) 
     {   
         [[challenge sender] cancelAuthenticationChallenge:challenge];
         return;
