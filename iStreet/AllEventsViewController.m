@@ -2,8 +2,7 @@
 //  AllEventsViewController.m
 //  iStreet
 //
-//  Created by Rishi on 5/3/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Alexa Krakaris, Akarshan Kumar, and Rishi Narang - COS 333 Spring 2012
 //
 
 #import "AllEventsViewController.h"
@@ -124,7 +123,7 @@
     }
 }
 
-- (void) fbDidLogout
+- (void)fbDidLogout
 {
     NSLog(@"Logged Out!");
     [(AppDelegate *) [[UIApplication sharedApplication] delegate] setAllfbFriends:nil];
@@ -142,10 +141,12 @@
     [prefs setObject:nil forKey:@"FBAccessTokenKey"];
     [prefs setObject:nil forKey:@"FBExpirationDateKey"];
     [prefs synchronize];
-    
-    //Show alert to confirm logout -- if needed!
-    
-    //Pop Friends screen to root view controller - taken care of in FriendsTableViewController
+        
+    //Pop Friends screen to root view controller (back to the login screen)
+    UITabBarController *mainTabBar = (UITabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    // The friends tab is the 4th tab (at index 3)
+    UINavigationController *friendsTab = [[mainTabBar viewControllers] objectAtIndex:3];
+    [friendsTab popToRootViewControllerAnimated:NO];
     
     [self login];
 }

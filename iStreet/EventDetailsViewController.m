@@ -2,8 +2,7 @@
 //  EventDetailsViewController.m
 //  iStreet
 //
-//  Created by Alexa Krakaris on 4/14/12.
-//  Copyright (c) 2012 Princeton University. All rights reserved.
+//  Alexa Krakaris, Akarshan Kumar, and Rishi Narang - COS 333 Spring 2012
 //
 
 #import "EventDetailsViewController.h"

@@ -1,5 +1,7 @@
-// IconDownloader.h
-// iStreet
+//  IconDownloader.h
+//  iStreet
+//
+//  Alexa Krakaris, Akarshan Kumar, and Rishi Narang - COS 333 Spring 2012
 //
 // Much of the IconDownloader code is borrowed from Apple – However, many modifications were made, including it making much more general so that it does not apply to only one class.
 

@@ -2,6 +2,8 @@
 //  ChatViewControllerViewController.m
 //  iStreet
 //
+//  Alexa Krakaris, Akarshan Kumar, and Rishi Narang - COS 333 Spring 2012
+//
 //  A little bit of the client-server interaction code is borrowed from Jack D Herrington, Senior Software Engineer, Fortify Software, Inc.
 //  http://www.ibm.com/developerworks/library/x-ioschat/index.html
 //
@@ -18,6 +20,12 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreData/CoreData.h>
 #import "Club.h"
+
+enum chatConstants 
+{
+    kRateLimit = 20,
+    kMessageSizeLimit = 90,
+};
 
 @interface ChatViewController ()
 
@@ -40,7 +48,6 @@
     secondLastMessage = nil;
     
     gettingNewMessages = NO;
-    //successfulInitialRequest = NO;
     failedLastRequest = NO;
     
     [activityIndicator startAnimating];
@@ -127,9 +134,8 @@
 {      
     if([description isEqualToString:@"add"])
     {
-        messageField.text = @"";
-
         //erase the message from the field, but don't let the user type more until the message shows up on the screen
+        messageField.text = @"";
         [self getNewMessages];
     }
     else 
@@ -148,12 +154,9 @@
             return; // do nothing if can't recieve messages
         }
         
-        //successfulInitialRequest = YES;
         if (failedLastRequest) 
         { // remove the error cell
             failedLastRequest = NO;
-            /*[messagesTable reloadData];
-            [messagesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([messages count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];*/
             [self.messagesTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:([messages count]) inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
         }
         failedLastRequest = NO;
@@ -192,7 +195,7 @@
         return;
     
     /* Simple spam prevention measures */
-    if([messageField.text length] > 90)
+    if([messageField.text length] > kMessageSizeLimit)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Character Limit Exceeded" message:[NSString stringWithFormat:@"Please limit chat messages to\n90 characters in length.\n(Currently using %d)", [messageField.text length]] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [alert show];
@@ -200,7 +203,7 @@
     }
     
     NSDate *now = [NSDate date];
-    if(lastMessage && [now timeIntervalSinceDate:lastMessage] <= 20)
+    if(lastMessage && [now timeIntervalSinceDate:lastMessage] <= kRateLimit)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Rate Limit" message:[NSString stringWithFormat:@"Please wait 20 seconds between sending chat messages.", [messageField.text length]] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [alert show];
@@ -339,6 +342,7 @@
 // Shift the tableview, textfield, etc. up to make space for the keyboard.
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    // These values can be found easily online
     static int TAB_BAR_HEIGHT = 49;
     static int KEYBOARD_HEIGHT = 216;
     CGPoint scrollPoint = CGPointMake(0.0, messageField.frame.origin.y - KEYBOARD_HEIGHT + TAB_BAR_HEIGHT);

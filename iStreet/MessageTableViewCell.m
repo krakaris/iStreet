@@ -2,8 +2,7 @@
 //  MessageTableViewCell.m
 //  iStreet
 //
-//  Created by Rishi on 4/11/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Alexa Krakaris, Akarshan Kumar, and Rishi Narang - COS 333 Spring 2012
 //
 
 #import "MessageTableViewCell.h"
@@ -97,8 +96,6 @@
     NSString *timestamp = [formatter stringFromDate:date];
     
     UIFont *infoLabelFont = [UIFont fontWithName:font.fontName size:font.pointSize - 1];
-    //CGSize infoLabelSize = [timestamp sizeWithFont:infoLabelFont constrainedToSize:maxTextSize];
-    //[self.infoLabel setFrame:CGRectMake(10, 0, 300, infoLabelSize.height)];
     [self.infoLabel setFont:infoLabelFont];
     [self.infoLabel setText:timestamp];
 }

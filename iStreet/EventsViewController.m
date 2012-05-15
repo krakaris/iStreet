@@ -2,10 +2,9 @@
 //  SecondViewController.m
 //  iStreet
 //
-//  Created by Rishi on 3/14/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Alexa Krakaris, Akarshan Kumar, and Rishi Narang - COS 333 Spring 2012
 //
-//  A good deal of the code for synchronously loading event icons in the table cells (and all of the logic) is from Apple's LazyTable sample project. The IconDownloader.h/.m code is almost completely Apple's. A lot of code was eliminated, however, and several customizations were made.
+//  A good deal of the code for synchronously loading event icons in the table cells (and all of the logic) is from Apple's LazyTable sample project. A lot of code was eliminated, however, and several customizations were made.
 
 #import "EventsViewController.h"
 #import "EventsNight.h"
