@@ -262,7 +262,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="bFG-au-ewV">
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="K5q-SA-ELi">
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="K5q-SA-ELi">
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
                                 <action selector="logoutOfFacebook:" destination="HDH-qv-0n4" id="089-mT-FX1"/>
                             </connections>
@@ -845,8 +846,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="SHi-xk-h61"/>
         <segue reference="6fS-cC-PVz"/>
         <segue reference="dJr-9i-Sko"/>
-        <segue reference="xz8-3J-H8S"/>
     </inferredMetricsTieBreakers>
 </document>
